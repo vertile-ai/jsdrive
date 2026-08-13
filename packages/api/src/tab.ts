@@ -65,6 +65,58 @@ export interface ScreenshotOptions extends Protocol.Page.Commands.CaptureScreens
 export type ReadyState = "loading" | "interactive" | "complete";
 export type WindowState = "normal" | "minimized" | "maximized" | "fullscreen";
 
+export type TabEventHandler = (params: unknown, metadata: EventMetadata) => void | Promise<void>;
+
+export interface EventDomain {
+  readonly name: string;
+  readonly events: readonly string[];
+  readonly dispatchable?: boolean;
+}
+
+const zendriverNetworkEntries = [
+  "Network.AlternateProtocolUsage",
+  "Network.BlockedReason",
+  "Network.CertificateTransparencyCompliance",
+  "Network.ConnectionType",
+  "Network.ContentEncoding",
+  "Network.ContentSecurityPolicySource",
+  "Network.CookieBlockedReason",
+  "Network.CookieExemptionReason",
+  "Network.CookiePriority",
+  "Network.CookieSameSite",
+  "Network.CookieSourceScheme",
+  "Network.CorsError",
+  "Network.CrossOriginEmbedderPolicyValue",
+  "Network.CrossOriginOpenerPolicyValue",
+  "Network.DeviceBoundSessionFetchResult",
+  "Network.DirectSocketDnsQueryType",
+  "Network.ErrorReason",
+  "Network.IPAddressSpace",
+  "Network.InterceptionStage",
+  "Network.LocalNetworkAccessRequestPolicy",
+  "Network.RenderBlockingBehavior",
+  "Network.ReportStatus",
+  "Network.ResourcePriority",
+  "Network.ResourceType",
+  "Network.ServiceWorkerResponseSource",
+  "Network.ServiceWorkerRouterSource",
+  "Network.SetCookieBlockedReason",
+  "Network.SignedExchangeErrorField",
+  "Network.TrustTokenOperationType",
+] as const;
+
+/** The 29 inert enum slots registered by Zendriver's Network module at the pinned reference. */
+export const ZendriverNetworkDomain: EventDomain = Object.freeze({
+  name: "Network",
+  events: zendriverNetworkEntries,
+  dispatchable: false,
+});
+
+interface HandlerRegistration {
+  readonly handler: TabEventHandler;
+  readonly off: () => void;
+}
+
 export class TargetClosedError extends Error {
   public constructor(public readonly targetId: string) {
     super(`CDP target closed: ${targetId}`);
@@ -86,6 +138,8 @@ export class TargetCrashedError extends Error {
 export class Tab {
   #failure: TargetClosedError | TargetCrashedError | undefined;
   #downloadPath: string | undefined;
+  readonly #handlers = new Map<string, HandlerRegistration[]>();
+  readonly #nonDispatchableHandlerMethods = new Set<string>();
 
   public constructor(
     public readonly targetId: string,
@@ -100,7 +154,15 @@ export class Tab {
   ) {}
 
   public get enabledDomains(): ReadonlySet<string> {
-    return this.connection.enabledDomains;
+    return this.connection.enabledDomainsFor?.(this.sessionId) ?? this.connection.enabledDomains;
+  }
+
+  public get manuallyEnabledDomains(): ReadonlySet<string> {
+    return this.connection.manuallyEnabledDomainsFor?.(this.sessionId) ?? this.connection.manuallyEnabledDomains;
+  }
+
+  public get handlers(): ReadonlyMap<string, readonly TabEventHandler[]> {
+    return new Map([...this.#handlers].map(([method, registrations]) => [method, registrations.map(({ handler }) => handler)]));
   }
 
   public get closed(): boolean {
@@ -137,12 +199,18 @@ export class Tab {
   ): Promise<CommandResult<M>> {
     this.#assertAvailable();
     const options = this.#mergeOptions(args[1]);
-    return this.connection.sendRaw(method, args[0], options) as Promise<CommandResult<M>>;
+    return this.#sendWithHandlerReconciliation(method, args[0], options).then((result) => {
+      this.#observeDomainCommand(method);
+      return result;
+    }) as Promise<CommandResult<M>>;
   }
 
   public sendRaw(method: string, params?: unknown, options?: SendOptions): Promise<Readonly<Record<string, unknown>>> {
     this.#assertAvailable();
-    return this.connection.sendRaw(method, params, this.#mergeOptions(options));
+    return this.#sendWithHandlerReconciliation(method, params, this.#mergeOptions(options)).then((result) => {
+      this.#observeDomainCommand(method);
+      return result;
+    });
   }
 
   public on<E extends ProtocolEvent>(
@@ -160,6 +228,47 @@ export class Tab {
     return this.connection.on(method, (params: unknown, metadata: EventMetadata) => {
       if (metadata.sessionId === this.sessionId) return handler(params, metadata);
     });
+  }
+
+  public addHandler<E extends ProtocolEvent>(
+    eventType: E,
+    handler: (params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>,
+  ): void;
+  public addHandler(domain: EventDomain, handler: TabEventHandler): void;
+  public addHandler(eventType: ProtocolEvent | EventDomain, handler: TabEventHandler): void {
+    if (typeof eventType !== "string" && eventType.dispatchable === false) {
+      for (const method of eventType.events) this.#addHandler(method, handler, false);
+      return;
+    }
+    const methods = typeof eventType === "string" ? [eventType] : eventType.events;
+    for (const method of methods) this.#addHandler(method, handler, true);
+  }
+
+  public removeHandlers(): void;
+  public removeHandlers(eventType: undefined, handler: TabEventHandler): void;
+  public removeHandlers(eventType: ProtocolEvent | EventDomain, handler?: TabEventHandler): void;
+  public removeHandlers(eventType?: ProtocolEvent | EventDomain, handler?: TabEventHandler): void {
+    if (handler !== undefined && eventType === undefined) {
+      throw new TypeError("if handler is provided, event_type should be provided as well");
+    }
+    if (eventType === undefined) {
+      for (const method of this.#handlers.keys()) this.#removeHandlerMethod(method);
+      return;
+    }
+    const methods = typeof eventType === "string" ? [eventType] : eventType.events;
+    for (const method of methods) {
+      if (handler === undefined) this.#removeHandlerMethod(method);
+      else {
+        const registrations = this.#handlers.get(method);
+        const registration = registrations?.find((item) => item.handler === handler);
+        if (registration !== undefined) {
+          registration.off();
+          const remaining = registrations?.filter((item) => item !== registration) ?? [];
+          if (remaining.length === 0) this.#handlers.delete(method);
+          else this.#handlers.set(method, remaining);
+        }
+      }
+    }
   }
 
   public async acquireDomain(domain: string, options: SendOptions = {}): Promise<() => Promise<void>> {
@@ -212,8 +321,16 @@ export class Tab {
   public async navigate(url: string, timeoutMs = 10_000, signal?: AbortSignal): Promise<Protocol.Page.Commands.NavigateResult> {
     this.#assertAvailable();
     const options = this.#options(timeoutMs, signal);
+    await this.#reconcileHandlerDomains("Page.navigate", options);
+    const enabledDomains = this.connection.enabledDomainsFor?.(this.sessionId)
+      ?? this.connection.enabledDomains
+      ?? new Set<string>();
+    const manuallyEnabledDomains = this.connection.manuallyEnabledDomainsFor?.(this.sessionId)
+      ?? this.connection.manuallyEnabledDomains
+      ?? new Set<string>();
+    const pageAlreadyEnabled = enabledDomains.has("Page") || manuallyEnabledDomains.has("Page");
     const release = this.connection.domainPolicy === "manual"
-      ? (await this.connection.enableDomain("Page", options), async () => {})
+      ? (pageAlreadyEnabled ? async () => {} : (await this.connection.enableDomain("Page", options), async () => {}))
       : await this.connection.acquireDomain("Page", options);
     const load = this.#waitForLoad(timeoutMs, signal);
     try {
@@ -569,6 +686,7 @@ export class Tab {
 
   public markClosed(): void {
     this.#failure = new TargetClosedError(this.targetId);
+    for (const method of this.#handlers.keys()) this.#removeHandlerMethod(method);
     if (this.sessionId === undefined) this.connection.close();
   }
 
@@ -596,6 +714,69 @@ export class Tab {
     if (this.sessionId === undefined) return options;
     return { ...options, sessionId: this.sessionId };
   }
+
+  #addHandler(method: string, handler: TabEventHandler, dispatchable: boolean): void {
+    if (!dispatchable) {
+      const registrations = this.#handlers.get(method) ?? [];
+      registrations.push({ handler, off: () => {} });
+      this.#handlers.set(method, registrations);
+      this.#nonDispatchableHandlerMethods.add(method);
+      return;
+    }
+    const registrationHandler: TabEventHandler = (params, metadata) => {
+      if (metadata.sessionId === this.sessionId) return handler(params, metadata);
+    };
+    const registration: HandlerRegistration = {
+      handler,
+      off: this.connection.on(method, registrationHandler),
+    };
+    const registrations = this.#handlers.get(method) ?? [];
+    registrations.push(registration);
+    this.#handlers.set(method, registrations);
+  }
+
+  #removeHandlerMethod(method: string): void {
+    for (const registration of this.#handlers.get(method) ?? []) registration.off();
+    this.#handlers.delete(method);
+    this.#nonDispatchableHandlerMethods.delete(method);
+  }
+
+  async #sendWithHandlerReconciliation(
+    method: string,
+    params: unknown,
+    options: SendOptions,
+  ): Promise<Readonly<Record<string, unknown>>> {
+    await this.#reconcileHandlerDomains(method, options);
+    return this.connection.sendRaw(method, params, options);
+  }
+
+  async #reconcileHandlerDomains(method: string, options: SendOptions): Promise<void> {
+    const command = /^(.*)\.(enable|disable)$/.exec(method);
+    const manualEnableDomain = command?.[2] === "enable" ? command[1] : undefined;
+    const requiredDomains = new Set<string>();
+    for (const eventMethod of this.#handlers.keys()) {
+      if (this.#nonDispatchableHandlerMethods.has(eventMethod)) continue;
+      const domain = eventMethod.split(".")[0];
+      if (domain !== undefined) requiredDomains.add(domain);
+    }
+    const enabledDomains = this.connection.enabledDomainsFor?.(options.sessionId)
+      ?? this.connection.enabledDomains
+      ?? new Set<string>();
+    const manuallyEnabledDomains = this.connection.manuallyEnabledDomainsFor?.(options.sessionId)
+      ?? this.connection.manuallyEnabledDomains
+      ?? new Set<string>();
+    for (const domain of requiredDomains) {
+      if (domain === manualEnableDomain) continue;
+      if (manuallyEnabledDomains.has(domain)) continue;
+      if (!enabledDomains.has(domain)) await this.connection.enableDomain(domain, options, "auto");
+    }
+    for (const domain of enabledDomains) {
+      if (requiredDomains.has(domain) || manuallyEnabledDomains.has(domain)) continue;
+      this.connection.forgetAutoDomain?.(domain, options);
+    }
+  }
+
+  #observeDomainCommand(_method: string): void {}
 
   async #history(offset: -1 | 1, options: WaitOptions): Promise<boolean> {
     const history = await this.send("Page.getNavigationHistory");

@@ -2,9 +2,9 @@
   "mappingCounts": {
     "coreMembers": {
       "CANDIDATE": 126,
-      "MISSING": 59,
+      "MISSING": 57,
       "UNKNOWN": 271,
-      "VERIFIED": 16
+      "VERIFIED": 18
     },
     "coreSymbols": {
       "CANDIDATE": 11,
@@ -18,9 +18,9 @@
     },
     "total": {
       "CANDIDATE": 146,
-      "MISSING": 96,
+      "MISSING": 94,
       "UNKNOWN": 274,
-      "VERIFIED": 17
+      "VERIFIED": 19
     }
   },
   "nodriver": {
@@ -154,6 +154,15 @@
             "declaration": "get enabledDomains(): ReadonlySet<string>;",
             "kind": "property",
             "name": "enabledDomains",
+            "parameters": [],
+            "returnType": "ReadonlySet<string>",
+            "typeParameters": []
+          },
+          {
+            "access": "get",
+            "declaration": "get manuallyEnabledDomains(): ReadonlySet<string>;",
+            "kind": "property",
+            "name": "manuallyEnabledDomains",
             "parameters": [],
             "returnType": "ReadonlySet<string>",
             "typeParameters": []
@@ -2550,6 +2559,24 @@
           },
           {
             "access": "get",
+            "declaration": "get manuallyEnabledDomains(): ReadonlySet<string>;",
+            "kind": "property",
+            "name": "manuallyEnabledDomains",
+            "parameters": [],
+            "returnType": "ReadonlySet<string>",
+            "typeParameters": []
+          },
+          {
+            "access": "get",
+            "declaration": "get handlers(): ReadonlyMap<string, readonly TabEventHandler[]>;",
+            "kind": "property",
+            "name": "handlers",
+            "parameters": [],
+            "returnType": "ReadonlyMap<string, readonly TabEventHandler[]>",
+            "typeParameters": []
+          },
+          {
+            "access": "get",
             "declaration": "get closed(): boolean;",
             "kind": "property",
             "name": "closed",
@@ -2787,6 +2814,121 @@
               }
             ],
             "returnType": "() => void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "addHandler<E extends ProtocolEvent>(eventType: E, handler: (params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>): void;",
+            "kind": "method",
+            "name": "addHandler",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "eventType",
+                "optional": false,
+                "rest": false,
+                "type": "E"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "handler",
+                "optional": false,
+                "rest": false,
+                "type": "(params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>"
+              }
+            ],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": [
+              "E extends ProtocolEvent"
+            ]
+          },
+          {
+            "declaration": "addHandler(domain: EventDomain, handler: TabEventHandler): void;",
+            "kind": "method",
+            "name": "addHandler",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "domain",
+                "optional": false,
+                "rest": false,
+                "type": "EventDomain"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "handler",
+                "optional": false,
+                "rest": false,
+                "type": "TabEventHandler"
+              }
+            ],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "removeHandlers(): void;",
+            "kind": "method",
+            "name": "removeHandlers",
+            "parameters": [],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "removeHandlers(eventType: undefined, handler: TabEventHandler): void;",
+            "kind": "method",
+            "name": "removeHandlers",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "eventType",
+                "optional": false,
+                "rest": false,
+                "type": "undefined"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "handler",
+                "optional": false,
+                "rest": false,
+                "type": "TabEventHandler"
+              }
+            ],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "removeHandlers(eventType: ProtocolEvent | EventDomain, handler?: TabEventHandler): void;",
+            "kind": "method",
+            "name": "removeHandlers",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "eventType",
+                "optional": false,
+                "rest": false,
+                "type": "ProtocolEvent | EventDomain"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "handler",
+                "optional": true,
+                "rest": false,
+                "type": "TabEventHandler"
+              }
+            ],
+            "returnType": "void",
             "static": false,
             "typeParameters": []
           },
@@ -4247,6 +4389,46 @@
             "type": "ReadonlySet<string>"
           },
           {
+            "declaration": "readonly manuallyEnabledDomains: ReadonlySet<string>;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "manuallyEnabledDomains",
+            "optional": false,
+            "readonly": true,
+            "type": "ReadonlySet<string>"
+          },
+          {
+            "declaration": "readonly enabledDomainsFor?: (sessionId?: string) => ReadonlySet<string>;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "enabledDomainsFor",
+            "optional": true,
+            "readonly": true,
+            "type": "(sessionId?: string) => ReadonlySet<string>"
+          },
+          {
+            "declaration": "readonly manuallyEnabledDomainsFor?: (sessionId?: string) => ReadonlySet<string>;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "manuallyEnabledDomainsFor",
+            "optional": true,
+            "readonly": true,
+            "type": "(sessionId?: string) => ReadonlySet<string>"
+          },
+          {
+            "declaration": "readonly forgetAutoDomain?: (domain: string, options?: SendOptions) => void;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "forgetAutoDomain",
+            "optional": true,
+            "readonly": true,
+            "type": "(domain: string, options?: SendOptions) => void"
+          },
+          {
             "declaration": "readonly closed: boolean;",
             "declaredDefault": null,
             "hasDeclaredDefault": false,
@@ -4443,7 +4625,7 @@
             "typeParameters": []
           },
           {
-            "declaration": "enableDomain(domain: string, options?: SendOptions): Promise<void>;",
+            "declaration": "enableDomain(domain: string, options?: SendOptions, source?: DomainEnableSource): Promise<void>;",
             "kind": "method",
             "name": "enableDomain",
             "parameters": [
@@ -4462,6 +4644,14 @@
                 "optional": true,
                 "rest": false,
                 "type": "SendOptions"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "source",
+                "optional": true,
+                "rest": false,
+                "type": "DomainEnableSource"
               }
             ],
             "returnType": "Promise<void>",
@@ -4536,7 +4726,7 @@
     "declaredSymbols": {
       "Browser": {
         "declarations": [
-          "export declare class Browser { #private; readonly connection: RuntimeBackend; readonly endpoint: BrowserEndpoint; readonly version: BrowserVersion; readonly protocol: unknown; readonly connectionMode: ConnectionMode; readonly config: Config; readonly process: BrowserProcessMetadata | undefined; readonly cookies: CookieJar; private constructor(); get targets(): readonly Protocol.Target.TargetInfo[]; get tabs(): readonly Tab[]; get mainTab(): Tab | undefined; get enabledDomains(): ReadonlySet<string>; get webSocketUrl(): string; get stopped(): boolean; [Symbol.iterator](): Iterator<Tab>; static start(options?: LaunchOptions | Config): Promise<Browser>; static connect(options: ConnectOptions): Promise<Browser>; get(url?: string, options?: { readonly newTab?: boolean; readonly newWindow?: boolean; }): Promise<Tab>; newTab(url?: string): Promise<Tab>; newWindow(url?: string): Promise<Tab>; createTab(url?: string, targetOptions?: Omit<Protocol.Target.Commands.CreateTargetParams, \"url\">): Promise<Tab>; targetInfo(target: string | Tab): Protocol.Target.TargetInfo | undefined; updateTargets(): Promise<readonly Protocol.Target.TargetInfo[]>; testConnection(): Promise<Protocol.Browser.Commands.GetVersionResult>; grantPermissions(permissions: readonly Protocol.Browser.PermissionType[], origin?: string): Promise<void>; grantAllPermissions(origin?: string): Promise<void>; wait(milliseconds: number, signal?: AbortSignal): Promise<void>; sleep(milliseconds: number, signal?: AbortSignal): Promise<void>; tileWindows(windows?: readonly Tab[], options?: { readonly maxColumns?: number; readonly left?: number; readonly top?: number; readonly width?: number; readonly height?: number; }): Promise<readonly Protocol.Browser.Bounds[]>; closeTab(tab: Tab): Promise<void>; close(): Promise<void>; stop(): Promise<void>; }"
+          "export declare class Browser { #private; readonly connection: RuntimeBackend; readonly endpoint: BrowserEndpoint; readonly version: BrowserVersion; readonly protocol: unknown; readonly connectionMode: ConnectionMode; readonly config: Config; readonly process: BrowserProcessMetadata | undefined; readonly cookies: CookieJar; private constructor(); get targets(): readonly Protocol.Target.TargetInfo[]; get tabs(): readonly Tab[]; get mainTab(): Tab | undefined; get enabledDomains(): ReadonlySet<string>; get manuallyEnabledDomains(): ReadonlySet<string>; get webSocketUrl(): string; get stopped(): boolean; [Symbol.iterator](): Iterator<Tab>; static start(options?: LaunchOptions | Config): Promise<Browser>; static connect(options: ConnectOptions): Promise<Browser>; get(url?: string, options?: { readonly newTab?: boolean; readonly newWindow?: boolean; }): Promise<Tab>; newTab(url?: string): Promise<Tab>; newWindow(url?: string): Promise<Tab>; createTab(url?: string, targetOptions?: Omit<Protocol.Target.Commands.CreateTargetParams, \"url\">): Promise<Tab>; targetInfo(target: string | Tab): Protocol.Target.TargetInfo | undefined; updateTargets(): Promise<readonly Protocol.Target.TargetInfo[]>; testConnection(): Promise<Protocol.Browser.Commands.GetVersionResult>; grantPermissions(permissions: readonly Protocol.Browser.PermissionType[], origin?: string): Promise<void>; grantAllPermissions(origin?: string): Promise<void>; wait(milliseconds: number, signal?: AbortSignal): Promise<void>; sleep(milliseconds: number, signal?: AbortSignal): Promise<void>; tileWindows(windows?: readonly Tab[], options?: { readonly maxColumns?: number; readonly left?: number; readonly top?: number; readonly width?: number; readonly height?: number; }): Promise<readonly Protocol.Browser.Bounds[]>; closeTab(tab: Tab): Promise<void>; close(): Promise<void>; stop(): Promise<void>; }"
         ],
         "file": "packages/api/dist/browser.d.ts",
         "kind": "class"
@@ -4645,6 +4835,13 @@
         ],
         "file": "packages/api/dist/element.d.ts",
         "kind": "class"
+      },
+      "EventDomain": {
+        "declarations": [
+          "export interface EventDomain { readonly name: string; readonly events: readonly string[]; readonly dispatchable?: boolean; }"
+        ],
+        "file": "packages/api/dist/tab.d.ts",
+        "kind": "interface"
       },
       "Expectation": {
         "declarations": [
@@ -4814,10 +5011,17 @@
       },
       "Tab": {
         "declarations": [
-          "export declare class Tab { #private; readonly targetId: string; readonly connection: RuntimeBackend; readonly sessionId?: string | undefined; readonly browserConnection: RuntimeBackend; readonly webSocketUrl?: string | undefined; private readonly closeTarget?; private readonly readTargetInfo; private readonly writeTargetInfo; constructor(targetId: string, connection: RuntimeBackend, sessionId?: string | undefined, browserConnection?: RuntimeBackend, webSocketUrl?: string | undefined, closeTarget?: (() => Promise<void>) | undefined, _childFrames?: () => readonly Tab[], readTargetInfo?: () => Protocol.Target.TargetInfo | undefined, writeTargetInfo?: (targetInfo: Protocol.Target.TargetInfo) => void); get enabledDomains(): ReadonlySet<string>; get closed(): boolean; get crashed(): boolean; get targetInfo(): Protocol.Target.TargetInfo | undefined; get title(): string; get url(): string; get type(): string; get subtype(): string | undefined; get attached(): boolean; get browserContextId(): Protocol.Browser.BrowserContextID | undefined; get openerId(): Protocol.Target.TargetID | undefined; get openerFrameId(): Protocol.Page.FrameId | undefined; get parentId(): Protocol.Target.TargetID | undefined; get parentFrameId(): Protocol.Page.FrameId | undefined; updateTarget(): Promise<Protocol.Target.TargetInfo>; send<M extends ProtocolCommand>(method: M, ...args: CommandParams<M> extends undefined ? [params?: undefined, options?: SendOptions] : [params: CommandParams<M>, options?: SendOptions]): Promise<CommandResult<M>>; sendRaw(method: string, params?: unknown, options?: SendOptions): Promise<Readonly<Record<string, unknown>>>; on<E extends ProtocolEvent>(method: E, handler: (params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>): () => void; on(method: string, handler: (params: unknown, metadata: EventMetadata) => void | Promise<void>): () => void; acquireDomain(domain: string, options?: SendOptions): Promise<() => Promise<void>>; expectRequest(matcher: UrlMatcher<Protocol.Network.Events.RequestWillBeSentEvent>, options?: WaitOptions): Expectation<ExpectedRequest>; expectResponse(matcher: UrlMatcher<Protocol.Network.Events.ResponseReceivedEvent>, options?: WaitOptions): Expectation<ExpectedResponse>; intercept(options?: InterceptionOptions): FetchInterception; setDownloadPath(path: string): Promise<string>; expectDownload(matcher?: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent>, options?: DownloadOptions): Expectation<DownloadResult>; downloadFile(url: string, destination: string, options?: WaitOptions): Promise<DownloadResult>; get(url: string, options?: WaitOptions): Promise<Protocol.Page.Commands.NavigateResult>; navigate(url: string, timeoutMs?: number, signal?: AbortSignal): Promise<Protocol.Page.Commands.NavigateResult>; reload(ignoreCache?: boolean, options?: WaitOptions): Promise<void>; back(options?: WaitOptions): Promise<boolean>; forward(options?: WaitOptions): Promise<boolean>; activate(): Promise<void>; bringToFront(): Promise<Protocol.Page.Commands.BringToFrontResult>; evaluate<T = unknown>(expression: string, awaitPromise?: boolean, returnByValue?: boolean, options?: WaitOptions): Promise<T>; getContent(): Promise<string>; querySelector(selector: string, options?: QueryOptions): Promise<Element | null>; querySelectorAll(selector: string, options?: QueryOptions): Promise<readonly Element[]>; select(selector: string, options?: WaitOptions): Promise<Element>; selectAll(selector: string, options?: WaitOptions & QueryOptions): Promise<readonly Element[]>; find(text: string, bestMatch?: boolean, returnEnclosingElement?: boolean, options?: WaitOptions): Promise<Element>; findAll(text: string, options?: WaitOptions): Promise<readonly Element[]>; findElementByText(text: string, bestMatch?: boolean, returnEnclosingElement?: boolean): Promise<Element | null>; findElementsByText(text: string, tagHint?: string): Promise<readonly Element[]>; getAllLinkedSources(): Promise<readonly Element[]>; getAllUrls(absolute?: boolean): Promise<readonly string[]>; jsDumps<T = unknown>(expression: string): Promise<T>; disableDomAgent(): Promise<void>; get inspectorUrl(): string | undefined; inspectorOpen(): string | undefined; openExternalInspector(): string | undefined; flashPoint(x: number, y: number, durationMs?: number, size?: number): Promise<void>; verifyCf(challengeSelector: string, options?: WaitOptions & { readonly clickDelayMs?: number; }): Promise<void>; recordScreencast(directory: string): Promise<ScreencastSession>; xpath(expression: string, options?: WaitOptions): Promise<readonly Element[]>; waitFor(selector: string, options?: WaitOptions): Promise<Element>; waitFor(options: WaitForOptions): Promise<Element>; waitForReadyState(state?: ReadyState, options?: WaitOptions): Promise<boolean>; waitForIdle(options?: WaitOptions & { readonly idleMs?: number; }): Promise<void>; getLocalStorage(): Promise<Record<string, string>>; setLocalStorage(values: Readonly<Record<string, string | null>>): Promise<void>; setUserAgent(userAgent?: string, acceptLanguage?: string, platform?: string): Promise<void>; screenshotB64(options?: ScreenshotOptions): Promise<string>; saveScreenshot(path: string, options?: ScreenshotOptions): Promise<string>; printToPdf(path?: string, options?: Protocol.Page.Commands.PrintToPDFParams): Promise<string>; saveSnapshot(path?: string): Promise<string>; scrollDown(amount?: number): Promise<void>; scrollUp(amount?: number): Promise<void>; getWindow(): Promise<Protocol.Browser.Commands.GetWindowForTargetResult>; setWindowState(windowState: WindowState): Promise<void>; setWindowSize(width: number, height: number): Promise<void>; maximize(): Promise<void>; minimize(): Promise<void>; fullscreen(): Promise<void>; mouseMove(x: number, y: number, modifiers?: number): Promise<void>; mouseClick(x: number, y: number, button?: Protocol.Input.MouseButton, modifiers?: number): Promise<void>; elementFromNodeId(nodeId: Protocol.DOM.NodeId): Promise<Element>; close(): Promise<void>; markClosed(): void; markCrashed(status: string, errorCode: number): void; }"
+          "export declare class Tab { #private; readonly targetId: string; readonly connection: RuntimeBackend; readonly sessionId?: string | undefined; readonly browserConnection: RuntimeBackend; readonly webSocketUrl?: string | undefined; private readonly closeTarget?; private readonly readTargetInfo; private readonly writeTargetInfo; constructor(targetId: string, connection: RuntimeBackend, sessionId?: string | undefined, browserConnection?: RuntimeBackend, webSocketUrl?: string | undefined, closeTarget?: (() => Promise<void>) | undefined, _childFrames?: () => readonly Tab[], readTargetInfo?: () => Protocol.Target.TargetInfo | undefined, writeTargetInfo?: (targetInfo: Protocol.Target.TargetInfo) => void); get enabledDomains(): ReadonlySet<string>; get manuallyEnabledDomains(): ReadonlySet<string>; get handlers(): ReadonlyMap<string, readonly TabEventHandler[]>; get closed(): boolean; get crashed(): boolean; get targetInfo(): Protocol.Target.TargetInfo | undefined; get title(): string; get url(): string; get type(): string; get subtype(): string | undefined; get attached(): boolean; get browserContextId(): Protocol.Browser.BrowserContextID | undefined; get openerId(): Protocol.Target.TargetID | undefined; get openerFrameId(): Protocol.Page.FrameId | undefined; get parentId(): Protocol.Target.TargetID | undefined; get parentFrameId(): Protocol.Page.FrameId | undefined; updateTarget(): Promise<Protocol.Target.TargetInfo>; send<M extends ProtocolCommand>(method: M, ...args: CommandParams<M> extends undefined ? [params?: undefined, options?: SendOptions] : [params: CommandParams<M>, options?: SendOptions]): Promise<CommandResult<M>>; sendRaw(method: string, params?: unknown, options?: SendOptions): Promise<Readonly<Record<string, unknown>>>; on<E extends ProtocolEvent>(method: E, handler: (params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>): () => void; on(method: string, handler: (params: unknown, metadata: EventMetadata) => void | Promise<void>): () => void; addHandler<E extends ProtocolEvent>(eventType: E, handler: (params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>): void; addHandler(domain: EventDomain, handler: TabEventHandler): void; removeHandlers(): void; removeHandlers(eventType: undefined, handler: TabEventHandler): void; removeHandlers(eventType: ProtocolEvent | EventDomain, handler?: TabEventHandler): void; acquireDomain(domain: string, options?: SendOptions): Promise<() => Promise<void>>; expectRequest(matcher: UrlMatcher<Protocol.Network.Events.RequestWillBeSentEvent>, options?: WaitOptions): Expectation<ExpectedRequest>; expectResponse(matcher: UrlMatcher<Protocol.Network.Events.ResponseReceivedEvent>, options?: WaitOptions): Expectation<ExpectedResponse>; intercept(options?: InterceptionOptions): FetchInterception; setDownloadPath(path: string): Promise<string>; expectDownload(matcher?: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent>, options?: DownloadOptions): Expectation<DownloadResult>; downloadFile(url: string, destination: string, options?: WaitOptions): Promise<DownloadResult>; get(url: string, options?: WaitOptions): Promise<Protocol.Page.Commands.NavigateResult>; navigate(url: string, timeoutMs?: number, signal?: AbortSignal): Promise<Protocol.Page.Commands.NavigateResult>; reload(ignoreCache?: boolean, options?: WaitOptions): Promise<void>; back(options?: WaitOptions): Promise<boolean>; forward(options?: WaitOptions): Promise<boolean>; activate(): Promise<void>; bringToFront(): Promise<Protocol.Page.Commands.BringToFrontResult>; evaluate<T = unknown>(expression: string, awaitPromise?: boolean, returnByValue?: boolean, options?: WaitOptions): Promise<T>; getContent(): Promise<string>; querySelector(selector: string, options?: QueryOptions): Promise<Element | null>; querySelectorAll(selector: string, options?: QueryOptions): Promise<readonly Element[]>; select(selector: string, options?: WaitOptions): Promise<Element>; selectAll(selector: string, options?: WaitOptions & QueryOptions): Promise<readonly Element[]>; find(text: string, bestMatch?: boolean, returnEnclosingElement?: boolean, options?: WaitOptions): Promise<Element>; findAll(text: string, options?: WaitOptions): Promise<readonly Element[]>; findElementByText(text: string, bestMatch?: boolean, returnEnclosingElement?: boolean): Promise<Element | null>; findElementsByText(text: string, tagHint?: string): Promise<readonly Element[]>; getAllLinkedSources(): Promise<readonly Element[]>; getAllUrls(absolute?: boolean): Promise<readonly string[]>; jsDumps<T = unknown>(expression: string): Promise<T>; disableDomAgent(): Promise<void>; get inspectorUrl(): string | undefined; inspectorOpen(): string | undefined; openExternalInspector(): string | undefined; flashPoint(x: number, y: number, durationMs?: number, size?: number): Promise<void>; verifyCf(challengeSelector: string, options?: WaitOptions & { readonly clickDelayMs?: number; }): Promise<void>; recordScreencast(directory: string): Promise<ScreencastSession>; xpath(expression: string, options?: WaitOptions): Promise<readonly Element[]>; waitFor(selector: string, options?: WaitOptions): Promise<Element>; waitFor(options: WaitForOptions): Promise<Element>; waitForReadyState(state?: ReadyState, options?: WaitOptions): Promise<boolean>; waitForIdle(options?: WaitOptions & { readonly idleMs?: number; }): Promise<void>; getLocalStorage(): Promise<Record<string, string>>; setLocalStorage(values: Readonly<Record<string, string | null>>): Promise<void>; setUserAgent(userAgent?: string, acceptLanguage?: string, platform?: string): Promise<void>; screenshotB64(options?: ScreenshotOptions): Promise<string>; saveScreenshot(path: string, options?: ScreenshotOptions): Promise<string>; printToPdf(path?: string, options?: Protocol.Page.Commands.PrintToPDFParams): Promise<string>; saveSnapshot(path?: string): Promise<string>; scrollDown(amount?: number): Promise<void>; scrollUp(amount?: number): Promise<void>; getWindow(): Promise<Protocol.Browser.Commands.GetWindowForTargetResult>; setWindowState(windowState: WindowState): Promise<void>; setWindowSize(width: number, height: number): Promise<void>; maximize(): Promise<void>; minimize(): Promise<void>; fullscreen(): Promise<void>; mouseMove(x: number, y: number, modifiers?: number): Promise<void>; mouseClick(x: number, y: number, button?: Protocol.Input.MouseButton, modifiers?: number): Promise<void>; elementFromNodeId(nodeId: Protocol.DOM.NodeId): Promise<Element>; close(): Promise<void>; markClosed(): void; markCrashed(status: string, errorCode: number): void; }"
         ],
         "file": "packages/api/dist/tab.d.ts",
         "kind": "class"
+      },
+      "TabEventHandler": {
+        "declarations": [
+          "export type TabEventHandler = (params: unknown, metadata: EventMetadata) => void | Promise<void>;"
+        ],
+        "file": "packages/api/dist/tab.d.ts",
+        "kind": "type"
       },
       "TargetClosedError": {
         "declarations": [
@@ -4874,6 +5078,18 @@
         ],
         "file": "packages/api/dist/tab.d.ts",
         "kind": "type"
+      },
+      "ZendriverNetworkDomain": {
+        "declarations": [
+          {
+            "declaration": "ZendriverNetworkDomain: EventDomain",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "type": "EventDomain"
+          }
+        ],
+        "file": "packages/api/dist/tab.d.ts",
+        "kind": "const"
       },
       "captureNetworkBootstrap": {
         "declarations": [
@@ -5422,6 +5638,10 @@
             "name": "mainTab"
           },
           {
+            "kind": "property",
+            "name": "manuallyEnabledDomains"
+          },
+          {
             "kind": "method",
             "name": "newTab"
           },
@@ -5968,6 +6188,10 @@
             "name": "activate"
           },
           {
+            "kind": "method",
+            "name": "addHandler"
+          },
+          {
             "kind": "property",
             "name": "attached"
           },
@@ -6080,6 +6304,10 @@
             "name": "getWindow"
           },
           {
+            "kind": "property",
+            "name": "handlers"
+          },
+          {
             "kind": "method",
             "name": "inspectorOpen"
           },
@@ -6094,6 +6322,10 @@
           {
             "kind": "method",
             "name": "jsDumps"
+          },
+          {
+            "kind": "property",
+            "name": "manuallyEnabledDomains"
           },
           {
             "kind": "method",
@@ -6166,6 +6398,10 @@
           {
             "kind": "method",
             "name": "reload"
+          },
+          {
+            "kind": "method",
+            "name": "removeHandlers"
           },
           {
             "kind": "method",
@@ -6279,6 +6515,12 @@
         "functionLength": 3,
         "kind": "function-or-class",
         "name": "TargetCrashedError",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": null,
+        "kind": "object",
+        "name": "ZendriverNetworkDomain",
         "prototypeMembers": []
       },
       {
@@ -19659,11 +19901,83 @@
                 "kind": "method",
                 "name": "add_handler",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Tab",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceTestIds": [
+                    "ZDTEST-0042",
+                    "ZDTEST-0043",
+                    "ZDTEST-0044",
+                    "ZDTEST-0045",
+                    "ZDTEST-0068",
+                    "ZDTEST-0069",
+                    "ZDTEST-0070",
+                    "ZDTEST-0071",
+                    "ZDTEST-0072",
+                    "ZDTEST-0073"
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "addHandler<E extends ProtocolEvent>(eventType: E, handler: (params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>): void;",
+                      "kind": "method",
+                      "name": "addHandler",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "eventType",
+                          "optional": false,
+                          "rest": false,
+                          "type": "E"
+                        },
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "handler",
+                          "optional": false,
+                          "rest": false,
+                          "type": "(params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>"
+                        }
+                      ],
+                      "returnType": "void",
+                      "static": false,
+                      "typeParameters": [
+                        "E extends ProtocolEvent"
+                      ]
+                    },
+                    {
+                      "declaration": "addHandler(domain: EventDomain, handler: TabEventHandler): void;",
+                      "kind": "method",
+                      "name": "addHandler",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "domain",
+                          "optional": false,
+                          "rest": false,
+                          "type": "EventDomain"
+                        },
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "handler",
+                          "optional": false,
+                          "rest": false,
+                          "type": "TabEventHandler"
+                        }
+                      ],
+                      "returnType": "void",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Tab.addHandler",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -22088,11 +22402,37 @@
                 "kind": "method",
                 "name": "remove_handlers",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Tab",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceTestIds": [
+                    "ZDTEST-0046",
+                    "ZDTEST-0047",
+                    "ZDTEST-0048",
+                    "ZDTEST-0049",
+                    "ZDTEST-0050",
+                    "ZDTEST-0051",
+                    "ZDTEST-0052",
+                    "ZDTEST-0053"
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "removeHandlers(): void;",
+                      "kind": "method",
+                      "name": "removeHandlers",
+                      "parameters": [],
+                      "returnType": "void",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Tab.removeHandlers",
+                  "semanticsCoverage": [
+                    "errors",
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [

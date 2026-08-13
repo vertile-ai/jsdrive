@@ -7,4 +7,13 @@ export * from "./input.js";
 export * from "./network.js";
 export * from "./provider.js";
 export * from "./trace.js";
-export type { ReadyState, ScreenshotOptions, WaitForOptions, WaitOptions, WindowState } from "./tab.js";
+export {
+  ZendriverNetworkDomain,
+  type EventDomain,
+  type ReadyState,
+  type ScreenshotOptions,
+  type TabEventHandler,
+  type WaitForOptions,
+  type WaitOptions,
+  type WindowState,
+} from "./tab.js";

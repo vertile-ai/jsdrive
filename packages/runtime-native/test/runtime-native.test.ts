@@ -135,6 +135,41 @@ test("records backend-neutral command results and events in the native wrapper",
   }
 });
 
+test("native handlers and domain bookkeeping stay scoped to a CDP session", async () => {
+  const peer = await createPeer((message, socket) => {
+    socket.send(JSON.stringify({ id: message.id, result: {} }));
+    socket.send(JSON.stringify({
+      method: "Runtime.consoleAPICalled",
+      params: { type: "log" },
+      ...(typeof message.sessionId === "string" ? { sessionId: message.sessionId } : {}),
+    }));
+  });
+  try {
+    let handled = 0;
+    const errors: unknown[] = [];
+    peer.connection.onHandlerError((event) => errors.push(event.error));
+    peer.connection.on("Runtime.consoleAPICalled", () => { throw new Error("native sync handler failure"); });
+    peer.connection.on("Runtime.consoleAPICalled", (_event, metadata) => {
+      if (metadata.sessionId === "native-a") handled += 1;
+    });
+    await peer.connection.enableDomain("Network", { sessionId: "native-a" }, "auto");
+    assert.deepEqual([...peer.connection.enabledDomainsFor?.("native-a") ?? []], ["Network"]);
+    assert.deepEqual([...peer.connection.enabledDomainsFor?.("native-b") ?? []], []);
+    assert.deepEqual([...peer.connection.manuallyEnabledDomainsFor?.("native-a") ?? []], []);
+    await peer.connection.send("Network.disable", undefined, { sessionId: "native-a" });
+    assert.deepEqual([...peer.connection.enabledDomainsFor?.("native-a") ?? []], []);
+    await peer.connection.sendRaw("Runtime.enable", undefined, { sessionId: "native-a" });
+    await waitFor(() => handled > 0, 500);
+    await waitFor(() => errors.length > 0, 500);
+    assert.equal(errors[0] instanceof Error && errors[0].message, "native sync handler failure");
+    await peer.connection.closeAsync();
+    assert.deepEqual([...peer.connection.enabledDomainsFor?.("native-a") ?? []], []);
+    assert.deepEqual([...peer.connection.manuallyEnabledDomainsFor?.("native-a") ?? []], []);
+  } finally {
+    await peer.close();
+  }
+});
+
 test("native backend runs DOM, input, capture, cookies, network, and download in both modes", { timeout: 60_000 }, async () => {
   const server = createHttpServer((request, response) => {
     if (request.url === "/api") { response.setHeader("content-type", "application/json"); response.end('{"ok":true}'); return; }

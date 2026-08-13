@@ -92,5 +92,17 @@
     "nodeMember": "Config",
     "testIds": ["ZDTEST-0020"],
     "upstream": "zendriver.core.config.Config"
+  },
+  {
+    "nodeMember": "Tab.addHandler",
+    "testIds": ["ZDTEST-0042", "ZDTEST-0043", "ZDTEST-0044", "ZDTEST-0045", "ZDTEST-0068", "ZDTEST-0069", "ZDTEST-0070", "ZDTEST-0071", "ZDTEST-0072", "ZDTEST-0073"],
+    "upstream": "zendriver.core.tab.Tab.add_handler",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Tab.removeHandlers",
+    "testIds": ["ZDTEST-0046", "ZDTEST-0047", "ZDTEST-0048", "ZDTEST-0049", "ZDTEST-0050", "ZDTEST-0051", "ZDTEST-0052", "ZDTEST-0053"],
+    "upstream": "zendriver.core.tab.Tab.remove_handlers",
+    "verifiedSemantics": ["errors", "return", "state"]
   }
 ]

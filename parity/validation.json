@@ -2,9 +2,9 @@
   "apiMappingCounts": {
     "coreMembers": {
       "CANDIDATE": 126,
-      "MISSING": 59,
+      "MISSING": 57,
       "UNKNOWN": 271,
-      "VERIFIED": 16
+      "VERIFIED": 18
     },
     "coreSymbols": {
       "CANDIDATE": 11,
@@ -18,9 +18,9 @@
     },
     "total": {
       "CANDIDATE": 146,
-      "MISSING": 96,
+      "MISSING": 94,
       "UNKNOWN": 274,
-      "VERIFIED": 17
+      "VERIFIED": 19
     }
   },
   "errors": [],
@@ -45,10 +45,10 @@
     "removedCoreSymbol": "PASS",
     "removedRootExport": "PASS"
   },
-  "notRunTestCases": 60,
+  "notRunTestCases": 42,
   "referenceObservationCount": 1,
-  "semanticallyVerifiedApiMappings": 17,
+  "semanticallyVerifiedApiMappings": 19,
   "status": "PASS",
   "testCases": 101,
-  "unmappedTestCases": 60
+  "unmappedTestCases": 42
 }

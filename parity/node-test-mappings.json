@@ -244,5 +244,113 @@
     "note": "Passed the complex/scalar evaluation stress set in real headful Chrome.",
     "result": "PASS",
     "status": "MAPPED"
+  },
+  "ZDTEST-0042": {
+    "case": "packages/api/test/handlers-domain-parity.test.ts::ZDTEST-0042",
+    "note": "Passed duplicate typed event handler registration and real headless/headful Network event dispatch.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0043": {
+    "case": "packages/api/test/handlers-domain-parity.test.ts::ZDTEST-0043",
+    "note": "Passed duplicate typed event handler registration and real headless/headful Network event dispatch.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0044": {
+    "case": "packages/api/test/handlers-domain-parity.test.ts::ZDTEST-0044",
+    "note": "Passed exact pinned ZendriverNetworkDomain 29 inert enum slots with no auto-enable or dispatch in real headless/headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0045": {
+    "case": "packages/api/test/handlers-domain-parity.test.ts::ZDTEST-0045",
+    "note": "Passed exact pinned ZendriverNetworkDomain 29 inert enum slots with no auto-enable or dispatch in real headless/headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0046": {
+    "case": "packages/api/test/handlers-domain-parity.test.ts::ZDTEST-0046",
+    "note": "Passed remove-all handler cleanup in real headless/headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0047": {
+    "case": "packages/api/test/handlers-domain-parity.test.ts::ZDTEST-0047",
+    "note": "Passed remove-all handler cleanup in real headless/headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0048": {
+    "case": "packages/api/test/handlers-domain-parity.test.ts::ZDTEST-0048",
+    "note": "Passed event-specific handler cleanup while retaining other handlers in real headless/headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0049": {
+    "case": "packages/api/test/handlers-domain-parity.test.ts::ZDTEST-0049",
+    "note": "Passed event-specific handler cleanup while retaining other handlers in real headless/headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0050": {
+    "case": "packages/api/test/handlers-domain-parity.test.ts::ZDTEST-0050",
+    "note": "Passed removal of one specific handler while retaining its sibling in real headless/headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0051": {
+    "case": "packages/api/test/handlers-domain-parity.test.ts::ZDTEST-0051",
+    "note": "Passed removal of one specific handler while retaining its sibling in real headless/headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0052": {
+    "case": "packages/api/test/handlers-domain-parity.test.ts::ZDTEST-0052",
+    "note": "Passed the exact typed error and message when removing a handler without an event type.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0053": {
+    "case": "packages/api/test/handlers-domain-parity.test.ts::ZDTEST-0053",
+    "note": "Passed the exact typed error and message when removing a handler without an event type.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0068": {
+    "case": "packages/api/test/handlers-domain-parity.test.ts::ZDTEST-0068",
+    "note": "Passed custom manual Fetch.enable parameter preservation without an implicit replacement in real headless/headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0069": {
+    "case": "packages/api/test/handlers-domain-parity.test.ts::ZDTEST-0069",
+    "note": "Passed custom manual Fetch.enable parameter preservation without an implicit replacement in real headless/headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0070": {
+    "case": "packages/api/test/handlers-domain-parity.test.ts::ZDTEST-0070",
+    "note": "Passed explicit Network.disable clearing enabled and manually-enabled views in real headless/headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0071": {
+    "case": "packages/api/test/handlers-domain-parity.test.ts::ZDTEST-0071",
+    "note": "Passed explicit Network.disable clearing enabled and manually-enabled views in real headless/headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0072": {
+    "case": "packages/api/test/handlers-domain-parity.test.ts::ZDTEST-0072",
+    "note": "Passed automatic Network domain enablement from a registered handler in real headless/headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0073": {
+    "case": "packages/api/test/handlers-domain-parity.test.ts::ZDTEST-0073",
+    "note": "Passed automatic Network domain enablement from a registered handler in real headless/headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
   }
 }

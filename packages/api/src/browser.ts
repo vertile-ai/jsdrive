@@ -128,6 +128,10 @@ export class Browser {
     return this.connection.enabledDomains;
   }
 
+  public get manuallyEnabledDomains(): ReadonlySet<string> {
+    return this.connection.manuallyEnabledDomains;
+  }
+
   public get webSocketUrl(): string {
     return this.version.webSocketDebuggerUrl;
   }

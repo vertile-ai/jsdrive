@@ -15,6 +15,7 @@ import {
   CdpTimeoutError,
   type ConnectOptions as RuntimeConnectOptions,
   type DomainPolicy,
+  type DomainEnableSource,
   type EventMetadata,
   type HandlerError,
   type RuntimeBackend,
@@ -71,7 +72,11 @@ export class NativeConnection implements RuntimeBackend {
   readonly #handle: number;
   readonly #handlers = new Map<string, Set<EventHandler>>();
   readonly #errorHandlers = new Set<ErrorHandler>();
+  readonly #domainEnableInFlight = new Map<string, Set<Promise<Readonly<Record<string, unknown>>>>>();
   readonly #enabledDomainKeys = new Set<string>();
+  readonly #autoEnabledDomainKeys = new Set<string>();
+  readonly #manuallyEnabledDomainKeys = new Set<string>();
+  readonly #autoEnablingDomainKeys = new Map<string, number>();
   readonly #domainReferences = new Map<string, number>();
   readonly #domainEnables = new Map<string, Promise<void>>();
   readonly #domainDisables = new Map<string, Promise<void>>();
@@ -122,6 +127,18 @@ export class NativeConnection implements RuntimeBackend {
     return new Set([...this.#enabledDomainKeys].map((key) => key.slice(key.indexOf(":") + 1)));
   }
 
+  public get manuallyEnabledDomains(): ReadonlySet<string> {
+    return new Set([...this.#manuallyEnabledDomainKeys].map((key) => key.slice(key.indexOf(":") + 1)));
+  }
+
+  public enabledDomainsFor(sessionId?: string): ReadonlySet<string> {
+    return this.#domainsFor(this.#enabledDomainKeys, sessionId);
+  }
+
+  public manuallyEnabledDomainsFor(sessionId?: string): ReadonlySet<string> {
+    return this.#domainsFor(this.#manuallyEnabledDomainKeys, sessionId);
+  }
+
   public get closed(): boolean {
     return this.#closed;
   }
@@ -143,6 +160,36 @@ export class NativeConnection implements RuntimeBackend {
     method: string,
     params?: unknown,
     options: SendOptions = {},
+  ): Promise<Readonly<Record<string, unknown>>> {
+    return this.#sendRawWithSource(method, params, options, "manual");
+  }
+
+  #sendRawWithSource(
+    method: string,
+    params: unknown,
+    options: SendOptions,
+    source: DomainEnableSource,
+  ): Promise<Readonly<Record<string, unknown>>> {
+    const operation = this.#sendRaw(method, params, options, source);
+    const match = /^(.*)\.enable$/.exec(method);
+    if (match !== null && match[1] !== undefined) {
+      const key = domainKey(match[1], options.sessionId);
+      const operations = this.#domainEnableInFlight.get(key) ?? new Set<Promise<Readonly<Record<string, unknown>>>>();
+      operations.add(operation);
+      this.#domainEnableInFlight.set(key, operations);
+      void operation.then(
+        () => this.#removeDomainEnableInFlight(key, operation),
+        () => this.#removeDomainEnableInFlight(key, operation),
+      );
+    }
+    return operation;
+  }
+
+  async #sendRaw(
+    method: string,
+    params: unknown,
+    options: SendOptions,
+    source: DomainEnableSource,
   ): Promise<Readonly<Record<string, unknown>>> {
     if (this.#closed) throw new CdpConnectionClosedError();
     const signal = options.signal;
@@ -178,6 +225,7 @@ export class NativeConnection implements RuntimeBackend {
         cancellationId,
       );
       const result = JSON.parse(resultJson) as Readonly<Record<string, unknown>>;
+      this.#recordDomainCommand(method, options, source);
       this.#trace.push({
         direction: "receive",
         timestamp: Date.now(),
@@ -226,30 +274,39 @@ export class NativeConnection implements RuntimeBackend {
     return () => this.#errorHandlers.delete(handler);
   }
 
-  public async enableDomain(domain: string, options: SendOptions = {}): Promise<void> {
+  public async enableDomain(domain: string, options: SendOptions = {}, source: DomainEnableSource = "manual"): Promise<void> {
     const key = domainKey(domain, options.sessionId);
-    if (this.#enabledDomainKeys.has(key)) return;
-    await this.sendRaw(`${domain}.enable`, {}, options);
-    this.#enabledDomainKeys.add(key);
+    if (source === "auto" && (this.#enabledDomainKeys.has(key) || this.#manuallyEnabledDomainKeys.has(key))) return;
+    if (source === "manual" && this.#manuallyEnabledDomainKeys.has(key)) return;
+    if (source === "auto") this.#incrementAutoEnabling(key);
+    try {
+      await this.#sendRawWithSource(`${domain}.enable`, {}, options, source);
+    } finally {
+      if (source === "auto") this.#decrementAutoEnabling(key);
+    }
   }
 
   public async disableDomain(domain: string, options: SendOptions = {}): Promise<void> {
     const key = domainKey(domain, options.sessionId);
-    if (!this.#enabledDomainKeys.has(key)) return;
+    const inFlight = [...(this.#domainEnableInFlight.get(key) ?? [])];
+    if (inFlight.length > 0) await Promise.allSettled(inFlight);
+    if (!this.#enabledDomainKeys.has(key) && !this.#manuallyEnabledDomainKeys.has(key)) return;
     await this.sendRaw(`${domain}.disable`, {}, options);
     this.#enabledDomainKeys.delete(key);
+    this.#manuallyEnabledDomainKeys.delete(key);
     this.#domainReferences.delete(key);
   }
 
   public async acquireDomain(domain: string, options: SendOptions = {}): Promise<() => Promise<void>> {
     if (this.domainPolicy === "manual") return async () => {};
     const key = domainKey(domain, options.sessionId);
+    if (this.#manuallyEnabledDomainKeys.has(key)) return async () => {};
     await this.#domainDisables.get(key);
     const references = this.#domainReferences.get(key) ?? 0;
     this.#domainReferences.set(key, references + 1);
     let enabling = this.#domainEnables.get(key);
     if (enabling === undefined && !this.#enabledDomainKeys.has(key)) {
-      enabling = this.enableDomain(domain, options);
+      enabling = this.enableDomain(domain, options, "auto");
       this.#domainEnables.set(key, enabling);
       void enabling.finally(() => {
         if (this.#domainEnables.get(key) === enabling) this.#domainEnables.delete(key);
@@ -270,6 +327,7 @@ export class NativeConnection implements RuntimeBackend {
       const remaining = (this.#domainReferences.get(key) ?? 1) - 1;
       if (remaining === 0) {
         this.#domainReferences.delete(key);
+        if (this.#manuallyEnabledDomainKeys.has(key)) return;
         const disabling = this.disableDomain(domain, options);
         this.#domainDisables.set(key, disabling);
         try {
@@ -284,12 +342,12 @@ export class NativeConnection implements RuntimeBackend {
   }
 
   public close(): void {
-    this.#closed = true;
+    this.#markClosed();
     void this.#dispose();
   }
 
   public async closeAsync(): Promise<void> {
-    this.#closed = true;
+    this.#markClosed();
     await this.#dispose();
   }
 
@@ -299,12 +357,12 @@ export class NativeConnection implements RuntimeBackend {
       try {
         batch = await binding.pollEvents(this.#handle, 100);
         if (await binding.connectionClosed(this.#handle)) {
-          this.#closed = true;
+          this.#markClosed();
           await this.#dispose();
           return;
         }
       } catch {
-        this.#closed = true;
+        this.#markClosed();
         return;
       }
       for (const json of batch) this.#dispatch(JSON.parse(json) as WireEvent);
@@ -331,13 +389,78 @@ export class NativeConnection implements RuntimeBackend {
     });
     const metadata: EventMetadata = event.sessionId === undefined ? {} : { sessionId: event.sessionId };
     for (const handler of this.#handlers.get(event.method) ?? []) {
-      Promise.resolve(handler(event.params, metadata)).catch((error: unknown) => {
+      Promise.resolve().then(() => handler(event.params, metadata)).catch((error: unknown) => {
         const report: HandlerError = event.sessionId === undefined
           ? { error, method: event.method, params: event.params }
           : { error, method: event.method, params: event.params, sessionId: event.sessionId };
         for (const errorHandler of this.#errorHandlers) errorHandler(report);
       });
     }
+  }
+
+  public forgetAutoDomain(domain: string, options: SendOptions = {}): void {
+    const key = domainKey(domain, options.sessionId);
+    if (this.#domainReferences.has(key) || this.#manuallyEnabledDomainKeys.has(key)) return;
+    this.#autoEnabledDomainKeys.delete(key);
+    this.#enabledDomainKeys.delete(key);
+  }
+
+  #recordDomainCommand(method: string, options: SendOptions, source: DomainEnableSource): void {
+    const match = /^(.*)\.(enable|disable)$/.exec(method);
+    if (match === null || match[1] === undefined) return;
+    const key = domainKey(match[1], options.sessionId);
+    if (match[2] === "enable") {
+      if (source === "auto") {
+        if (this.#manuallyEnabledDomainKeys.has(key)) return;
+        this.#enabledDomainKeys.add(key);
+        this.#autoEnabledDomainKeys.add(key);
+      } else {
+        this.#enabledDomainKeys.delete(key);
+        this.#autoEnabledDomainKeys.delete(key);
+        this.#manuallyEnabledDomainKeys.add(key);
+      }
+      return;
+    }
+    this.#enabledDomainKeys.delete(key);
+    this.#autoEnabledDomainKeys.delete(key);
+    this.#manuallyEnabledDomainKeys.delete(key);
+    this.#domainReferences.delete(key);
+  }
+
+  #domainsFor(keys: ReadonlySet<string>, sessionId?: string): ReadonlySet<string> {
+    const prefix = `${sessionId ?? "browser"}:`;
+    return new Set([...keys].filter((key) => key.startsWith(prefix)).map((key) => key.slice(prefix.length)));
+  }
+
+  #removeDomainEnableInFlight(key: string, operation: Promise<Readonly<Record<string, unknown>>>): void {
+    const operations = this.#domainEnableInFlight.get(key);
+    if (operations === undefined) return;
+    operations.delete(operation);
+    if (operations.size === 0) this.#domainEnableInFlight.delete(key);
+  }
+
+  #incrementAutoEnabling(key: string): void {
+    this.#autoEnablingDomainKeys.set(key, (this.#autoEnablingDomainKeys.get(key) ?? 0) + 1);
+  }
+
+  #decrementAutoEnabling(key: string): void {
+    const remaining = (this.#autoEnablingDomainKeys.get(key) ?? 1) - 1;
+    if (remaining <= 0) this.#autoEnablingDomainKeys.delete(key);
+    else this.#autoEnablingDomainKeys.set(key, remaining);
+  }
+
+  #markClosed(): void {
+    this.#closed = true;
+    this.#enabledDomainKeys.clear();
+    this.#autoEnabledDomainKeys.clear();
+    this.#manuallyEnabledDomainKeys.clear();
+    this.#domainReferences.clear();
+    this.#domainEnables.clear();
+    this.#domainDisables.clear();
+    this.#domainEnableInFlight.clear();
+    this.#autoEnablingDomainKeys.clear();
+    this.#handlers.clear();
+    this.#errorHandlers.clear();
   }
 }
 

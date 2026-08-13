@@ -222,6 +222,65 @@ test("concurrent domain acquire shares enable failure and rolls back reservation
   }
 });
 
+test("domain enable sources remain separated for concurrent and out-of-order commands", async () => {
+  const peer = await createPeer();
+  try {
+    const auto = peer.connection.enableDomain("Network", {}, "auto");
+    const manual = peer.connection.enableDomain("Network");
+    const first = await peer.nextMessage();
+    const second = await peer.nextMessage();
+    peer.socket.send(JSON.stringify({ id: second.id, result: {} }));
+    peer.socket.send(JSON.stringify({ id: first.id, result: {} }));
+    await Promise.all([auto, manual]);
+    assert.deepEqual([...peer.connection.enabledDomains], []);
+    assert.deepEqual([...peer.connection.manuallyEnabledDomains], ["Network"]);
+
+    const disabled = peer.connection.disableDomain("Network");
+    const disable = await peer.nextMessage();
+    assert.equal(disable.method, "Network.disable");
+    peer.socket.send(JSON.stringify({ id: disable.id, result: {} }));
+    await disabled;
+
+    const duplicateFirst = peer.connection.enableDomain("Network", {}, "auto");
+    const duplicateSecond = peer.connection.enableDomain("Network", {}, "auto");
+    const duplicateMessage1 = await peer.nextMessage();
+    const duplicateMessage2 = await peer.nextMessage();
+    peer.socket.send(JSON.stringify({ id: duplicateMessage2.id, result: {} }));
+    peer.socket.send(JSON.stringify({ id: duplicateMessage1.id, result: {} }));
+    await Promise.all([duplicateFirst, duplicateSecond]);
+    assert.deepEqual([...peer.connection.enabledDomains], ["Network"]);
+    assert.deepEqual([...peer.connection.manuallyEnabledDomains], []);
+  } finally {
+    await peer.close();
+  }
+});
+
+test("domain disable serializes behind enable and does not follow failed enable", async () => {
+  const peer = await createPeer();
+  try {
+    const enabling = peer.connection.enableDomain("Network", {}, "auto");
+    const disabling = peer.connection.disableDomain("Network");
+    const enable = await peer.nextMessage();
+    peer.socket.send(JSON.stringify({ id: enable.id, result: {} }));
+    const disable = await peer.nextMessage();
+    assert.equal(disable.method, "Network.disable");
+    peer.socket.send(JSON.stringify({ id: disable.id, result: {} }));
+    await Promise.all([enabling, disabling]);
+    assert.deepEqual([...peer.connection.enabledDomains], []);
+
+    const failed = peer.connection.enableDomain("Fetch", {}, "auto");
+    const failedEnable = await peer.nextMessage();
+    peer.socket.send(JSON.stringify({ id: failedEnable.id, error: { code: -32000, message: "enable failed" } }));
+    await assert.rejects(failed, CdpProtocolError);
+    const sendsBeforeDisable = peer.connection.trace.filter((entry) => entry.direction === "send").length;
+    await peer.connection.disableDomain("Fetch");
+    const sendsAfterDisable = peer.connection.trace.filter((entry) => entry.direction === "send").length;
+    assert.equal(sendsAfterDisable, sendsBeforeDisable);
+  } finally {
+    await peer.close();
+  }
+});
+
 test("domain acquire waits for an in-flight final disable before enabling again", async () => {
   const peer = await createPeer({ domainPolicy: "reference-counted" });
   try {

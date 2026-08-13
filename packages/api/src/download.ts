@@ -87,6 +87,7 @@ export function expectDownload(
   if (options.destination !== undefined) assertAbsolute(options.destination, "Download destination");
   const timeoutMs = options.timeoutMs ?? 10_000;
   let begin: Protocol.Browser.Events.DownloadWillBeginEvent | undefined;
+  const pendingProgress = new Map<string, Protocol.Browser.Events.DownloadProgressEvent>();
   let resolveValue: (value: DownloadResult) => void = () => {};
   let rejectValue: (reason: unknown) => void = () => {};
   let settled = false;
@@ -99,6 +100,7 @@ export function expectDownload(
     options.signal?.removeEventListener("abort", abort);
     offBegin();
     offProgress();
+    pendingProgress.clear();
   };
   const fail = (reason: unknown): void => {
     if (settled) return;
@@ -107,10 +109,7 @@ export function expectDownload(
     rejectValue(reason);
   };
   const frameId = tab.send("Page.getFrameTree").then(({ frameTree }) => frameTree.frame.id);
-  const offBegin = tab.browserConnection.on("Browser.downloadWillBegin", async (event) => {
-    if (event.frameId === await frameId && await matches(matcher, event.url, event)) begin = event;
-  });
-  const offProgress = tab.browserConnection.on("Browser.downloadProgress", async (event) => {
+  const finish = async (event: Protocol.Browser.Events.DownloadProgressEvent): Promise<void> => {
     if (begin?.guid !== event.guid || event.state === "inProgress") return;
     if (event.state === "canceled") {
       fail(new Error(`Download canceled: ${begin.url}`));
@@ -135,6 +134,20 @@ export function expectDownload(
     } catch (error) {
       fail(error);
     }
+  };
+  const offBegin = tab.browserConnection.on("Browser.downloadWillBegin", async (event) => {
+    if (settled || event.frameId !== await frameId || !(await matches(matcher, event.url, event))) return;
+    begin = event;
+    const progress = pendingProgress.get(event.guid);
+    if (progress !== undefined) await finish(progress);
+  });
+  const offProgress = tab.browserConnection.on("Browser.downloadProgress", async (event) => {
+    if (event.state === "inProgress") return;
+    if (begin?.guid === event.guid) {
+      await finish(event);
+      return;
+    }
+    pendingProgress.set(event.guid, event);
   });
   const timeout = setTimeout(() => fail(new CdpTimeoutError("Wait for download", timeoutMs)), timeoutMs);
   const abort = (): void => fail(new CdpAbortError("Wait for download", { cause: options.signal?.reason }));

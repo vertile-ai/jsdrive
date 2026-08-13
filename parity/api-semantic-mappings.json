@@ -339,5 +339,60 @@
     "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-CONFIG-001"}],
     "upstream": "zendriver.core.config.Config.uses_custom_data_dir",
     "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Connection",
+    "testCases": [{"file": "packages/api/test/connection-api-parity.test.ts", "case": "ZDAPI-CONNECTION-EXPORT-001"}],
+    "upstream": "zendriver.Connection",
+    "verifiedSemantics": ["return", "signature", "state"]
+  },
+  {
+    "nodeMember": "CantTouchThis",
+    "testCases": [{"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-CONNECTION-ERRORS-001"}],
+    "upstream": "zendriver.core.connection.CantTouchThis",
+    "verifiedSemantics": ["errors", "return", "signature"]
+  },
+  {
+    "nodeMember": "Connection",
+    "testCases": [
+      {"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-CONNECTION-001"},
+      {"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-CONNECTION-HANDLERS-001"},
+      {"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-CONNECTION-LIFECYCLE-001"}
+    ],
+    "upstream": "zendriver.core.connection.Connection",
+    "verifiedSemantics": ["defaults", "errors", "return", "signature", "state"]
+  },
+  {
+    "nodeMember": "EventTransaction",
+    "testCases": [{"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-TRANSACTION-001"}],
+    "upstream": "zendriver.core.connection.EventTransaction",
+    "verifiedSemantics": ["return", "signature", "state"]
+  },
+  {
+    "nodeMember": "Listener",
+    "testCases": [{"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-LISTENER-001"}],
+    "upstream": "zendriver.core.connection.Listener",
+    "verifiedSemantics": ["defaults", "return", "signature", "state"]
+  },
+  {
+    "nodeMember": "ProtocolException",
+    "testCases": [{"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-CONNECTION-ERRORS-001"}],
+    "upstream": "zendriver.core.connection.ProtocolException",
+    "verifiedSemantics": ["errors", "return", "signature", "state"]
+  },
+  {
+    "nodeMember": "SettingClassVarNotAllowedException",
+    "testCases": [{"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-CONNECTION-ERRORS-001"}],
+    "upstream": "zendriver.core.connection.SettingClassVarNotAllowedException",
+    "verifiedSemantics": ["errors", "return", "signature"]
+  },
+  {
+    "nodeMember": "Transaction",
+    "testCases": [
+      {"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-TRANSACTION-001"},
+      {"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-TRANSACTION-FUTURE-001"}
+    ],
+    "upstream": "zendriver.core.connection.Transaction",
+    "verifiedSemantics": ["errors", "return", "signature", "state"]
   }
 ]

@@ -149,7 +149,7 @@ test("ZDAPI-CONNECTION-LIFECYCLE-001", async () => {
     browser_context_id: "context-1",
     subtype: "prerender",
   });
-  assert.equal(await connection.aenter(), connection);
+  assert.equal(connection.aenter(), connection);
   assert.equal(connection.target_id, "target-1");
   assert.equal(connection.targetId, "target-1");
   assert.equal(connection.type_, "page");

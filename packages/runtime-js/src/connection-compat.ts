@@ -443,7 +443,8 @@ class ConnectionImpl {
     return this.aclose();
   }
 
-  public async aenter(): Promise<this> {
+  /** JavaScript's synchronous context-entry equivalent avoids thenable assimilation. */
+  public aenter(): this {
     return this;
   }
 

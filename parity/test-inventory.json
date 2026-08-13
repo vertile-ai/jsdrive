@@ -1,0 +1,2497 @@
+{
+  "caseCount": 101,
+  "cases": [
+    {
+      "category": "bot_detection",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "www.browserscan.net"
+        }
+      ],
+      "file": "tests/bot_detection/test_browserscan.py",
+      "id": "ZDTEST-0001",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_browserscan",
+      "upstreamNodeId": "tests/bot_detection/test_browserscan.py::test_browserscan[headless0]"
+    },
+    {
+      "category": "bot_detection",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "www.browserscan.net"
+        }
+      ],
+      "file": "tests/bot_detection/test_browserscan.py",
+      "id": "ZDTEST-0002",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_browserscan",
+      "upstreamNodeId": "tests/bot_detection/test_browserscan.py::test_browserscan[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        }
+      ],
+      "file": "tests/core/test_browser.py",
+      "id": "ZDTEST-0003",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": null,
+      "testFunction": "test_connection_error_raises_exception_and_logs_stderr",
+      "upstreamNodeId": "tests/core/test_browser.py::test_connection_error_raises_exception_and_logs_stderr"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "example.com"
+        }
+      ],
+      "file": "tests/core/test_browser.py",
+      "id": "ZDTEST-0004",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_get_content_gets_html_content",
+      "upstreamNodeId": "tests/core/test_browser.py::test_get_content_gets_html_content[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "example.com"
+        }
+      ],
+      "file": "tests/core/test_browser.py",
+      "id": "ZDTEST-0005",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_get_content_gets_html_content",
+      "upstreamNodeId": "tests/core/test_browser.py::test_get_content_gets_html_content[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "example.com"
+        }
+      ],
+      "file": "tests/core/test_browser.py",
+      "id": "ZDTEST-0006",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_update_target_sets_target_title",
+      "upstreamNodeId": "tests/core/test_browser.py::test_update_target_sets_target_title[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "example.com"
+        }
+      ],
+      "file": "tests/core/test_browser.py",
+      "id": "ZDTEST-0007",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_update_target_sets_target_title",
+      "upstreamNodeId": "tests/core/test_browser.py::test_update_target_sets_target_title[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "example.com"
+        }
+      ],
+      "file": "tests/core/test_browser.py",
+      "id": "ZDTEST-0008",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_browser_stop_can_be_called_on_a_closed_connection",
+      "upstreamNodeId": "tests/core/test_browser.py::test_browser_stop_can_be_called_on_a_closed_connection[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "example.com"
+        }
+      ],
+      "file": "tests/core/test_browser.py",
+      "id": "ZDTEST-0009",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_browser_stop_can_be_called_on_a_closed_connection",
+      "upstreamNodeId": "tests/core/test_browser.py::test_browser_stop_can_be_called_on_a_closed_connection[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "example.com"
+        }
+      ],
+      "file": "tests/core/test_browser.py",
+      "id": "ZDTEST-0010",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_browser_stop_can_be_called_multiple_times",
+      "upstreamNodeId": "tests/core/test_browser.py::test_browser_stop_can_be_called_multiple_times[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "example.com"
+        }
+      ],
+      "file": "tests/core/test_browser.py",
+      "id": "ZDTEST-0011",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_browser_stop_can_be_called_multiple_times",
+      "upstreamNodeId": "tests/core/test_browser.py::test_browser_stop_can_be_called_multiple_times[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "example.com"
+        }
+      ],
+      "file": "tests/core/test_browser.py",
+      "id": "ZDTEST-0012",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_browser_stopped_is_true_after_calling_stop",
+      "upstreamNodeId": "tests/core/test_browser.py::test_browser_stopped_is_true_after_calling_stop[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "example.com"
+        }
+      ],
+      "file": "tests/core/test_browser.py",
+      "id": "ZDTEST-0013",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_browser_stopped_is_true_after_calling_stop",
+      "upstreamNodeId": "tests/core/test_browser.py::test_browser_stopped_is_true_after_calling_stop[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "example.com"
+        }
+      ],
+      "file": "tests/core/test_browser.py",
+      "id": "ZDTEST-0014",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_browser_stopped_is_true_when_stopped_externally",
+      "upstreamNodeId": "tests/core/test_browser.py::test_browser_stopped_is_true_when_stopped_externally[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "example.com"
+        }
+      ],
+      "file": "tests/core/test_browser.py",
+      "id": "ZDTEST-0015",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_browser_stopped_is_true_when_stopped_externally",
+      "upstreamNodeId": "tests/core/test_browser.py::test_browser_stopped_is_true_when_stopped_externally[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/simple_editor.html"
+        }
+      ],
+      "file": "tests/core/test_keyinputs.py",
+      "id": "ZDTEST-0016",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_visible_events",
+      "upstreamNodeId": "tests/core/test_keyinputs.py::test_visible_events[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/simple_editor.html"
+        }
+      ],
+      "file": "tests/core/test_keyinputs.py",
+      "id": "ZDTEST-0017",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_visible_events",
+      "upstreamNodeId": "tests/core/test_keyinputs.py::test_visible_events[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/special_key_detector.html"
+        }
+      ],
+      "file": "tests/core/test_keyinputs.py",
+      "id": "ZDTEST-0018",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_escape_key_popup",
+      "upstreamNodeId": "tests/core/test_keyinputs.py::test_escape_key_popup[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/special_key_detector.html"
+        }
+      ],
+      "file": "tests/core/test_keyinputs.py",
+      "id": "ZDTEST-0019",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_escape_key_popup",
+      "upstreamNodeId": "tests/core/test_keyinputs.py::test_escape_key_popup[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "example.com"
+        }
+      ],
+      "file": "tests/core/test_multiple_browsers.py",
+      "id": "ZDTEST-0020",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": null,
+      "testFunction": "test_multiple_browsers_diff_userdata",
+      "upstreamNodeId": "tests/core/test_multiple_browsers.py::test_multiple_browsers_diff_userdata"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/react-controlled-input-test.html"
+        }
+      ],
+      "file": "tests/core/test_react_controlled_input.py",
+      "id": "ZDTEST-0021",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_clear_input_does_not_notify_react",
+      "upstreamNodeId": "tests/core/test_react_controlled_input.py::test_clear_input_does_not_notify_react[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/react-controlled-input-test.html"
+        }
+      ],
+      "file": "tests/core/test_react_controlled_input.py",
+      "id": "ZDTEST-0022",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_clear_input_does_not_notify_react",
+      "upstreamNodeId": "tests/core/test_react_controlled_input.py::test_clear_input_does_not_notify_react[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/react-controlled-input-test.html"
+        }
+      ],
+      "file": "tests/core/test_react_controlled_input.py",
+      "id": "ZDTEST-0023",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_clear_input_by_deleting_does_not_notify_react",
+      "upstreamNodeId": "tests/core/test_react_controlled_input.py::test_clear_input_by_deleting_does_not_notify_react[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/react-controlled-input-test.html"
+        }
+      ],
+      "file": "tests/core/test_react_controlled_input.py",
+      "id": "ZDTEST-0024",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_clear_input_by_deleting_does_not_notify_react",
+      "upstreamNodeId": "tests/core/test_react_controlled_input.py::test_clear_input_by_deleting_does_not_notify_react[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/react-controlled-input-test.html"
+        }
+      ],
+      "file": "tests/core/test_react_controlled_input.py",
+      "id": "ZDTEST-0025",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_fill_react_controlled_input_produces_mixed_value",
+      "upstreamNodeId": "tests/core/test_react_controlled_input.py::test_fill_react_controlled_input_produces_mixed_value[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/react-controlled-input-test.html"
+        }
+      ],
+      "file": "tests/core/test_react_controlled_input.py",
+      "id": "ZDTEST-0026",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_fill_react_controlled_input_produces_mixed_value",
+      "upstreamNodeId": "tests/core/test_react_controlled_input.py::test_fill_react_controlled_input_produces_mixed_value[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0027",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_set_user_agent_sets_navigator_values",
+      "upstreamNodeId": "tests/core/test_tab.py::test_set_user_agent_sets_navigator_values[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0028",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_set_user_agent_sets_navigator_values",
+      "upstreamNodeId": "tests/core/test_tab.py::test_set_user_agent_sets_navigator_values[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0029",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_set_user_agent_defaults_existing_user_agent",
+      "upstreamNodeId": "tests/core/test_tab.py::test_set_user_agent_defaults_existing_user_agent[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0030",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_set_user_agent_defaults_existing_user_agent",
+      "upstreamNodeId": "tests/core/test_tab.py::test_set_user_agent_defaults_existing_user_agent[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0031",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_find_finds_element_by_text",
+      "upstreamNodeId": "tests/core/test_tab.py::test_find_finds_element_by_text[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0032",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_find_finds_element_by_text",
+      "upstreamNodeId": "tests/core/test_tab.py::test_find_finds_element_by_text[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0033",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_find_times_out_if_element_not_found",
+      "upstreamNodeId": "tests/core/test_tab.py::test_find_times_out_if_element_not_found[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0034",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_find_times_out_if_element_not_found",
+      "upstreamNodeId": "tests/core/test_tab.py::test_find_times_out_if_element_not_found[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0035",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_select",
+      "upstreamNodeId": "tests/core/test_tab.py::test_select[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0036",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_select",
+      "upstreamNodeId": "tests/core/test_tab.py::test_select[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0037",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": null,
+      "testFunction": "test_query_selector_all_include_frames_queries_nested_iframe_documents",
+      "upstreamNodeId": "tests/core/test_tab.py::test_query_selector_all_include_frames_queries_nested_iframe_documents"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0038",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_xpath",
+      "upstreamNodeId": "tests/core/test_tab.py::test_xpath[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0039",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_xpath",
+      "upstreamNodeId": "tests/core/test_tab.py::test_xpath[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0040",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_xpath_no_results",
+      "upstreamNodeId": "tests/core/test_tab.py::test_xpath_no_results[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0041",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_xpath_no_results",
+      "upstreamNodeId": "tests/core/test_tab.py::test_xpath_no_results[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0042",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_add_handler_type_event",
+      "upstreamNodeId": "tests/core/test_tab.py::test_add_handler_type_event[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0043",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_add_handler_type_event",
+      "upstreamNodeId": "tests/core/test_tab.py::test_add_handler_type_event[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0044",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_add_handler_module_event",
+      "upstreamNodeId": "tests/core/test_tab.py::test_add_handler_module_event[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0045",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_add_handler_module_event",
+      "upstreamNodeId": "tests/core/test_tab.py::test_add_handler_module_event[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0046",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_remove_handlers",
+      "upstreamNodeId": "tests/core/test_tab.py::test_remove_handlers[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0047",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_remove_handlers",
+      "upstreamNodeId": "tests/core/test_tab.py::test_remove_handlers[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0048",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_remove_handlers_specific_event",
+      "upstreamNodeId": "tests/core/test_tab.py::test_remove_handlers_specific_event[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0049",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_remove_handlers_specific_event",
+      "upstreamNodeId": "tests/core/test_tab.py::test_remove_handlers_specific_event[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0050",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_remove_specific_handler",
+      "upstreamNodeId": "tests/core/test_tab.py::test_remove_specific_handler[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0051",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_remove_specific_handler",
+      "upstreamNodeId": "tests/core/test_tab.py::test_remove_specific_handler[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0052",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_remove_handlers_without_event",
+      "upstreamNodeId": "tests/core/test_tab.py::test_remove_handlers_without_event[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0053",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_remove_handlers_without_event",
+      "upstreamNodeId": "tests/core/test_tab.py::test_remove_handlers_without_event[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0054",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_wait_for_ready_state",
+      "upstreamNodeId": "tests/core/test_tab.py::test_wait_for_ready_state[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0055",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_wait_for_ready_state",
+      "upstreamNodeId": "tests/core/test_tab.py::test_wait_for_ready_state[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0056",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_expect_request",
+      "upstreamNodeId": "tests/core/test_tab.py::test_expect_request[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0057",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_expect_request",
+      "upstreamNodeId": "tests/core/test_tab.py::test_expect_request[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0058",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_expect_response",
+      "upstreamNodeId": "tests/core/test_tab.py::test_expect_response[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0059",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_expect_response",
+      "upstreamNodeId": "tests/core/test_tab.py::test_expect_response[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0060",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_expect_response_with_reload",
+      "upstreamNodeId": "tests/core/test_tab.py::test_expect_response_with_reload[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0061",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_expect_response_with_reload",
+      "upstreamNodeId": "tests/core/test_tab.py::test_expect_response_with_reload[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0062",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_expect_download",
+      "upstreamNodeId": "tests/core/test_tab.py::test_expect_download[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/groceries.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0063",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_expect_download",
+      "upstreamNodeId": "tests/core/test_tab.py::test_expect_download[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "cdpdriver.github.io"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/profile.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0064",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_intercept",
+      "upstreamNodeId": "tests/core/test_tab.py::test_intercept[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "cdpdriver.github.io"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/profile.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0065",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_intercept",
+      "upstreamNodeId": "tests/core/test_tab.py::test_intercept[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "cdpdriver.github.io"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/profile.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0066",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_intercept_with_reload",
+      "upstreamNodeId": "tests/core/test_tab.py::test_intercept_with_reload[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "cdpdriver.github.io"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/profile.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0067",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_intercept_with_reload",
+      "upstreamNodeId": "tests/core/test_tab.py::test_intercept_with_reload[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "cdpdriver.github.io"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/profile.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0068",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_handler_wont_reenable_without_params",
+      "upstreamNodeId": "tests/core/test_tab.py::test_handler_wont_reenable_without_params[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "cdpdriver.github.io"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/profile.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0069",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_handler_wont_reenable_without_params",
+      "upstreamNodeId": "tests/core/test_tab.py::test_handler_wont_reenable_without_params[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0070",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_manual_disable_send",
+      "upstreamNodeId": "tests/core/test_tab.py::test_manual_disable_send[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0071",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_manual_disable_send",
+      "upstreamNodeId": "tests/core/test_tab.py::test_manual_disable_send[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "cdpdriver.github.io"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/profile.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0072",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_auto_enable_domain",
+      "upstreamNodeId": "tests/core/test_tab.py::test_auto_enable_domain[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "cdpdriver.github.io"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/profile.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0073",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_auto_enable_domain",
+      "upstreamNodeId": "tests/core/test_tab.py::test_auto_enable_domain[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/complex_object.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0074",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_evaluate_complex_object_no_error",
+      "upstreamNodeId": "tests/core/test_tab.py::test_evaluate_complex_object_no_error[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/complex_object.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0075",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_evaluate_complex_object_no_error",
+      "upstreamNodeId": "tests/core/test_tab.py::test_evaluate_complex_object_no_error[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/complex_object.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0076",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_evaluate_return_by_value_complex_object",
+      "upstreamNodeId": "tests/core/test_tab.py::test_evaluate_return_by_value_complex_object[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/complex_object.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0077",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_evaluate_return_by_value_complex_object",
+      "upstreamNodeId": "tests/core/test_tab.py::test_evaluate_return_by_value_complex_object[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/simple_json.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0078",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_evaluate_return_by_value_simple_json",
+      "upstreamNodeId": "tests/core/test_tab.py::test_evaluate_return_by_value_simple_json[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/simple_json.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0079",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_evaluate_return_by_value_simple_json",
+      "upstreamNodeId": "tests/core/test_tab.py::test_evaluate_return_by_value_simple_json[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/simple_json.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0080",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_evaluate_return_by_value_falsy",
+      "upstreamNodeId": "tests/core/test_tab.py::test_evaluate_return_by_value_falsy[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/simple_json.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0081",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_evaluate_return_by_value_falsy",
+      "upstreamNodeId": "tests/core/test_tab.py::test_evaluate_return_by_value_falsy[headless1]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/complex_object.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0082",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_evaluate_stress_test_complex_objects",
+      "upstreamNodeId": "tests/core/test_tab.py::test_evaluate_stress_test_complex_objects[headless0]"
+    },
+    {
+      "category": "core",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "repository-fixture",
+          "value": "tests/sample_data/complex_object.html"
+        }
+      ],
+      "file": "tests/core/test_tab.py",
+      "id": "ZDTEST-0083",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_evaluate_stress_test_complex_objects",
+      "upstreamNodeId": "tests/core/test_tab.py::test_evaluate_stress_test_complex_objects[headless1]"
+    },
+    {
+      "category": "docs",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "cdpdriver.github.io"
+        },
+        {
+          "kind": "tutorial-module",
+          "value": "docs/tutorials/tutorial-code/account-creation-1.py"
+        }
+      ],
+      "file": "tests/docs/tutorials/test_account_creation_tutorial.py",
+      "id": "ZDTEST-0084",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_account_creation_tutorial_1",
+      "upstreamNodeId": "tests/docs/tutorials/test_account_creation_tutorial.py::test_account_creation_tutorial_1[headless0]"
+    },
+    {
+      "category": "docs",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "cdpdriver.github.io"
+        },
+        {
+          "kind": "tutorial-module",
+          "value": "docs/tutorials/tutorial-code/account-creation-1.py"
+        }
+      ],
+      "file": "tests/docs/tutorials/test_account_creation_tutorial.py",
+      "id": "ZDTEST-0085",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_account_creation_tutorial_1",
+      "upstreamNodeId": "tests/docs/tutorials/test_account_creation_tutorial.py::test_account_creation_tutorial_1[headless1]"
+    },
+    {
+      "category": "docs",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "cdpdriver.github.io"
+        },
+        {
+          "kind": "tutorial-module",
+          "value": "docs/tutorials/tutorial-code/account-creation-2.py"
+        }
+      ],
+      "file": "tests/docs/tutorials/test_account_creation_tutorial.py",
+      "id": "ZDTEST-0086",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_account_creation_tutorial_2",
+      "upstreamNodeId": "tests/docs/tutorials/test_account_creation_tutorial.py::test_account_creation_tutorial_2[headless0]"
+    },
+    {
+      "category": "docs",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "cdpdriver.github.io"
+        },
+        {
+          "kind": "tutorial-module",
+          "value": "docs/tutorials/tutorial-code/account-creation-2.py"
+        }
+      ],
+      "file": "tests/docs/tutorials/test_account_creation_tutorial.py",
+      "id": "ZDTEST-0087",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_account_creation_tutorial_2",
+      "upstreamNodeId": "tests/docs/tutorials/test_account_creation_tutorial.py::test_account_creation_tutorial_2[headless1]"
+    },
+    {
+      "category": "docs",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "cdpdriver.github.io"
+        },
+        {
+          "kind": "tutorial-module",
+          "value": "docs/tutorials/tutorial-code/api-responses-1.py"
+        }
+      ],
+      "file": "tests/docs/tutorials/test_api_responses_tutorial.py",
+      "id": "ZDTEST-0088",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_api_responses_tutorial_1",
+      "upstreamNodeId": "tests/docs/tutorials/test_api_responses_tutorial.py::test_api_responses_tutorial_1[headless0]"
+    },
+    {
+      "category": "docs",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "cdpdriver.github.io"
+        },
+        {
+          "kind": "tutorial-module",
+          "value": "docs/tutorials/tutorial-code/api-responses-1.py"
+        }
+      ],
+      "file": "tests/docs/tutorials/test_api_responses_tutorial.py",
+      "id": "ZDTEST-0089",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_api_responses_tutorial_1",
+      "upstreamNodeId": "tests/docs/tutorials/test_api_responses_tutorial.py::test_api_responses_tutorial_1[headless1]"
+    },
+    {
+      "category": "docs",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "cdpdriver.github.io"
+        },
+        {
+          "kind": "tutorial-module",
+          "value": "docs/tutorials/tutorial-code/api-responses-2.py"
+        }
+      ],
+      "file": "tests/docs/tutorials/test_api_responses_tutorial.py",
+      "id": "ZDTEST-0090",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_api_responses_tutorial_2",
+      "upstreamNodeId": "tests/docs/tutorials/test_api_responses_tutorial.py::test_api_responses_tutorial_2[headless0]"
+    },
+    {
+      "category": "docs",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "cdpdriver.github.io"
+        },
+        {
+          "kind": "tutorial-module",
+          "value": "docs/tutorials/tutorial-code/api-responses-2.py"
+        }
+      ],
+      "file": "tests/docs/tutorials/test_api_responses_tutorial.py",
+      "id": "ZDTEST-0091",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_api_responses_tutorial_2",
+      "upstreamNodeId": "tests/docs/tutorials/test_api_responses_tutorial.py::test_api_responses_tutorial_2[headless1]"
+    },
+    {
+      "category": "docs",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "cdpdriver.github.io"
+        },
+        {
+          "kind": "tutorial-module",
+          "value": "docs/tutorials/tutorial-code/cdp-1.py"
+        }
+      ],
+      "file": "tests/docs/tutorials/test_cdp_tutorial.py",
+      "id": "ZDTEST-0092",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_cdp_tutorial_1",
+      "upstreamNodeId": "tests/docs/tutorials/test_cdp_tutorial.py::test_cdp_tutorial_1[headless0]"
+    },
+    {
+      "category": "docs",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "cdpdriver.github.io"
+        },
+        {
+          "kind": "tutorial-module",
+          "value": "docs/tutorials/tutorial-code/cdp-1.py"
+        }
+      ],
+      "file": "tests/docs/tutorials/test_cdp_tutorial.py",
+      "id": "ZDTEST-0093",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_cdp_tutorial_1",
+      "upstreamNodeId": "tests/docs/tutorials/test_cdp_tutorial.py::test_cdp_tutorial_1[headless1]"
+    },
+    {
+      "category": "docs",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "cdpdriver.github.io"
+        },
+        {
+          "kind": "tutorial-module",
+          "value": "docs/tutorials/tutorial-code/cdp-2.py"
+        }
+      ],
+      "file": "tests/docs/tutorials/test_cdp_tutorial.py",
+      "id": "ZDTEST-0094",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_cdp_tutorial_2",
+      "upstreamNodeId": "tests/docs/tutorials/test_cdp_tutorial.py::test_cdp_tutorial_2[headless0]"
+    },
+    {
+      "category": "docs",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "cdpdriver.github.io"
+        },
+        {
+          "kind": "tutorial-module",
+          "value": "docs/tutorials/tutorial-code/cdp-2.py"
+        }
+      ],
+      "file": "tests/docs/tutorials/test_cdp_tutorial.py",
+      "id": "ZDTEST-0095",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_cdp_tutorial_2",
+      "upstreamNodeId": "tests/docs/tutorials/test_cdp_tutorial.py::test_cdp_tutorial_2[headless1]"
+    },
+    {
+      "category": "docs",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "cdpdriver.github.io"
+        },
+        {
+          "kind": "tutorial-module",
+          "value": "docs/tutorials/tutorial-code/infinite-scrolling-1.py"
+        }
+      ],
+      "file": "tests/docs/tutorials/test_infinite_scrolling_tutorial.py",
+      "id": "ZDTEST-0096",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_infinite_scrolling_tutorial_1",
+      "upstreamNodeId": "tests/docs/tutorials/test_infinite_scrolling_tutorial.py::test_infinite_scrolling_tutorial_1[headless0]"
+    },
+    {
+      "category": "docs",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "cdpdriver.github.io"
+        },
+        {
+          "kind": "tutorial-module",
+          "value": "docs/tutorials/tutorial-code/infinite-scrolling-1.py"
+        }
+      ],
+      "file": "tests/docs/tutorials/test_infinite_scrolling_tutorial.py",
+      "id": "ZDTEST-0097",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_infinite_scrolling_tutorial_1",
+      "upstreamNodeId": "tests/docs/tutorials/test_infinite_scrolling_tutorial.py::test_infinite_scrolling_tutorial_1[headless1]"
+    },
+    {
+      "category": "docs",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "cdpdriver.github.io"
+        },
+        {
+          "kind": "tutorial-module",
+          "value": "docs/tutorials/tutorial-code/infinite-scrolling-2.py"
+        }
+      ],
+      "file": "tests/docs/tutorials/test_infinite_scrolling_tutorial.py",
+      "id": "ZDTEST-0098",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_infinite_scrolling_tutorial_2",
+      "upstreamNodeId": "tests/docs/tutorials/test_infinite_scrolling_tutorial.py::test_infinite_scrolling_tutorial_2[headless0]"
+    },
+    {
+      "category": "docs",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "cdpdriver.github.io"
+        },
+        {
+          "kind": "tutorial-module",
+          "value": "docs/tutorials/tutorial-code/infinite-scrolling-2.py"
+        }
+      ],
+      "file": "tests/docs/tutorials/test_infinite_scrolling_tutorial.py",
+      "id": "ZDTEST-0099",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_infinite_scrolling_tutorial_2",
+      "upstreamNodeId": "tests/docs/tutorials/test_infinite_scrolling_tutorial.py::test_infinite_scrolling_tutorial_2[headless1]"
+    },
+    {
+      "category": "docs",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "cdpdriver.github.io"
+        },
+        {
+          "kind": "tutorial-module",
+          "value": "docs/tutorials/tutorial-code/infinite-scrolling-3.py"
+        }
+      ],
+      "file": "tests/docs/tutorials/test_infinite_scrolling_tutorial.py",
+      "id": "ZDTEST-0100",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless0",
+      "testFunction": "test_infinite_scrolling_tutorial_3",
+      "upstreamNodeId": "tests/docs/tutorials/test_infinite_scrolling_tutorial.py::test_infinite_scrolling_tutorial_3[headless0]"
+    },
+    {
+      "category": "docs",
+      "externalDependencies": [
+        {
+          "kind": "browser",
+          "value": "local Chrome/Chromium"
+        },
+        {
+          "kind": "network-host",
+          "value": "cdpdriver.github.io"
+        },
+        {
+          "kind": "tutorial-module",
+          "value": "docs/tutorials/tutorial-code/infinite-scrolling-3.py"
+        }
+      ],
+      "file": "tests/docs/tutorials/test_infinite_scrolling_tutorial.py",
+      "id": "ZDTEST-0101",
+      "nodeParity": {
+        "case": null,
+        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
+        "result": "NOT_RUN",
+        "status": "UNMAPPED"
+      },
+      "parameterization": "headless1",
+      "testFunction": "test_infinite_scrolling_tutorial_3",
+      "upstreamNodeId": "tests/docs/tutorials/test_infinite_scrolling_tutorial.py::test_infinite_scrolling_tutorial_3[headless1]"
+    }
+  ],
+  "schemaVersion": 1
+}

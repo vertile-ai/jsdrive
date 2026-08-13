@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "provenance": "Coordinator-executed exact local reference run against the fixed upstream checkout.",
+  "environment": {
+    "browser": "Chromium 145.0.7632.159",
+    "platform": "darwin-arm64"
+  },
+  "observations": [
+    {
+      "id": "ZDREF-001",
+      "scope": "tests/core",
+      "mode": "headless",
+      "command": "ZENDRIVER_TEST_BROWSERS=headless timeout 600s uv run --project .tmp/zendriver-upstream --locked pytest -q --tb=short .tmp/zendriver-upstream/tests/core",
+      "outcome": "FAIL",
+      "exitCode": 1,
+      "passed": 41,
+      "failed": 1,
+      "durationSeconds": 265.01,
+      "failureNodeId": "tests/core/test_keyinputs.py::test_visible_events[headless0]",
+      "failure": "Expected 4 children after operations; actual 2",
+      "exact": true,
+      "note": "The upstream reference itself fails this assertion on Chromium 145; parity must compare nodriver against the same-environment observable baseline rather than relabel the case as passing."
+    }
+  ]
+}

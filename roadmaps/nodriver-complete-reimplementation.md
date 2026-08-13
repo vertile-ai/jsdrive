@@ -1,5 +1,7 @@
 # nodriver 完整复刻任务契约
 
+> 状态：2026-08-13 重新打开。此前把 roadmap V1 纵向能力误报为 Zendriver 完整 parity；该完成结论已撤回。
+
 ## Goal
 
 在本仓库交付一套 clean-room、raw-CDP-first 的 Node.js/TypeScript 浏览器自动化 runtime。它直接连接 Chrome DevTools Protocol，不依赖 Playwright、Puppeteer、Selenium、ChromeDriver、chrome-remote-interface 或 Node driver subprocess；公开 Browser、Tab、Element、Input、Cookie、Expectation、Interception 等 Zendriver 等价能力，同时提供完整 TypeScript 类型、纯 JS backend 和 Rust/N-API backend。
@@ -65,9 +67,9 @@ V1 不是玩具层，而是一个真实可运行的完整纵向路径：启动�
 
 所有 assertion 有真实证据、reviewer verdict 为 `approved`、协调者独立复验且工作树干净时完成。若同一 blocker 连续三轮仍无法解除，停止扩展实现并报告精确 blocker 与已保留的可运行结果。
 
-## 完成记录（2026-08-13）
+## 已撤回的 V1 完成记录（2026-08-13）
 
-本计划的 `VAL-001` 至 `VAL-013` 已全部完成，并经独立只读 reviewer 最终批准。最终实现包含固定官方 CDP schema、完整 TS/Rust 生成类型、JS 与 Rust/N-API transport、direct/flattened routing、Browser/Tab/Element/Input/Cookie/Expectation/Fetch/download 对象层、provider-shaped primitives、归一化 trace 和 Zendriver 0.15.5 黑盒差分。
+以下证据只证明原 roadmap V1，不再被视为“完整复刻”完成证据。原实现包含固定官方 CDP schema、完整 TS/Rust 生成类型、JS 与 Rust/N-API transport、direct/flattened routing、Browser/Tab/Element/Input/Cookie/Expectation/Fetch/download 对象层、provider-shaped primitives、归一化 trace 和少量 Zendriver 0.15.5 黑盒差分。
 
 最终证据：
 
@@ -81,3 +83,32 @@ V1 不是玩具层，而是一个真实可运行的完整纵向路径：启动�
 - Node 生产依赖只有 `ws` 一个，低于 Zendriver 0.15.5 的六个；`npm audit --omit=dev` 为 0 vulnerabilities。
 
 保留的精确语言/产品形态差异：不复制 Python 的 dunder/thenable/snake_case 语法，不转换 requests-cookie 专用格式，不承诺 CAPTCHA 绕过；inspector helper 返回 DevTools URL，screencast session 输出有序 JPEG frames 而不捆绑编码器，window tiling 使用显式 CDP bounds 而不枚举原生显示器。上述差异均在 README 中公开，不影响本计划的可观察能力断言。
+
+## 完整 parity 重开契约
+
+### 基准
+
+- 唯一上游基准为 Zendriver `v0.15.5` tag，commit `f0bd943853a35b9394289ba80027ca26c8bd4d16`。
+- 上游公开 API、文档示例和 `tests/` 全量清单共同组成能力合同；不再以本项目自建 happy-path tests 替代上游合同。
+- 可以读取和执行上游 AGPL 测试及公开 API 作为行为规范，但项目不得复制、翻译或派生上游实现源码；Node parity tests 使用独立 fixture 与独立表达。
+
+### Assertions
+
+- `PAR-001 API inventory`：Zendriver 0.15.5 的所有公开 export、类、方法、属性、参数默认值和异常语义均有 Node.js 等价入口，或者只有经用户明确批准的语言级等价映射。Evidence：固定版本 API inventory 与逐项 executable type/runtime checks，缺口数必须为 0。
+- `PAR-002 Test inventory`：上游 `tests/` 中每个 test case 都有一项稳定 ID、同一行为断言、Node parity case 和运行结果。Evidence：自动生成/校验的映射报告；unmapped、not-run、failed 均必须为 0。
+- `PAR-003 Core parity`：browser lifecycle、connection、targets、tabs、elements、key/input、controlled input、多浏览器、domain handlers、downloads、expectations 和 interception 的全部上游 core assertions 通过。Evidence：本地 Chrome 运行完整 core parity suite。
+- `PAR-004 Tutorial parity`：上游 docs tutorial tests 的可观察结果全部通过；外部站点依赖通过受控等价 fixture 复现同一能力，不得仅标记 skip。Evidence：tutorial parity suite。
+- `PAR-005 Bot-detection parity`：上游 browserscan assertion 在同等本机 Chrome 条件下执行并达到 Zendriver 基准结果；不得用 mock 或静态值代替。Evidence：Zendriver 与 nodriver 同机对照结果。
+- `PAR-006 Backend parity`：完整 parity suite 中适用于 transport 的 case 同时通过 JS/native 与 direct/flattened；若上游语义只允许某一 routing，必须有可复现证据而非自行排除。Evidence：四象限报告。
+- `PAR-007 Typing and packaging`：所有等价 API full typing，四个发布 tarball 的外部 strict TS consumer 可以调用完整表面。Evidence：strict compile、pack/install/runtime checks。
+- `PAR-008 Dependency ceiling`：Node production dependency 不超过 Zendriver 0.15.5 的六个。Evidence：manifest 与 `npm ls --omit=dev --all`。
+
+### Non-goals
+
+- 不要求 Python 与 JavaScript 具有相同语法；但任何语法差异必须保持相同能力、状态变化和错误结果，且不能被当作缺失能力的借口。
+- 不复制上游实现源码或把 AGPL test code 原文放入 MIT package；行为合同和独立测试可以覆盖相同行为。
+- 不添加上游没有且完整 parity 不需要的平台、恢复、队列或插件机制。
+
+### Stop condition
+
+只有 `PAR-001` 至 `PAR-008` 全部有可重复证据、完整映射报告为零缺口、独立 reviewer verdict 为 `approved`、协调者复验且工作树干净时，才允许再次使用“完成”一词。任何外部条件造成的未运行项必须明确报告为 blocker，不能改写成 non-goal 或 residual difference。

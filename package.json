@@ -18,6 +18,7 @@
     "smoke:m2": "npm run build && npm run smoke --workspace=@nodriver/api",
     "smoke:native": "npm run build && npm run smoke --workspace=@nodriver/runtime-native",
     "differential": "npm run build && tsc -p packages/api/tsconfig.test.json && node packages/api/dist-test/differential/run.js",
+    "parity:inventory": "python3 parity/generate.py",
     "typecheck": "npm run build --workspace=@nodriver/protocol && npm run build --workspace=@nodriver/runtime-js && npm run build --workspace=@nodriver/api && npm run build --workspace=@nodriver/runtime-native && tsc -p tsconfig.json"
   },
   "devDependencies": {

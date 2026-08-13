@@ -1,0 +1,47 @@
+{
+  "apiMappingCounts": {
+    "coreMembers": {
+      "CANDIDATE": 137,
+      "MISSING": 62,
+      "UNKNOWN": 273
+    },
+    "coreSymbols": {
+      "CANDIDATE": 12,
+      "MISSING": 30,
+      "UNKNOWN": 3
+    },
+    "rootExports": {
+      "CANDIDATE": 9,
+      "MISSING": 7
+    },
+    "total": {
+      "CANDIDATE": 158,
+      "MISSING": 99,
+      "UNKNOWN": 276
+    }
+  },
+  "errors": [],
+  "fingerprints": {
+    "coreMembers": "0c24b69ae84b1f3d982660b4646b9baf51c1e0cbd436f8b76f0de39de79caea9",
+    "coreSymbols": "8c200eb1e8f7cd1432a466770b258c0dbc0a2838f4ee50ff72b01502a393cf2b",
+    "referenceObservations": "05e6b97725477bb0c863627a1b4488eba6ec49b4c5e12848895600d9305a4557",
+    "rootExports": "f1542412b091090c4b847006530bef971818316c7c406d67154818daa857cd5e",
+    "testCases": "29b7154ec1e524a5222f85e3eeee4bb206091265ecd08015dbf54f204a7c665e",
+    "testCategories": "37ca44131fd1e807e3992065648bec6c05e93a1ff22b8de52b89e1f862e7db1d",
+    "testExternalDependencies": "61f541dfbe429283b3dc4abe176a25c194fe38db0444b9b9159fd61a9114b7f3",
+    "testParameterization": "894a854a2c56e6917b385a84a4dbee3dd7c0ac2eea8b6ffc4fedfbb172cb2b54"
+  },
+  "mutationProbes": {
+    "corruptedCategory": "PASS",
+    "corruptedExternalDependency": "PASS",
+    "corruptedParameterization": "PASS",
+    "removedCoreMember": "PASS",
+    "removedCoreSymbol": "PASS",
+    "removedRootExport": "PASS"
+  },
+  "notRunTestCases": 101,
+  "referenceObservationCount": 1,
+  "status": "PASS",
+  "testCases": 101,
+  "unmappedTestCases": 101
+}

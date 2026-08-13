@@ -64,3 +64,20 @@ V1 不是玩具层，而是一个真实可运行的完整纵向路径：启动�
 ## Stop condition
 
 所有 assertion 有真实证据、reviewer verdict 为 `approved`、协调者独立复验且工作树干净时完成。若同一 blocker 连续三轮仍无法解除，停止扩展实现并报告精确 blocker 与已保留的可运行结果。
+
+## 完成记录（2026-08-13）
+
+本计划的 `VAL-001` 至 `VAL-013` 已全部完成，并经独立只读 reviewer 最终批准。最终实现包含固定官方 CDP schema、完整 TS/Rust 生成类型、JS 与 Rust/N-API transport、direct/flattened routing、Browser/Tab/Element/Input/Cookie/Expectation/Fetch/download 对象层、provider-shaped primitives、归一化 trace 和 Zendriver 0.15.5 黑盒差分。
+
+最终证据：
+
+- `npm run generate`：58 domains、607 named types、663 commands、233 events；Rust 共生成 239 个受约束 protocol enums。
+- `npm run typecheck`：strict TypeScript workspace 通过。
+- `npm test`：protocol 1/1、runtime-js 8/8、API 15/15、runtime-native 5/5；完整进程自然退出。
+- `cargo clippy --workspace --all-targets -- -D warnings`：无问题；`cargo test --workspace`：4 passed。
+- JS 与 native 的 direct/flattened Chrome smoke 均通过；native 高层真实覆盖 DOM、input、upload、capture、cookies、expectation、Fetch interception 和 download。
+- differential：JS/native/Zendriver 0.15.5 的七项可观察结果完全一致；JS/native 十条 outbound trace 一致，`traceDifferences: []`。Zendriver 不公开 backend-neutral raw trace，因此其 trace 明确记为 `unavailable`。
+- 四个 `0.15.5` 公共 tarball 均包含 types、exports 和 MIT `LICENSE`；临时外部消费者 strict TS compile 与 ESM runtime import 通过。
+- Node 生产依赖只有 `ws` 一个，低于 Zendriver 0.15.5 的六个；`npm audit --omit=dev` 为 0 vulnerabilities。
+
+保留的精确语言/产品形态差异：不复制 Python 的 dunder/thenable/snake_case 语法，不转换 requests-cookie 专用格式，不承诺 CAPTCHA 绕过；inspector helper 返回 DevTools URL，screencast session 输出有序 JPEG frames 而不捆绑编码器，window tiling 使用显式 CDP bounds 而不枚举原生显示器。上述差异均在 README 中公开，不影响本计划的可观察能力断言。

@@ -1,8 +1,10 @@
 {
   "name": "@nodriver/api",
-  "version": "0.0.0",
+  "version": "0.15.5",
   "description": "Typed clean-room Chrome DevTools Protocol browser automation API",
-  "private": true,
+  "private": false,
+  "license": "MIT",
+  "engines": { "node": ">=22" },
   "type": "module",
   "files": ["dist"],
   "exports": {
@@ -17,7 +19,7 @@
     "smoke": "node dist/smoke.js"
   },
   "dependencies": {
-    "@nodriver/protocol": "0.0.0",
-    "@nodriver/runtime-js": "0.0.0"
+    "@nodriver/protocol": "0.15.5",
+    "@nodriver/runtime-js": "0.15.5"
   }
 }

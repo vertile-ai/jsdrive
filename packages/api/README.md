@@ -3,13 +3,15 @@
 `@nodriver/api` is a strict TypeScript object API over the repository's raw Chrome DevTools Protocol runtime. It has no browser-driver subprocess and supports direct page WebSockets and flattened browser sessions.
 
 ```ts
-import { Browser } from "@nodriver/api";
+import { Browser, KeyEvents, KeyModifiers, SpecialKeys } from "@nodriver/api";
 
 const browser = await Browser.start({ connectionMode: "flattened" });
 try {
   const tab = await browser.get("http://127.0.0.1:3000");
   const input = await tab.select("input[name=query]");
   await input.sendKeys("typed 👋");
+  await input.sendKeys([SpecialKeys.ArrowLeft, SpecialKeys.Backspace]);
+  await input.sendKeys(KeyEvents.chord(KeyModifiers.Control, "a"));
   await (await tab.find("Submit", true)).click();
   await tab.saveScreenshot("result.png", { format: "png" });
 } finally {
@@ -21,11 +23,11 @@ try {
 
 - `Tab` forwards fully typed `send`, raw `sendRaw`, and typed `on` calls to its target session.
 - Navigation includes `get`, `reload`, `back`, `forward`, `activate`, and `bringToFront`.
-- DOM access includes CSS queries, polling selectors, text best-match, XPath, generic `evaluate`, and page content.
+- DOM access includes iframe-aware CSS queries (`includeFrames` covers same-origin documents and cross-origin OOPIF targets), polling selectors, text best-match, XPath, generic `evaluate`, and page content.
 - `WaitOptions` consistently accepts `timeoutMs`, `intervalMs`, and `AbortSignal` for polling operations.
 - Storage, user-agent override, page screenshot, PDF, MHTML snapshot, scrolling, window state, and mouse input are available directly on `Tab`.
 - `Browser.cookies` is a typed `CookieJar` with `getAll`, `setAll`, `clear`, and JSON `save`/`load` methods.
-- Network expectations expose `ready`, `value`, and `cancel`: create the expectation, await `ready`, perform the action, then await `value`. Response results include the completed body plus `json()` and `bytes()` helpers.
+- Network expectations expose `ready`, `value`, `cancel`, and `reset`: create the expectation, await `ready`, perform the action, then await `value`. `reset()` returns a fresh ready object with the same configuration. Response results include the completed body plus `json()` and `bytes()` helpers.
 - `tab.intercept()` returns an explicit `FetchInterception`. Await `ready`, consume paused requests with `next()`, then call `continueRequest`, `continueResponse`, `failRequest`, or `fulfillRequest`. Always close it (or use `await using`) so paused requests are continued and Fetch is disabled.
 - Downloads require an explicit absolute directory or destination. Use `setDownloadPath` plus `expectDownload`, or the single-step `downloadFile(url, absoluteDestination)` helper.
 - `Element` identity is its stable CDP `backendNodeId`; `refresh` updates the cached frontend `nodeId` and runtime `objectId` after DOM changes.

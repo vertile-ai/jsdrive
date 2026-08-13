@@ -13,6 +13,14 @@ export interface SendOptions {
   readonly signal?: AbortSignal;
 }
 
+function delay(milliseconds: number, signal?: AbortSignal): Promise<void> {
+  if (signal?.aborted === true) return Promise.reject(signal.reason);
+  return new Promise((resolve, reject) => {
+    const timeout = setTimeout(resolve, milliseconds);
+    signal?.addEventListener("abort", () => { clearTimeout(timeout); reject(signal.reason); }, { once: true });
+  });
+}
+
 export type DomainPolicy = "manual" | "zendriver-compatible" | "reference-counted";
 
 export interface ConnectOptions extends Pick<SendOptions, "timeoutMs" | "signal"> {
@@ -100,6 +108,9 @@ export interface RuntimeBackend {
     method: string,
     handler: (params: unknown, metadata: EventMetadata) => void | Promise<void>,
   ): () => void;
+  removeHandlers(method?: string): void;
+  wait(milliseconds: number, signal?: AbortSignal): Promise<void>;
+  sleep(milliseconds: number, signal?: AbortSignal): Promise<void>;
   enableDomain(domain: string, options?: SendOptions): Promise<void>;
   disableDomain(domain: string, options?: SendOptions): Promise<void>;
   acquireDomain(domain: string, options?: SendOptions): Promise<() => Promise<void>>;
@@ -310,6 +321,14 @@ export class CdpConnection implements RuntimeBackend {
     this.#handlers.set(method, handlers);
     return () => handlers.delete(handler);
   }
+
+  public removeHandlers(method?: string): void {
+    if (method === undefined) this.#handlers.clear();
+    else this.#handlers.delete(method);
+  }
+
+  public wait(milliseconds: number, signal?: AbortSignal): Promise<void> { return delay(milliseconds, signal); }
+  public sleep(milliseconds: number, signal?: AbortSignal): Promise<void> { return this.wait(milliseconds, signal); }
 
   public onHandlerError(handler: ErrorHandler): () => void {
     this.#errorHandlers.add(handler);

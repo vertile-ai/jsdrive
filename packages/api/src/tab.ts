@@ -1,4 +1,5 @@
-import { writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
+import { join } from "node:path";
 import type {
   CommandParams,
   CommandResult,
@@ -46,6 +47,16 @@ export interface WaitForOptions extends WaitOptions {
   readonly bestMatch?: boolean;
 }
 
+export interface QueryOptions {
+  readonly includeFrames?: boolean;
+}
+
+export interface ScreencastSession {
+  readonly directory: string;
+  readonly frames: readonly string[];
+  stop(): Promise<readonly string[]>;
+}
+
 export interface ScreenshotOptions extends Protocol.Page.Commands.CaptureScreenshotParams {
   readonly fullPage?: boolean;
 }
@@ -81,6 +92,10 @@ export class Tab {
     public readonly sessionId?: string,
     public readonly browserConnection: RuntimeBackend = connection,
     public readonly webSocketUrl?: string,
+    private readonly closeTarget?: () => Promise<void>,
+    private readonly childFrames: () => readonly Tab[] = () => [],
+    private readonly readTargetInfo: () => Protocol.Target.TargetInfo | undefined = () => undefined,
+    private readonly writeTargetInfo: (targetInfo: Protocol.Target.TargetInfo) => void = () => {},
   ) {}
 
   public get enabledDomains(): ReadonlySet<string> {
@@ -93,6 +108,24 @@ export class Tab {
 
   public get crashed(): boolean {
     return this.#failure instanceof TargetCrashedError;
+  }
+
+  public get targetInfo(): Protocol.Target.TargetInfo | undefined { return this.readTargetInfo(); }
+  public get title(): string { return this.targetInfo?.title ?? ""; }
+  public get url(): string { return this.targetInfo?.url ?? ""; }
+  public get type(): string { return this.targetInfo?.type ?? ""; }
+  public get subtype(): string | undefined { return this.targetInfo?.subtype; }
+  public get attached(): boolean { return this.targetInfo?.attached ?? false; }
+  public get browserContextId(): Protocol.Browser.BrowserContextID | undefined { return this.targetInfo?.browserContextId; }
+  public get openerId(): Protocol.Target.TargetID | undefined { return this.targetInfo?.openerId; }
+  public get openerFrameId(): Protocol.Page.FrameId | undefined { return this.targetInfo?.openerFrameId; }
+  public get parentId(): Protocol.Target.TargetID | undefined { return this.targetInfo?.parentId; }
+  public get parentFrameId(): Protocol.Page.FrameId | undefined { return this.targetInfo?.parentFrameId; }
+
+  public async updateTarget(): Promise<Protocol.Target.TargetInfo> {
+    const { targetInfo } = await this.browserConnection.send("Target.getTargetInfo", { targetId: this.targetId });
+    this.writeTargetInfo(targetInfo);
+    return targetInfo;
   }
 
   public send<M extends ProtocolCommand>(
@@ -247,25 +280,34 @@ export class Tab {
     return (await this.send("DOM.getOuterHTML", { nodeId: root.nodeId, includeShadowDOM: true })).outerHTML;
   }
 
-  public async querySelector(selector: string): Promise<Element | null> {
-    const { root } = await this.send("DOM.getDocument", { depth: 0, pierce: true });
-    const { nodeId } = await this.send("DOM.querySelector", { nodeId: root.nodeId, selector: selector.trim() });
-    return nodeId === 0 ? null : this.elementFromNodeId(nodeId);
+  public async querySelector(selector: string, options: QueryOptions = {}): Promise<Element | null> {
+    return (await this.querySelectorAll(selector, options))[0] ?? null;
   }
 
-  public async querySelectorAll(selector: string): Promise<readonly Element[]> {
-    const { root } = await this.send("DOM.getDocument", { depth: 0, pierce: true });
-    const { nodeIds } = await this.send("DOM.querySelectorAll", { nodeId: root.nodeId, selector: selector.trim() });
-    return Promise.all(nodeIds.map((nodeId) => this.elementFromNodeId(nodeId)));
+  public async querySelectorAll(selector: string, options: QueryOptions = {}): Promise<readonly Element[]> {
+    const includeFrames = options.includeFrames ?? false;
+    const { root } = await this.send("DOM.getDocument", { depth: includeFrames ? -1 : 0, pierce: true });
+    const documents = includeFrames ? collectDocuments(root) : [root];
+    const groups = await Promise.all(documents.map(async (document) => {
+      const { nodeIds } = await this.send("DOM.querySelectorAll", { nodeId: document.nodeId, selector: selector.trim() });
+      return Promise.all(nodeIds.map((nodeId) => {
+        const cached = findNode(document, nodeId);
+        return cached === undefined ? this.elementFromNodeId(nodeId) : Promise.resolve(new Element(this, cached.backendNodeId, cached));
+      }));
+    }));
+    if (includeFrames) {
+      for (const frame of this.childFrames()) groups.push([...(await frame.querySelectorAll(selector, { includeFrames: true }))]);
+    }
+    return [...new Map(groups.flat().map((element) => [`${element.tab.targetId}:${element.backendNodeId}`, element])).values()];
   }
 
   public select(selector: string, options: WaitOptions = {}): Promise<Element> {
     return this.waitFor(selector, options);
   }
 
-  public async selectAll(selector: string, options: WaitOptions = {}): Promise<readonly Element[]> {
+  public async selectAll(selector: string, options: WaitOptions & QueryOptions = {}): Promise<readonly Element[]> {
     return this.#poll(async () => {
-      const elements = await this.querySelectorAll(selector);
+      const elements = await this.querySelectorAll(selector, options);
       return elements.length === 0 ? undefined : elements;
     }, `elements matching ${selector}`, options);
   }
@@ -290,6 +332,67 @@ export class Tab {
     const ranked = await Promise.all(elements.map(async (element) => ({ element, length: (await element.getText()).length })));
     ranked.sort((a, b) => Math.abs(a.length - text.length) - Math.abs(b.length - text.length));
     return ranked.map(({ element }) => element);
+  }
+
+  public async findElementByText(text: string, bestMatch = false): Promise<Element | null> {
+    const elements = await this.findElementsByText(text);
+    if (!bestMatch) return elements[0] ?? null;
+    const ranked = await Promise.all(elements.map(async (element) => ({ element, length: (await element.getText()).length })));
+    ranked.sort((a, b) => Math.abs(a.length - text.length) - Math.abs(b.length - text.length));
+    return ranked[0]?.element ?? null;
+  }
+
+  public findElementsByText(text: string): Promise<readonly Element[]> { return this.#search(text, true); }
+
+  public getAllLinkedSources(): Promise<readonly Element[]> { return this.querySelectorAll("a,link,img,script,meta,video,audio", { includeFrames: true }); }
+
+  public async getAllUrls(absolute = true): Promise<readonly string[]> {
+    const sources = await this.getAllLinkedSources();
+    const groups = await Promise.all(sources.map((element) => element.apply<readonly string[]>(
+      `function (absolute) { return ['href','src','content'].map(name => this.getAttribute(name)).filter(Boolean).map(value => absolute ? new URL(value, this.baseURI).href : value); }`,
+      absolute,
+    )));
+    return groups.flat();
+  }
+
+  public jsDumps<T = unknown>(expression: string): Promise<T> {
+    return this.evaluate<T>(`JSON.parse(JSON.stringify(${expression}))`);
+  }
+
+  public async disableDomAgent(): Promise<void> { await this.send("DOM.disable"); }
+
+  public get inspectorUrl(): string | undefined {
+    if (this.webSocketUrl === undefined) return undefined;
+    const websocket = new URL(this.webSocketUrl);
+    return `devtools://devtools/bundled/inspector.html?ws=${websocket.host}${websocket.pathname}`;
+  }
+
+  public inspectorOpen(): string | undefined { return this.inspectorUrl; }
+  public openExternalInspector(): string | undefined { return this.inspectorUrl; }
+
+  public async flashPoint(x: number, y: number, durationMs = 500, size = 10): Promise<void> {
+    await this.evaluate(`new Promise(resolve => { const p=document.createElement('div'); Object.assign(p.style,{position:'fixed',zIndex:'2147483647',pointerEvents:'none',left:${JSON.stringify(`${x - size / 2}px`)},top:${JSON.stringify(`${y - size / 2}px`)},width:${JSON.stringify(`${size}px`)},height:${JSON.stringify(`${size}px`)},borderRadius:'50%',background:'red'}); document.documentElement.append(p); setTimeout(()=>{p.remove();resolve()},${durationMs}); })`);
+  }
+
+  public async verifyCf(challengeSelector: string, options: WaitOptions & { readonly clickDelayMs?: number } = {}): Promise<void> {
+    const challenge = await this.waitFor(challengeSelector, options);
+    await delay(options.clickDelayMs ?? 0, options.signal);
+    await challenge.mouseClick();
+  }
+
+  public async recordScreencast(directory: string): Promise<ScreencastSession> {
+    await mkdir(directory, { recursive: true });
+    const frames: string[] = [];
+    let stopped = false;
+    const off = this.on("Page.screencastFrame", async (event) => {
+      if (stopped) return;
+      const path = join(directory, `${String(frames.length).padStart(6, "0")}.jpg`);
+      await writeFile(path, Buffer.from(event.data, "base64"));
+      frames.push(path);
+      await this.send("Page.screencastFrameAck", { sessionId: event.sessionId });
+    });
+    await this.send("Page.startScreencast", { format: "jpeg" });
+    return { directory, frames, stop: async () => { stopped = true; off(); await this.send("Page.stopScreencast"); return frames; } };
   }
 
   public async xpath(expression: string, options: WaitOptions = {}): Promise<readonly Element[]> {
@@ -412,14 +515,14 @@ export class Tab {
   public minimize(): Promise<void> { return this.setWindowState("minimized"); }
   public fullscreen(): Promise<void> { return this.setWindowState("fullscreen"); }
 
-  public async mouseMove(x: number, y: number): Promise<void> {
-    await this.send("Input.dispatchMouseEvent", { type: "mouseMoved", x, y });
+  public async mouseMove(x: number, y: number, modifiers = 0): Promise<void> {
+    await this.send("Input.dispatchMouseEvent", { type: "mouseMoved", x, y, modifiers });
   }
 
-  public async mouseClick(x: number, y: number, button: Protocol.Input.MouseButton = "left"): Promise<void> {
+  public async mouseClick(x: number, y: number, button: Protocol.Input.MouseButton = "left", modifiers = 0): Promise<void> {
     const buttons = mouseButtonMask(button);
-    await this.send("Input.dispatchMouseEvent", { type: "mousePressed", x, y, button, buttons, clickCount: 1 });
-    await this.send("Input.dispatchMouseEvent", { type: "mouseReleased", x, y, button, buttons: 0, clickCount: 1 });
+    await this.send("Input.dispatchMouseEvent", { type: "mousePressed", x, y, modifiers, button, buttons, clickCount: 1 });
+    await this.send("Input.dispatchMouseEvent", { type: "mouseReleased", x, y, modifiers, button, buttons: 0, clickCount: 1 });
   }
 
   public async elementFromNodeId(nodeId: Protocol.DOM.NodeId): Promise<Element> {
@@ -427,13 +530,14 @@ export class Tab {
     return new Element(this, node.backendNodeId, node);
   }
 
-  public close(): void {
+  public async close(): Promise<void> {
+    if (this.closeTarget !== undefined) return this.closeTarget();
     if (this.sessionId === undefined) this.connection.close();
   }
 
   public markClosed(): void {
     this.#failure = new TargetClosedError(this.targetId);
-    this.close();
+    if (this.sessionId === undefined) this.connection.close();
   }
 
   public markCrashed(status: string, errorCode: number): void {
@@ -585,4 +689,25 @@ function mouseButtonMask(button: Protocol.Input.MouseButton): number {
     case "forward": return 16;
     case "none": return 0;
   }
+}
+
+function collectDocuments(root: Protocol.DOM.Node): Protocol.DOM.Node[] {
+  const documents = [root];
+  const visit = (node: Protocol.DOM.Node): void => {
+    if (node.contentDocument !== undefined) documents.push(node.contentDocument);
+    for (const child of node.children ?? []) visit(child);
+    for (const shadow of node.shadowRoots ?? []) visit(shadow);
+    if (node.contentDocument !== undefined) visit(node.contentDocument);
+  };
+  visit(root);
+  return documents;
+}
+
+function findNode(root: Protocol.DOM.Node, nodeId: Protocol.DOM.NodeId): Protocol.DOM.Node | undefined {
+  if (root.nodeId === nodeId) return root;
+  for (const node of [...(root.children ?? []), ...(root.shadowRoots ?? []), ...(root.contentDocument === undefined ? [] : [root.contentDocument])]) {
+    const found = findNode(node, nodeId);
+    if (found !== undefined) return found;
+  }
+  return undefined;
 }

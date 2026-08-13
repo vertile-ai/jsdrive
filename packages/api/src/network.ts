@@ -24,6 +24,7 @@ export interface Expectation<T> {
   readonly ready: Promise<void>;
   readonly value: Promise<T>;
   cancel(reason?: unknown): Promise<void>;
+  reset(): Promise<Expectation<T>>;
 }
 
 export interface InterceptionOptions {
@@ -108,6 +109,13 @@ export class FetchInterception {
 
   public [Symbol.asyncDispose](): Promise<void> {
     return this.close();
+  }
+
+  public async reset(): Promise<FetchInterception> {
+    await this.close();
+    const fresh = new FetchInterception(this.#tab, this.#options);
+    await fresh.ready;
+    return fresh;
   }
 
   async #paused(event: Protocol.Fetch.Events.RequestPausedEvent): Promise<void> {
@@ -206,7 +214,7 @@ export function expectRequest(
   matcher: UrlMatcher<Protocol.Network.Events.RequestWillBeSentEvent>,
   options: WaitOptions = {},
 ): Expectation<ExpectedRequest> {
-  return networkExpectation(tab, `request matching ${describeMatcher(matcher)}`, options, (finish) => [
+  return networkExpectation(tab, `request matching ${describeMatcher(matcher)}`, options, () => expectRequest(tab, matcher, options), (finish) => [
     tab.on("Network.requestWillBeSent", async (event) => {
       if (await matches(matcher, event.request.url, event)) {
         void finish({ event, request: event.request });
@@ -223,7 +231,7 @@ export function expectResponse(
   const requests = new Map<Protocol.Network.RequestId, Protocol.Network.Events.RequestWillBeSentEvent>();
   const responses = new Map<Protocol.Network.RequestId, Protocol.Network.Events.ResponseReceivedEvent>();
   const responseMatches = new Map<Protocol.Network.RequestId, Promise<boolean>>();
-  return networkExpectation(tab, `response matching ${describeMatcher(matcher)}`, options, (finish, fail) => [
+  return networkExpectation(tab, `response matching ${describeMatcher(matcher)}`, options, () => expectResponse(tab, matcher, options), (finish, fail) => [
     tab.on("Network.requestWillBeSent", (event) => { requests.set(event.requestId, event); }),
     tab.on("Network.responseReceived", (event) => {
       responses.set(event.requestId, event);
@@ -260,6 +268,7 @@ function networkExpectation<T>(
   tab: Tab,
   description: string,
   options: WaitOptions,
+  recreate: () => Expectation<T>,
   listen: (
     finish: (value: T) => Promise<void>,
     fail: (reason: unknown) => Promise<void>,
@@ -306,6 +315,13 @@ function networkExpectation<T>(
     ready,
     value,
     cancel: async (reason?: unknown) => fail(new CdpAbortError(`Wait for ${description}`, { cause: reason })),
+    reset: async () => {
+      void value.catch(() => undefined);
+      await fail(new CdpAbortError(`Reset ${description}`));
+      const fresh = recreate();
+      await fresh.ready;
+      return fresh;
+    },
   };
 }
 

@@ -95,6 +95,13 @@ export function expectDownload(
     ready: frameId.then(() => undefined),
     value,
     cancel: async (reason?: unknown) => fail(new CdpAbortError("Wait for download", { cause: reason })),
+    reset: async () => {
+      void value.catch(() => undefined);
+      fail(new CdpAbortError("Reset download expectation"));
+      const fresh = expectDownload(tab, downloadPath, matcher, options);
+      await fresh.ready;
+      return fresh;
+    },
   };
 }
 

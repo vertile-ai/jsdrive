@@ -67,6 +67,11 @@ test("cookies, network expectations, interception, and downloads work in direct 
         assert.deepEqual(expectedResponse.json(), { source: "server", method: "GET", header: "expected" });
         assert.deepEqual(await apiAction, { source: "server", method: "GET", header: "expected" });
 
+        const resetRequest = await requestExpectation.reset();
+        const resetAction = tab.evaluate(`fetch(${JSON.stringify(`${baseUrl}/api`)})`);
+        assert.match((await resetRequest.value).request.url, /\/api$/);
+        await resetAction;
+
         const streamExpectation = tab.expectResponse("/stream");
         await streamExpectation.ready;
         const streamAction = tab.evaluate<string>(`fetch(${JSON.stringify(`${baseUrl}/stream`)}).then(r => r.text())`);
@@ -81,7 +86,11 @@ test("cookies, network expectations, interception, and downloads work in direct 
           body: Buffer.from("fulfilled locally").toString("base64"),
         });
         assert.equal(await fulfillAction, "fulfilled locally");
-        await fulfill.close();
+        const resetFulfill = await fulfill.reset();
+        const resetFulfillAction = tab.evaluate<string>(`fetch(${JSON.stringify(`${baseUrl}/intercept`)}).then(r => r.text())`);
+        await (await resetFulfill.next()).fulfillRequest(200, { body: Buffer.from("fulfilled after reset").toString("base64") });
+        assert.equal(await resetFulfillAction, "fulfilled after reset");
+        await resetFulfill.close();
 
         const rewrite = tab.intercept({ url: "/rewrite", stage: "Request" });
         await rewrite.ready;

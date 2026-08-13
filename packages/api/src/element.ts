@@ -1,6 +1,7 @@
 import { writeFile } from "node:fs/promises";
 import type { Protocol } from "@nodriver/protocol";
-import type { Tab } from "./tab.js";
+import { dispatchKey, KeyEvents, type KeyInput } from "./input.js";
+import type { ScreencastSession, Tab } from "./tab.js";
 
 export interface Position {
   readonly x: number;
@@ -13,6 +14,7 @@ export interface Position {
 export class Element {
   #node: Protocol.DOM.Node;
   #objectId: Protocol.Runtime.RemoteObjectId | undefined;
+  #highlighted = false;
   public readonly backendNodeId: Protocol.DOM.BackendNodeId;
 
   public constructor(
@@ -25,19 +27,66 @@ export class Element {
   }
 
   public get nodeId(): Protocol.DOM.NodeId { return this.#node.nodeId; }
+  public get node(): Protocol.DOM.Node { return this.#node; }
   public get parentNodeId(): Protocol.DOM.NodeId | undefined { return this.#node.parentId; }
+  public get parentId(): Protocol.DOM.NodeId | undefined { return this.#node.parentId; }
   public get objectId(): Protocol.Runtime.RemoteObjectId | undefined { return this.#objectId; }
   public get nodeType(): number { return this.#node.nodeType; }
   public get tag(): string { return this.#node.nodeName.toLowerCase(); }
+  public get tagName(): string { return this.tag; }
+  public get nodeName(): string { return this.#node.nodeName; }
+  public get localName(): string { return this.#node.localName; }
+  public get nodeValue(): string { return this.#node.nodeValue; }
+  public get textAll(): string { return flattenNodes(this.#node).map((node) => node.nodeValue).join(""); }
+  public get documentURL(): string | undefined { return this.#node.documentURL; }
+  public get baseURL(): string | undefined { return this.#node.baseURL; }
+  public get publicId(): string | undefined { return this.#node.publicId; }
+  public get systemId(): string | undefined { return this.#node.systemId; }
+  public get internalSubset(): string | undefined { return this.#node.internalSubset; }
+  public get xmlVersion(): string | undefined { return this.#node.xmlVersion; }
+  public get pseudoType(): Protocol.DOM.PseudoType | undefined { return this.#node.pseudoType; }
+  public get pseudoIdentifier(): string | undefined { return this.#node.pseudoIdentifier; }
+  public get shadowRootType(): Protocol.DOM.ShadowRootType | undefined { return this.#node.shadowRootType; }
+  public get frameId(): Protocol.Page.FrameId | undefined { return this.#node.frameId; }
+  public get childNodeCount(): number | undefined { return this.#node.childNodeCount; }
+  public get compatibilityMode(): Protocol.DOM.CompatibilityMode | undefined { return this.#node.compatibilityMode; }
+  public get isSvg(): boolean { return this.#node.isSVG ?? false; }
+  public get isScrollable(): boolean | undefined { return this.#node.isScrollable; }
+  public get assignedSlot(): Protocol.DOM.BackendNode | undefined { return this.#node.assignedSlot; }
+  public get distributedNodes(): readonly Protocol.DOM.BackendNode[] { return this.#node.distributedNodes ?? []; }
+  public get adoptedStyleSheets(): readonly Protocol.DOM.StyleSheetId[] { return this.#node.adoptedStyleSheets ?? []; }
   public get attributes(): Readonly<Record<string, string>> { return attributesFrom(this.#node.attributes); }
+  public get attrs(): Readonly<Record<string, string>> { return this.attributes; }
+  public get children(): readonly Element[] { return (this.#node.children ?? []).map((node) => new Element(this.tab, node.backendNodeId, node)); }
+  public get tree(): readonly Element[] { return flattenNodes(this.#node).map((node) => new Element(this.tab, node.backendNodeId, node)); }
+  public get shadowRoots(): readonly Element[] { return (this.#node.shadowRoots ?? []).map((node) => new Element(this.tab, node.backendNodeId, node)); }
+  public get pseudoElements(): readonly Element[] { return (this.#node.pseudoElements ?? []).map((node) => new Element(this.tab, node.backendNodeId, node)); }
+  public get contentDocument(): Element | undefined {
+    const node = this.#node.contentDocument;
+    return node === undefined ? undefined : new Element(this.tab, node.backendNodeId, node);
+  }
+  public get templateContent(): Element | undefined {
+    const node = this.#node.templateContent;
+    return node === undefined ? undefined : new Element(this.tab, node.backendNodeId, node);
+  }
+  public get importedDocument(): Element | undefined {
+    const node = this.#node.importedDocument;
+    return node === undefined ? undefined : new Element(this.tab, node.backendNodeId, node);
+  }
   public get text(): string { return this.#node.nodeValue; }
   public get value(): string | undefined { return this.attributes.value; }
   public get html(): string | undefined { return this.#node.nodeValue || undefined; }
+  public get(name: string): string | undefined { return this.attributes[name]; }
+
+  public async parent(): Promise<Element | null> {
+    await this.refresh();
+    return this.parentNodeId === undefined ? null : this.tab.elementFromNodeId(this.parentNodeId);
+  }
 
   public async refresh(): Promise<this> {
     const { node } = await this.tab.send("DOM.describeNode", {
       backendNodeId: this.backendNodeId,
-      depth: 0,
+      depth: -1,
       pierce: true,
     });
     if (this.#objectId !== undefined) {
@@ -62,6 +111,23 @@ export class Element {
     return (await this.tab.send("DOM.getOuterHTML", { backendNodeId: this.backendNodeId, includeShadowDOM: true })).outerHTML;
   }
 
+  public async getRemoteObject(): Promise<Protocol.Runtime.RemoteObject> {
+    if (this.#objectId !== undefined) await this.tab.send("Runtime.releaseObject", { objectId: this.#objectId });
+    const { object } = await this.tab.send("DOM.resolveNode", { backendNodeId: this.backendNodeId });
+    this.#objectId = object.objectId;
+    return object;
+  }
+
+  public getJsAttributes(): Promise<Readonly<Record<string, unknown>>> {
+    return this.apply("function () { const result = {}; for (const key in this) { const value = this[key]; if (value === null || ['string','number','boolean'].includes(typeof value)) result[key] = value; } return result; }");
+  }
+
+  public async saveToDom(outerHtml?: string): Promise<void> {
+    await this.refresh();
+    await this.tab.send("DOM.setOuterHTML", { nodeId: this.nodeId, outerHTML: outerHtml ?? await this.getHtml() });
+    await this.refresh();
+  }
+
   public async getPosition(): Promise<Position> {
     const { model } = await this.tab.send("DOM.getBoxModel", { backendNodeId: this.backendNodeId });
     const xs = model.border.filter((_value, index) => index % 2 === 0);
@@ -82,7 +148,10 @@ export class Element {
   public async querySelectorAll(selector: string): Promise<readonly Element[]> {
     await this.refresh();
     const { nodeIds } = await this.tab.send("DOM.querySelectorAll", { nodeId: this.nodeId, selector: selector.trim() });
-    return Promise.all(nodeIds.map((nodeId) => this.tab.elementFromNodeId(nodeId)));
+    return Promise.all(nodeIds.map((nodeId) => {
+      const cached = findNode(this.#node, nodeId);
+      return cached === undefined ? this.tab.elementFromNodeId(nodeId) : Promise.resolve(new Element(this.tab, cached.backendNodeId, cached));
+    }));
   }
 
   public async apply<T = unknown>(functionDeclaration: string, ...arguments_: readonly unknown[]): Promise<T> {
@@ -105,10 +174,10 @@ export class Element {
 
   public click(): Promise<void> { return this.domClick(); }
 
-  public async mouseClick(button: Protocol.Input.MouseButton = "left"): Promise<void> {
+  public async mouseClick(button: Protocol.Input.MouseButton = "left", modifiers = 0): Promise<void> {
     await this.scrollIntoView();
     const [x, y] = (await this.getPosition()).center;
-    await this.tab.mouseClick(x, y, button);
+    await this.tab.mouseClick(x, y, button, modifiers);
   }
 
   public async focus(): Promise<void> {
@@ -139,9 +208,16 @@ export class Element {
     }
   }
 
-  public async sendKeys(text: string): Promise<void> {
+  public async sendKeys(input: KeyInput | KeyEvents | readonly KeyInput[]): Promise<void> {
     await this.focus();
-    for (const segment of graphemes(text)) await this.tab.send("Input.insertText", { text: segment });
+    const inputs = input instanceof KeyEvents ? input.events : Array.isArray(input) ? input : [input as KeyInput];
+    for (const item of inputs) {
+      if (typeof item === "string") {
+        for (const segment of graphemes(item)) await this.tab.send("Input.insertText", { text: segment });
+      } else {
+        await dispatchKey(this.tab, item);
+      }
+    }
   }
 
   public async uploadFiles(files: readonly string[]): Promise<void> {
@@ -159,6 +235,29 @@ export class Element {
     const [x, y] = (await this.getPosition()).center;
     await this.tab.mouseMove(x, y);
   }
+
+  public async flash(durationMs = 500): Promise<void> {
+    const [x, y] = (await this.getPosition()).center;
+    await this.tab.flashPoint(x, y, durationMs);
+  }
+
+  public async highlightOverlay(): Promise<void> {
+    if (this.#highlighted) {
+      await this.tab.send("Overlay.hideHighlight");
+      await this.tab.send("Overlay.disable");
+      this.#highlighted = false;
+      return;
+    }
+    await this.tab.send("DOM.enable", {});
+    await this.tab.send("Overlay.enable");
+    await this.tab.send("Overlay.highlightNode", {
+      backendNodeId: this.backendNodeId,
+      highlightConfig: { showInfo: true, contentColor: { r: 255, g: 0, b: 0, a: 0.15 }, borderColor: { r: 255, g: 0, b: 0, a: 1 } },
+    });
+    this.#highlighted = true;
+  }
+
+  public recordVideo(directory: string): Promise<ScreencastSession> { return this.tab.recordScreencast(directory); }
 
   public async mouseDrag(destination: Element | Position): Promise<void> {
     await this.scrollIntoView();
@@ -212,4 +311,12 @@ function attributesFrom(values: readonly string[] | undefined): Readonly<Record<
 
 function graphemes(value: string): readonly string[] {
   return [...new Intl.Segmenter(undefined, { granularity: "grapheme" }).segment(value)].map(({ segment }) => segment);
+}
+
+function flattenNodes(node: Protocol.DOM.Node): Protocol.DOM.Node[] {
+  return [node, ...(node.children ?? []).flatMap(flattenNodes), ...(node.shadowRoots ?? []).flatMap(flattenNodes), ...(node.contentDocument === undefined ? [] : flattenNodes(node.contentDocument))];
+}
+
+function findNode(root: Protocol.DOM.Node, nodeId: Protocol.DOM.NodeId): Protocol.DOM.Node | undefined {
+  return flattenNodes(root).find((node) => node.nodeId === nodeId);
 }

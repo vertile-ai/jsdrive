@@ -17,17 +17,22 @@ The full build compiles the Rust native addon with Cargo. Use `npm run build --w
 ## Quick start
 
 ```ts
-import { Browser } from "@nodriver/api";
+import { Browser, Config, KeyEvents, KeyModifiers, SpecialKeys } from "@nodriver/api";
 
-const browser = await Browser.start({
+const config = new Config({
   connectionMode: "direct",
   domainPolicy: "reference-counted",
 });
+config.addArgument("--window-size=1200,800");
+const browser = await Browser.start(config);
 
 try {
+  // get() reuses the initial page; newTab()/newWindow() create targets.
   const tab = await browser.get("https://example.com");
   console.log(await tab.evaluate<string>("document.title"));
   await (await tab.select("a")).mouseClick();
+  await (await tab.select("input")).sendKeys(["hello", SpecialKeys.Enter]);
+  await (await tab.select("input")).sendKeys(KeyEvents.chord(KeyModifiers.Control, "a"));
 } finally {
   await browser.close();
 }
@@ -35,7 +40,7 @@ try {
 
 Pass `backend: NativeConnection` from `@nodriver/runtime-native` to use the native transport. `Browser.start()` exposes the selected executable, complete argument list, debugging endpoint, profile, and process metadata through `browser.process`.
 
-By default, `Browser.start()` passes `--remote-debugging-address`, an allocated `--remote-debugging-port`, a temporary `--user-data-dir`, `--no-first-run`, `--no-default-browser-check`, `--headless=new`, and the initial URL `about:blank`. Setting `headless: false` omits the headless flag; `args` appends explicit caller-provided Chrome arguments.
+By default, `Browser.start()` passes `--remote-debugging-address`, an allocated `--remote-debugging-port`, a temporary `--user-data-dir`, `--no-first-run`, `--no-default-browser-check`, `--headless=new`, and the initial URL `about:blank`. Other launch flags are opt-in through `Config`; extensions use Chrome's `--load-extension` flag.
 
 ## Architecture
 
@@ -66,6 +71,16 @@ The domain policy controls CDP domain lifetime:
 | Screenshots, PDF, snapshot, upload | Yes | Yes |
 | Abort, timeout, protocol, close, and connection-loss errors | Yes | Yes |
 | Normalized command/event trace | Yes | Yes |
+
+The high-level native row is exercised with both direct and flattened routing across DOM selection/input, cookies, network expectations, Fetch interception, and downloads. `querySelectorAll(selector, { includeFrames: true })` and `selectAll` traverse same-origin nested documents and cross-origin OOPIF targets.
+
+`Expectation.reset()` and `FetchInterception.reset()` cancel the current lifecycle and return a fresh, already-ready object with the same matcher/options. JavaScript callers should assign the returned object; the settled Promise fields themselves are immutable.
+
+`Element.recordVideo(directory)` intentionally returns a typed screencast session that writes an ordered JPEG frame sequence and exposes `stop()`. The package does not bundle a video encoder. Inspector helpers return a DevTools URL instead of launching an OS process. `verifyCf(selector)` is an explicit selector wait-and-click helper and makes no CAPTCHA-bypass claim. `tileWindows()` uses CDP bounds and explicit virtual screen dimensions; it does not enumerate native monitors.
+
+## Packages
+
+The publishable packages are `@nodriver/protocol`, `@nodriver/runtime-js`, `@nodriver/api`, and `@nodriver/runtime-native`, versioned together. The native package contains the addon for the platform on which it was packed; consumers that need another platform build it from this workspace.
 
 Provider compatibility helpers are site-parameterized: `extractRuntimeValue`, `captureNetworkBootstrap`, `waitForSessionMaterial`, and `runProviderPage`. They contain no site secrets or private endpoints. `CdpTraceRecorder` normalizes volatile command IDs, timestamps, target IDs, and session values before differential comparison.
 

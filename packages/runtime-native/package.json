@@ -1,7 +1,9 @@
 {
   "name": "@nodriver/runtime-native",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.15.5",
+  "private": false,
+  "license": "MIT",
+  "engines": { "node": ">=22" },
   "type": "module",
   "files": ["dist", "native"],
   "exports": {
@@ -17,11 +19,11 @@
     "smoke": "node dist/smoke.js"
   },
   "dependencies": {
-    "@nodriver/protocol": "0.0.0",
-    "@nodriver/runtime-js": "0.0.0"
+    "@nodriver/protocol": "0.15.5",
+    "@nodriver/runtime-js": "0.15.5"
   },
   "devDependencies": {
-    "@nodriver/api": "0.0.0",
+    "@nodriver/api": "0.15.5",
     "@types/ws": "8.18.1",
     "ws": "8.21.3"
   }

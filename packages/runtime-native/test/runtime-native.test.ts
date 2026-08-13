@@ -1,6 +1,11 @@
 import assert from "node:assert/strict";
+import { readFile, mkdtemp, writeFile } from "node:fs/promises";
+import { createServer as createHttpServer } from "node:http";
 import { createServer, type Socket } from "node:net";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import test from "node:test";
+import { Browser, discoverChromeExecutable, SpecialKeys, type ConnectionMode } from "@nodriver/api";
 import { WebSocket, WebSocketServer } from "ws";
 import {
   CdpAbortError,
@@ -108,6 +113,58 @@ test("records backend-neutral command results and events in the native wrapper",
       && message.method === "Runtime.consoleAPICalled" && message.sessionId === "fixture-session"), true);
   } finally {
     await peer.close();
+  }
+});
+
+test("native backend runs DOM, input, capture, cookies, network, and download in both modes", { timeout: 60_000 }, async () => {
+  const server = createHttpServer((request, response) => {
+    if (request.url === "/api") { response.setHeader("content-type", "application/json"); response.end('{"ok":true}'); return; }
+    if (request.url === "/download") { response.setHeader("content-disposition", "attachment; filename=native.txt"); response.end("native download"); return; }
+    response.end("<!doctype html><input id=input><input id=file type=file><div id=result></div>");
+  });
+  await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
+  const address = server.address();
+  assert.ok(typeof address === "object" && address !== null);
+  const baseUrl = `http://127.0.0.1:${address.port}`;
+  const output = await mkdtemp(join(tmpdir(), "nodriver-native-high-level-"));
+  const upload = join(output, "upload.txt");
+  await writeFile(upload, "native upload");
+  const executable = await discoverChromeExecutable();
+  try {
+    for (const connectionMode of ["direct", "flattened"] satisfies readonly ConnectionMode[]) {
+      const browser = await Browser.start({ executable, connectionMode, backend: NativeConnection });
+      try {
+        const tab = await browser.get(baseUrl);
+        const input = await tab.select("#input");
+        await input.sendKeys(["native", SpecialKeys.Backspace, "e"]);
+        assert.equal(await input.getValue(), "native");
+        await (await tab.select("#file")).uploadFiles([upload]);
+        assert.equal(await tab.evaluate("document.querySelector('#file').files[0].name"), "upload.txt");
+        assert.ok((await tab.screenshotB64()).length > 100);
+        assert.ok((await tab.printToPdf()).length > 100);
+        assert.match(await tab.saveSnapshot(), /multipart\/related/i);
+        await browser.cookies.setAll([{ name: "native", value: connectionMode, url: baseUrl }]);
+        assert.equal((await browser.cookies.getAll()).find(({ name }) => name === "native")?.value, connectionMode);
+        const expectation = tab.expectResponse("/api");
+        await expectation.ready;
+        const fetchAction = tab.evaluate(`fetch(${JSON.stringify(`${baseUrl}/api`)}).then(r => r.json())`);
+        assert.deepEqual((await expectation.value).json(), { ok: true });
+        assert.deepEqual(await fetchAction, { ok: true });
+        const interception = tab.intercept({ url: "/local" });
+        await interception.ready;
+        const interceptAction = tab.evaluate<string>(`fetch(${JSON.stringify(`${baseUrl}/local`)}).then(r => r.text())`);
+        await (await interception.next()).fulfillRequest(200, { body: Buffer.from("native fulfilled").toString("base64") });
+        assert.equal(await interceptAction, "native fulfilled");
+        await interception.close();
+        const destination = join(output, `${connectionMode}.txt`);
+        await tab.downloadFile(`${baseUrl}/download`, destination);
+        assert.equal(await readFile(destination, "utf8"), "native download");
+      } finally {
+        await browser.close();
+      }
+    }
+  } finally {
+    await new Promise<void>((resolve) => server.close(() => resolve()));
   }
 });
 

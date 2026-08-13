@@ -199,6 +199,20 @@ export class NativeConnection implements RuntimeBackend {
     return () => handlers.delete(handler);
   }
 
+  public removeHandlers(method?: string): void {
+    if (method === undefined) this.#handlers.clear();
+    else this.#handlers.delete(method);
+  }
+
+  public wait(milliseconds: number, signal?: AbortSignal): Promise<void> {
+    if (signal?.aborted === true) return Promise.reject(signal.reason);
+    return new Promise((resolve, reject) => {
+      const timeout = setTimeout(resolve, milliseconds);
+      signal?.addEventListener("abort", () => { clearTimeout(timeout); reject(signal.reason); }, { once: true });
+    });
+  }
+  public sleep(milliseconds: number, signal?: AbortSignal): Promise<void> { return this.wait(milliseconds, signal); }
+
   public onHandlerError(handler: ErrorHandler): () => void {
     this.#errorHandlers.add(handler);
     return () => this.#errorHandlers.delete(handler);

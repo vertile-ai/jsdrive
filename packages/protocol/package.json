@@ -1,7 +1,9 @@
 {
   "name": "@nodriver/protocol",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.15.5",
+  "private": false,
+  "license": "MIT",
+  "engines": { "node": ">=22" },
   "type": "module",
   "files": ["dist"],
   "exports": {

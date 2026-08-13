@@ -12,6 +12,7 @@ import {
   type RuntimeBackendFactory,
 } from "@nodriver/runtime-js";
 import { CookieJar } from "./cookies.js";
+import { Config, type BrowserConfig } from "./config.js";
 import { Tab, TargetClosedError, TargetCrashedError } from "./tab.js";
 
 export { Tab, TargetClosedError, TargetCrashedError } from "./tab.js";
@@ -40,17 +41,11 @@ export interface BrowserVersion {
   readonly webSocketDebuggerUrl: string;
 }
 
-export interface LaunchOptions {
+export interface LaunchOptions extends BrowserConfig {
   readonly executable?: string;
   readonly host?: string;
   readonly port?: number;
   readonly profile?: string;
-  readonly headless?: boolean;
-  readonly args?: readonly string[];
-  readonly connectionMode?: ConnectionMode;
-  readonly domainPolicy?: DomainPolicy;
-  readonly timeoutMs?: number;
-  readonly backend?: RuntimeBackendFactory;
 }
 
 export interface ConnectOptions extends BrowserEndpoint {
@@ -63,7 +58,7 @@ export interface ConnectOptions extends BrowserEndpoint {
 export class Browser {
   readonly #process: ChildProcess | undefined;
   readonly #sessions = new Map<string, string>();
-  readonly #sessionWaiters = new Map<string, (sessionId: string) => void>();
+  readonly #tabCreations = new Map<string, Promise<Tab>>();
   readonly #tabs = new Map<string, Tab>();
   readonly #targets = new Map<string, Protocol.Target.TargetInfo>();
   readonly #timeoutMs: number;
@@ -89,10 +84,16 @@ export class Browser {
     connection.on("Target.attachedToTarget", (event) => {
       this.#targets.set(event.targetInfo.targetId, event.targetInfo);
       this.#sessions.set(event.targetInfo.targetId, event.sessionId);
-      this.#sessionWaiters.get(event.targetInfo.targetId)?.(event.sessionId);
-      this.#sessionWaiters.delete(event.targetInfo.targetId);
+      if (this.connectionMode === "flattened" && (event.targetInfo.type === "page" || event.targetInfo.type === "iframe") && !this.#tabs.has(event.targetInfo.targetId)) {
+        void this.#ensureTab(event.targetInfo.targetId).catch(() => undefined);
+      }
     });
-    connection.on("Target.targetCreated", (event) => { this.#targets.set(event.targetInfo.targetId, event.targetInfo); });
+    connection.on("Target.targetCreated", (event) => {
+      this.#targets.set(event.targetInfo.targetId, event.targetInfo);
+      if ((event.targetInfo.type === "page" || event.targetInfo.type === "iframe") && !this.#tabs.has(event.targetInfo.targetId)) {
+        void this.#ensureTab(event.targetInfo.targetId).catch(() => undefined);
+      }
+    });
     connection.on("Target.targetInfoChanged", (event) => { this.#targets.set(event.targetInfo.targetId, event.targetInfo); });
     connection.on("Target.targetDestroyed", (event) => {
       this.#targets.delete(event.targetId);
@@ -114,7 +115,7 @@ export class Browser {
   }
 
   public get mainTab(): Tab | undefined {
-    return this.tabs[0];
+    return this.tabs.find((tab) => this.#targets.get(tab.targetId)?.type === "page");
   }
 
   public get enabledDomains(): ReadonlySet<string> {
@@ -129,44 +130,52 @@ export class Browser {
     return this.tabs[Symbol.iterator]();
   }
 
-  public static async start(options: LaunchOptions = {}): Promise<Browser> {
-    const executable = options.executable ?? await discoverChromeExecutable();
-    const host = options.host ?? "127.0.0.1";
-    const port = options.port ?? await freePort(host);
-    const temporaryProfile = options.profile === undefined;
-    const profile = options.profile ?? await mkdtemp(join(tmpdir(), "nodriver-"));
+  public static async start(options: LaunchOptions | Config = {}): Promise<Browser> {
+    const profile = options instanceof Config ? undefined : options.userDataDir ?? options.profile;
+    const config = options instanceof Config ? options : new Config({ ...options, ...(profile === undefined ? {} : { userDataDir: profile }) });
+    const executable = config.executable ?? await discoverChromeExecutable(config.browser);
+    const host = config.host;
+    const port = config.port ?? await freePort(host);
+    const temporaryProfile = config.userDataDir === undefined;
+    const profilePath = config.userDataDir ?? await mkdtemp(join(tmpdir(), "nodriver-"));
     const args = [
       `--remote-debugging-address=${host}`,
       `--remote-debugging-port=${port}`,
-      `--user-data-dir=${profile}`,
+      `--user-data-dir=${profilePath}`,
       "--no-first-run",
       "--no-default-browser-check",
-      ...(options.headless === false ? [] : ["--headless=new"]),
-      ...(options.args ?? []),
+      ...(config.headless ? ["--headless=new"] : []),
+      ...(config.sandbox ? [] : ["--no-sandbox"]),
+      ...(config.userAgent === undefined ? [] : [`--user-agent=${config.userAgent}`]),
+      ...(config.lang === undefined ? [] : [`--lang=${config.lang}`]),
+      ...(config.disableWebgl ? ["--disable-webgl"] : []),
+      ...(config.disableWebrtc ? ["--force-webrtc-ip-handling-policy=disable_non_proxied_udp"] : []),
+      ...(config.extensions.length === 0 ? [] : [`--load-extension=${config.extensions.join(",")}`]),
+      ...config.browserArgs,
       "about:blank",
     ];
     const child = spawn(executable, args, { stdio: "ignore" });
     try {
-      const timeoutMs = options.timeoutMs ?? 10_000;
+      const timeoutMs = config.connectionTimeoutMs;
       const browser = await Browser.#connect({
         host,
         port,
-        connectionMode: options.connectionMode ?? "direct",
-        domainPolicy: options.domainPolicy ?? "manual",
+        connectionMode: config.connectionMode,
+        domainPolicy: config.domainPolicy,
         timeoutMs,
       }, {
         executable,
         arguments: args,
         ...(child.pid === undefined ? {} : { pid: child.pid }),
-        profile,
+        profile: profilePath,
         temporaryProfile,
         host,
         port,
-      }, child, options.backend ?? CdpConnection);
+      }, child, config.backend ?? CdpConnection, config.autodiscoverTargets);
       return browser;
     } catch (error) {
       child.kill();
-      if (temporaryProfile) await rm(profile, { recursive: true, force: true });
+      if (temporaryProfile) await rm(profilePath, { recursive: true, force: true });
       throw error;
     }
   }
@@ -180,8 +189,12 @@ export class Browser {
     }, undefined, undefined, options.backend ?? CdpConnection);
   }
 
-  public async get(url = "about:blank"): Promise<Tab> {
-    return this.createTab(url);
+  public async get(url = "about:blank", options: { readonly newTab?: boolean; readonly newWindow?: boolean } = {}): Promise<Tab> {
+    if (options.newWindow === true) return this.newWindow(url);
+    if (options.newTab === true) return this.newTab(url);
+    const tab = this.mainTab ?? await this.createTab();
+    if (url !== "about:blank" || this.mainTab === undefined) await tab.navigate(url, this.#timeoutMs);
+    return tab;
   }
 
   public newTab(url = "about:blank"): Promise<Tab> {
@@ -201,20 +214,9 @@ export class Browser {
       { url: "about:blank", ...targetOptions },
       { timeoutMs: this.#timeoutMs },
     );
-    let tab: Tab;
-    if (this.connectionMode === "flattened") {
-      const sessionId = this.#sessions.get(targetId) ?? await this.#waitForSession(targetId);
-      tab = new Tab(targetId, this.connection, sessionId, this.connection);
-    } else {
-      const websocket = await this.#waitForTargetWebSocket(targetId);
-      tab = new Tab(targetId, await this.#backend.connect(websocket, {
-        timeoutMs: this.#timeoutMs,
-        domainPolicy: this.connection.domainPolicy,
-      }), undefined, this.connection, websocket);
-    }
-    this.#tabs.set(targetId, tab);
     const { targetInfo } = await this.connection.send("Target.getTargetInfo", { targetId }, { timeoutMs: this.#timeoutMs });
     this.#targets.set(targetId, targetInfo);
+    const tab = await this.#ensureTab(targetId);
     if (url !== "about:blank") await tab.navigate(url, this.#timeoutMs);
     return tab;
   }
@@ -256,6 +258,33 @@ export class Browser {
     return this.wait(milliseconds, signal);
   }
 
+  public async tileWindows(
+    windows: readonly Tab[] = this.tabs,
+    options: { readonly maxColumns?: number; readonly left?: number; readonly top?: number; readonly width?: number; readonly height?: number } = {},
+  ): Promise<readonly Protocol.Browser.Bounds[]> {
+    const unique = new Map<number, Tab>();
+    for (const tab of windows) unique.set((await tab.getWindow()).windowId, tab);
+    const items = [...unique.entries()];
+    if (items.length === 0) return [];
+    const columns = Math.min(options.maxColumns ?? Math.ceil(Math.sqrt(items.length)), items.length);
+    const rows = Math.ceil(items.length / columns);
+    const width = Math.floor((options.width ?? 1920) / columns);
+    const height = Math.floor((options.height ?? 1080) / rows);
+    const bounds: Protocol.Browser.Bounds[] = [];
+    for (const [index, [windowId]] of items.entries()) {
+      const value: Protocol.Browser.Bounds = {
+        left: (options.left ?? 0) + (index % columns) * width,
+        top: (options.top ?? 0) + Math.floor(index / columns) * height,
+        width,
+        height,
+        windowState: "normal",
+      };
+      await this.connection.send("Browser.setWindowBounds", { windowId, bounds: value });
+      bounds.push(value);
+    }
+    return bounds;
+  }
+
   public async closeTab(tab: Tab): Promise<void> {
     await this.connection.send("Target.closeTarget", { targetId: tab.targetId }, { timeoutMs: this.#timeoutMs });
     this.#targets.delete(tab.targetId);
@@ -267,7 +296,8 @@ export class Browser {
   public async close(): Promise<void> {
     if (this.#closed) return;
     this.#closed = true;
-    for (const tab of this.#tabs.values()) tab.close();
+    for (const tab of this.#tabs.values()) tab.markClosed();
+    this.#tabs.clear();
     this.connection.close();
     if (this.#process !== undefined) {
       this.#process.kill();
@@ -286,6 +316,7 @@ export class Browser {
     metadata?: BrowserProcessMetadata,
     child?: ChildProcess,
     backend: RuntimeBackendFactory = CdpConnection,
+    autodiscoverTargets = true,
   ): Promise<Browser> {
     const base = `http://${options.host}:${options.port}`;
     const version = await pollJson<BrowserVersion>(`${base}/json/version`, options.timeoutMs);
@@ -305,7 +336,7 @@ export class Browser {
       options.timeoutMs,
       backend,
     );
-    await connection.send("Target.setDiscoverTargets", { discover: true }, { timeoutMs: options.timeoutMs });
+    if (autodiscoverTargets) await connection.send("Target.setDiscoverTargets", { discover: true }, { timeoutMs: options.timeoutMs });
     const { targetInfos } = await connection.send("Target.getTargets", {}, { timeoutMs: options.timeoutMs });
     for (const targetInfo of targetInfos) browser.#targets.set(targetInfo.targetId, targetInfo);
     if (options.connectionMode === "flattened") {
@@ -315,16 +346,76 @@ export class Browser {
         flatten: true,
       }, { timeoutMs: options.timeoutMs });
     }
+    for (const targetInfo of targetInfos) {
+      if (targetInfo.type !== "page" && targetInfo.type !== "iframe") continue;
+      await browser.#ensureTab(targetInfo.targetId);
+    }
     return browser;
   }
 
-  #waitForSession(targetId: string): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const timeout = setTimeout(() => {
-        this.#sessionWaiters.delete(targetId);
-        reject(new CdpTimeoutError(`Target session ${targetId}`, this.#timeoutMs));
-      }, this.#timeoutMs);
-      this.#sessionWaiters.set(targetId, (sessionId) => { clearTimeout(timeout); resolve(sessionId); });
+  #ensureTab(targetId: string): Promise<Tab> {
+    const existing = this.#tabs.get(targetId);
+    if (existing !== undefined) return Promise.resolve(existing);
+    const pending = this.#tabCreations.get(targetId);
+    if (pending !== undefined) return pending;
+    const creation = this.#wrapTarget(targetId).then((tab) => {
+      if (this.#closed || !this.#targets.has(targetId)) {
+        tab.markClosed();
+        throw new TargetClosedError(targetId);
+      }
+      const winner = this.#tabs.get(targetId);
+      if (winner !== undefined) {
+        tab.markClosed();
+        return winner;
+      }
+      this.#tabs.set(targetId, tab);
+      return tab;
+    }).finally(() => this.#tabCreations.delete(targetId));
+    this.#tabCreations.set(targetId, creation);
+    return creation;
+  }
+
+  async #wrapTarget(targetId: string): Promise<Tab> {
+    let tab: Tab;
+    if (this.connectionMode === "flattened") {
+      const sessionId = this.#sessions.get(targetId) ?? (await this.connection.send("Target.attachToTarget", { targetId, flatten: true }, { timeoutMs: this.#timeoutMs })).sessionId;
+      this.#sessions.set(targetId, sessionId);
+      tab = new Tab(
+        targetId,
+        this.connection,
+        sessionId,
+        this.connection,
+        this.#targetWebSocketUrl(targetId),
+        () => this.closeTab(tab),
+        () => this.#frameTabs(targetId),
+        () => this.#targets.get(targetId),
+        (targetInfo) => this.#targets.set(targetId, targetInfo),
+      );
+    } else {
+      const websocket = await this.#waitForTargetWebSocket(targetId);
+      const targetConnection = await this.#backend.connect(websocket, {
+        timeoutMs: this.#timeoutMs,
+        domainPolicy: this.connection.domainPolicy,
+      });
+      tab = new Tab(
+        targetId,
+        targetConnection,
+        undefined,
+        this.connection,
+        websocket,
+        () => this.closeTab(tab),
+        () => this.#frameTabs(targetId),
+        () => this.#targets.get(targetId),
+        (targetInfo) => this.#targets.set(targetId, targetInfo),
+      );
+    }
+    return tab;
+  }
+
+  #frameTabs(parentTargetId: string): readonly Tab[] {
+    return this.tabs.filter((tab) => {
+      const info = this.#targets.get(tab.targetId);
+      return info?.type === "iframe" && (info.parentId === parentTargetId || info.parentFrameId === parentTargetId);
     });
   }
 
@@ -338,6 +429,10 @@ export class Browser {
       await delay(50);
     }
     throw new CdpTimeoutError(`Target WebSocket ${targetId}`, this.#timeoutMs);
+  }
+
+  #targetWebSocketUrl(targetId: string): string {
+    return `ws://${this.endpoint.host}:${this.endpoint.port}/devtools/page/${targetId}`;
   }
 }
 
@@ -354,18 +449,21 @@ const ALL_PERMISSIONS: readonly Protocol.Browser.PermissionType[] = [
   "webPrinting", "windowManagement",
 ];
 
-export async function discoverChromeExecutable(): Promise<string> {
-  const candidates = process.platform === "darwin"
+export async function discoverChromeExecutable(browser: "auto" | "chrome" | "chromium" | "brave" = "auto"): Promise<string> {
+  let candidates = process.platform === "darwin"
     ? [
         "/Applications/Chromium.app/Contents/MacOS/Chromium",
         "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser",
       ]
     : process.platform === "win32"
       ? [
           `${process.env.PROGRAMFILES ?? "C:\\Program Files"}\\Google\\Chrome\\Application\\chrome.exe`,
           `${process.env.LOCALAPPDATA ?? ""}\\Chromium\\Application\\chrome.exe`,
+          `${process.env.PROGRAMFILES ?? "C:\\Program Files"}\\BraveSoftware\\Brave-Browser\\Application\\brave.exe`,
         ]
-      : ["/usr/bin/chromium", "/usr/bin/chromium-browser", "/usr/bin/google-chrome"];
+      : ["/usr/bin/chromium", "/usr/bin/chromium-browser", "/usr/bin/google-chrome", "/usr/bin/brave-browser"];
+  if (browser !== "auto") candidates = candidates.filter((candidate) => candidate.toLowerCase().includes(browser));
   for (const candidate of candidates) {
     try { await access(candidate); return candidate; } catch { /* Continue discovery. */ }
   }

@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import { createServer, type Server } from "node:http";
 import test from "node:test";
-import type { RuntimeBackendFactory } from "@nodriver/runtime-js";
-import { NativeConnection } from "@nodriver/runtime-native";
+import type { RuntimeBackendFactory } from "@vertile-ai/jsdriver-runtime-js";
+import { NativeConnection } from "@vertile-ai/jsdriver-runtime-native";
 import {
   Browser,
   discoverChromeExecutable,

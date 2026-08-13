@@ -1,5 +1,5 @@
-import type { Protocol } from "@nodriver/protocol";
-import { CdpAbortError } from "@nodriver/runtime-js";
+import type { Protocol } from "@vertile-ai/jsdriver-protocol";
+import { CdpAbortError } from "@vertile-ai/jsdriver-runtime-js";
 import type { Browser } from "./browser.js";
 import type { ExpectedResponse, UrlMatcher } from "./network.js";
 import type { Tab, WaitOptions } from "./tab.js";

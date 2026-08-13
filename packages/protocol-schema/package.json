@@ -1,5 +1,5 @@
 {
-  "name": "@nodriver/protocol-schema",
+  "name": "@vertile-ai/jsdriver-protocol-schema",
   "version": "0.0.0",
   "private": true,
   "files": [

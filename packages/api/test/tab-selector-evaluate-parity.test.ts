@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { createServer, type Server } from "node:http";
 import test from "node:test";
-import { CdpProtocolError, CdpTimeoutError, type RuntimeBackend } from "@nodriver/runtime-js";
+import { CdpProtocolError, CdpTimeoutError, type RuntimeBackend } from "@vertile-ai/jsdriver-runtime-js";
 import { Browser, discoverChromeExecutable, Tab, type ConnectionMode } from "../src/index.js";
 
 const groceries = `<!doctype html><title>Groceries</title><ul>

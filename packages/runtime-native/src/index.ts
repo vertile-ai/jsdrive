@@ -6,7 +6,7 @@ import type {
   EventPayload,
   ProtocolCommand,
   ProtocolEvent,
-} from "@nodriver/protocol";
+} from "@vertile-ai/jsdriver-protocol";
 import {
   CdpAbortError,
   CdpConnectionClosedError,
@@ -22,7 +22,7 @@ import {
   type RuntimeBackend,
   type SendOptions,
   type TraceEntry,
-} from "@nodriver/runtime-js";
+} from "@vertile-ai/jsdriver-runtime-js";
 
 type CommandSource = DomainEnableSource | "internal";
 

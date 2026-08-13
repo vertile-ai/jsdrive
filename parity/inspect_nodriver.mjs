@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/** Inspect the current built @nodriver/api runtime and parse its declarations. */
+/** Inspect the current built jsdriver runtime and parse its declarations. */
 
 import { readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
@@ -16,6 +16,7 @@ const declarationFiles = [
     "cookies.d.ts",
     "download.d.ts",
     "element.d.ts",
+    "http-api.d.ts",
     "input.d.ts",
     "network.d.ts",
     "provider.d.ts",
@@ -224,7 +225,7 @@ const runtimeExports = Object.keys(api)
 process.stdout.write(
   `${JSON.stringify(
     {
-      package: "@nodriver/api",
+      package: "jsdriver",
       declarationParser: `typescript-${ts.version}`,
       runtimeExports,
       declaredSymbols,

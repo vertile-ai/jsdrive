@@ -1,5 +1,8 @@
 import assert from "node:assert/strict";
+import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { createServer } from "node:http";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import test from "node:test";
 import {
   Browser,
@@ -11,12 +14,20 @@ import {
   type ConnectionMode,
 } from "../src/index.js";
 
-test("Config exposes explicit launch flags and mutable arguments", () => {
+test("Config exposes explicit launch flags and mutable arguments", async () => {
+  const extensionDir = await mkdtemp(join(tmpdir(), "nodriver-extension-"));
+  await writeFile(join(extensionDir, "manifest.json"), JSON.stringify({ manifest_version: 3, name: "fixture", version: "1" }), "utf8");
   const config = new Config({ userDataDir: "/tmp/nodriver-profile", headless: false });
-  config.addArgument("--window-size=800,600").addExtension("/tmp/extension");
-  assert.equal(config.usesCustomDataDir, true);
-  assert.deepEqual(config.browserArgs, ["--window-size=800,600"]);
-  assert.deepEqual(config.extensions, ["/tmp/extension"]);
+  try {
+    config.addArgument("--window-size=800,600");
+    config.addExtension(extensionDir);
+    assert.equal(config.usesCustomDataDir, true);
+    assert.deepEqual(config.browserArgs, ["--window-size=800,600"]);
+    assert.deepEqual(config.extensions, [extensionDir]);
+    assert.throws(() => config.addExtension(join(extensionDir, "missing.crx")), /could not find anything/);
+  } finally {
+    await rm(extensionDir, { recursive: true, force: true });
+  }
 });
 
 test("Config userDataDir assignment updates custom-profile state", () => {
@@ -50,7 +61,7 @@ test("lifecycle, special keys, and iframe queries work in both connection modes"
       try {
         const initial = browser.mainTab;
         assert.ok(initial);
-        const tab = await browser.get(`http://localhost:${mainAddress.port}`);
+        const tab: Awaited<ReturnType<Browser["get"]>> = await browser.get(`http://localhost:${mainAddress.port}`);
         assert.equal(tab, initial);
         const targetInfo = await tab.updateTarget();
         assert.equal(targetInfo.targetId, tab.targetId);

@@ -1,7 +1,7 @@
 import { mkdir, rename } from "node:fs/promises";
 import { basename, dirname, isAbsolute, join, resolve } from "node:path";
-import type { Protocol } from "@nodriver/protocol";
-import { CdpAbortError, CdpTimeoutError } from "@nodriver/runtime-js";
+import type { Protocol } from "@vertile-ai/jsdriver-protocol";
+import { CdpAbortError, CdpTimeoutError } from "@vertile-ai/jsdriver-runtime-js";
 import type { UrlMatcher } from "./network.js";
 import type { Tab, WaitOptions } from "./tab.js";
 
@@ -30,6 +30,25 @@ export interface DownloadWillBeginExpectation {
   cancel(reason?: unknown): Promise<void>;
   close(): Promise<void>;
   [Symbol.asyncDispose](): Promise<void>;
+}
+
+export class DownloadExpectation implements DownloadWillBeginExpectation {
+  readonly #state: DownloadWillBeginExpectation;
+
+  public constructor(
+    tab: Tab,
+    matcher: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent> = () => true,
+    options: DownloadOptions = {},
+    previousDownloadPath?: string,
+  ) {
+    this.#state = createDownloadWillBeginState(tab, matcher, options, previousDownloadPath);
+  }
+
+  public get ready(): Promise<void> { return this.#state.ready; }
+  public get value(): Promise<Protocol.Browser.Events.DownloadWillBeginEvent> { return this.#state.value; }
+  public cancel(reason?: unknown): Promise<void> { return this.#state.cancel(reason); }
+  public close(): Promise<void> { return this.#state.close(); }
+  public [Symbol.asyncDispose](): Promise<void> { return this.#state[Symbol.asyncDispose](); }
 }
 
 export async function setDownloadPath(tab: Tab, path: string): Promise<string> {
@@ -64,7 +83,7 @@ export function expectDownload(
   options: DownloadOptions = {},
   previousDownloadPath?: string,
 ): DownloadResultExpectation | DownloadWillBeginExpectation {
-  if (downloadPath === undefined) return expectDownloadWillBegin(tab, matcher, options, previousDownloadPath);
+  if (downloadPath === undefined) return new DownloadExpectation(tab, matcher, options, previousDownloadPath);
   if (options.destination !== undefined) assertAbsolute(options.destination, "Download destination");
   const timeoutMs = options.timeoutMs ?? 10_000;
   let begin: Protocol.Browser.Events.DownloadWillBeginEvent | undefined;
@@ -135,7 +154,7 @@ export function expectDownload(
   };
 }
 
-function expectDownloadWillBegin(
+function createDownloadWillBeginState(
   tab: Tab,
   matcher: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent>,
   options: DownloadOptions,

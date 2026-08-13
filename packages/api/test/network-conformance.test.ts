@@ -45,7 +45,8 @@ test("cookies, network expectations, interception, and downloads work in direct 
       const browser = await Browser.start({ executable, connectionMode, domainPolicy: "reference-counted" });
       try {
         const tab = await browser.newTab(baseUrl);
-        assert.equal((await browser.testConnection()).protocolVersion.length > 0, true);
+        assert.equal(await browser.testConnection(), true);
+        assert.equal((await browser.getVersion()).protocolVersion.length > 0, true);
         assert.equal(browser.targetInfo(tab)?.targetId, tab.targetId);
         assert.ok([...browser].includes(tab));
 

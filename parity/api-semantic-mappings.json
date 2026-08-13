@@ -1,5 +1,71 @@
 [
   {
+    "nodeMember": "Browser",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-BROWSER-001"}],
+    "upstream": "zendriver.Browser",
+    "verifiedSemantics": ["return", "signature", "state"]
+  },
+  {
+    "nodeMember": "Browser.connection",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-BROWSER-001"}],
+    "upstream": "zendriver.core.browser.Browser.connection",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Browser.cookies",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-BROWSER-001"}],
+    "upstream": "zendriver.core.browser.Browser.cookies",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Browser.mainTab",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-BROWSER-001"}],
+    "upstream": "zendriver.core.browser.Browser.main_tab",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Browser.tabs",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-BROWSER-001"}],
+    "upstream": "zendriver.core.browser.Browser.tabs",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Browser.updateTargets",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-BROWSER-001"}],
+    "upstream": "zendriver.core.browser.Browser.update_targets",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Config",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-CONFIG-001"}],
+    "upstream": "zendriver.Config",
+    "verifiedSemantics": ["defaults", "signature", "state"]
+  },
+  {
+    "nodeMember": "CookieJar",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-BROWSER-001"}],
+    "upstream": "zendriver.core.browser.CookieJar",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "HTTPApi",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-HTTP-001"}],
+    "upstream": "zendriver.core.browser.HTTPApi",
+    "verifiedSemantics": ["return", "signature", "state"]
+  },
+  {
+    "nodeMember": "start",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-BROWSER-001"}],
+    "upstream": "zendriver.start",
+    "verifiedSemantics": ["return", "signature", "state"]
+  },
+  {
+    "nodeMember": "Browser",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-BROWSER-001"}],
+    "upstream": "zendriver.core.browser.Browser",
+    "verifiedSemantics": ["return", "signature", "state"]
+  },
+  {
     "nodeMember": "Browser.config",
     "testIds": ["ZDTEST-0020"],
     "upstream": "zendriver.core.browser.Browser.config"
@@ -113,11 +179,6 @@
     "verifiedSemantics": ["state"]
   },
   {
-    "nodeMember": "Config",
-    "testIds": ["ZDTEST-0020"],
-    "upstream": "zendriver.core.config.Config"
-  },
-  {
     "nodeMember": "Tab.addHandler",
     "testIds": ["ZDTEST-0042", "ZDTEST-0043", "ZDTEST-0044", "ZDTEST-0045", "ZDTEST-0068", "ZDTEST-0069", "ZDTEST-0070", "ZDTEST-0071", "ZDTEST-0072", "ZDTEST-0073"],
     "upstream": "zendriver.core.tab.Tab.add_handler",
@@ -151,6 +212,132 @@
     "nodeMember": "Tab.intercept",
     "testIds": ["ZDTEST-0064", "ZDTEST-0065", "ZDTEST-0066", "ZDTEST-0067"],
     "upstream": "zendriver.core.tab.Tab.intercept",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Browser.create",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-BROWSER-001"}],
+    "upstream": "zendriver.core.browser.Browser.create",
+    "verifiedSemantics": ["return", "signature", "state"]
+  },
+  {
+    "nodeMember": "Browser.testConnection",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-BROWSER-001"}],
+    "upstream": "zendriver.core.browser.Browser.test_connection",
+    "verifiedSemantics": ["errors", "return", "signature"]
+  },
+  {
+    "nodeMember": "Browser.wait",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-BROWSER-001"}],
+    "upstream": "zendriver.core.browser.Browser.wait",
+    "verifiedSemantics": ["defaults", "return"]
+  },
+  {
+    "nodeMember": "Browser.sleep",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-BROWSER-001"}],
+    "upstream": "zendriver.core.browser.Browser.sleep",
+    "verifiedSemantics": ["defaults", "return"]
+  },
+  {
+    "nodeMember": "Config",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-CONFIG-001"}],
+    "upstream": "zendriver.core.config.Config",
+    "verifiedSemantics": ["defaults", "signature", "state"]
+  },
+  {
+    "nodeMember": "Config.addArgument",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-CONFIG-001"}],
+    "upstream": "zendriver.core.config.Config.add_argument",
+    "verifiedSemantics": ["errors", "return", "state"]
+  },
+  {
+    "nodeMember": "Config.addExtension",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-CONFIG-001"}],
+    "upstream": "zendriver.core.config.Config.add_extension",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "findBinary",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-CONFIG-001"}],
+    "upstream": "zendriver.core.config.find_binary",
+    "verifiedSemantics": ["return"]
+  },
+  {
+    "nodeMember": "findExecutable",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-CONFIG-001"}],
+    "upstream": "zendriver.core.config.find_executable",
+    "verifiedSemantics": ["defaults", "errors", "return"]
+  },
+  {
+    "nodeMember": "isRoot",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-CONFIG-001"}],
+    "upstream": "zendriver.core.config.is_root",
+    "verifiedSemantics": ["return"]
+  },
+  {
+    "nodeMember": "tempProfileDir",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-CONFIG-001"}],
+    "upstream": "zendriver.core.config.temp_profile_dir",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "CookieJar.getAll",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-BROWSER-001"}],
+    "upstream": "zendriver.core.browser.CookieJar.get_all",
+    "verifiedSemantics": ["defaults", "return"]
+  },
+  {
+    "nodeMember": "CookieJar.setAll",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-BROWSER-001"}],
+    "upstream": "zendriver.core.browser.CookieJar.set_all",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "CookieJar.save",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-BROWSER-001"}],
+    "upstream": "zendriver.core.browser.CookieJar.save",
+    "verifiedSemantics": ["defaults", "return", "state"]
+  },
+  {
+    "nodeMember": "CookieJar.load",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-BROWSER-001"}],
+    "upstream": "zendriver.core.browser.CookieJar.load",
+    "verifiedSemantics": ["defaults", "return", "state"]
+  },
+  {
+    "nodeMember": "CookieJar.clear",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-BROWSER-001"}],
+    "upstream": "zendriver.core.browser.CookieJar.clear",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "HTTPApi.get",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-HTTP-001"}],
+    "upstream": "zendriver.core.browser.HTTPApi.get",
+    "verifiedSemantics": ["return", "signature"]
+  },
+  {
+    "nodeMember": "HTTPApi.post",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-HTTP-001"}],
+    "upstream": "zendriver.core.browser.HTTPApi.post",
+    "verifiedSemantics": ["return", "signature"]
+  },
+  {
+    "nodeMember": "Config.browserArgs",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-CONFIG-001"}],
+    "upstream": "zendriver.core.config.Config.browser_args",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Config.userDataDir",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-CONFIG-001"}],
+    "upstream": "zendriver.core.config.Config.user_data_dir",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Config.usesCustomDataDir",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-CONFIG-001"}],
+    "upstream": "zendriver.core.config.Config.uses_custom_data_dir",
     "verifiedSemantics": ["return", "state"]
   }
 ]

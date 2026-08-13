@@ -1,9 +1,9 @@
 import { spawn, type ChildProcess } from "node:child_process";
-import { access, mkdtemp, rm } from "node:fs/promises";
+import { mkdtemp, rm } from "node:fs/promises";
 import { createServer } from "node:net";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { Protocol } from "@nodriver/protocol";
+import type { Protocol } from "@vertile-ai/jsdriver-protocol";
 import {
   CdpConnection,
   CdpTimeoutError,
@@ -11,9 +11,10 @@ import {
   type DomainPolicy,
   type RuntimeBackend,
   type RuntimeBackendFactory,
-} from "@nodriver/runtime-js";
+} from "@vertile-ai/jsdriver-runtime-js";
 import { CookieJar } from "./cookies.js";
-import { Config, type BrowserConfig } from "./config.js";
+import { Config, findExecutable, type BrowserConfig } from "./config.js";
+import { HTTPApi } from "./http-api.js";
 import { Tab, TargetClosedError, TargetCrashedError } from "./tab.js";
 
 export { Tab, TargetClosedError, TargetCrashedError } from "./tab.js";
@@ -67,6 +68,7 @@ export class Browser {
   #stopped = false;
   #stopPromise: Promise<void> | undefined;
   public readonly cookies: CookieJar;
+  public readonly http: HTTPApi;
 
   private constructor(
     public readonly connection: RuntimeBackend,
@@ -84,6 +86,7 @@ export class Browser {
     this.#timeoutMs = timeoutMs;
     this.#backend = backend;
     this.cookies = new CookieJar(connection);
+    this.http = new HTTPApi([endpoint.host, endpoint.port]);
     childProcess?.once("exit", () => {
       this.#markStopped();
       this.connection.close();
@@ -118,7 +121,7 @@ export class Browser {
   }
 
   public get tabs(): readonly Tab[] {
-    return [...this.#tabs.values()];
+    return [...this.#tabs.values()].filter((tab) => this.#targets.get(tab.targetId)?.type === "page");
   }
 
   public get mainTab(): Tab | undefined {
@@ -151,11 +154,12 @@ export class Browser {
       ? new Config(options)
       : new Config({ ...options, ...(profile === undefined ? {} : { userDataDir: profile }) });
     const executable = requestedConfig.executable ?? await discoverChromeExecutable(requestedConfig.browser);
-    const host = requestedConfig.host;
+    const host = requestedConfig.host ?? "127.0.0.1";
     const port = requestedConfig.port ?? await freePort(host);
-    const temporaryProfile = requestedConfig.userDataDir === undefined;
-    const profilePath = requestedConfig.userDataDir ?? await mkdtemp(join(tmpdir(), "nodriver-"));
-    const config = new Config(requestedConfig, { userDataDir: profilePath, port });
+    const configuredProfile = requestedConfig.configuredUserDataDir;
+    const temporaryProfile = !requestedConfig.usesCustomDataDir;
+    const profilePath = configuredProfile ?? await mkdtemp(join(tmpdir(), "nodriver-"));
+    const config = new Config(requestedConfig, { userDataDir: profilePath, port, host });
     const args = [
       `--remote-debugging-address=${host}`,
       `--remote-debugging-port=${port}`,
@@ -204,6 +208,11 @@ export class Browser {
     }
   }
 
+  /** Zendriver-compatible async factory spelling. */
+  public static create(options: LaunchOptions | Config = {}): Promise<Browser> {
+    return Browser.start(options);
+  }
+
   public static connect(options: ConnectOptions): Promise<Browser> {
     return Browser.#connect({
       ...options,
@@ -213,9 +222,17 @@ export class Browser {
     }, undefined, undefined, options.backend ?? CdpConnection);
   }
 
-  public async get(url = "about:blank", options: { readonly newTab?: boolean; readonly newWindow?: boolean } = {}): Promise<Tab> {
-    if (options.newWindow === true) return this.newWindow(url);
-    if (options.newTab === true) return this.newTab(url);
+  public async get(url?: string, newTab?: boolean, newWindow?: boolean): Promise<Tab>;
+  public async get(url?: string, options?: { readonly newTab?: boolean; readonly newWindow?: boolean }): Promise<Tab>;
+  public async get(
+    url = "about:blank",
+    newTabOrOptions: boolean | { readonly newTab?: boolean; readonly newWindow?: boolean } = false,
+    newWindow = false,
+  ): Promise<Tab> {
+    const newTab = typeof newTabOrOptions === "boolean" ? newTabOrOptions : newTabOrOptions.newTab === true;
+    const requestedWindow = typeof newTabOrOptions === "boolean" ? newWindow : newTabOrOptions.newWindow === true;
+    if (requestedWindow) return this.newWindow(url);
+    if (newTab) return this.newTab(url);
     const tab = this.mainTab ?? await this.createTab();
     if (url !== "about:blank" || this.mainTab === undefined) await tab.navigate(url, this.#timeoutMs);
     return tab;
@@ -256,7 +273,16 @@ export class Browser {
     return this.targets;
   }
 
-  public testConnection(): Promise<Protocol.Browser.Commands.GetVersionResult> {
+  public async testConnection(): Promise<boolean> {
+    try {
+      await this.connection.send("Browser.getVersion", undefined, { timeoutMs: this.#timeoutMs });
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  public getVersion(): Promise<Protocol.Browser.Commands.GetVersionResult> {
     return this.connection.send("Browser.getVersion", undefined, { timeoutMs: this.#timeoutMs });
   }
 
@@ -274,12 +300,13 @@ export class Browser {
     return this.grantPermissions(ALL_PERMISSIONS, origin);
   }
 
-  public wait(milliseconds: number, signal?: AbortSignal): Promise<void> {
-    return delay(milliseconds, signal);
+  public async wait(time = 1, signal?: AbortSignal): Promise<this> {
+    await delay(time * 1_000, signal);
+    return this;
   }
 
-  public sleep(milliseconds: number, signal?: AbortSignal): Promise<void> {
-    return this.wait(milliseconds, signal);
+  public sleep(time = 1, signal?: AbortSignal): Promise<this> {
+    return this.wait(time, signal);
   }
 
   public async tileWindows(
@@ -461,7 +488,7 @@ export class Browser {
   }
 
   #frameTabs(parentTargetId: string): readonly Tab[] {
-    return this.tabs.filter((tab) => {
+    return [...this.#tabs.values()].filter((tab) => {
       const info = this.#targets.get(tab.targetId);
       return info?.type === "iframe" && (info.parentId === parentTargetId || info.parentFrameId === parentTargetId);
     });
@@ -498,24 +525,7 @@ const ALL_PERMISSIONS: readonly Protocol.Browser.PermissionType[] = [
 ];
 
 export async function discoverChromeExecutable(browser: "auto" | "chrome" | "chromium" | "brave" = "auto"): Promise<string> {
-  let candidates = process.platform === "darwin"
-    ? [
-        "/Applications/Chromium.app/Contents/MacOS/Chromium",
-        "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-        "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser",
-      ]
-    : process.platform === "win32"
-      ? [
-          `${process.env.PROGRAMFILES ?? "C:\\Program Files"}\\Google\\Chrome\\Application\\chrome.exe`,
-          `${process.env.LOCALAPPDATA ?? ""}\\Chromium\\Application\\chrome.exe`,
-          `${process.env.PROGRAMFILES ?? "C:\\Program Files"}\\BraveSoftware\\Brave-Browser\\Application\\brave.exe`,
-        ]
-      : ["/usr/bin/chromium", "/usr/bin/chromium-browser", "/usr/bin/google-chrome", "/usr/bin/brave-browser"];
-  if (browser !== "auto") candidates = candidates.filter((candidate) => candidate.toLowerCase().includes(browser));
-  for (const candidate of candidates) {
-    try { await access(candidate); return candidate; } catch { /* Continue discovery. */ }
-  }
-  throw new Error("No Chrome or Chromium executable found; pass LaunchOptions.executable");
+  return findExecutable(browser);
 }
 
 async function freePort(host: string): Promise<number> {

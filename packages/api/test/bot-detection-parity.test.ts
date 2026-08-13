@@ -3,9 +3,9 @@ import { execFile } from "node:child_process";
 import { access } from "node:fs/promises";
 import { promisify } from "node:util";
 import test from "node:test";
-import type { RuntimeBackendFactory } from "@nodriver/runtime-js";
-import { CdpConnection } from "@nodriver/runtime-js";
-import { NativeConnection } from "@nodriver/runtime-native";
+import type { RuntimeBackendFactory } from "@vertile-ai/jsdriver-runtime-js";
+import { CdpConnection } from "@vertile-ai/jsdriver-runtime-js";
+import { NativeConnection } from "@vertile-ai/jsdriver-runtime-native";
 import { Browser, discoverChromeExecutable, type ConnectionMode, type Tab } from "../src/index.js";
 
 const TARGET_URL = "https://www.browserscan.net/bot-detection";

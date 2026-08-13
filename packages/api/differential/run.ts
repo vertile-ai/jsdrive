@@ -3,8 +3,8 @@ import { access } from "node:fs/promises";
 import { execFile } from "node:child_process";
 import { resolve } from "node:path";
 import { promisify } from "node:util";
-import { CdpConnection, type RuntimeBackendFactory } from "@nodriver/runtime-js";
-import { NativeConnection } from "@nodriver/runtime-native";
+import { CdpConnection, type RuntimeBackendFactory } from "@vertile-ai/jsdriver-runtime-js";
+import { NativeConnection } from "@vertile-ai/jsdriver-runtime-native";
 import {
   Browser,
   CdpTraceRecorder,

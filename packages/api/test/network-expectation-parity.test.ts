@@ -1,10 +1,10 @@
 import assert from "node:assert/strict";
 import { createServer, type Server } from "node:http";
 import test from "node:test";
-import type { Protocol } from "@nodriver/protocol";
+import type { Protocol } from "@vertile-ai/jsdriver-protocol";
 import { Browser, discoverChromeExecutable, type ConnectionMode, type Tab } from "../src/index.js";
-import { NativeConnection } from "@nodriver/runtime-native";
-import type { RuntimeBackendFactory } from "@nodriver/runtime-js";
+import { NativeConnection } from "@vertile-ai/jsdriver-runtime-native";
+import type { RuntimeBackendFactory } from "@vertile-ai/jsdriver-runtime-js";
 
 const pageHtml = `<!doctype html>
 <title>Network parity fixture</title>

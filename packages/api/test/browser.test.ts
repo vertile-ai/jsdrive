@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import type { Protocol } from "@nodriver/protocol";
-import { CdpAbortError, type CdpConnection, type SendOptions } from "@nodriver/runtime-js";
+import type { Protocol } from "@vertile-ai/jsdriver-protocol";
+import { CdpAbortError, type CdpConnection, type SendOptions } from "@vertile-ai/jsdriver-runtime-js";
 import { Tab, TargetClosedError, TargetCrashedError } from "../src/browser.js";
 import { Element } from "../src/element.js";
 

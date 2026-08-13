@@ -1,8 +1,16 @@
 {
-  "name": "@nodriver/runtime-native",
+  "name": "@vertile-ai/jsdriver-runtime-native",
   "version": "0.15.5",
   "private": false,
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vertile-ai/jsdrive.git",
+    "directory": "packages/runtime-native"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "engines": { "node": ">=22" },
   "type": "module",
   "files": ["dist", "native"],
@@ -19,11 +27,11 @@
     "smoke": "node dist/smoke.js"
   },
   "dependencies": {
-    "@nodriver/protocol": "0.15.5",
-    "@nodriver/runtime-js": "0.15.5"
+    "@vertile-ai/jsdriver-protocol": "0.15.5",
+    "@vertile-ai/jsdriver-runtime-js": "0.15.5"
   },
   "devDependencies": {
-    "@nodriver/api": "0.15.5",
+    "jsdriver": "0.15.5",
     "@types/ws": "8.18.1",
     "ws": "8.21.3"
   }

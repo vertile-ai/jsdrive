@@ -7,7 +7,7 @@ import type {
   Protocol,
   ProtocolCommand,
   ProtocolEvent,
-} from "@nodriver/protocol";
+} from "@vertile-ai/jsdriver-protocol";
 import {
   CdpAbortError,
   CdpConnection,
@@ -16,7 +16,7 @@ import {
   type EventMetadata,
   type RuntimeBackend,
   type SendOptions,
-} from "@nodriver/runtime-js";
+} from "@vertile-ai/jsdriver-runtime-js";
 import { Element } from "./element.js";
 import {
   downloadFile as downloadFileToPath,

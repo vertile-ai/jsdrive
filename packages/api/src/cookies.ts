@@ -1,6 +1,6 @@
 import { readFile, writeFile } from "node:fs/promises";
-import type { Protocol } from "@nodriver/protocol";
-import type { RuntimeBackend } from "@nodriver/runtime-js";
+import type { Protocol } from "@vertile-ai/jsdriver-protocol";
+import type { RuntimeBackend } from "@vertile-ai/jsdriver-runtime-js";
 
 export type Cookie = Protocol.Network.Cookie;
 export type CookieParam = Protocol.Network.CookieParam;
@@ -8,7 +8,10 @@ export type CookieParam = Protocol.Network.CookieParam;
 export class CookieJar {
   public constructor(private readonly connection: RuntimeBackend) {}
 
-  public async getAll(): Promise<readonly Cookie[]> {
+  public async getAll(_requestsCookieFormat = false): Promise<readonly Cookie[]> {
+    // requests/http.cookiejar conversion is intentionally not part of the
+    // Node API; the flag is accepted so existing Zendriver-shaped calls fail
+    // soft while retaining the typed CDP cookie records.
     return (await this.connection.send("Storage.getCookies", {})).cookies;
   }
 
@@ -20,17 +23,18 @@ export class CookieJar {
     await this.connection.send("Storage.clearCookies", {});
   }
 
-  public async save(path: string): Promise<string> {
-    await writeFile(path, `${JSON.stringify(await this.getAll(), null, 2)}\n`, "utf8");
-    return path;
+  public async save(path = ".session.dat", pattern = ".*"): Promise<void> {
+    const matcher = new RegExp(pattern);
+    const cookies = (await this.getAll()).filter((cookie) => matcher.test(JSON.stringify(cookie)));
+    await writeFile(path, `${JSON.stringify(cookies, null, 2)}\n`, "utf8");
   }
 
-  public async load(path: string): Promise<readonly CookieParam[]> {
+  public async load(path = ".session.dat", pattern = ".*"): Promise<void> {
     const parsed: unknown = JSON.parse(await readFile(path, "utf8"));
     if (!Array.isArray(parsed)) throw new TypeError("Cookie file must contain a JSON array");
-    const cookies = parsed.map(cookieParamFromJson);
+    const matcher = new RegExp(pattern);
+    const cookies = parsed.filter((cookie) => matcher.test(JSON.stringify(cookie))).map(cookieParamFromJson);
     await this.setAll(cookies);
-    return cookies;
   }
 }
 

@@ -1,4 +1,4 @@
-import type { TraceEntry } from "@nodriver/runtime-js";
+import type { TraceEntry } from "@vertile-ai/jsdriver-runtime-js";
 
 export interface TraceSource {
   readonly trace: readonly TraceEntry[];

@@ -7,7 +7,7 @@ import { createServer, type Socket } from "node:net";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
-import { Browser, discoverChromeExecutable, SpecialKeys, type ConnectionMode } from "@nodriver/api";
+import { Browser, discoverChromeExecutable, SpecialKeys, type ConnectionMode } from "jsdriver";
 import { WebSocket, WebSocketServer } from "ws";
 import {
   CdpAbortError,
@@ -15,7 +15,7 @@ import {
   CdpConnectionLostError,
   CdpProtocolError,
   CdpTimeoutError,
-} from "@nodriver/runtime-js";
+} from "@vertile-ai/jsdriver-runtime-js";
 import { NativeConnection } from "../src/index.js";
 
 const nativeAddon = fileURLToPath(new URL(`../../native/nodriver.${process.platform}-${process.arch}.node`, import.meta.url));

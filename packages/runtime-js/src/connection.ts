@@ -4,7 +4,7 @@ import type {
   EventPayload,
   ProtocolCommand,
   ProtocolEvent,
-} from "@nodriver/protocol";
+} from "@vertile-ai/jsdriver-protocol";
 import WebSocket, { type RawData } from "ws";
 
 export interface SendOptions {
@@ -235,6 +235,11 @@ export class CdpConnection implements RuntimeBackend {
 
   public get closed(): boolean {
     return this.#closed;
+  }
+
+  /** The underlying WebSocket used by this connection, when it is still open. */
+  public get websocket(): WebSocket | null {
+    return this.#closed ? null : this.#socket;
   }
 
   public send<M extends ProtocolCommand>(

@@ -1,9 +1,9 @@
 import assert from "node:assert/strict";
 import { createServer, type Server } from "node:http";
 import test from "node:test";
-import type { Protocol } from "@nodriver/protocol";
-import type { RuntimeBackendFactory } from "@nodriver/runtime-js";
-import { NativeConnection } from "@nodriver/runtime-native";
+import type { Protocol } from "@vertile-ai/jsdriver-protocol";
+import type { RuntimeBackendFactory } from "@vertile-ai/jsdriver-runtime-js";
+import { NativeConnection } from "@vertile-ai/jsdriver-runtime-native";
 import { Browser, discoverChromeExecutable, type ConnectionMode, type Element, type Tab, type TabEventHandler } from "../src/index.js";
 
 const loginPage = `<!doctype html><html><head><title>Account tutorial</title></head><body>

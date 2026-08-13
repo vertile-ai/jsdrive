@@ -1,5 +1,5 @@
 {
-  "name": "@nodriver/protocol-codegen",
+  "name": "@vertile-ai/jsdriver-protocol-codegen",
   "version": "0.0.0",
   "private": true,
   "type": "module",

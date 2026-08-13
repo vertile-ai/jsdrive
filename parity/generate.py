@@ -269,7 +269,7 @@ def inspect_reference() -> dict[str, Any]:
 def inspect_nodriver() -> dict[str, Any]:
     output = require_success(
         run(["node", str(PARITY / "inspect_nodriver.mjs")]),
-        "@nodriver/api runtime introspection",
+        "jsdriver runtime introspection",
     )
     return json.loads(output)
 

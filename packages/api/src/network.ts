@@ -1,5 +1,5 @@
-import type { Protocol } from "@nodriver/protocol";
-import { CdpAbortError, CdpTimeoutError, type SendOptions } from "@nodriver/runtime-js";
+import type { Protocol } from "@vertile-ai/jsdriver-protocol";
+import { CdpAbortError, CdpTimeoutError, type SendOptions } from "@vertile-ai/jsdriver-runtime-js";
 import type { Tab, WaitOptions } from "./tab.js";
 
 export type UrlMatcher<T> = string | RegExp | ((event: T) => boolean | Promise<boolean>);
@@ -16,15 +16,51 @@ export interface Expectation<T> {
   [Symbol.asyncDispose](): Promise<void>;
 }
 
-export interface BaseRequestExpectation<T> extends Expectation<T> {
+interface BaseRequestExpectationState<T> extends Expectation<T> {
   readonly request: Promise<Protocol.Network.Request>;
   readonly response: Promise<Protocol.Network.Response>;
   readonly responseBody: Promise<readonly [string, boolean]>;
 }
 
-export interface RequestExpectation extends BaseRequestExpectation<ExpectedRequest> {}
+export class BaseRequestExpectation<T extends ExpectedRequest | ExpectedResponse = ExpectedRequest> {
+  protected readonly state: BaseRequestExpectationState<T>;
 
-export interface ResponseExpectation extends BaseRequestExpectation<ExpectedResponse> {}
+  public constructor(
+    tab: Tab,
+    matcher: UrlMatcher<Protocol.Network.Events.RequestWillBeSentEvent>,
+    options?: WaitOptions,
+  );
+  public constructor(
+    tab: Tab,
+    matcher: UrlMatcher<Protocol.Network.Events.ResponseReceivedEvent>,
+    options?: WaitOptions,
+  );
+  public constructor(
+    tab: Tab,
+    matcher: UrlMatcher<Protocol.Network.Events.RequestWillBeSentEvent> | UrlMatcher<Protocol.Network.Events.ResponseReceivedEvent>,
+    options: WaitOptions = {},
+  ) {
+    this.state = (new.target === ResponseExpectation
+      ? createResponseExpectationState(tab, matcher as UrlMatcher<Protocol.Network.Events.ResponseReceivedEvent>, options)
+      : createRequestExpectationState(tab, matcher as UrlMatcher<Protocol.Network.Events.RequestWillBeSentEvent>, options)) as BaseRequestExpectationState<T>;
+  }
+
+  public get ready(): Promise<void> { return this.state.ready; }
+  public get request(): Promise<Protocol.Network.Request> { return this.state.request; }
+  public get response(): Promise<Protocol.Network.Response> { return this.state.response; }
+  public get responseBody(): Promise<readonly [string, boolean]> { return this.state.responseBody; }
+  public cancel(reason?: unknown): Promise<void> { return this.state.cancel(reason); }
+  public reset(): Promise<void> { return this.state.reset(); }
+  public [Symbol.asyncDispose](): Promise<void> { return this.state[Symbol.asyncDispose](); }
+}
+
+export class RequestExpectation extends BaseRequestExpectation<ExpectedRequest> implements Expectation<ExpectedRequest> {
+  public get value(): Promise<ExpectedRequest> { return this.state.value; }
+}
+
+export class ResponseExpectation extends BaseRequestExpectation<ExpectedResponse> implements Expectation<ExpectedResponse> {
+  public get value(): Promise<ExpectedResponse> { return this.state.value; }
+}
 
 export interface InterceptionOptions {
   readonly url?: string | RegExp | ((event: Protocol.Fetch.Events.RequestPausedEvent) => boolean | Promise<boolean>);
@@ -35,7 +71,7 @@ export interface InterceptionOptions {
 
 export interface NextInterceptionOptions extends WaitOptions {}
 
-export class FetchInterception {
+export class BaseFetchInterception {
   readonly #tab: Tab;
   readonly #options: InterceptionOptions;
   readonly #queued: InterceptedRequest[] = [];
@@ -53,9 +89,28 @@ export class FetchInterception {
 
   public get ready(): Promise<void> { return this.#ready; }
 
-  public constructor(tab: Tab, options: InterceptionOptions = {}) {
+  public constructor(tab: Tab, options?: InterceptionOptions);
+  public constructor(
+    tab: Tab,
+    urlPattern: string,
+    requestStage: Protocol.Fetch.RequestStage,
+    resourceType: Protocol.Network.ResourceType,
+  );
+  public constructor(
+    tab: Tab,
+    optionsOrPattern: InterceptionOptions | string = {},
+    requestStage?: Protocol.Fetch.RequestStage,
+    resourceType?: Protocol.Network.ResourceType,
+  ) {
     this.#tab = tab;
-    this.#options = options;
+    if (typeof optionsOrPattern === "string") {
+      if (requestStage === undefined || resourceType === undefined) {
+        throw new TypeError("requestStage and resourceType are required with a URL pattern");
+      }
+      this.#options = { urlPattern: optionsOrPattern, stage: requestStage, resourceType };
+    } else {
+      this.#options = optionsOrPattern;
+    }
     this.#install();
   }
 
@@ -111,26 +166,87 @@ export class FetchInterception {
     return this.#currentRequest().then((request) => request.responseBody);
   }
 
+  public continueRequest(params?: Omit<Protocol.Fetch.Commands.ContinueRequestParams, "requestId">): Promise<void>;
   public continueRequest(
-    params: Omit<Protocol.Fetch.Commands.ContinueRequestParams, "requestId"> = {},
+    url?: string,
+    method?: string,
+    postData?: string,
+    headers?: Protocol.Fetch.HeaderEntry[],
+    interceptResponse?: boolean,
+  ): Promise<void>;
+  public continueRequest(
+    paramsOrUrl?: Omit<Protocol.Fetch.Commands.ContinueRequestParams, "requestId"> | string,
+    method?: string,
+    postData?: string,
+    headers?: Protocol.Fetch.HeaderEntry[],
+    interceptResponse?: boolean,
   ): Promise<void> {
+    const params = paramsOrUrl !== undefined && typeof paramsOrUrl === "object"
+      ? paramsOrUrl
+      : {
+          ...(paramsOrUrl === undefined ? {} : { url: paramsOrUrl }),
+          ...(method === undefined ? {} : { method }),
+          ...(postData === undefined ? {} : { postData }),
+          ...(headers === undefined ? {} : { headers }),
+          ...(interceptResponse === undefined ? {} : { interceptResponse }),
+        };
     return this.#currentRequest().then((request) => request.continueRequest(params));
   }
 
+  public continueResponse(params?: Omit<Protocol.Fetch.Commands.ContinueResponseParams, "requestId">): Promise<void>;
   public continueResponse(
-    params: Omit<Protocol.Fetch.Commands.ContinueResponseParams, "requestId"> = {},
+    responseCode?: number,
+    responsePhrase?: string,
+    responseHeaders?: Protocol.Fetch.HeaderEntry[],
+    binaryResponseHeaders?: string,
+  ): Promise<void>;
+  public continueResponse(
+    paramsOrCode?: Omit<Protocol.Fetch.Commands.ContinueResponseParams, "requestId"> | number,
+    responsePhrase?: string,
+    responseHeaders?: Protocol.Fetch.HeaderEntry[],
+    binaryResponseHeaders?: string,
   ): Promise<void> {
+    const params = paramsOrCode !== undefined && typeof paramsOrCode === "object"
+      ? paramsOrCode
+      : {
+          ...(paramsOrCode === undefined ? {} : { responseCode: paramsOrCode }),
+          ...(responsePhrase === undefined ? {} : { responsePhrase }),
+          ...(responseHeaders === undefined ? {} : { responseHeaders }),
+          ...(binaryResponseHeaders === undefined ? {} : { binaryResponseHeaders }),
+        };
     return this.#currentRequest().then((request) => request.continueResponse(params));
   }
 
-  public failRequest(errorReason: Protocol.Network.ErrorReason = "Failed"): Promise<void> {
+  public failRequest(errorReason: Protocol.Network.ErrorReason): Promise<void> {
     return this.#currentRequest().then((request) => request.failRequest(errorReason));
   }
 
   public fulfillRequest(
     responseCode: number,
-    options: Omit<Protocol.Fetch.Commands.FulfillRequestParams, "requestId" | "responseCode"> = {},
+    options?: Omit<Protocol.Fetch.Commands.FulfillRequestParams, "requestId" | "responseCode">,
+  ): Promise<void>;
+  public fulfillRequest(
+    responseCode: number,
+    responseHeaders?: Protocol.Fetch.HeaderEntry[],
+    binaryResponseHeaders?: string,
+    body?: string,
+    responsePhrase?: string,
+  ): Promise<void>;
+  public fulfillRequest(
+    responseCode: number,
+    optionsOrHeaders?: Omit<Protocol.Fetch.Commands.FulfillRequestParams, "requestId" | "responseCode"> | Protocol.Fetch.HeaderEntry[],
+    binaryResponseHeaders?: string,
+    body?: string,
+    responsePhrase?: string,
   ): Promise<void> {
+    const options = optionsOrHeaders === undefined || Array.isArray(optionsOrHeaders)
+      ? {
+          ...(optionsOrHeaders === undefined ? {} : { responseHeaders: optionsOrHeaders }),
+          ...(binaryResponseHeaders === undefined ? {} : { binaryResponseHeaders }),
+          ...(body === undefined ? {} : { body }),
+          ...(responsePhrase === undefined ? {} : { responsePhrase }),
+        }
+      : optionsOrHeaders;
     return this.#currentRequest().then((request) => request.fulfillRequest(responseCode, options));
   }
 
@@ -178,6 +294,16 @@ export class FetchInterception {
     await this.#ready;
   }
 
+  public [Symbol.asyncIterator](): AsyncIterator<InterceptedRequest> {
+    return {
+      next: async (): Promise<IteratorResult<InterceptedRequest>> => ({ value: await this.next(), done: false }),
+      return: async (): Promise<IteratorResult<InterceptedRequest>> => {
+        await this.close();
+        return { value: undefined, done: true };
+      },
+    };
+  }
+
   async #paused(event: Protocol.Fetch.Events.RequestPausedEvent): Promise<void> {
     if (this.#closed) return;
     const stage = event.responseStatusCode === undefined && event.responseErrorReason === undefined ? "Request" : "Response";
@@ -211,6 +337,8 @@ export class FetchInterception {
   }
 }
 
+export class FetchInterception extends BaseFetchInterception {}
+
 export class InterceptedRequest {
   #handled = false;
   #responseBody: Promise<readonly [string, boolean]> | undefined;
@@ -225,6 +353,19 @@ export class InterceptedRequest {
   public get request(): Protocol.Network.Request { return this.event.request; }
   public get resourceType(): Protocol.Network.ResourceType { return this.event.resourceType; }
   public get responseStatusCode(): number | undefined { return this.event.responseStatusCode; }
+  public get response(): Readonly<{
+    statusCode?: number;
+    statusText?: string;
+    headers?: readonly Protocol.Fetch.HeaderEntry[];
+  }> | undefined {
+    if (this.stage !== "Response") return undefined;
+    return {
+      ...(this.event.responseStatusCode === undefined ? {} : { statusCode: this.event.responseStatusCode }),
+      ...(this.event.responseStatusText === undefined ? {} : { statusText: this.event.responseStatusText }),
+      ...(this.event.responseHeaders === undefined ? {} : { headers: this.event.responseHeaders }),
+    };
+  }
+  public get error(): Protocol.Network.ErrorReason | undefined { return this.event.responseErrorReason; }
   public get handled(): boolean { return this.#handled; }
 
   public get responseBody(): Promise<readonly [string, boolean]> {
@@ -234,11 +375,54 @@ export class InterceptedRequest {
     return this.#responseBody;
   }
 
-  public continueRequest(params: Omit<Protocol.Fetch.Commands.ContinueRequestParams, "requestId"> = {}): Promise<void> {
+  public continueRequest(params?: Omit<Protocol.Fetch.Commands.ContinueRequestParams, "requestId">): Promise<void>;
+  public continueRequest(
+    url?: string,
+    method?: string,
+    postData?: string,
+    headers?: Protocol.Fetch.HeaderEntry[],
+    interceptResponse?: boolean,
+  ): Promise<void>;
+  public continueRequest(
+    paramsOrUrl?: Omit<Protocol.Fetch.Commands.ContinueRequestParams, "requestId"> | string,
+    method?: string,
+    postData?: string,
+    headers?: Protocol.Fetch.HeaderEntry[],
+    interceptResponse?: boolean,
+  ): Promise<void> {
+    const params = paramsOrUrl !== undefined && typeof paramsOrUrl === "object"
+      ? paramsOrUrl
+      : {
+          ...(paramsOrUrl === undefined ? {} : { url: paramsOrUrl }),
+          ...(method === undefined ? {} : { method }),
+          ...(postData === undefined ? {} : { postData }),
+          ...(headers === undefined ? {} : { headers }),
+          ...(interceptResponse === undefined ? {} : { interceptResponse }),
+        };
     return this.#handle("Fetch.continueRequest", { requestId: this.event.requestId, ...params });
   }
 
-  public continueResponse(params: Omit<Protocol.Fetch.Commands.ContinueResponseParams, "requestId"> = {}): Promise<void> {
+  public continueResponse(params?: Omit<Protocol.Fetch.Commands.ContinueResponseParams, "requestId">): Promise<void>;
+  public continueResponse(
+    responseCode?: number,
+    responsePhrase?: string,
+    responseHeaders?: Protocol.Fetch.HeaderEntry[],
+    binaryResponseHeaders?: string,
+  ): Promise<void>;
+  public continueResponse(
+    paramsOrCode?: Omit<Protocol.Fetch.Commands.ContinueResponseParams, "requestId"> | number,
+    responsePhrase?: string,
+    responseHeaders?: Protocol.Fetch.HeaderEntry[],
+    binaryResponseHeaders?: string,
+  ): Promise<void> {
+    const params = paramsOrCode !== undefined && typeof paramsOrCode === "object"
+      ? paramsOrCode
+      : {
+          ...(paramsOrCode === undefined ? {} : { responseCode: paramsOrCode }),
+          ...(responsePhrase === undefined ? {} : { responsePhrase }),
+          ...(responseHeaders === undefined ? {} : { responseHeaders }),
+          ...(binaryResponseHeaders === undefined ? {} : { binaryResponseHeaders }),
+        };
     return this.#handle("Fetch.continueResponse", { requestId: this.event.requestId, ...params });
   }
 
@@ -246,14 +430,36 @@ export class InterceptedRequest {
     return this.stage === "Response" ? this.continueResponse() : this.continueRequest();
   }
 
-  public failRequest(errorReason: Protocol.Network.ErrorReason = "Failed"): Promise<void> {
+  public failRequest(errorReason: Protocol.Network.ErrorReason): Promise<void> {
     return this.#handle("Fetch.failRequest", { requestId: this.event.requestId, errorReason });
   }
 
   public fulfillRequest(
     responseCode: number,
-    options: Omit<Protocol.Fetch.Commands.FulfillRequestParams, "requestId" | "responseCode"> = {},
+    options?: Omit<Protocol.Fetch.Commands.FulfillRequestParams, "requestId" | "responseCode">,
+  ): Promise<void>;
+  public fulfillRequest(
+    responseCode: number,
+    responseHeaders?: Protocol.Fetch.HeaderEntry[],
+    binaryResponseHeaders?: string,
+    body?: string,
+    responsePhrase?: string,
+  ): Promise<void>;
+  public fulfillRequest(
+    responseCode: number,
+    optionsOrHeaders?: Omit<Protocol.Fetch.Commands.FulfillRequestParams, "requestId" | "responseCode"> | Protocol.Fetch.HeaderEntry[],
+    binaryResponseHeaders?: string,
+    body?: string,
+    responsePhrase?: string,
   ): Promise<void> {
+    const options = optionsOrHeaders === undefined || Array.isArray(optionsOrHeaders)
+      ? {
+          ...(optionsOrHeaders === undefined ? {} : { responseHeaders: optionsOrHeaders }),
+          ...(binaryResponseHeaders === undefined ? {} : { binaryResponseHeaders }),
+          ...(body === undefined ? {} : { body }),
+          ...(responsePhrase === undefined ? {} : { responsePhrase }),
+        }
+      : optionsOrHeaders;
     return this.#handle("Fetch.fulfillRequest", { requestId: this.event.requestId, responseCode, ...options });
   }
 
@@ -281,11 +487,11 @@ export class InterceptedRequest {
   }
 }
 
-export function expectRequest(
+function createRequestExpectationState(
   tab: Tab,
   matcher: UrlMatcher<Protocol.Network.Events.RequestWillBeSentEvent>,
   options: WaitOptions = {},
-): RequestExpectation {
+): BaseRequestExpectationState<ExpectedRequest> {
   const bodies = new Map<Protocol.Network.RequestId, Promise<readonly [string, boolean]>>();
   const responses = new Map<Protocol.Network.RequestId, Promise<Protocol.Network.Response>>();
   const responseEvents = new Map<Protocol.Network.RequestId, Protocol.Network.Response>();
@@ -355,7 +561,7 @@ export function expectRequest(
       responseStates.get(event.requestId)?.reject(error);
       bodyStates.get(event.requestId)?.reject(error);
     }),
-  ]) as RequestExpectation;
+  ]) as BaseRequestExpectationState<ExpectedRequest>;
   Object.defineProperty(expectation, "responseBody", {
     enumerable: true,
     get: (): Promise<readonly [string, boolean]> => expectation.value.then((event) => bodies.get(event.requestId) ?? Promise.reject(new Error("Request body is unavailable"))).then((body) => body),
@@ -371,11 +577,11 @@ export function expectRequest(
   return expectation;
 }
 
-export function expectResponse(
+function createResponseExpectationState(
   tab: Tab,
   matcher: UrlMatcher<Protocol.Network.Events.ResponseReceivedEvent>,
   options: WaitOptions = {},
-): ResponseExpectation {
+): BaseRequestExpectationState<ExpectedResponse> {
   const bodies = new Map<Protocol.Network.RequestId, Promise<readonly [string, boolean]>>();
   const bodyStates = new Map<Protocol.Network.RequestId, {
     readonly resolve: (value: readonly [string, boolean]) => void;
@@ -385,6 +591,7 @@ export function expectResponse(
   const finished = new Set<Protocol.Network.RequestId>();
   const failures = new Map<Protocol.Network.RequestId, Error>();
   const requests = new Map<Protocol.Network.RequestId, Protocol.Network.Events.RequestWillBeSentEvent>();
+  const matchedRequests = new Map<Protocol.Network.RequestId, Protocol.Network.Request>();
   const expectation = networkExpectation(tab, `response matching ${describeMatcher(matcher)}`, options, (finish, fail, control) => {
     const matchedRequestIds = new Set<Protocol.Network.RequestId>();
     const loadBody = async (requestId: Protocol.Network.RequestId): Promise<void> => {
@@ -399,9 +606,23 @@ export function expectResponse(
       }
     };
     return [
-      tab.on("Network.requestWillBeSent", (event) => { requests.set(event.requestId, event); }),
+      tab.on("Network.requestWillBeSent", (event) => {
+        requests.set(event.requestId, event);
+        if (typeof matcher === "function" || matchedRequestIds.has(event.requestId)) return;
+        if (matchesUrlPattern(matcher, event.request.url)) {
+          matchedRequestIds.add(event.requestId);
+          matchedRequests.set(event.requestId, event.request);
+        }
+      }),
       tab.on("Network.responseReceived", async (event) => {
-        if (await matches(matcher, event.response.url, event) !== true) return;
+        if (typeof matcher === "function") {
+          if (await matcher(event) !== true) return;
+          matchedRequestIds.add(event.requestId);
+          const request = requests.get(event.requestId)?.request;
+          if (request !== undefined) matchedRequests.set(event.requestId, request);
+        } else if (!matchedRequestIds.has(event.requestId)) {
+          return;
+        }
         let resolveBody: (value: readonly [string, boolean]) => void = () => {};
         let rejectBody: (reason: unknown) => void = () => {};
         const bodyPromise = new Promise<readonly [string, boolean]>((resolve, reject) => { resolveBody = resolve; rejectBody = reject; });
@@ -426,20 +647,36 @@ export function expectResponse(
         if (matchedRequestIds.has(event.requestId)) await fail(error);
       }),
     ];
-  }) as ResponseExpectation;
+  }) as BaseRequestExpectationState<ExpectedResponse>;
   Object.defineProperty(expectation, "responseBody", {
     enumerable: true,
     get: (): Promise<readonly [string, boolean]> => expectation.value.then((event) => bodies.get(event.requestId) ?? Promise.reject(new Error("Response body is unavailable"))).then((body) => body),
   });
   Object.defineProperty(expectation, "request", {
     enumerable: true,
-    get: (): Promise<Protocol.Network.Request> => expectation.value.then((event) => requests.get(event.requestId)?.request ?? Promise.reject(new Error("Request is unavailable"))).then((request) => request),
+    get: (): Promise<Protocol.Network.Request> => expectation.value.then((event) => matchedRequests.get(event.requestId) ?? Promise.reject(new Error("Request is unavailable"))).then((request) => request),
   });
   Object.defineProperty(expectation, "response", {
     enumerable: true,
     get: (): Promise<Protocol.Network.Response> => expectation.value.then((event) => event.response),
   });
   return expectation;
+}
+
+export function expectRequest(
+  tab: Tab,
+  matcher: UrlMatcher<Protocol.Network.Events.RequestWillBeSentEvent>,
+  options: WaitOptions = {},
+): RequestExpectation {
+  return new RequestExpectation(tab, matcher, options);
+}
+
+export function expectResponse(
+  tab: Tab,
+  matcher: UrlMatcher<Protocol.Network.Events.ResponseReceivedEvent>,
+  options: WaitOptions = {},
+): ResponseExpectation {
+  return new ResponseExpectation(tab, matcher, options);
 }
 
 function networkExpectation<T>(
@@ -568,13 +805,15 @@ function commandOptions(options: WaitOptions): SendOptions {
 
 async function matches<T>(matcher: UrlMatcher<T> | undefined, url: string, event: T): Promise<boolean> {
   if (matcher === undefined) return true;
-  if (typeof matcher === "string") return new RegExp(`^(?:${matcher})$`).test(url);
-  if (matcher instanceof RegExp) {
-    matcher.lastIndex = 0;
-    const match = matcher.exec(url);
-    return match?.[0] === url;
-  }
+  if (typeof matcher !== "function") return matchesUrlPattern(matcher, url);
   return matcher(event);
+}
+
+function matchesUrlPattern(matcher: string | RegExp, url: string): boolean {
+  if (typeof matcher === "string") return new RegExp(`^(?:${matcher})$`).test(url);
+  matcher.lastIndex = 0;
+  const match = matcher.exec(url);
+  return match?.[0] === url;
 }
 
 function describeMatcher<T>(matcher: UrlMatcher<T>): string {

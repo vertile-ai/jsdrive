@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { createServer, type Server } from "node:http";
 import test from "node:test";
-import type { RuntimeBackendFactory } from "@nodriver/runtime-js";
+import type { RuntimeBackendFactory } from "@vertile-ai/jsdriver-runtime-js";
 import { Browser, Config, discoverChromeExecutable } from "../src/index.js";
 
 let executable = "";
@@ -101,7 +101,7 @@ test("ZDTEST-0020 one Config launches three isolated browsers", { timeout: 60_00
   try {
     browsers.push(await Browser.start(shared), await Browser.start(shared), await Browser.start(shared));
     assert.equal(shared.port, undefined);
-    assert.equal(shared.userDataDir, undefined);
+    assert.equal(shared.configuredUserDataDir, undefined);
     assert.equal(browsers.every((browser) => !browser.config.usesCustomDataDir), true);
     assert.equal(new Set(browsers.map((browser) => browser.config.port)).size, 3);
     assert.equal(new Set(browsers.map((browser) => browser.config.userDataDir)).size, 3);

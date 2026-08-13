@@ -1,5 +1,5 @@
-import { Browser, discoverChromeExecutable, type ConnectionMode } from "@nodriver/api";
-import { CdpAbortError } from "@nodriver/runtime-js";
+import { Browser, discoverChromeExecutable, type ConnectionMode } from "jsdriver";
+import { CdpAbortError } from "@vertile-ai/jsdriver-runtime-js";
 import { NativeConnection } from "./index.js";
 
 const executable = await discoverChromeExecutable();
@@ -12,7 +12,8 @@ for (const connectionMode of ["direct", "flattened"] satisfies readonly Connecti
     backend: NativeConnection,
   });
   try {
-    const version = await browser.testConnection();
+    if (!await browser.testConnection()) throw new Error("native browser connection probe failed");
+    const version = await browser.getVersion();
     const tab = await browser.get("data:text/html,<title>native</title><main id=result>native-ok</main>");
     const releaseRuntime = await tab.acquireDomain("Runtime");
     const eventPromise = new Promise<string>((resolve) => {

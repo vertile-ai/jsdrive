@@ -112,3 +112,14 @@ V1 不是玩具层，而是一个真实可运行的完整纵向路径：启动�
 ### Stop condition
 
 只有 `PAR-001` 至 `PAR-008` 全部有可重复证据、完整映射报告为零缺口、独立 reviewer verdict 为 `approved`、协调者复验且工作树干净时，才允许再次使用“完成”一词。任何外部条件造成的未运行项必须明确报告为 blocker，不能改写成 non-goal 或 residual difference。
+
+## 当前完整 parity 状态（2026-08-13）
+
+- `PAR-001` 未完成：inventory validation 本身通过，但只有 66 个 API mapping 为 `VERIFIED`；仍有 133 个 `MISSING`、170 个 `UNKNOWN`、164 个 `CANDIDATE`。
+- Connection family 已有 strict TypeScript public surface 和 deterministic executable checks；runtime-js 19/19、API root export 1/1 通过，bounded reviewer verdict 为 `approved`。
+- `EventTransaction` 的任意 thenable payload 存在语言级差异：ECMAScript `await` 必须 assimilate thenable，无法像 Python Future 一样保证返回 payload object identity。当前只声明同步 `event`/`result()` state parity，不声明 exact await return parity。
+- 当前仓库规则禁止在没有本次明确授权时运行 headful browser，而上游 inventory 含 49 个 `headless1` case；这些历史 `PASS` mapping 在本次 engagement 中不可重复验证。
+- 上游 `test_multiple_browsers_diff_userdata` 要求同时运行三个浏览器，但仓库的 Browser Test Isolation 明确禁止任意时刻超过一个 nodriver-managed Chromium。
+- 上游公开 `Tab.activate` / `Tab.bring_to_front` 能力会激活窗口或抢占焦点，但仓库规则明确禁止实现与测试此行为。
+
+在上述合同冲突由用户或仓库 policy 明确裁决前，完整 parity stop condition 不可满足；不得把 inventory 的结构校验通过或历史 test mapping 当成完整 drop-in replacement 的完成证据。

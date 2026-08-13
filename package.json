@@ -13,6 +13,7 @@
     "build": "npm run build --workspace=@nodriver/protocol && npm run build --workspace=@nodriver/runtime-js && npm run build --workspace=@nodriver/api",
     "generate": "npm run generate --workspace=@nodriver/protocol-codegen",
     "test": "npm run test --workspace=@nodriver/protocol-codegen && npm run test --workspace=@nodriver/runtime-js && npm run test --workspace=@nodriver/api",
+    "conformance:dom": "npm run test --workspace=@nodriver/api",
     "smoke:m2": "npm run build && npm run smoke --workspace=@nodriver/api",
     "typecheck": "tsc -p tsconfig.json"
   },

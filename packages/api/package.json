@@ -1,6 +1,7 @@
 {
   "name": "@nodriver/api",
   "version": "0.0.0",
+  "description": "Typed clean-room Chrome DevTools Protocol browser automation API",
   "private": true,
   "type": "module",
   "files": ["dist"],
@@ -12,7 +13,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "test": "tsc -p tsconfig.test.json && node --test dist-test/test/browser.test.js",
+    "test": "tsc -p tsconfig.test.json && node --test dist-test/test/*.test.js",
     "smoke": "node dist/smoke.js"
   },
   "dependencies": {

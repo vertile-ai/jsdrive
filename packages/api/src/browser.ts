@@ -5,6 +5,9 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { Protocol } from "@nodriver/protocol";
 import { CdpConnection, CdpTimeoutError, type DomainPolicy } from "@nodriver/runtime-js";
+import { Tab, TargetClosedError, TargetCrashedError } from "./tab.js";
+
+export { Tab, TargetClosedError, TargetCrashedError } from "./tab.js";
 
 export type ConnectionMode = "direct" | "flattened";
 
@@ -46,128 +49,6 @@ export interface ConnectOptions extends BrowserEndpoint {
   readonly connectionMode?: ConnectionMode;
   readonly domainPolicy?: DomainPolicy;
   readonly timeoutMs?: number;
-}
-
-export class TargetClosedError extends Error {
-  public constructor(public readonly targetId: string) {
-    super(`CDP target closed: ${targetId}`);
-    this.name = "TargetClosedError";
-  }
-}
-
-export class TargetCrashedError extends Error {
-  public constructor(
-    public readonly targetId: string,
-    public readonly status: string,
-    public readonly errorCode: number,
-  ) {
-    super(`CDP target crashed: ${targetId} (${status}, ${errorCode})`);
-    this.name = "TargetCrashedError";
-  }
-}
-
-export class Tab {
-  #failure: TargetClosedError | TargetCrashedError | undefined;
-
-  public constructor(
-    public readonly targetId: string,
-    readonly connection: CdpConnection,
-    readonly sessionId?: string,
-  ) {}
-
-  public get enabledDomains(): ReadonlySet<string> {
-    return this.connection.enabledDomains;
-  }
-
-  public get closed(): boolean {
-    return this.#failure instanceof TargetClosedError;
-  }
-
-  public get crashed(): boolean {
-    return this.#failure instanceof TargetCrashedError;
-  }
-
-  public async navigate(url: string, timeoutMs = 10_000): Promise<Protocol.Page.Commands.NavigateResult> {
-    this.#assertAvailable();
-    const options = this.#options(timeoutMs);
-    const release = this.connection.domainPolicy === "manual"
-      ? (await this.connection.enableDomain("Page", options), async () => {})
-      : await this.connection.acquireDomain("Page", options);
-    const load = this.#waitForLoad(timeoutMs);
-    try {
-      let result: Protocol.Page.Commands.NavigateResult;
-      try {
-        result = await this.connection.send("Page.navigate", { url }, options);
-      } catch (error) {
-        load.cancel();
-        await load.promise;
-        throw error;
-      }
-      if (await load.promise !== "loaded") {
-        throw new CdpTimeoutError("Page load", timeoutMs);
-      }
-      return result;
-    } finally {
-      load.cancel();
-      await release();
-    }
-  }
-
-  public async evaluate<T = unknown>(expression: string, timeoutMs = 10_000): Promise<T> {
-    this.#assertAvailable();
-    const result = await this.connection.send("Runtime.evaluate", {
-      expression,
-      returnByValue: true,
-      awaitPromise: true,
-    }, this.#options(timeoutMs));
-    if (result.exceptionDetails !== undefined) {
-      throw new Error(result.exceptionDetails.text);
-    }
-    return result.result.value as T;
-  }
-
-  public close(): void {
-    if (this.sessionId === undefined) this.connection.close();
-  }
-
-  public markClosed(): void {
-    this.#failure = new TargetClosedError(this.targetId);
-    this.close();
-  }
-
-  public markCrashed(status: string, errorCode: number): void {
-    this.#failure = new TargetCrashedError(this.targetId, status, errorCode);
-  }
-
-  #options(timeoutMs: number): { readonly timeoutMs: number; readonly sessionId?: string } {
-    return this.sessionId === undefined ? { timeoutMs } : { timeoutMs, sessionId: this.sessionId };
-  }
-
-  #waitForLoad(timeoutMs: number): {
-    readonly promise: Promise<"loaded" | "timed-out" | "cancelled">;
-    readonly cancel: () => void;
-  } {
-    let finish: (result: "loaded" | "timed-out" | "cancelled") => void = () => {};
-    let settled = false;
-    const promise = new Promise<"loaded" | "timed-out" | "cancelled">((resolve) => { finish = resolve; });
-    const complete = (result: "loaded" | "timed-out" | "cancelled"): void => {
-      if (settled) return;
-      settled = true;
-      clearTimeout(timeout);
-      off();
-      finish(result);
-    };
-    const off = this.connection.on("Page.loadEventFired", (_params, metadata) => {
-        if (metadata.sessionId !== this.sessionId) return;
-        complete("loaded");
-      });
-    const timeout = setTimeout(() => complete("timed-out"), timeoutMs);
-    return { promise, cancel: () => complete("cancelled") };
-  }
-
-  #assertAvailable(): void {
-    if (this.#failure !== undefined) throw this.#failure;
-  }
 }
 
 export class Browser {
@@ -284,13 +165,13 @@ export class Browser {
     let tab: Tab;
     if (this.connectionMode === "flattened") {
       const sessionId = this.#sessions.get(targetId) ?? await this.#waitForSession(targetId);
-      tab = new Tab(targetId, this.#connection, sessionId);
+      tab = new Tab(targetId, this.#connection, sessionId, this.#connection);
     } else {
       const websocket = await this.#waitForTargetWebSocket(targetId);
       tab = new Tab(targetId, await CdpConnection.connect(websocket, {
         timeoutMs: this.#timeoutMs,
         domainPolicy: this.#connection.domainPolicy,
-      }));
+      }), undefined, this.#connection);
     }
     this.#tabs.set(targetId, tab);
     const { targetInfo } = await this.#connection.send("Target.getTargetInfo", { targetId }, { timeoutMs: this.#timeoutMs });

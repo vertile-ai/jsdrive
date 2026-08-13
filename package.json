@@ -1,0 +1,23 @@
+{
+  "name": "nodriver",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace=@nodriver/protocol",
+    "generate": "npm run generate --workspace=@nodriver/protocol-codegen",
+    "test": "npm run test --workspace=@nodriver/protocol-codegen",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.1",
+    "devtools-protocol": "0.0.1677763",
+    "typescript": "5.9.3"
+  }
+}

@@ -1,0 +1,14 @@
+node_modules/
+dist/
+target/
+coverage/
+*.node
+*.log
+.DS_Store
+.tmp/
+test-results/
+.DS_Store
+node_modules/
+dist/
+target/
+*.tsbuildinfo

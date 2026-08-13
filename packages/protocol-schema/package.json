@@ -1,0 +1,11 @@
+{
+  "name": "@nodriver/protocol-schema",
+  "version": "0.0.0",
+  "private": true,
+  "files": [
+    "browser_protocol.json",
+    "js_protocol.json",
+    "LICENSE",
+    "PROVENANCE.json"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "@nodriver/protocol-codegen",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "generate": "npm run build && node dist/generate.js",
+    "test": "npm run generate && node --test dist/generate.test.js"
+  }
+}

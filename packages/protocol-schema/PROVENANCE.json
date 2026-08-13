@@ -1,0 +1,12 @@
+{
+  "package": "devtools-protocol",
+  "version": "0.0.1677763",
+  "registry": "https://registry.npmjs.org/devtools-protocol/-/devtools-protocol-0.0.1677763.tgz",
+  "npmIntegrity": "sha512-DGflkl9ehLrUXqK3ntQ5ORMWa5gy8MafMGMsHGc7Vu3YGiyU7I8lwo3bWV35a3mmZeFxEzBSWB0zwJKD7paCIw==",
+  "tarballSha256": "d404b8e0e0b82aba4adb42d7bedefcbecb028d6631e279823b8e16fda88cb383",
+  "license": "BSD-3-Clause",
+  "files": {
+    "browser_protocol.json": "e55633447016ec834e7de831a7567e9760506e3fb9cb7a8755d1521750b50907",
+    "js_protocol.json": "cf124bf143bf361a7900bcfeea3926c1cfcc1da36d83756c228c43d84321539a"
+  }
+}

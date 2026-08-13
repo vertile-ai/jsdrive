@@ -7,6 +7,7 @@ import type { Protocol } from "@nodriver/protocol";
 import {
   CdpConnection,
   CdpTimeoutError,
+  RUNTIME_BACKEND_INTERNAL_SEND,
   type DomainPolicy,
   type RuntimeBackend,
   type RuntimeBackendFactory,
@@ -445,7 +446,18 @@ export class Browser {
         (targetInfo) => this.#targets.set(targetId, targetInfo),
       );
     }
+    if (this.#process !== undefined && this.config.headless) await this.#prepareHeadless(tab);
     return tab;
+  }
+
+  async #prepareHeadless(tab: Tab): Promise<void> {
+    const options = { timeoutMs: this.#timeoutMs, ...(tab.sessionId === undefined ? {} : { sessionId: tab.sessionId }) };
+    const internalSend = tab.connection[RUNTIME_BACKEND_INTERNAL_SEND]?.bind(tab.connection)
+      ?? tab.connection.sendRaw.bind(tab.connection);
+    const evaluated = await internalSend("Runtime.evaluate", { expression: "navigator.userAgent", returnByValue: true }, options);
+    const userAgent = (evaluated.result as { readonly value?: unknown } | undefined)?.value;
+    if (typeof userAgent !== "string") throw new Error("Headless Chrome did not expose a user agent");
+    await internalSend("Network.setUserAgentOverride", { userAgent: userAgent.replace("Headless", "") }, options);
   }
 
   #frameTabs(parentTargetId: string): readonly Tab[] {

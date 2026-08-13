@@ -32,6 +32,10 @@ export interface EventMetadata {
 }
 
 export type DomainEnableSource = "manual" | "auto";
+type CommandSource = DomainEnableSource | "internal";
+
+/** @internal Browser bootstrap commands that must not affect domain bookkeeping. */
+export const RUNTIME_BACKEND_INTERNAL_SEND = Symbol("nodriver.runtimeBackendInternalSend");
 
 export interface TraceEntry {
   readonly direction: "send" | "receive";
@@ -96,6 +100,11 @@ export interface RuntimeBackend {
   readonly manuallyEnabledDomainsFor?: (sessionId?: string) => ReadonlySet<string>;
   readonly forgetAutoDomain?: (domain: string, options?: SendOptions) => void;
   readonly closed: boolean;
+  readonly [RUNTIME_BACKEND_INTERNAL_SEND]?: (
+    method: string,
+    params?: unknown,
+    options?: SendOptions,
+  ) => Promise<Readonly<Record<string, unknown>>>;
   send<M extends ProtocolCommand>(
     method: M,
     ...args: CommandParams<M> extends undefined
@@ -134,7 +143,7 @@ interface Pending {
   readonly cleanup: () => void;
   readonly method: string;
   readonly options: SendOptions;
-  readonly source: DomainEnableSource;
+  readonly source: CommandSource;
 }
 
 export class CdpConnection implements RuntimeBackend {
@@ -245,6 +254,14 @@ export class CdpConnection implements RuntimeBackend {
     return this.#sendRawWithSource(method, params, options, "manual");
   }
 
+  public [RUNTIME_BACKEND_INTERNAL_SEND](
+    method: string,
+    params?: unknown,
+    options: SendOptions = {},
+  ): Promise<Readonly<Record<string, unknown>>> {
+    return this.#sendRaw(method, params, options, "internal");
+  }
+
   #sendRawWithSource(
     method: string,
     params: unknown,
@@ -270,7 +287,7 @@ export class CdpConnection implements RuntimeBackend {
     method: string,
     params: unknown,
     options: SendOptions,
-    source: DomainEnableSource,
+    source: CommandSource,
   ): Promise<Readonly<Record<string, unknown>>> {
     if (this.#closed) return Promise.reject(new CdpConnectionClosedError());
     if (options.signal?.aborted === true) {
@@ -485,7 +502,8 @@ export class CdpConnection implements RuntimeBackend {
     else this.#autoEnablingDomainKeys.set(key, remaining);
   }
 
-  #recordDomainCommand(method: string, options: SendOptions, source: DomainEnableSource): void {
+  #recordDomainCommand(method: string, options: SendOptions, source: CommandSource): void {
+    if (source === "internal") return;
     const match = /^(.*)\.(enable|disable)$/.exec(method);
     if (match === null) return;
     const domain = match[1];

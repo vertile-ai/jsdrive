@@ -1,6 +1,15 @@
 import { writeFile } from "node:fs/promises";
 import type { Protocol } from "@nodriver/protocol";
-import { dispatchKey, KeyEvents, type KeyInput } from "./input.js";
+import {
+  dispatchKey,
+  keyInputList,
+  KeyEvents,
+  KeyModifiers,
+  KeyPressEvent,
+  SpecialKeys,
+  type KeyEventPayload,
+  type KeyInput,
+} from "./input.js";
 import type { ScreencastSession, Tab } from "./tab.js";
 
 export interface Position {
@@ -189,34 +198,35 @@ export class Element {
   }
 
   public async setValue(value: string): Promise<void> {
-    await this.apply("function (value) { const proto = this instanceof HTMLTextAreaElement ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype; const setter = Object.getOwnPropertyDescriptor(proto, 'value')?.set; setter ? setter.call(this, value) : (this.value = value); this.dispatchEvent(new InputEvent('input', { bubbles: true, inputType: 'insertText', data: value })); this.dispatchEvent(new Event('change', { bubbles: true })); }", value);
+    await this.#setTextControlValue(value, "insertText", value);
   }
 
   public async setText(value: string): Promise<void> {
     await this.apply("function (value) { this.textContent = value; this.dispatchEvent(new InputEvent('input', { bubbles: true, inputType: 'insertText', data: value })); }", value);
   }
 
-  public clearInput(): Promise<void> { return this.setValue(""); }
+  public clearInput(): Promise<void> {
+    return this.#setTextControlValue("", "deleteContentBackward", null);
+  }
 
   public async clearInputByDeleting(): Promise<void> {
     await this.focus();
     const value = await this.getValue();
     await this.apply("function () { this.setSelectionRange?.(this.value.length, this.value.length); }");
     for (const _segment of graphemes(value)) {
-      await this.tab.send("Input.dispatchKeyEvent", { type: "rawKeyDown", key: "Backspace", code: "Backspace", windowsVirtualKeyCode: 8 });
-      await this.tab.send("Input.dispatchKeyEvent", { type: "keyUp", key: "Backspace", code: "Backspace", windowsVirtualKeyCode: 8 });
+      for (const event of KeyEvents.fromMixedInput([SpecialKeys.Backspace]).toCdpEvents()) {
+        await dispatchKey(this.tab, event);
+      }
     }
   }
 
   public async sendKeys(input: KeyInput | KeyEvents | readonly KeyInput[]): Promise<void> {
     await this.focus();
-    const inputs = input instanceof KeyEvents ? input.events : Array.isArray(input) ? input : [input as KeyInput];
-    for (const item of inputs) {
-      if (typeof item === "string") {
-        for (const segment of graphemes(item)) await this.tab.send("Input.insertText", { text: segment });
-      } else {
-        await dispatchKey(this.tab, item);
-      }
+    const events = input instanceof KeyEvents
+      ? input.toCdpEvents()
+      : KeyEvents.fromMixedInput(keyInputList(input)).toCdpEvents();
+    for (const event of events) {
+      await dispatchElementKey(this.tab, event);
     }
   }
 
@@ -297,6 +307,19 @@ export class Element {
     this.#objectId = object.objectId;
     return object.objectId;
   }
+
+  async #setTextControlValue(
+    value: string,
+    inputType: "deleteContentBackward" | "insertText",
+    data: string | null,
+  ): Promise<void> {
+    await this.apply(
+      "function (value, inputType, data) { const proto = this instanceof HTMLTextAreaElement ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype; const setter = Object.getOwnPropertyDescriptor(proto, 'value')?.set; setter ? setter.call(this, value) : (this.value = value); this.dispatchEvent(new InputEvent('input', { bubbles: true, inputType, data })); this.dispatchEvent(new Event('change', { bubbles: true })); }",
+      value,
+      inputType,
+      data,
+    );
+  }
 }
 
 function attributesFrom(values: readonly string[] | undefined): Readonly<Record<string, string>> {
@@ -311,6 +334,31 @@ function attributesFrom(values: readonly string[] | undefined): Readonly<Record<
 
 function graphemes(value: string): readonly string[] {
   return [...new Intl.Segmenter(undefined, { granularity: "grapheme" }).segment(value)].map(({ segment }) => segment);
+}
+
+async function dispatchElementKey(tab: Tab, event: KeyEventPayload): Promise<void> {
+  const command = blinkEditingCommand(event);
+  if (command === undefined) return dispatchKey(tab, event);
+  await tab.send("Input.dispatchKeyEvent", {
+    type: "keyDown",
+    ...(event.key === undefined ? {} : { key: event.key }),
+    ...(event.code === undefined ? {} : { code: event.code }),
+    ...(event.text === undefined ? {} : { text: event.text }),
+    ...(event.windowsVirtualKeyCode === undefined ? {} : { windowsVirtualKeyCode: event.windowsVirtualKeyCode }),
+    ...(event.nativeVirtualKeyCode === undefined ? {} : { nativeVirtualKeyCode: event.nativeVirtualKeyCode }),
+    ...(event.modifiers === undefined ? {} : { modifiers: event.modifiers }),
+    commands: [command],
+  });
+}
+
+function blinkEditingCommand(event: KeyEventPayload): "SelectAll" | "Copy" | "Paste" | undefined {
+  if (event.type !== KeyPressEvent.KeyDown || event.modifiers !== KeyModifiers.Control) return undefined;
+  switch (event.key) {
+    case "a": return "SelectAll";
+    case "c": return "Copy";
+    case "v": return "Paste";
+    default: return undefined;
+  }
 }
 
 function flattenNodes(node: Protocol.DOM.Node): Protocol.DOM.Node[] {

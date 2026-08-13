@@ -89,6 +89,30 @@
     "verifiedSemantics": ["return"]
   },
   {
+    "nodeMember": "Element.sendKeys",
+    "testIds": ["ZDTEST-0016", "ZDTEST-0017", "ZDTEST-0018", "ZDTEST-0019", "ZDTEST-0025", "ZDTEST-0026"],
+    "upstream": "zendriver.core.element.Element.send_keys",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Element.clearInput",
+    "testIds": ["ZDTEST-0021", "ZDTEST-0022"],
+    "upstream": "zendriver.core.element.Element.clear_input",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Element.clearInputByDeleting",
+    "testIds": ["ZDTEST-0023", "ZDTEST-0024", "ZDTEST-0025", "ZDTEST-0026"],
+    "upstream": "zendriver.core.element.Element.clear_input_by_deleting",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "KeyEvents.fromMixedInput",
+    "testIds": ["ZDTEST-0016", "ZDTEST-0017"],
+    "upstream": "zendriver.core.keys.KeyEvents.from_mixed_input",
+    "verifiedSemantics": ["state"]
+  },
+  {
     "nodeMember": "Config",
     "testIds": ["ZDTEST-0020"],
     "upstream": "zendriver.core.config.Config"

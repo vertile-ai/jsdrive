@@ -16,10 +16,10 @@
       "file": "tests/bot_detection/test_browserscan.py",
       "id": "ZDTEST-0001",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/bot-detection-parity.test.ts::ZDTEST-0001",
+        "note": "Passed the exact BrowserScan Normal result against the same-executable Zendriver 0.15.5 reference and real Node JS/native direct/flattened headless runs.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_browserscan",
@@ -40,10 +40,10 @@
       "file": "tests/bot_detection/test_browserscan.py",
       "id": "ZDTEST-0002",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/bot-detection-parity.test.ts::ZDTEST-0002",
+        "note": "Passed the exact BrowserScan Normal result against the same-executable Zendriver 0.15.5 reference and real Node JS/native direct/flattened headful runs.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_browserscan",
@@ -372,10 +372,10 @@
       "file": "tests/core/test_keyinputs.py",
       "id": "ZDTEST-0016",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/input-react-parity.test.ts::ZDTEST-0016",
+        "note": "Passed the pinned public four-child contenteditable assertion through Element internal Blink editing-command compatibility in real Chromium 145 across JS/native and direct/flattened headless runs. The separate pinned upstream headless reference observation remains a FAIL with two children on this Chromium version.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_visible_events",
@@ -396,10 +396,10 @@
       "file": "tests/core/test_keyinputs.py",
       "id": "ZDTEST-0017",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/input-react-parity.test.ts::ZDTEST-0017",
+        "note": "Passed the pinned exact four-child contenteditable structure in real Chromium 145 across JS/native and direct/flattened headful runs.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_visible_events",
@@ -420,10 +420,10 @@
       "file": "tests/core/test_keyinputs.py",
       "id": "ZDTEST-0018",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/input-react-parity.test.ts::ZDTEST-0018",
+        "note": "Passed Escape keydown then keyup ordering and popup closure in real Chromium 145 across JS/native and direct/flattened headless runs.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_escape_key_popup",
@@ -444,10 +444,10 @@
       "file": "tests/core/test_keyinputs.py",
       "id": "ZDTEST-0019",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/input-react-parity.test.ts::ZDTEST-0019",
+        "note": "Passed Escape keydown then keyup ordering and popup closure in real Chromium 145 across JS/native and direct/flattened headful runs.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_escape_key_popup",
@@ -492,10 +492,10 @@
       "file": "tests/core/test_react_controlled_input.py",
       "id": "ZDTEST-0021",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/input-react-parity.test.ts::ZDTEST-0021",
+        "note": "Passed React-controlled clear via the native prototype value setter and input notification in real Chromium 145 across JS/native and direct/flattened headless runs.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_clear_input_does_not_notify_react",
@@ -516,10 +516,10 @@
       "file": "tests/core/test_react_controlled_input.py",
       "id": "ZDTEST-0022",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/input-react-parity.test.ts::ZDTEST-0022",
+        "note": "Passed React-controlled clear via the native prototype value setter and input notification in real Chromium 145 across JS/native and direct/flattened headful runs.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_clear_input_does_not_notify_react",
@@ -540,10 +540,10 @@
       "file": "tests/core/test_react_controlled_input.py",
       "id": "ZDTEST-0023",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/input-react-parity.test.ts::ZDTEST-0023",
+        "note": "Passed React-controlled Backspace deletion with visible keyboard events in real Chromium 145 across JS/native and direct/flattened headless runs.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_clear_input_by_deleting_does_not_notify_react",
@@ -564,10 +564,10 @@
       "file": "tests/core/test_react_controlled_input.py",
       "id": "ZDTEST-0024",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/input-react-parity.test.ts::ZDTEST-0024",
+        "note": "Passed React-controlled Backspace deletion with visible keyboard events in real Chromium 145 across JS/native and direct/flattened headful runs.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_clear_input_by_deleting_does_not_notify_react",
@@ -588,10 +588,10 @@
       "file": "tests/core/test_react_controlled_input.py",
       "id": "ZDTEST-0025",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/input-react-parity.test.ts::ZDTEST-0025",
+        "note": "Passed clear, controlled render commit, and replacement fill without a mixed value in real Chromium 145 across JS/native and direct/flattened headless runs.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_fill_react_controlled_input_produces_mixed_value",
@@ -612,10 +612,10 @@
       "file": "tests/core/test_react_controlled_input.py",
       "id": "ZDTEST-0026",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/input-react-parity.test.ts::ZDTEST-0026",
+        "note": "Passed clear, controlled render commit, and replacement fill without a mixed value in real Chromium 145 across JS/native and direct/flattened headful runs.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_fill_react_controlled_input_produces_mixed_value",
@@ -2007,10 +2007,10 @@
       "file": "tests/docs/tutorials/test_account_creation_tutorial.py",
       "id": "ZDTEST-0084",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0084",
+        "note": "Passed the controlled account tutorial page-open behavior in real JS/native direct/flattened headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_account_creation_tutorial_1",
@@ -2035,10 +2035,10 @@
       "file": "tests/docs/tutorials/test_account_creation_tutorial.py",
       "id": "ZDTEST-0085",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0085",
+        "note": "Passed the controlled account tutorial page-open behavior in real JS/native direct/flattened headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_account_creation_tutorial_1",
@@ -2063,10 +2063,10 @@
       "file": "tests/docs/tutorials/test_account_creation_tutorial.py",
       "id": "ZDTEST-0086",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0086",
+        "note": "Passed the complete controlled sign-up, confirmation, and login tutorial journey in real JS/native direct/flattened headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_account_creation_tutorial_2",
@@ -2091,10 +2091,10 @@
       "file": "tests/docs/tutorials/test_account_creation_tutorial.py",
       "id": "ZDTEST-0087",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0087",
+        "note": "Passed the complete controlled sign-up, confirmation, and login tutorial journey in real JS/native direct/flattened headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_account_creation_tutorial_2",
@@ -2119,10 +2119,10 @@
       "file": "tests/docs/tutorials/test_api_responses_tutorial.py",
       "id": "ZDTEST-0088",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0088",
+        "note": "Passed the controlled API tutorial page-open behavior in real JS/native direct/flattened headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_api_responses_tutorial_1",
@@ -2147,10 +2147,10 @@
       "file": "tests/docs/tutorials/test_api_responses_tutorial.py",
       "id": "ZDTEST-0089",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0089",
+        "note": "Passed the controlled API tutorial page-open behavior in real JS/native direct/flattened headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_api_responses_tutorial_1",
@@ -2175,10 +2175,10 @@
       "file": "tests/docs/tutorials/test_api_responses_tutorial.py",
       "id": "ZDTEST-0090",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0090",
+        "note": "Passed matching a controlled API response and decoding its body in real JS/native direct/flattened headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_api_responses_tutorial_2",
@@ -2203,10 +2203,10 @@
       "file": "tests/docs/tutorials/test_api_responses_tutorial.py",
       "id": "ZDTEST-0091",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0091",
+        "note": "Passed matching a controlled API response and decoding its body in real JS/native direct/flattened headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_api_responses_tutorial_2",
@@ -2231,10 +2231,10 @@
       "file": "tests/docs/tutorials/test_cdp_tutorial.py",
       "id": "ZDTEST-0092",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0092",
+        "note": "Passed repeated typed Runtime.enable commands in real JS/native direct/flattened headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_cdp_tutorial_1",
@@ -2259,10 +2259,10 @@
       "file": "tests/docs/tutorials/test_cdp_tutorial.py",
       "id": "ZDTEST-0093",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0093",
+        "note": "Passed repeated typed Runtime.enable commands in real JS/native direct/flattened headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_cdp_tutorial_1",
@@ -2287,10 +2287,10 @@
       "file": "tests/docs/tutorials/test_cdp_tutorial.py",
       "id": "ZDTEST-0094",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0094",
+        "note": "Passed typed Runtime console handler registration, delivery, and removal in real JS/native direct/flattened headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_cdp_tutorial_2",
@@ -2315,10 +2315,10 @@
       "file": "tests/docs/tutorials/test_cdp_tutorial.py",
       "id": "ZDTEST-0095",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0095",
+        "note": "Passed typed Runtime console handler registration, delivery, and removal in real JS/native direct/flattened headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_cdp_tutorial_2",
@@ -2343,10 +2343,10 @@
       "file": "tests/docs/tutorials/test_infinite_scrolling_tutorial.py",
       "id": "ZDTEST-0096",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0096",
+        "note": "Passed observing an initially empty controlled infinite-scroll container in real JS/native direct/flattened headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_infinite_scrolling_tutorial_1",
@@ -2371,10 +2371,10 @@
       "file": "tests/docs/tutorials/test_infinite_scrolling_tutorial.py",
       "id": "ZDTEST-0097",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0097",
+        "note": "Passed observing an initially empty controlled infinite-scroll container in real JS/native direct/flattened headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_infinite_scrolling_tutorial_1",
@@ -2399,10 +2399,10 @@
       "file": "tests/docs/tutorials/test_infinite_scrolling_tutorial.py",
       "id": "ZDTEST-0098",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0098",
+        "note": "Passed waiting for and reading the first ten controlled cards in real JS/native direct/flattened headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_infinite_scrolling_tutorial_2",
@@ -2427,10 +2427,10 @@
       "file": "tests/docs/tutorials/test_infinite_scrolling_tutorial.py",
       "id": "ZDTEST-0099",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0099",
+        "note": "Passed waiting for and reading the first ten controlled cards in real JS/native direct/flattened headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_infinite_scrolling_tutorial_2",
@@ -2455,10 +2455,10 @@
       "file": "tests/docs/tutorials/test_infinite_scrolling_tutorial.py",
       "id": "ZDTEST-0100",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0100",
+        "note": "Passed three controlled scroll batches and locating lucky card 27 in real JS/native direct/flattened headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_infinite_scrolling_tutorial_3",
@@ -2483,10 +2483,10 @@
       "file": "tests/docs/tutorials/test_infinite_scrolling_tutorial.py",
       "id": "ZDTEST-0101",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0101",
+        "note": "Passed three controlled scroll batches and locating lucky card 27 in real JS/native direct/flattened headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_infinite_scrolling_tutorial_3",

@@ -13,6 +13,7 @@ import {
   CdpConnectionLostError,
   CdpProtocolError,
   CdpTimeoutError,
+  RUNTIME_BACKEND_INTERNAL_SEND,
   type ConnectOptions as RuntimeConnectOptions,
   type DomainPolicy,
   type DomainEnableSource,
@@ -22,6 +23,8 @@ import {
   type SendOptions,
   type TraceEntry,
 } from "@nodriver/runtime-js";
+
+type CommandSource = DomainEnableSource | "internal";
 
 interface NativeBinding {
   connect(endpoint: string, timeoutMs?: number, cancellationId?: number): Promise<number>;
@@ -164,6 +167,14 @@ export class NativeConnection implements RuntimeBackend {
     return this.#sendRawWithSource(method, params, options, "manual");
   }
 
+  public [RUNTIME_BACKEND_INTERNAL_SEND](
+    method: string,
+    params?: unknown,
+    options: SendOptions = {},
+  ): Promise<Readonly<Record<string, unknown>>> {
+    return this.#sendRaw(method, params, options, "internal");
+  }
+
   #sendRawWithSource(
     method: string,
     params: unknown,
@@ -189,7 +200,7 @@ export class NativeConnection implements RuntimeBackend {
     method: string,
     params: unknown,
     options: SendOptions,
-    source: DomainEnableSource,
+    source: CommandSource,
   ): Promise<Readonly<Record<string, unknown>>> {
     if (this.#closed) throw new CdpConnectionClosedError();
     const signal = options.signal;
@@ -405,7 +416,8 @@ export class NativeConnection implements RuntimeBackend {
     this.#enabledDomainKeys.delete(key);
   }
 
-  #recordDomainCommand(method: string, options: SendOptions, source: DomainEnableSource): void {
+  #recordDomainCommand(method: string, options: SendOptions, source: CommandSource): void {
+    if (source === "internal") return;
     const match = /^(.*)\.(enable|disable)$/.exec(method);
     if (match === null || match[1] === undefined) return;
     const key = domainKey(match[1], options.sessionId);

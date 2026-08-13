@@ -1,10 +1,10 @@
 {
   "mappingCounts": {
     "coreMembers": {
-      "CANDIDATE": 128,
+      "CANDIDATE": 124,
       "MISSING": 51,
       "UNKNOWN": 271,
-      "VERIFIED": 22
+      "VERIFIED": 26
     },
     "coreSymbols": {
       "CANDIDATE": 12,
@@ -17,10 +17,10 @@
       "MISSING": 7
     },
     "total": {
-      "CANDIDATE": 149,
+      "CANDIDATE": 145,
       "MISSING": 87,
       "UNKNOWN": 274,
-      "VERIFIED": 23
+      "VERIFIED": 27
     }
   },
   "nodriver": {
@@ -4588,6 +4588,16 @@
             "type": "boolean"
           },
           {
+            "declaration": "readonly [RUNTIME_BACKEND_INTERNAL_SEND]?: (method: string, params?: unknown, options?: SendOptions) => Promise<Readonly<Record<string, unknown>>>;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "[RUNTIME_BACKEND_INTERNAL_SEND]",
+            "optional": true,
+            "readonly": true,
+            "type": "(method: string, params?: unknown, options?: SendOptions) => Promise<Readonly<Record<string, unknown>>>"
+          },
+          {
             "declaration": "send<M extends ProtocolCommand>(method: M, ...args: CommandParams<M> extends undefined ? [params?: undefined, options?: SendOptions] : [params: CommandParams<M>, options?: SendOptions]): Promise<CommandResult<M>>;",
             "kind": "method",
             "name": "send",
@@ -5055,9 +5065,16 @@
         "file": "packages/api/dist/network.d.ts",
         "kind": "interface"
       },
+      "KeyChord": {
+        "declarations": [
+          "export type KeyChord = readonly [key: string | KeyEventPayload, modifiers: KeyModifiers];"
+        ],
+        "file": "packages/api/dist/input.d.ts",
+        "kind": "type"
+      },
       "KeyEventPayload": {
         "declarations": [
-          "export interface KeyEventPayload { readonly type?: KeyPressEvent; readonly key: string; readonly code?: string; readonly text?: string; readonly windowsVirtualKeyCode?: number; readonly nativeVirtualKeyCode?: number; readonly modifiers?: KeyModifiers; }"
+          "export interface KeyEventPayload { readonly type?: KeyPressEvent; readonly key?: string; readonly code?: string; readonly text?: string; readonly windowsVirtualKeyCode?: number; readonly nativeVirtualKeyCode?: number; readonly modifiers?: KeyModifiers; }"
         ],
         "file": "packages/api/dist/input.d.ts",
         "kind": "interface"
@@ -5071,7 +5088,7 @@
       },
       "KeyInput": {
         "declarations": [
-          "export type KeyInput = string | KeyEventPayload;"
+          "export type KeyInput = string | KeyEventPayload | KeyChord;"
         ],
         "file": "packages/api/dist/input.d.ts",
         "kind": "type"
@@ -5184,10 +5201,10 @@
       "SpecialKeys": {
         "declarations": [
           {
-            "declaration": "SpecialKeys: { readonly BACKSPACE: { readonly key: \"Backspace\"; readonly code: \"Backspace\"; readonly windowsVirtualKeyCode: 8; }; readonly TAB: { readonly key: \"Tab\"; readonly code: \"Tab\"; readonly windowsVirtualKeyCode: 9; }; readonly ENTER: { readonly key: \"Enter\"; readonly code: \"Enter\"; readonly windowsVirtualKeyCode: 13; readonly text: \"\\r\"; }; readonly ESCAPE: { readonly key: \"Escape\"; readonly code: \"Escape\"; readonly windowsVirtualKeyCode: 27; }; readonly ARROW_LEFT: { readonly key: \"ArrowLeft\"; readonly code: \"ArrowLeft\"; readonly windowsVirtualKeyCode: 37; }; readonly ARROW_UP: { readonly key: \"ArrowUp\"; readonly code: \"ArrowUp\"; readonly windowsVirtualKeyCode: 38; }; readonly ARROW_RIGHT: { readonly key: \"ArrowRight\"; readonly code: \"ArrowRight\"; readonly windowsVirtualKeyCode: 39; }; readonly ARROW_DOWN: { readonly key: \"ArrowDown\"; readonly code: \"ArrowDown\"; readonly windowsVirtualKeyCode: 40; }; readonly DELETE: { readonly key: \"Delete\"; readonly code: \"Delete\"; readonly windowsVirtualKeyCode: 46; }; readonly SPACE: { readonly key: \" \"; readonly code: \"Space\"; readonly windowsVirtualKeyCode: 32; readonly text: \" \"; }; readonly ALT: { readonly key: \"Alt\"; readonly code: \"AltLeft\"; readonly windowsVirtualKeyCode: 18; readonly modifiers: KeyModifiers.Alt; }; readonly CTRL: { readonly key: \"Control\"; readonly code: \"ControlLeft\"; readonly windowsVirtualKeyCode: 17; readonly modifiers: KeyModifiers.Ctrl; }; readonly META: { readonly key: \"Meta\"; readonly code: \"MetaLeft\"; readonly windowsVirtualKeyCode: 91; readonly modifiers: KeyModifiers.Meta; }; readonly SHIFT: { readonly key: \"Shift\"; readonly code: \"ShiftLeft\"; readonly windowsVirtualKeyCode: 16; readonly modifiers: KeyModifiers.Shift; }; readonly Backspace: { readonly key: \"Backspace\"; readonly code: \"Backspace\"; readonly windowsVirtualKeyCode: 8; }; readonly Tab: { readonly key: \"Tab\"; readonly code: \"Tab\"; readonly windowsVirtualKeyCode: 9; }; readonly Enter: { readonly key: \"Enter\"; readonly code: \"Enter\"; readonly windowsVirtualKeyCode: 13; readonly text: \"\\r\"; }; readonly Escape: { readonly key: \"Escape\"; readonly code: \"Escape\"; readonly windowsVirtualKeyCode: 27; }; readonly ArrowLeft: { readonly key: \"ArrowLeft\"; readonly code: \"ArrowLeft\"; readonly windowsVirtualKeyCode: 37; }; readonly ArrowUp: { readonly key: \"ArrowUp\"; readonly code: \"ArrowUp\"; readonly windowsVirtualKeyCode: 38; }; readonly ArrowRight: { readonly key: \"ArrowRight\"; readonly code: \"ArrowRight\"; readonly windowsVirtualKeyCode: 39; }; readonly ArrowDown: { readonly key: \"ArrowDown\"; readonly code: \"ArrowDown\"; readonly windowsVirtualKeyCode: 40; }; readonly Delete: { readonly key: \"Delete\"; readonly code: \"Delete\"; readonly windowsVirtualKeyCode: 46; }; readonly Home: { readonly key: \"Home\"; readonly code: \"Home\"; readonly windowsVirtualKeyCode: 36; }; readonly End: { readonly key: \"End\"; readonly code: \"End\"; readonly windowsVirtualKeyCode: 35; }; readonly Space: { readonly key: \" \"; readonly code: \"Space\"; readonly windowsVirtualKeyCode: 32; readonly text: \" \"; }; readonly Alt: { readonly key: \"Alt\"; readonly code: \"AltLeft\"; readonly windowsVirtualKeyCode: 18; readonly modifiers: KeyModifiers.Alt; }; readonly Ctrl: { readonly key: \"Control\"; readonly code: \"ControlLeft\"; readonly windowsVirtualKeyCode: 17; readonly modifiers: KeyModifiers.Ctrl; }; readonly Meta: { readonly key: \"Meta\"; readonly code: \"MetaLeft\"; readonly windowsVirtualKeyCode: 91; readonly modifiers: KeyModifiers.Meta; }; readonly Shift: { readonly key: \"Shift\"; readonly code: \"ShiftLeft\"; readonly windowsVirtualKeyCode: 16; readonly modifiers: KeyModifiers.Shift; }; }",
+            "declaration": "SpecialKeys: { readonly BACKSPACE: { readonly key: \"Backspace\"; readonly code: \"Backspace\"; readonly windowsVirtualKeyCode: 8; readonly nativeVirtualKeyCode: 8; }; readonly TAB: { readonly key: \"Tab\"; readonly code: \"Tab\"; readonly windowsVirtualKeyCode: 9; readonly nativeVirtualKeyCode: 9; }; readonly ENTER: { readonly key: \"\\r\"; readonly code: \"Enter\"; readonly windowsVirtualKeyCode: 13; readonly nativeVirtualKeyCode: 13; readonly text: \"\\r\"; }; readonly ESCAPE: { readonly key: \"Escape\"; readonly code: \"Escape\"; readonly windowsVirtualKeyCode: 27; readonly nativeVirtualKeyCode: 27; }; readonly ARROW_LEFT: { readonly key: \"ArrowLeft\"; readonly code: \"ArrowLeft\"; readonly windowsVirtualKeyCode: 37; readonly nativeVirtualKeyCode: 37; }; readonly ARROW_UP: { readonly key: \"ArrowUp\"; readonly code: \"ArrowUp\"; readonly windowsVirtualKeyCode: 38; readonly nativeVirtualKeyCode: 38; }; readonly ARROW_RIGHT: { readonly key: \"ArrowRight\"; readonly code: \"ArrowRight\"; readonly windowsVirtualKeyCode: 39; readonly nativeVirtualKeyCode: 39; }; readonly ARROW_DOWN: { readonly key: \"ArrowDown\"; readonly code: \"ArrowDown\"; readonly windowsVirtualKeyCode: 40; readonly nativeVirtualKeyCode: 40; }; readonly DELETE: { readonly key: \"Delete\"; readonly code: \"Delete\"; readonly windowsVirtualKeyCode: 46; readonly nativeVirtualKeyCode: 46; }; readonly SPACE: { readonly key: \" \"; readonly code: \" \"; readonly windowsVirtualKeyCode: 32; readonly nativeVirtualKeyCode: 32; readonly text: \" \"; }; readonly ALT: { readonly key: \"Alt\"; readonly code: \"AltLeft\"; readonly windowsVirtualKeyCode: 18; readonly nativeVirtualKeyCode: 18; readonly modifiers: KeyModifiers.Alt; }; readonly CTRL: { readonly key: \"Control\"; readonly code: \"ControlLeft\"; readonly windowsVirtualKeyCode: 17; readonly nativeVirtualKeyCode: 17; readonly modifiers: KeyModifiers.Ctrl; }; readonly META: { readonly key: \"Meta\"; readonly code: \"MetaLeft\"; readonly windowsVirtualKeyCode: 91; readonly nativeVirtualKeyCode: 91; readonly modifiers: KeyModifiers.Meta; }; readonly SHIFT: { readonly key: \"Shift\"; readonly code: \"ShiftLeft\"; readonly windowsVirtualKeyCode: 16; readonly nativeVirtualKeyCode: 16; readonly modifiers: KeyModifiers.Shift; }; readonly Backspace: { readonly key: \"Backspace\"; readonly code: \"Backspace\"; readonly windowsVirtualKeyCode: 8; readonly nativeVirtualKeyCode: 8; }; readonly Tab: { readonly key: \"Tab\"; readonly code: \"Tab\"; readonly windowsVirtualKeyCode: 9; readonly nativeVirtualKeyCode: 9; }; readonly Enter: { readonly key: \"\\r\"; readonly code: \"Enter\"; readonly windowsVirtualKeyCode: 13; readonly nativeVirtualKeyCode: 13; readonly text: \"\\r\"; }; readonly Escape: { readonly key: \"Escape\"; readonly code: \"Escape\"; readonly windowsVirtualKeyCode: 27; readonly nativeVirtualKeyCode: 27; }; readonly ArrowLeft: { readonly key: \"ArrowLeft\"; readonly code: \"ArrowLeft\"; readonly windowsVirtualKeyCode: 37; readonly nativeVirtualKeyCode: 37; }; readonly ArrowUp: { readonly key: \"ArrowUp\"; readonly code: \"ArrowUp\"; readonly windowsVirtualKeyCode: 38; readonly nativeVirtualKeyCode: 38; }; readonly ArrowRight: { readonly key: \"ArrowRight\"; readonly code: \"ArrowRight\"; readonly windowsVirtualKeyCode: 39; readonly nativeVirtualKeyCode: 39; }; readonly ArrowDown: { readonly key: \"ArrowDown\"; readonly code: \"ArrowDown\"; readonly windowsVirtualKeyCode: 40; readonly nativeVirtualKeyCode: 40; }; readonly Delete: { readonly key: \"Delete\"; readonly code: \"Delete\"; readonly windowsVirtualKeyCode: 46; readonly nativeVirtualKeyCode: 46; }; readonly Home: { readonly key: \"Home\"; readonly code: \"Home\"; readonly windowsVirtualKeyCode: 36; readonly nativeVirtualKeyCode: 36; }; readonly End: { readonly key: \"End\"; readonly code: \"End\"; readonly windowsVirtualKeyCode: 35; readonly nativeVirtualKeyCode: 35; }; readonly Space: { readonly key: \" \"; readonly code: \" \"; readonly windowsVirtualKeyCode: 32; readonly nativeVirtualKeyCode: 32; readonly text: \" \"; }; readonly Alt: { readonly key: \"Alt\"; readonly code: \"AltLeft\"; readonly windowsVirtualKeyCode: 18; readonly nativeVirtualKeyCode: 18; readonly modifiers: KeyModifiers.Alt; }; readonly Ctrl: { readonly key: \"Control\"; readonly code: \"ControlLeft\"; readonly windowsVirtualKeyCode: 17; readonly nativeVirtualKeyCode: 17; readonly modifiers: KeyModifiers.Ctrl; }; readonly Meta: { readonly key: \"Meta\"; readonly code: \"MetaLeft\"; readonly windowsVirtualKeyCode: 91; readonly nativeVirtualKeyCode: 91; readonly modifiers: KeyModifiers.Meta; }; readonly Shift: { readonly key: \"Shift\"; readonly code: \"ShiftLeft\"; readonly windowsVirtualKeyCode: 16; readonly nativeVirtualKeyCode: 16; readonly modifiers: KeyModifiers.Shift; }; }",
             "declaredDefault": null,
             "hasDeclaredDefault": false,
-            "type": "{ readonly BACKSPACE: { readonly key: \"Backspace\"; readonly code: \"Backspace\"; readonly windowsVirtualKeyCode: 8; }; readonly TAB: { readonly key: \"Tab\"; readonly code: \"Tab\"; readonly windowsVirtualKeyCode: 9; }; readonly ENTER: { readonly key: \"Enter\"; readonly code: \"Enter\"; readonly windowsVirtualKeyCode: 13; readonly text: \"\\r\"; }; readonly ESCAPE: { readonly key: \"Escape\"; readonly code: \"Escape\"; readonly windowsVirtualKeyCode: 27; }; readonly ARROW_LEFT: { readonly key: \"ArrowLeft\"; readonly code: \"ArrowLeft\"; readonly windowsVirtualKeyCode: 37; }; readonly ARROW_UP: { readonly key: \"ArrowUp\"; readonly code: \"ArrowUp\"; readonly windowsVirtualKeyCode: 38; }; readonly ARROW_RIGHT: { readonly key: \"ArrowRight\"; readonly code: \"ArrowRight\"; readonly windowsVirtualKeyCode: 39; }; readonly ARROW_DOWN: { readonly key: \"ArrowDown\"; readonly code: \"ArrowDown\"; readonly windowsVirtualKeyCode: 40; }; readonly DELETE: { readonly key: \"Delete\"; readonly code: \"Delete\"; readonly windowsVirtualKeyCode: 46; }; readonly SPACE: { readonly key: \" \"; readonly code: \"Space\"; readonly windowsVirtualKeyCode: 32; readonly text: \" \"; }; readonly ALT: { readonly key: \"Alt\"; readonly code: \"AltLeft\"; readonly windowsVirtualKeyCode: 18; readonly modifiers: KeyModifiers.Alt; }; readonly CTRL: { readonly key: \"Control\"; readonly code: \"ControlLeft\"; readonly windowsVirtualKeyCode: 17; readonly modifiers: KeyModifiers.Ctrl; }; readonly META: { readonly key: \"Meta\"; readonly code: \"MetaLeft\"; readonly windowsVirtualKeyCode: 91; readonly modifiers: KeyModifiers.Meta; }; readonly SHIFT: { readonly key: \"Shift\"; readonly code: \"ShiftLeft\"; readonly windowsVirtualKeyCode: 16; readonly modifiers: KeyModifiers.Shift; }; readonly Backspace: { readonly key: \"Backspace\"; readonly code: \"Backspace\"; readonly windowsVirtualKeyCode: 8; }; readonly Tab: { readonly key: \"Tab\"; readonly code: \"Tab\"; readonly windowsVirtualKeyCode: 9; }; readonly Enter: { readonly key: \"Enter\"; readonly code: \"Enter\"; readonly windowsVirtualKeyCode: 13; readonly text: \"\\r\"; }; readonly Escape: { readonly key: \"Escape\"; readonly code: \"Escape\"; readonly windowsVirtualKeyCode: 27; }; readonly ArrowLeft: { readonly key: \"ArrowLeft\"; readonly code: \"ArrowLeft\"; readonly windowsVirtualKeyCode: 37; }; readonly ArrowUp: { readonly key: \"ArrowUp\"; readonly code: \"ArrowUp\"; readonly windowsVirtualKeyCode: 38; }; readonly ArrowRight: { readonly key: \"ArrowRight\"; readonly code: \"ArrowRight\"; readonly windowsVirtualKeyCode: 39; }; readonly ArrowDown: { readonly key: \"ArrowDown\"; readonly code: \"ArrowDown\"; readonly windowsVirtualKeyCode: 40; }; readonly Delete: { readonly key: \"Delete\"; readonly code: \"Delete\"; readonly windowsVirtualKeyCode: 46; }; readonly Home: { readonly key: \"Home\"; readonly code: \"Home\"; readonly windowsVirtualKeyCode: 36; }; readonly End: { readonly key: \"End\"; readonly code: \"End\"; readonly windowsVirtualKeyCode: 35; }; readonly Space: { readonly key: \" \"; readonly code: \"Space\"; readonly windowsVirtualKeyCode: 32; readonly text: \" \"; }; readonly Alt: { readonly key: \"Alt\"; readonly code: \"AltLeft\"; readonly windowsVirtualKeyCode: 18; readonly modifiers: KeyModifiers.Alt; }; readonly Ctrl: { readonly key: \"Control\"; readonly code: \"ControlLeft\"; readonly windowsVirtualKeyCode: 17; readonly modifiers: KeyModifiers.Ctrl; }; readonly Meta: { readonly key: \"Meta\"; readonly code: \"MetaLeft\"; readonly windowsVirtualKeyCode: 91; readonly modifiers: KeyModifiers.Meta; }; readonly Shift: { readonly key: \"Shift\"; readonly code: \"ShiftLeft\"; readonly windowsVirtualKeyCode: 16; readonly modifiers: KeyModifiers.Shift; }; }"
+            "type": "{ readonly BACKSPACE: { readonly key: \"Backspace\"; readonly code: \"Backspace\"; readonly windowsVirtualKeyCode: 8; readonly nativeVirtualKeyCode: 8; }; readonly TAB: { readonly key: \"Tab\"; readonly code: \"Tab\"; readonly windowsVirtualKeyCode: 9; readonly nativeVirtualKeyCode: 9; }; readonly ENTER: { readonly key: \"\\r\"; readonly code: \"Enter\"; readonly windowsVirtualKeyCode: 13; readonly nativeVirtualKeyCode: 13; readonly text: \"\\r\"; }; readonly ESCAPE: { readonly key: \"Escape\"; readonly code: \"Escape\"; readonly windowsVirtualKeyCode: 27; readonly nativeVirtualKeyCode: 27; }; readonly ARROW_LEFT: { readonly key: \"ArrowLeft\"; readonly code: \"ArrowLeft\"; readonly windowsVirtualKeyCode: 37; readonly nativeVirtualKeyCode: 37; }; readonly ARROW_UP: { readonly key: \"ArrowUp\"; readonly code: \"ArrowUp\"; readonly windowsVirtualKeyCode: 38; readonly nativeVirtualKeyCode: 38; }; readonly ARROW_RIGHT: { readonly key: \"ArrowRight\"; readonly code: \"ArrowRight\"; readonly windowsVirtualKeyCode: 39; readonly nativeVirtualKeyCode: 39; }; readonly ARROW_DOWN: { readonly key: \"ArrowDown\"; readonly code: \"ArrowDown\"; readonly windowsVirtualKeyCode: 40; readonly nativeVirtualKeyCode: 40; }; readonly DELETE: { readonly key: \"Delete\"; readonly code: \"Delete\"; readonly windowsVirtualKeyCode: 46; readonly nativeVirtualKeyCode: 46; }; readonly SPACE: { readonly key: \" \"; readonly code: \" \"; readonly windowsVirtualKeyCode: 32; readonly nativeVirtualKeyCode: 32; readonly text: \" \"; }; readonly ALT: { readonly key: \"Alt\"; readonly code: \"AltLeft\"; readonly windowsVirtualKeyCode: 18; readonly nativeVirtualKeyCode: 18; readonly modifiers: KeyModifiers.Alt; }; readonly CTRL: { readonly key: \"Control\"; readonly code: \"ControlLeft\"; readonly windowsVirtualKeyCode: 17; readonly nativeVirtualKeyCode: 17; readonly modifiers: KeyModifiers.Ctrl; }; readonly META: { readonly key: \"Meta\"; readonly code: \"MetaLeft\"; readonly windowsVirtualKeyCode: 91; readonly nativeVirtualKeyCode: 91; readonly modifiers: KeyModifiers.Meta; }; readonly SHIFT: { readonly key: \"Shift\"; readonly code: \"ShiftLeft\"; readonly windowsVirtualKeyCode: 16; readonly nativeVirtualKeyCode: 16; readonly modifiers: KeyModifiers.Shift; }; readonly Backspace: { readonly key: \"Backspace\"; readonly code: \"Backspace\"; readonly windowsVirtualKeyCode: 8; readonly nativeVirtualKeyCode: 8; }; readonly Tab: { readonly key: \"Tab\"; readonly code: \"Tab\"; readonly windowsVirtualKeyCode: 9; readonly nativeVirtualKeyCode: 9; }; readonly Enter: { readonly key: \"\\r\"; readonly code: \"Enter\"; readonly windowsVirtualKeyCode: 13; readonly nativeVirtualKeyCode: 13; readonly text: \"\\r\"; }; readonly Escape: { readonly key: \"Escape\"; readonly code: \"Escape\"; readonly windowsVirtualKeyCode: 27; readonly nativeVirtualKeyCode: 27; }; readonly ArrowLeft: { readonly key: \"ArrowLeft\"; readonly code: \"ArrowLeft\"; readonly windowsVirtualKeyCode: 37; readonly nativeVirtualKeyCode: 37; }; readonly ArrowUp: { readonly key: \"ArrowUp\"; readonly code: \"ArrowUp\"; readonly windowsVirtualKeyCode: 38; readonly nativeVirtualKeyCode: 38; }; readonly ArrowRight: { readonly key: \"ArrowRight\"; readonly code: \"ArrowRight\"; readonly windowsVirtualKeyCode: 39; readonly nativeVirtualKeyCode: 39; }; readonly ArrowDown: { readonly key: \"ArrowDown\"; readonly code: \"ArrowDown\"; readonly windowsVirtualKeyCode: 40; readonly nativeVirtualKeyCode: 40; }; readonly Delete: { readonly key: \"Delete\"; readonly code: \"Delete\"; readonly windowsVirtualKeyCode: 46; readonly nativeVirtualKeyCode: 46; }; readonly Home: { readonly key: \"Home\"; readonly code: \"Home\"; readonly windowsVirtualKeyCode: 36; readonly nativeVirtualKeyCode: 36; }; readonly End: { readonly key: \"End\"; readonly code: \"End\"; readonly windowsVirtualKeyCode: 35; readonly nativeVirtualKeyCode: 35; }; readonly Space: { readonly key: \" \"; readonly code: \" \"; readonly windowsVirtualKeyCode: 32; readonly nativeVirtualKeyCode: 32; readonly text: \" \"; }; readonly Alt: { readonly key: \"Alt\"; readonly code: \"AltLeft\"; readonly windowsVirtualKeyCode: 18; readonly nativeVirtualKeyCode: 18; readonly modifiers: KeyModifiers.Alt; }; readonly Ctrl: { readonly key: \"Control\"; readonly code: \"ControlLeft\"; readonly windowsVirtualKeyCode: 17; readonly nativeVirtualKeyCode: 17; readonly modifiers: KeyModifiers.Ctrl; }; readonly Meta: { readonly key: \"Meta\"; readonly code: \"MetaLeft\"; readonly windowsVirtualKeyCode: 91; readonly nativeVirtualKeyCode: 91; readonly modifiers: KeyModifiers.Meta; }; readonly Shift: { readonly key: \"Shift\"; readonly code: \"ShiftLeft\"; readonly windowsVirtualKeyCode: 16; readonly nativeVirtualKeyCode: 16; readonly modifiers: KeyModifiers.Shift; }; }"
           }
         ],
         "file": "packages/api/dist/input.d.ts",
@@ -5704,6 +5721,27 @@
           }
         ],
         "file": "packages/api/dist/trace.d.ts",
+        "kind": "function"
+      },
+      "keyInputList": {
+        "declarations": [
+          {
+            "declaration": "export declare function keyInputList(input: KeyInput | readonly KeyInput[]): readonly KeyInput[];",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "input",
+                "optional": false,
+                "rest": false,
+                "type": "KeyInput | readonly KeyInput[]"
+              }
+            ],
+            "returnType": "readonly KeyInput[]",
+            "typeParameters": []
+          }
+        ],
+        "file": "packages/api/dist/input.d.ts",
         "kind": "function"
       },
       "normalizeTrace": {
@@ -6858,6 +6896,12 @@
         "functionLength": 1,
         "kind": "function-or-class",
         "name": "hasTrace",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "keyInputList",
         "prototypeMembers": []
       },
       {
@@ -11982,7 +12026,11 @@
                 "kind": "method",
                 "name": "clear_input",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceTestIds": [
+                    "ZDTEST-0021",
+                    "ZDTEST-0022"
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "clearInput(): Promise<void>;",
@@ -11995,9 +12043,13 @@
                     }
                   ],
                   "nodeMember": "Element.clearInput",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -12020,7 +12072,13 @@
                 "kind": "method",
                 "name": "clear_input_by_deleting",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceTestIds": [
+                    "ZDTEST-0023",
+                    "ZDTEST-0024",
+                    "ZDTEST-0025",
+                    "ZDTEST-0026"
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "clearInputByDeleting(): Promise<void>;",
@@ -12033,9 +12091,13 @@
                     }
                   ],
                   "nodeMember": "Element.clearInputByDeleting",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -13700,7 +13762,15 @@
                 "kind": "method",
                 "name": "send_keys",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceTestIds": [
+                    "ZDTEST-0016",
+                    "ZDTEST-0017",
+                    "ZDTEST-0018",
+                    "ZDTEST-0019",
+                    "ZDTEST-0025",
+                    "ZDTEST-0026"
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "sendKeys(input: KeyInput | KeyEvents | readonly KeyInput[]): Promise<void>;",
@@ -13722,9 +13792,13 @@
                     }
                   ],
                   "nodeMember": "Element.sendKeys",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -16630,7 +16704,11 @@
                 "kind": "classmethod",
                 "name": "from_mixed_input",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceTestIds": [
+                    "ZDTEST-0016",
+                    "ZDTEST-0017"
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "static fromMixedInput(input: readonly KeyInput[]): KeyEvents;",
@@ -16652,9 +16730,12 @@
                     }
                   ],
                   "nodeMember": "KeyEvents.fromMixedInput",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [

@@ -1,4 +1,16 @@
 {
+  "ZDTEST-0001": {
+    "case": "packages/api/test/bot-detection-parity.test.ts::ZDTEST-0001",
+    "note": "Passed the exact BrowserScan Normal result against the same-executable Zendriver 0.15.5 reference and real Node JS/native direct/flattened headless runs.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0002": {
+    "case": "packages/api/test/bot-detection-parity.test.ts::ZDTEST-0002",
+    "note": "Passed the exact BrowserScan Normal result against the same-executable Zendriver 0.15.5 reference and real Node JS/native direct/flattened headful runs.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
   "ZDTEST-0003": {
     "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0003",
     "note": "Passed with a controlled connection failure after launching real Chrome; the public error includes the connection cause and captured Chrome stderr.",
@@ -77,9 +89,69 @@
     "result": "PASS",
     "status": "MAPPED"
   },
+  "ZDTEST-0016": {
+    "case": "packages/api/test/input-react-parity.test.ts::ZDTEST-0016",
+    "note": "Passed the pinned public four-child contenteditable assertion through Element internal Blink editing-command compatibility in real Chromium 145 across JS/native and direct/flattened headless runs. The separate pinned upstream headless reference observation remains a FAIL with two children on this Chromium version.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0017": {
+    "case": "packages/api/test/input-react-parity.test.ts::ZDTEST-0017",
+    "note": "Passed the pinned exact four-child contenteditable structure in real Chromium 145 across JS/native and direct/flattened headful runs.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0018": {
+    "case": "packages/api/test/input-react-parity.test.ts::ZDTEST-0018",
+    "note": "Passed Escape keydown then keyup ordering and popup closure in real Chromium 145 across JS/native and direct/flattened headless runs.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0019": {
+    "case": "packages/api/test/input-react-parity.test.ts::ZDTEST-0019",
+    "note": "Passed Escape keydown then keyup ordering and popup closure in real Chromium 145 across JS/native and direct/flattened headful runs.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
   "ZDTEST-0020": {
     "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0020",
     "note": "Passed three real Chrome launches from one Config with unique ports, temporary profiles, and independent navigation.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0021": {
+    "case": "packages/api/test/input-react-parity.test.ts::ZDTEST-0021",
+    "note": "Passed React-controlled clear via the native prototype value setter and input notification in real Chromium 145 across JS/native and direct/flattened headless runs.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0022": {
+    "case": "packages/api/test/input-react-parity.test.ts::ZDTEST-0022",
+    "note": "Passed React-controlled clear via the native prototype value setter and input notification in real Chromium 145 across JS/native and direct/flattened headful runs.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0023": {
+    "case": "packages/api/test/input-react-parity.test.ts::ZDTEST-0023",
+    "note": "Passed React-controlled Backspace deletion with visible keyboard events in real Chromium 145 across JS/native and direct/flattened headless runs.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0024": {
+    "case": "packages/api/test/input-react-parity.test.ts::ZDTEST-0024",
+    "note": "Passed React-controlled Backspace deletion with visible keyboard events in real Chromium 145 across JS/native and direct/flattened headful runs.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0025": {
+    "case": "packages/api/test/input-react-parity.test.ts::ZDTEST-0025",
+    "note": "Passed clear, controlled render commit, and replacement fill without a mixed value in real Chromium 145 across JS/native and direct/flattened headless runs.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0026": {
+    "case": "packages/api/test/input-react-parity.test.ts::ZDTEST-0026",
+    "note": "Passed clear, controlled render commit, and replacement fill without a mixed value in real Chromium 145 across JS/native and direct/flattened headful runs.",
     "result": "PASS",
     "status": "MAPPED"
   },
@@ -422,6 +494,114 @@
   "ZDTEST-0073": {
     "case": "packages/api/test/handlers-domain-parity.test.ts::ZDTEST-0073",
     "note": "Passed automatic Network domain enablement from a registered handler in real headless/headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0084": {
+    "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0084",
+    "note": "Passed the controlled account tutorial page-open behavior in real JS/native direct/flattened headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0085": {
+    "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0085",
+    "note": "Passed the controlled account tutorial page-open behavior in real JS/native direct/flattened headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0086": {
+    "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0086",
+    "note": "Passed the complete controlled sign-up, confirmation, and login tutorial journey in real JS/native direct/flattened headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0087": {
+    "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0087",
+    "note": "Passed the complete controlled sign-up, confirmation, and login tutorial journey in real JS/native direct/flattened headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0088": {
+    "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0088",
+    "note": "Passed the controlled API tutorial page-open behavior in real JS/native direct/flattened headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0089": {
+    "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0089",
+    "note": "Passed the controlled API tutorial page-open behavior in real JS/native direct/flattened headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0090": {
+    "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0090",
+    "note": "Passed matching a controlled API response and decoding its body in real JS/native direct/flattened headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0091": {
+    "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0091",
+    "note": "Passed matching a controlled API response and decoding its body in real JS/native direct/flattened headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0092": {
+    "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0092",
+    "note": "Passed repeated typed Runtime.enable commands in real JS/native direct/flattened headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0093": {
+    "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0093",
+    "note": "Passed repeated typed Runtime.enable commands in real JS/native direct/flattened headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0094": {
+    "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0094",
+    "note": "Passed typed Runtime console handler registration, delivery, and removal in real JS/native direct/flattened headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0095": {
+    "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0095",
+    "note": "Passed typed Runtime console handler registration, delivery, and removal in real JS/native direct/flattened headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0096": {
+    "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0096",
+    "note": "Passed observing an initially empty controlled infinite-scroll container in real JS/native direct/flattened headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0097": {
+    "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0097",
+    "note": "Passed observing an initially empty controlled infinite-scroll container in real JS/native direct/flattened headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0098": {
+    "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0098",
+    "note": "Passed waiting for and reading the first ten controlled cards in real JS/native direct/flattened headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0099": {
+    "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0099",
+    "note": "Passed waiting for and reading the first ten controlled cards in real JS/native direct/flattened headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0100": {
+    "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0100",
+    "note": "Passed three controlled scroll batches and locating lucky card 27 in real JS/native direct/flattened headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0101": {
+    "case": "packages/api/test/tutorial-parity.test.ts::ZDTEST-0101",
+    "note": "Passed three controlled scroll batches and locating lucky card 27 in real JS/native direct/flattened headful Chrome.",
     "result": "PASS",
     "status": "MAPPED"
   }

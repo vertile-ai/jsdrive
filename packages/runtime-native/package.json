@@ -1,6 +1,6 @@
 {
   "name": "@vertile-ai/jsdriver-runtime-native",
-  "version": "0.15.5",
+  "version": "0.16.0",
   "private": false,
   "license": "MIT",
   "repository": {
@@ -27,11 +27,11 @@
     "smoke": "node dist/smoke.js"
   },
   "dependencies": {
-    "@vertile-ai/jsdriver-protocol": "0.15.5",
-    "@vertile-ai/jsdriver-runtime-js": "0.15.5"
+    "@vertile-ai/jsdriver-protocol": "0.16.0",
+    "@vertile-ai/jsdriver-runtime-js": "0.16.0"
   },
   "devDependencies": {
-    "jsdriver": "0.15.5",
+    "jsdriver": "0.16.0",
     "@types/ws": "8.18.1",
     "ws": "8.21.3"
   }

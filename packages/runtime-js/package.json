@@ -1,6 +1,6 @@
 {
   "name": "@vertile-ai/jsdriver-runtime-js",
-  "version": "0.15.5",
+  "version": "0.16.0",
   "private": false,
   "license": "MIT",
   "repository": {
@@ -25,7 +25,7 @@
     "test": "tsc -p tsconfig.test.json && node --test dist-test/test/runtime.test.js dist-test/test/connection-compat.test.js"
   },
   "dependencies": {
-    "@vertile-ai/jsdriver-protocol": "0.15.5",
+    "@vertile-ai/jsdriver-protocol": "0.16.0",
     "ws": "8.21.3"
   }
 }

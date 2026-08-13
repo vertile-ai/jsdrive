@@ -1,6 +1,6 @@
 {
   "name": "jsdriver",
-  "version": "0.15.5",
+  "version": "0.16.0",
   "description": "Typed clean-room Chrome DevTools Protocol browser automation API",
   "private": false,
   "license": "MIT",
@@ -28,10 +28,10 @@
     "smoke": "node dist/smoke.js"
   },
   "dependencies": {
-    "@vertile-ai/jsdriver-protocol": "0.15.5",
-    "@vertile-ai/jsdriver-runtime-js": "0.15.5"
+    "@vertile-ai/jsdriver-protocol": "0.16.0",
+    "@vertile-ai/jsdriver-runtime-js": "0.16.0"
   },
   "devDependencies": {
-    "@vertile-ai/jsdriver-runtime-native": "0.15.5"
+    "@vertile-ai/jsdriver-runtime-native": "0.16.0"
   }
 }

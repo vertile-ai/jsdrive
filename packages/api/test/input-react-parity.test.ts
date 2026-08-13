@@ -270,7 +270,5 @@ async function wait(milliseconds: number): Promise<void> {
 
 async function open(tab: Tab, path: string): Promise<void> {
   await tab.get(`${baseUrl}${path}`);
-  await tab.activate();
-  await tab.bringToFront();
   await wait(250);
 }

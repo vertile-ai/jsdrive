@@ -132,9 +132,6 @@ test("DOM, input, and capture journey works in direct and flattened modes", { ti
         await tab.setWindowState("normal");
         await tab.fullscreen();
         await tab.setWindowState("normal");
-        await tab.activate();
-        await tab.bringToFront();
-
         const removable = await tab.select("#tall");
         await removable.setText("Changed before removal");
         assert.equal(await removable.getText(), "Changed before removal");

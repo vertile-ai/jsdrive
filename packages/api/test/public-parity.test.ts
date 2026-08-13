@@ -19,6 +19,13 @@ test("Config exposes explicit launch flags and mutable arguments", () => {
   assert.deepEqual(config.extensions, ["/tmp/extension"]);
 });
 
+test("Config userDataDir assignment updates custom-profile state", () => {
+  const config = new Config();
+  assert.equal(config.usesCustomDataDir, false);
+  config.userDataDir = "/tmp/nodriver-assigned-profile";
+  assert.equal(config.usesCustomDataDir, true);
+});
+
 test("lifecycle, special keys, and iframe queries work in both connection modes", { timeout: 60_000 }, async () => {
   const cross = createServer((_request, response) => response.end("<!doctype html><div class=hit data-kind=cross>cross</div>"));
   await new Promise<void>((resolve) => cross.listen(0, "127.0.0.1", resolve));

@@ -251,6 +251,10 @@ impl Connection {
         events.drain(..count).collect()
     }
 
+    pub fn is_closed(&self) -> bool {
+        self.closed.load(Ordering::Acquire)
+    }
+
     pub async fn close(&self) {
         if self.closed.swap(true, Ordering::AcqRel) {
             return;

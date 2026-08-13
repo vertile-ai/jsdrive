@@ -1,0 +1,86 @@
+{
+  "ZDTEST-0003": {
+    "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0003",
+    "note": "Passed with a controlled connection failure after launching real Chrome; the public error includes the connection cause and captured Chrome stderr.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0004": {
+    "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0004",
+    "note": "Passed against a controlled HTML fixture in real headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0005": {
+    "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0005",
+    "note": "Passed against a controlled HTML fixture in real headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0006": {
+    "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0006",
+    "note": "Passed target metadata refresh in real headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0007": {
+    "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0007",
+    "note": "Passed target metadata refresh in real headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0008": {
+    "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0008",
+    "note": "Passed stop after closing the CDP connection in real headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0009": {
+    "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0009",
+    "note": "Passed stop after closing the CDP connection in real headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0010": {
+    "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0010",
+    "note": "Passed repeated stop calls in real headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0011": {
+    "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0011",
+    "note": "Passed repeated stop calls in real headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0012": {
+    "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0012",
+    "note": "Passed stopped-state transition after stop in real headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0013": {
+    "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0013",
+    "note": "Passed stopped-state transition after stop in real headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0014": {
+    "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0014",
+    "note": "Passed external Browser.close process/connection state observation in real headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0015": {
+    "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0015",
+    "note": "Passed external Browser.close process/connection state observation in real headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0020": {
+    "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0020",
+    "note": "Passed three real Chrome launches from one Config with unique ports, temporary profiles, and independent navigation.",
+    "result": "PASS",
+    "status": "MAPPED"
+  }
+}

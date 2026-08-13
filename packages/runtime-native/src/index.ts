@@ -33,6 +33,8 @@ interface NativeBinding {
     cancellationId?: number,
   ): Promise<string>;
   pollEvents(handle: number, maxEvents?: number): Promise<readonly string[]>;
+  connectionClosed(handle: number): Promise<boolean>;
+  activeConnectionCount(): Promise<number>;
   close(handle: number): Promise<void>;
   createCancellation(): number;
   cancel(cancellationId: number): void;
@@ -76,6 +78,8 @@ export class NativeConnection implements RuntimeBackend {
   readonly #trace: TraceEntry[] = [];
   #nextTraceId = 1;
   #closed = false;
+  #disposed = false;
+  #disposePromise: Promise<void> | undefined;
 
   private constructor(
     handle: number,
@@ -116,6 +120,10 @@ export class NativeConnection implements RuntimeBackend {
 
   public get enabledDomains(): ReadonlySet<string> {
     return new Set([...this.#enabledDomainKeys].map((key) => key.slice(key.indexOf(":") + 1)));
+  }
+
+  public get closed(): boolean {
+    return this.#closed;
   }
 
   public get trace(): readonly TraceEntry[] {
@@ -276,15 +284,13 @@ export class NativeConnection implements RuntimeBackend {
   }
 
   public close(): void {
-    if (this.#closed) return;
     this.#closed = true;
-    void binding.close(this.#handle);
+    void this.#dispose();
   }
 
   public async closeAsync(): Promise<void> {
-    if (this.#closed) return;
     this.#closed = true;
-    await binding.close(this.#handle);
+    await this.#dispose();
   }
 
   async #pumpEvents(): Promise<void> {
@@ -292,12 +298,25 @@ export class NativeConnection implements RuntimeBackend {
       let batch: readonly string[];
       try {
         batch = await binding.pollEvents(this.#handle, 100);
+        if (await binding.connectionClosed(this.#handle)) {
+          this.#closed = true;
+          await this.#dispose();
+          return;
+        }
       } catch {
+        this.#closed = true;
         return;
       }
       for (const json of batch) this.#dispatch(JSON.parse(json) as WireEvent);
       await new Promise<void>((resolve) => setTimeout(resolve, batch.length === 0 ? 5 : 0));
     }
+  }
+
+  #dispose(): Promise<void> {
+    if (this.#disposed) return this.#disposePromise ?? Promise.resolve();
+    this.#disposed = true;
+    this.#disposePromise = binding.close(this.#handle);
+    return this.#disposePromise;
   }
 
   #dispatch(event: WireEvent): void {

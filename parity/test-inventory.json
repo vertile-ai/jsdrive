@@ -60,10 +60,10 @@
       "file": "tests/core/test_browser.py",
       "id": "ZDTEST-0003",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0003",
+        "note": "Passed with a controlled connection failure after launching real Chrome; the public error includes the connection cause and captured Chrome stderr.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": null,
       "testFunction": "test_connection_error_raises_exception_and_logs_stderr",
@@ -84,10 +84,10 @@
       "file": "tests/core/test_browser.py",
       "id": "ZDTEST-0004",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0004",
+        "note": "Passed against a controlled HTML fixture in real headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_get_content_gets_html_content",
@@ -108,10 +108,10 @@
       "file": "tests/core/test_browser.py",
       "id": "ZDTEST-0005",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0005",
+        "note": "Passed against a controlled HTML fixture in real headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_get_content_gets_html_content",
@@ -132,10 +132,10 @@
       "file": "tests/core/test_browser.py",
       "id": "ZDTEST-0006",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0006",
+        "note": "Passed target metadata refresh in real headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_update_target_sets_target_title",
@@ -156,10 +156,10 @@
       "file": "tests/core/test_browser.py",
       "id": "ZDTEST-0007",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0007",
+        "note": "Passed target metadata refresh in real headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_update_target_sets_target_title",
@@ -180,10 +180,10 @@
       "file": "tests/core/test_browser.py",
       "id": "ZDTEST-0008",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0008",
+        "note": "Passed stop after closing the CDP connection in real headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_browser_stop_can_be_called_on_a_closed_connection",
@@ -204,10 +204,10 @@
       "file": "tests/core/test_browser.py",
       "id": "ZDTEST-0009",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0009",
+        "note": "Passed stop after closing the CDP connection in real headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_browser_stop_can_be_called_on_a_closed_connection",
@@ -228,10 +228,10 @@
       "file": "tests/core/test_browser.py",
       "id": "ZDTEST-0010",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0010",
+        "note": "Passed repeated stop calls in real headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_browser_stop_can_be_called_multiple_times",
@@ -252,10 +252,10 @@
       "file": "tests/core/test_browser.py",
       "id": "ZDTEST-0011",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0011",
+        "note": "Passed repeated stop calls in real headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_browser_stop_can_be_called_multiple_times",
@@ -276,10 +276,10 @@
       "file": "tests/core/test_browser.py",
       "id": "ZDTEST-0012",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0012",
+        "note": "Passed stopped-state transition after stop in real headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_browser_stopped_is_true_after_calling_stop",
@@ -300,10 +300,10 @@
       "file": "tests/core/test_browser.py",
       "id": "ZDTEST-0013",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0013",
+        "note": "Passed stopped-state transition after stop in real headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_browser_stopped_is_true_after_calling_stop",
@@ -324,10 +324,10 @@
       "file": "tests/core/test_browser.py",
       "id": "ZDTEST-0014",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0014",
+        "note": "Passed external Browser.close process/connection state observation in real headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_browser_stopped_is_true_when_stopped_externally",
@@ -348,10 +348,10 @@
       "file": "tests/core/test_browser.py",
       "id": "ZDTEST-0015",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0015",
+        "note": "Passed external Browser.close process/connection state observation in real headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_browser_stopped_is_true_when_stopped_externally",
@@ -468,10 +468,10 @@
       "file": "tests/core/test_multiple_browsers.py",
       "id": "ZDTEST-0020",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0020",
+        "note": "Passed three real Chrome launches from one Config with unique ports, temporary profiles, and independent navigation.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": null,
       "testFunction": "test_multiple_browsers_diff_userdata",

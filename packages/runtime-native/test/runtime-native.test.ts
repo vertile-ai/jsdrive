@@ -1,4 +1,6 @@
 import assert from "node:assert/strict";
+import { createRequire } from "node:module";
+import { fileURLToPath } from "node:url";
 import { readFile, mkdtemp, writeFile } from "node:fs/promises";
 import { createServer as createHttpServer } from "node:http";
 import { createServer, type Socket } from "node:net";
@@ -15,6 +17,11 @@ import {
   CdpTimeoutError,
 } from "@nodriver/runtime-js";
 import { NativeConnection } from "../src/index.js";
+
+const nativeAddon = fileURLToPath(new URL(`../../native/nodriver.${process.platform}-${process.arch}.node`, import.meta.url));
+const nativeBinding = createRequire(import.meta.url)(nativeAddon) as {
+  activeConnectionCount(): Promise<number>;
+};
 
 test("aborts a stalled WebSocket handshake and releases the TCP socket", async () => {
   const sockets = new Set<Socket>();
@@ -73,6 +80,18 @@ test("preserves protocol, explicit timeout, local close, and remote loss error t
   await closed.connection.closeAsync();
   await assert.rejects(closed.connection.sendRaw("After.close"), CdpConnectionClosedError);
   await closed.closeServer();
+});
+
+test("closed becomes true when the WebSocket peer closes without a command", async () => {
+  const initialHandles = await nativeBinding.activeConnectionCount();
+  const peer = await createPeer(() => {});
+  assert.equal(await nativeBinding.activeConnectionCount(), initialHandles + 1);
+  await peer.closeServer();
+  await waitFor(() => peer.connection.closed, 500);
+  assert.equal(peer.connection.closed, true);
+  await waitForAsync(async () => await nativeBinding.activeConnectionCount() === initialHandles, 500);
+  await peer.connection.closeAsync();
+  assert.equal(await nativeBinding.activeConnectionCount(), initialHandles);
 });
 
 test("serialization failures do not retain cancellation registrations", async () => {
@@ -202,6 +221,14 @@ async function createPeer(
 async function waitFor(predicate: () => boolean, timeoutMs: number): Promise<void> {
   const deadline = Date.now() + timeoutMs;
   while (!predicate()) {
+    if (Date.now() >= deadline) throw new Error("Condition did not become true");
+    await new Promise<void>((resolve) => setTimeout(resolve, 5));
+  }
+}
+
+async function waitForAsync(predicate: () => Promise<boolean>, timeoutMs: number): Promise<void> {
+  const deadline = Date.now() + timeoutMs;
+  while (!await predicate()) {
     if (Date.now() >= deadline) throw new Error("Condition did not become true");
     await new Promise<void>((resolve) => setTimeout(resolve, 5));
   }

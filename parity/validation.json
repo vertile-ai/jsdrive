@@ -1,23 +1,26 @@
 {
   "apiMappingCounts": {
     "coreMembers": {
-      "CANDIDATE": 137,
-      "MISSING": 62,
-      "UNKNOWN": 273
+      "CANDIDATE": 134,
+      "MISSING": 59,
+      "UNKNOWN": 272,
+      "VERIFIED": 7
     },
     "coreSymbols": {
-      "CANDIDATE": 12,
+      "CANDIDATE": 11,
       "MISSING": 30,
-      "UNKNOWN": 3
+      "UNKNOWN": 3,
+      "VERIFIED": 1
     },
     "rootExports": {
       "CANDIDATE": 9,
       "MISSING": 7
     },
     "total": {
-      "CANDIDATE": 158,
-      "MISSING": 99,
-      "UNKNOWN": 276
+      "CANDIDATE": 154,
+      "MISSING": 96,
+      "UNKNOWN": 275,
+      "VERIFIED": 8
     }
   },
   "errors": [],
@@ -35,13 +38,17 @@
     "corruptedCategory": "PASS",
     "corruptedExternalDependency": "PASS",
     "corruptedParameterization": "PASS",
+    "duplicateNodeCase": "PASS",
+    "mismatchedNodeCaseId": "PASS",
+    "nonexistentNodeCaseSource": "PASS",
     "removedCoreMember": "PASS",
     "removedCoreSymbol": "PASS",
     "removedRootExport": "PASS"
   },
-  "notRunTestCases": 101,
+  "notRunTestCases": 87,
   "referenceObservationCount": 1,
+  "semanticallyVerifiedApiMappings": 8,
   "status": "PASS",
   "testCases": 101,
-  "unmappedTestCases": 101
+  "unmappedTestCases": 87
 }

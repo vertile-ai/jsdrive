@@ -63,7 +63,8 @@ export class Browser {
   readonly #targets = new Map<string, Protocol.Target.TargetInfo>();
   readonly #timeoutMs: number;
   readonly #backend: RuntimeBackendFactory;
-  #closed = false;
+  #stopped = false;
+  #stopPromise: Promise<void> | undefined;
   public readonly cookies: CookieJar;
 
   private constructor(
@@ -72,6 +73,7 @@ export class Browser {
     public readonly version: BrowserVersion,
     public readonly protocol: unknown,
     public readonly connectionMode: ConnectionMode,
+    public readonly config: Config,
     public readonly process: BrowserProcessMetadata | undefined,
     childProcess: ChildProcess | undefined,
     timeoutMs: number,
@@ -81,6 +83,10 @@ export class Browser {
     this.#timeoutMs = timeoutMs;
     this.#backend = backend;
     this.cookies = new CookieJar(connection);
+    childProcess?.once("exit", () => {
+      this.#markStopped();
+      this.connection.close();
+    });
     connection.on("Target.attachedToTarget", (event) => {
       this.#targets.set(event.targetInfo.targetId, event.targetInfo);
       this.#sessions.set(event.targetInfo.targetId, event.sessionId);
@@ -126,18 +132,25 @@ export class Browser {
     return this.version.webSocketDebuggerUrl;
   }
 
+  public get stopped(): boolean {
+    return this.#stopped || (this.#process !== undefined && (this.#process.exitCode !== null || this.#process.signalCode !== null));
+  }
+
   public [Symbol.iterator](): Iterator<Tab> {
     return this.tabs[Symbol.iterator]();
   }
 
   public static async start(options: LaunchOptions | Config = {}): Promise<Browser> {
     const profile = options instanceof Config ? undefined : options.userDataDir ?? options.profile;
-    const config = options instanceof Config ? options : new Config({ ...options, ...(profile === undefined ? {} : { userDataDir: profile }) });
-    const executable = config.executable ?? await discoverChromeExecutable(config.browser);
-    const host = config.host;
-    const port = config.port ?? await freePort(host);
-    const temporaryProfile = config.userDataDir === undefined;
-    const profilePath = config.userDataDir ?? await mkdtemp(join(tmpdir(), "nodriver-"));
+    const requestedConfig = options instanceof Config
+      ? new Config(options)
+      : new Config({ ...options, ...(profile === undefined ? {} : { userDataDir: profile }) });
+    const executable = requestedConfig.executable ?? await discoverChromeExecutable(requestedConfig.browser);
+    const host = requestedConfig.host;
+    const port = requestedConfig.port ?? await freePort(host);
+    const temporaryProfile = requestedConfig.userDataDir === undefined;
+    const profilePath = requestedConfig.userDataDir ?? await mkdtemp(join(tmpdir(), "nodriver-"));
+    const config = new Config(requestedConfig, { userDataDir: profilePath, port });
     const args = [
       `--remote-debugging-address=${host}`,
       `--remote-debugging-port=${port}`,
@@ -154,7 +167,12 @@ export class Browser {
       ...config.browserArgs,
       "about:blank",
     ];
-    const child = spawn(executable, args, { stdio: "ignore" });
+    const child = spawn(executable, args, { stdio: ["ignore", "ignore", "pipe"] });
+    let browserStderr = "";
+    child.stderr?.setEncoding("utf8");
+    child.stderr?.on("data", (chunk: string) => {
+      browserStderr = (browserStderr + chunk).slice(-65_536);
+    });
     try {
       const timeoutMs = config.connectionTimeoutMs;
       const browser = await Browser.#connect({
@@ -171,12 +189,13 @@ export class Browser {
         temporaryProfile,
         host,
         port,
-      }, child, config.backend ?? CdpConnection, config.autodiscoverTargets);
+      }, child, config.backend ?? CdpConnection, config.autodiscoverTargets, config);
       return browser;
     } catch (error) {
-      child.kill();
+      await stopChildProcess(child);
       if (temporaryProfile) await rm(profilePath, { recursive: true, force: true });
-      throw error;
+      const detail = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
+      throw new Error(`Failed to start Chrome: ${detail}\nBrowser stderr:\n${browserStderr.trim() || "(empty)"}`, { cause: error });
     }
   }
 
@@ -293,22 +312,29 @@ export class Browser {
     tab.markClosed();
   }
 
-  public async close(): Promise<void> {
-    if (this.#closed) return;
-    this.#closed = true;
-    for (const tab of this.#tabs.values()) tab.markClosed();
-    this.#tabs.clear();
+  public close(): Promise<void> {
+    this.#stopPromise ??= this.#stop();
+    return this.#stopPromise;
+  }
+
+  public stop(): Promise<void> {
+    return this.close();
+  }
+
+  async #stop(): Promise<void> {
+    this.#markStopped();
     this.connection.close();
-    if (this.#process !== undefined) {
-      this.#process.kill();
-      await new Promise<void>((resolve) => {
-        if (this.#process?.exitCode !== null) resolve();
-        else this.#process?.once("exit", () => resolve());
-      });
-    }
+    if (this.#process !== undefined) await stopChildProcess(this.#process);
     if (this.process?.temporaryProfile === true) {
       await rm(this.process.profile, { recursive: true, force: true });
     }
+  }
+
+  #markStopped(): void {
+    if (this.#stopped) return;
+    this.#stopped = true;
+    for (const tab of this.#tabs.values()) tab.markClosed();
+    this.#tabs.clear();
   }
 
   static async #connect(
@@ -317,6 +343,7 @@ export class Browser {
     child?: ChildProcess,
     backend: RuntimeBackendFactory = CdpConnection,
     autodiscoverTargets = true,
+    config = new Config({ host: options.host, port: options.port }),
   ): Promise<Browser> {
     const base = `http://${options.host}:${options.port}`;
     const version = await pollJson<BrowserVersion>(`${base}/json/version`, options.timeoutMs);
@@ -331,6 +358,7 @@ export class Browser {
       version,
       protocol,
       options.connectionMode,
+      config,
       metadata,
       child,
       options.timeoutMs,
@@ -359,7 +387,7 @@ export class Browser {
     const pending = this.#tabCreations.get(targetId);
     if (pending !== undefined) return pending;
     const creation = this.#wrapTarget(targetId).then((tab) => {
-      if (this.#closed || !this.#targets.has(targetId)) {
+      if (this.stopped || !this.#targets.has(targetId)) {
         tab.markClosed();
         throw new TargetClosedError(targetId);
       }
@@ -515,4 +543,11 @@ function delay(ms: number, signal?: AbortSignal): Promise<void> {
     };
     signal?.addEventListener("abort", abort, { once: true });
   });
+}
+
+async function stopChildProcess(child: ChildProcess): Promise<void> {
+  if (child.exitCode !== null || child.signalCode !== null) return;
+  const exited = new Promise<void>((resolve) => child.once("exit", () => resolve()));
+  child.kill();
+  await exited;
 }

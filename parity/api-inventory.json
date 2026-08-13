@@ -1,23 +1,26 @@
 {
   "mappingCounts": {
     "coreMembers": {
-      "CANDIDATE": 137,
-      "MISSING": 62,
-      "UNKNOWN": 273
+      "CANDIDATE": 134,
+      "MISSING": 59,
+      "UNKNOWN": 272,
+      "VERIFIED": 7
     },
     "coreSymbols": {
-      "CANDIDATE": 12,
+      "CANDIDATE": 11,
       "MISSING": 30,
-      "UNKNOWN": 3
+      "UNKNOWN": 3,
+      "VERIFIED": 1
     },
     "rootExports": {
       "CANDIDATE": 9,
       "MISSING": 7
     },
     "total": {
-      "CANDIDATE": 158,
-      "MISSING": 99,
-      "UNKNOWN": 276
+      "CANDIDATE": 154,
+      "MISSING": 96,
+      "UNKNOWN": 275,
+      "VERIFIED": 8
     }
   },
   "nodriver": {
@@ -31,7 +34,8 @@
       "packages/api/dist/network.d.ts",
       "packages/api/dist/provider.d.ts",
       "packages/api/dist/tab.d.ts",
-      "packages/api/dist/trace.d.ts"
+      "packages/api/dist/trace.d.ts",
+      "packages/runtime-js/dist/connection.d.ts"
     ],
     "declarationParser": "typescript-5.9.3",
     "declaredClasses": {
@@ -87,6 +91,16 @@
             "optional": false,
             "readonly": true,
             "type": "ConnectionMode"
+          },
+          {
+            "declaration": "readonly config: Config;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "config",
+            "optional": false,
+            "readonly": true,
+            "type": "Config"
           },
           {
             "declaration": "readonly process: BrowserProcessMetadata | undefined;",
@@ -151,6 +165,15 @@
             "name": "webSocketUrl",
             "parameters": [],
             "returnType": "string",
+            "typeParameters": []
+          },
+          {
+            "access": "get",
+            "declaration": "get stopped(): boolean;",
+            "kind": "property",
+            "name": "stopped",
+            "parameters": [],
+            "returnType": "boolean",
             "typeParameters": []
           },
           {
@@ -470,6 +493,15 @@
             "returnType": "Promise<void>",
             "static": false,
             "typeParameters": []
+          },
+          {
+            "declaration": "stop(): Promise<void>;",
+            "kind": "method",
+            "name": "stop",
+            "parameters": [],
+            "returnType": "Promise<void>",
+            "static": false,
+            "typeParameters": []
           }
         ],
         "nonPublicMembers": [
@@ -574,16 +606,6 @@
       "Config": {
         "file": "packages/api/dist/config.d.ts",
         "members": [
-          {
-            "declaration": "userDataDir: string | undefined;",
-            "declaredDefault": null,
-            "hasDeclaredDefault": false,
-            "kind": "property",
-            "name": "userDataDir",
-            "optional": false,
-            "readonly": false,
-            "type": "string | undefined"
-          },
           {
             "declaration": "headless: boolean;",
             "declaredDefault": null,
@@ -775,7 +797,7 @@
             "type": "RuntimeBackendFactory | undefined"
           },
           {
-            "declaration": "constructor(options?: BrowserConfig);",
+            "declaration": "constructor(options?: BrowserConfig | Config);",
             "kind": "constructor",
             "name": "constructor",
             "parameters": [
@@ -785,7 +807,59 @@
                 "name": "options",
                 "optional": true,
                 "rest": false,
-                "type": "BrowserConfig"
+                "type": "BrowserConfig | Config"
+              }
+            ],
+            "returnType": null,
+            "typeParameters": []
+          },
+          {
+            "declaration": "constructor(options: BrowserConfig | Config, launch: { readonly userDataDir: string; readonly port: number; });",
+            "kind": "constructor",
+            "name": "constructor",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "options",
+                "optional": false,
+                "rest": false,
+                "type": "BrowserConfig | Config"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "launch",
+                "optional": false,
+                "rest": false,
+                "type": "{ readonly userDataDir: string; readonly port: number; }"
+              }
+            ],
+            "returnType": null,
+            "typeParameters": []
+          },
+          {
+            "access": "get",
+            "declaration": "get userDataDir(): string | undefined;",
+            "kind": "property",
+            "name": "userDataDir",
+            "parameters": [],
+            "returnType": "string | undefined",
+            "typeParameters": []
+          },
+          {
+            "access": "set",
+            "declaration": "set userDataDir(value: string | undefined);",
+            "kind": "property",
+            "name": "userDataDir",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "value",
+                "optional": false,
+                "rest": false,
+                "type": "string | undefined"
               }
             ],
             "returnType": null,
@@ -837,7 +911,18 @@
             "typeParameters": []
           }
         ],
-        "nonPublicMembers": []
+        "nonPublicMembers": [
+          {
+            "declaration": "#private;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "#private",
+            "optional": false,
+            "readonly": false,
+            "type": null
+          }
+        ]
       },
       "CookieJar": {
         "file": "packages/api/dist/cookies.d.ts",
@@ -4123,10 +4208,321 @@
         "nonPublicMembers": []
       }
     },
+    "declaredSupportingClasses": {
+      "RuntimeBackend": {
+        "file": "packages/runtime-js/dist/connection.d.ts",
+        "members": [
+          {
+            "declaration": "readonly domainPolicy: DomainPolicy;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "domainPolicy",
+            "optional": false,
+            "readonly": true,
+            "type": "DomainPolicy"
+          },
+          {
+            "declaration": "readonly enabledDomains: ReadonlySet<string>;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "enabledDomains",
+            "optional": false,
+            "readonly": true,
+            "type": "ReadonlySet<string>"
+          },
+          {
+            "declaration": "readonly closed: boolean;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "closed",
+            "optional": false,
+            "readonly": true,
+            "type": "boolean"
+          },
+          {
+            "declaration": "send<M extends ProtocolCommand>(method: M, ...args: CommandParams<M> extends undefined ? [params?: undefined, options?: SendOptions] : [params: CommandParams<M>, options?: SendOptions]): Promise<CommandResult<M>>;",
+            "kind": "method",
+            "name": "send",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "method",
+                "optional": false,
+                "rest": false,
+                "type": "M"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "args",
+                "optional": false,
+                "rest": true,
+                "type": "CommandParams<M> extends undefined ? [params?: undefined, options?: SendOptions] : [params: CommandParams<M>, options?: SendOptions]"
+              }
+            ],
+            "returnType": "Promise<CommandResult<M>>",
+            "static": false,
+            "typeParameters": [
+              "M extends ProtocolCommand"
+            ]
+          },
+          {
+            "declaration": "sendRaw(method: string, params?: unknown, options?: SendOptions): Promise<Readonly<Record<string, unknown>>>;",
+            "kind": "method",
+            "name": "sendRaw",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "method",
+                "optional": false,
+                "rest": false,
+                "type": "string"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "params",
+                "optional": true,
+                "rest": false,
+                "type": "unknown"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "options",
+                "optional": true,
+                "rest": false,
+                "type": "SendOptions"
+              }
+            ],
+            "returnType": "Promise<Readonly<Record<string, unknown>>>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "on<E extends ProtocolEvent>(method: E, handler: (params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>): () => void;",
+            "kind": "method",
+            "name": "on",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "method",
+                "optional": false,
+                "rest": false,
+                "type": "E"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "handler",
+                "optional": false,
+                "rest": false,
+                "type": "(params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>"
+              }
+            ],
+            "returnType": "() => void",
+            "static": false,
+            "typeParameters": [
+              "E extends ProtocolEvent"
+            ]
+          },
+          {
+            "declaration": "on(method: string, handler: (params: unknown, metadata: EventMetadata) => void | Promise<void>): () => void;",
+            "kind": "method",
+            "name": "on",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "method",
+                "optional": false,
+                "rest": false,
+                "type": "string"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "handler",
+                "optional": false,
+                "rest": false,
+                "type": "(params: unknown, metadata: EventMetadata) => void | Promise<void>"
+              }
+            ],
+            "returnType": "() => void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "removeHandlers(method?: string): void;",
+            "kind": "method",
+            "name": "removeHandlers",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "method",
+                "optional": true,
+                "rest": false,
+                "type": "string"
+              }
+            ],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "wait(milliseconds: number, signal?: AbortSignal): Promise<void>;",
+            "kind": "method",
+            "name": "wait",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "milliseconds",
+                "optional": false,
+                "rest": false,
+                "type": "number"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "signal",
+                "optional": true,
+                "rest": false,
+                "type": "AbortSignal"
+              }
+            ],
+            "returnType": "Promise<void>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "sleep(milliseconds: number, signal?: AbortSignal): Promise<void>;",
+            "kind": "method",
+            "name": "sleep",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "milliseconds",
+                "optional": false,
+                "rest": false,
+                "type": "number"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "signal",
+                "optional": true,
+                "rest": false,
+                "type": "AbortSignal"
+              }
+            ],
+            "returnType": "Promise<void>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "enableDomain(domain: string, options?: SendOptions): Promise<void>;",
+            "kind": "method",
+            "name": "enableDomain",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "domain",
+                "optional": false,
+                "rest": false,
+                "type": "string"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "options",
+                "optional": true,
+                "rest": false,
+                "type": "SendOptions"
+              }
+            ],
+            "returnType": "Promise<void>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "disableDomain(domain: string, options?: SendOptions): Promise<void>;",
+            "kind": "method",
+            "name": "disableDomain",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "domain",
+                "optional": false,
+                "rest": false,
+                "type": "string"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "options",
+                "optional": true,
+                "rest": false,
+                "type": "SendOptions"
+              }
+            ],
+            "returnType": "Promise<void>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "acquireDomain(domain: string, options?: SendOptions): Promise<() => Promise<void>>;",
+            "kind": "method",
+            "name": "acquireDomain",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "domain",
+                "optional": false,
+                "rest": false,
+                "type": "string"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "options",
+                "optional": true,
+                "rest": false,
+                "type": "SendOptions"
+              }
+            ],
+            "returnType": "Promise<() => Promise<void>>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "close(): void;",
+            "kind": "method",
+            "name": "close",
+            "parameters": [],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          }
+        ],
+        "nonPublicMembers": []
+      }
+    },
     "declaredSymbols": {
       "Browser": {
         "declarations": [
-          "export declare class Browser { #private; readonly connection: RuntimeBackend; readonly endpoint: BrowserEndpoint; readonly version: BrowserVersion; readonly protocol: unknown; readonly connectionMode: ConnectionMode; readonly process: BrowserProcessMetadata | undefined; readonly cookies: CookieJar; private constructor(); get targets(): readonly Protocol.Target.TargetInfo[]; get tabs(): readonly Tab[]; get mainTab(): Tab | undefined; get enabledDomains(): ReadonlySet<string>; get webSocketUrl(): string; [Symbol.iterator](): Iterator<Tab>; static start(options?: LaunchOptions | Config): Promise<Browser>; static connect(options: ConnectOptions): Promise<Browser>; get(url?: string, options?: { readonly newTab?: boolean; readonly newWindow?: boolean; }): Promise<Tab>; newTab(url?: string): Promise<Tab>; newWindow(url?: string): Promise<Tab>; createTab(url?: string, targetOptions?: Omit<Protocol.Target.Commands.CreateTargetParams, \"url\">): Promise<Tab>; targetInfo(target: string | Tab): Protocol.Target.TargetInfo | undefined; updateTargets(): Promise<readonly Protocol.Target.TargetInfo[]>; testConnection(): Promise<Protocol.Browser.Commands.GetVersionResult>; grantPermissions(permissions: readonly Protocol.Browser.PermissionType[], origin?: string): Promise<void>; grantAllPermissions(origin?: string): Promise<void>; wait(milliseconds: number, signal?: AbortSignal): Promise<void>; sleep(milliseconds: number, signal?: AbortSignal): Promise<void>; tileWindows(windows?: readonly Tab[], options?: { readonly maxColumns?: number; readonly left?: number; readonly top?: number; readonly width?: number; readonly height?: number; }): Promise<readonly Protocol.Browser.Bounds[]>; closeTab(tab: Tab): Promise<void>; close(): Promise<void>; }"
+          "export declare class Browser { #private; readonly connection: RuntimeBackend; readonly endpoint: BrowserEndpoint; readonly version: BrowserVersion; readonly protocol: unknown; readonly connectionMode: ConnectionMode; readonly config: Config; readonly process: BrowserProcessMetadata | undefined; readonly cookies: CookieJar; private constructor(); get targets(): readonly Protocol.Target.TargetInfo[]; get tabs(): readonly Tab[]; get mainTab(): Tab | undefined; get enabledDomains(): ReadonlySet<string>; get webSocketUrl(): string; get stopped(): boolean; [Symbol.iterator](): Iterator<Tab>; static start(options?: LaunchOptions | Config): Promise<Browser>; static connect(options: ConnectOptions): Promise<Browser>; get(url?: string, options?: { readonly newTab?: boolean; readonly newWindow?: boolean; }): Promise<Tab>; newTab(url?: string): Promise<Tab>; newWindow(url?: string): Promise<Tab>; createTab(url?: string, targetOptions?: Omit<Protocol.Target.Commands.CreateTargetParams, \"url\">): Promise<Tab>; targetInfo(target: string | Tab): Protocol.Target.TargetInfo | undefined; updateTargets(): Promise<readonly Protocol.Target.TargetInfo[]>; testConnection(): Promise<Protocol.Browser.Commands.GetVersionResult>; grantPermissions(permissions: readonly Protocol.Browser.PermissionType[], origin?: string): Promise<void>; grantAllPermissions(origin?: string): Promise<void>; wait(milliseconds: number, signal?: AbortSignal): Promise<void>; sleep(milliseconds: number, signal?: AbortSignal): Promise<void>; tileWindows(windows?: readonly Tab[], options?: { readonly maxColumns?: number; readonly left?: number; readonly top?: number; readonly width?: number; readonly height?: number; }): Promise<readonly Protocol.Browser.Bounds[]>; closeTab(tab: Tab): Promise<void>; close(): Promise<void>; stop(): Promise<void>; }"
         ],
         "file": "packages/api/dist/browser.d.ts",
         "kind": "class"
@@ -4175,7 +4571,7 @@
       },
       "Config": {
         "declarations": [
-          "export declare class Config { userDataDir: string | undefined; headless: boolean; userAgent: string | undefined; executable: string | undefined; browser: BrowserType; readonly browserArgs: string[]; sandbox: boolean; lang: string | undefined; host: string; port: number | undefined; expert: boolean; autodiscoverTargets: boolean; disableWebgl: boolean; disableWebrtc: boolean; connectionTries: number; connectionTimeoutMs: number; readonly extensions: string[]; connectionMode: ConnectionMode; domainPolicy: DomainPolicy; backend: RuntimeBackendFactory | undefined; constructor(options?: BrowserConfig); get usesCustomDataDir(): boolean; addArgument(argument: string): this; addExtension(path: string): this; }"
+          "export declare class Config { #private; headless: boolean; userAgent: string | undefined; executable: string | undefined; browser: BrowserType; readonly browserArgs: string[]; sandbox: boolean; lang: string | undefined; host: string; port: number | undefined; expert: boolean; autodiscoverTargets: boolean; disableWebgl: boolean; disableWebrtc: boolean; connectionTries: number; connectionTimeoutMs: number; readonly extensions: string[]; connectionMode: ConnectionMode; domainPolicy: DomainPolicy; backend: RuntimeBackendFactory | undefined; constructor(options?: BrowserConfig | Config); /** @internal Used to expose resolved launch state without marking a temporary profile as custom. */ constructor(options: BrowserConfig | Config, launch: { readonly userDataDir: string; readonly port: number; }); get userDataDir(): string | undefined; set userDataDir(value: string | undefined); get usesCustomDataDir(): boolean; addArgument(argument: string): this; addExtension(path: string): this; }"
         ],
         "file": "packages/api/dist/config.d.ts",
         "kind": "class"
@@ -4975,7 +5371,7 @@
     "package": "@nodriver/api",
     "runtimeExports": [
       {
-        "functionLength": 9,
+        "functionLength": 10,
         "kind": "function-or-class",
         "name": "Browser",
         "prototypeMembers": [
@@ -5022,6 +5418,14 @@
           {
             "kind": "method",
             "name": "sleep"
+          },
+          {
+            "kind": "method",
+            "name": "stop"
+          },
+          {
+            "kind": "property",
+            "name": "stopped"
           },
           {
             "kind": "property",
@@ -5088,6 +5492,10 @@
           {
             "kind": "method",
             "name": "addExtension"
+          },
+          {
+            "kind": "property",
+            "name": "userDataDir"
           },
           {
             "kind": "property",
@@ -6182,11 +6590,26 @@
                 "kind": "annotated-attribute",
                 "name": "config",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Browser",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceTestIds": [
+                    "ZDTEST-0020"
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "readonly config: Config;",
+                      "declaredDefault": null,
+                      "hasDeclaredDefault": false,
+                      "kind": "property",
+                      "name": "config",
+                      "optional": false,
+                      "readonly": true,
+                      "type": "Config"
+                    }
+                  ],
+                  "nodeMember": "Browser.config",
+                  "semanticsVerified": true,
+                  "signatureComparison": "PROPERTY_KIND_ONLY",
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -6360,7 +6783,14 @@
                 "kind": "method",
                 "name": "get",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceTestIds": [
+                    "ZDTEST-0004",
+                    "ZDTEST-0005",
+                    "ZDTEST-0006",
+                    "ZDTEST-0007",
+                    "ZDTEST-0020"
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "get(url?: string, options?: { readonly newTab?: boolean; readonly newWindow?: boolean; }): Promise<Tab>;",
@@ -6390,9 +6820,9 @@
                     }
                   ],
                   "nodeMember": "Browser.get",
-                  "semanticsVerified": false,
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -6618,11 +7048,32 @@
                 "kind": "method",
                 "name": "stop",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Browser",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceTestIds": [
+                    "ZDTEST-0008",
+                    "ZDTEST-0009",
+                    "ZDTEST-0010",
+                    "ZDTEST-0011",
+                    "ZDTEST-0012",
+                    "ZDTEST-0013",
+                    "ZDTEST-0014",
+                    "ZDTEST-0015"
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "stop(): Promise<void>;",
+                      "kind": "method",
+                      "name": "stop",
+                      "parameters": [],
+                      "returnType": "Promise<void>",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Browser.stop",
+                  "semanticsVerified": true,
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -6646,11 +7097,28 @@
                 "kind": "property",
                 "name": "stopped",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Browser",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceTestIds": [
+                    "ZDTEST-0012",
+                    "ZDTEST-0013",
+                    "ZDTEST-0014",
+                    "ZDTEST-0015"
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "access": "get",
+                      "declaration": "get stopped(): boolean;",
+                      "kind": "property",
+                      "name": "stopped",
+                      "parameters": [],
+                      "returnType": "boolean",
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Browser.stopped",
+                  "semanticsVerified": true,
+                  "signatureComparison": "PROPERTY_KIND_ONLY",
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -7697,14 +8165,31 @@
                   "evidence": "compatible member kind in TypeScript AST declaration",
                   "nodeDeclarations": [
                     {
-                      "declaration": "userDataDir: string | undefined;",
-                      "declaredDefault": null,
-                      "hasDeclaredDefault": false,
+                      "access": "get",
+                      "declaration": "get userDataDir(): string | undefined;",
                       "kind": "property",
                       "name": "userDataDir",
-                      "optional": false,
-                      "readonly": false,
-                      "type": "string | undefined"
+                      "parameters": [],
+                      "returnType": "string | undefined",
+                      "typeParameters": []
+                    },
+                    {
+                      "access": "set",
+                      "declaration": "set userDataDir(value: string | undefined);",
+                      "kind": "property",
+                      "name": "userDataDir",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "value",
+                          "optional": false,
+                          "rest": false,
+                          "type": "string | undefined"
+                        }
+                      ],
+                      "returnType": null,
+                      "typeParameters": []
                     }
                   ],
                   "nodeMember": "Config.userDataDir",
@@ -7747,13 +8232,17 @@
             ],
             "name": "Config",
             "nodeMapping": {
-              "evidence": "compatible TypeScript AST declaration",
+              "evidence": "independent passing Node parity cases",
+              "evidenceTestIds": [
+                "ZDTEST-0020"
+              ],
               "nodeKind": "class",
+              "nodeMember": "Config",
               "nodeSymbol": "Config",
               "runtimeExport": true,
-              "semanticsVerified": false,
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "CANDIDATE"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -8384,11 +8873,17 @@
                 "kind": "property",
                 "name": "closed",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceTestIds": [
+                    "ZDTEST-0008",
+                    "ZDTEST-0009",
+                    "ZDTEST-0014",
+                    "ZDTEST-0015"
+                  ],
+                  "nodeMember": "RuntimeBackend.closed",
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -20497,7 +20992,11 @@
                 "kind": "method",
                 "name": "get_content",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceTestIds": [
+                    "ZDTEST-0004",
+                    "ZDTEST-0005"
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "getContent(): Promise<string>;",
@@ -20510,9 +21009,9 @@
                     }
                   ],
                   "nodeMember": "Tab.getContent",
-                  "semanticsVerified": false,
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -22574,7 +23073,12 @@
                 "kind": "method",
                 "name": "update_target",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceTestIds": [
+                    "ZDTEST-0006",
+                    "ZDTEST-0007",
+                    "ZDTEST-0020"
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "updateTarget(): Promise<Protocol.Target.TargetInfo>;",
@@ -22587,9 +23091,9 @@
                     }
                   ],
                   "nodeMember": "Tab.updateTarget",
-                  "semanticsVerified": false,
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [

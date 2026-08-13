@@ -10,16 +10,19 @@ const parityDirectory = dirname(fileURLToPath(import.meta.url));
 const root = resolve(parityDirectory, "..");
 const api = await import(resolve(root, "packages/api/dist/index.js"));
 const declarationFiles = [
-  "browser.d.ts",
-  "config.d.ts",
-  "cookies.d.ts",
-  "download.d.ts",
-  "element.d.ts",
-  "input.d.ts",
-  "network.d.ts",
-  "provider.d.ts",
-  "tab.d.ts",
-  "trace.d.ts",
+  ...[
+    "browser.d.ts",
+    "config.d.ts",
+    "cookies.d.ts",
+    "download.d.ts",
+    "element.d.ts",
+    "input.d.ts",
+    "network.d.ts",
+    "provider.d.ts",
+    "tab.d.ts",
+    "trace.d.ts",
+  ].map((file) => `packages/api/dist/${file}`),
+  "packages/runtime-js/dist/connection.d.ts",
 ];
 
 function normalizedText(node, sourceFile) {
@@ -111,6 +114,7 @@ function classMemberData(member, sourceFile) {
 
 const declaredSymbols = {};
 const declaredClasses = {};
+const declaredSupportingClasses = {};
 const declarationPaths = [];
 
 function addSymbol(name, kind, relativePath, declaration) {
@@ -120,8 +124,7 @@ function addSymbol(name, kind, relativePath, declaration) {
   declaredSymbols[name].declarations.push(declaration);
 }
 
-for (const file of declarationFiles) {
-  const relativePath = `packages/api/dist/${file}`;
+for (const relativePath of declarationFiles) {
   const text = await readFile(resolve(root, relativePath), "utf8");
   const sourceFile = ts.createSourceFile(
     relativePath,
@@ -141,6 +144,15 @@ for (const file of declarationFiles) {
 
   for (const statement of sourceFile.statements) {
     if (!isExported(statement)) continue;
+    if (!relativePath.startsWith("packages/api/")) {
+      if (ts.isInterfaceDeclaration(statement) && statement.name.text === "RuntimeBackend") {
+        const members = statement.members
+          .map((member) => classMemberData(member, sourceFile))
+          .filter(Boolean);
+        declaredSupportingClasses[statement.name.text] = { file: relativePath, members, nonPublicMembers: [] };
+      }
+      continue;
+    }
     if (ts.isClassDeclaration(statement) && statement.name) {
       const name = statement.name.text;
       const members = statement.members
@@ -217,6 +229,7 @@ process.stdout.write(
       runtimeExports,
       declaredSymbols,
       declaredClasses,
+      declaredSupportingClasses,
       declarationFiles: declarationPaths,
     },
     null,

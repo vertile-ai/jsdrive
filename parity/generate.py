@@ -39,6 +39,8 @@ ROOT = Path(__file__).resolve().parent.parent
 PARITY = ROOT / "parity"
 UPSTREAM = ROOT / ".tmp" / "zendriver-upstream"
 REFERENCE = ROOT / ".tmp" / "zendriver-ref"
+NODE_TEST_MAPPINGS = PARITY / "node-test-mappings.json"
+API_SEMANTIC_MAPPINGS = PARITY / "api-semantic-mappings.json"
 
 
 def run(command: list[str], cwd: Path = ROOT) -> subprocess.CompletedProcess[str]:
@@ -192,6 +194,54 @@ def mutation_probes(
             else "FAIL"
         )
     return results
+
+
+def node_mapping_errors(cases: list[dict[str, Any]], mappings: dict[str, Any]) -> list[str]:
+    errors = []
+    inventory_ids = {case["id"] for case in cases}
+    unknown_mapping_ids = sorted(set(mappings) - inventory_ids)
+    if unknown_mapping_ids:
+        errors.append(f"Node test mappings contain unknown IDs: {unknown_mapping_ids}")
+    mapped_cases: dict[str, str] = {}
+    for case_id, mapping in mappings.items():
+        if set(mapping) != {"status", "case", "result", "note"}:
+            errors.append(f"Node test mapping schema is invalid for {case_id}")
+            continue
+        if mapping["status"] != "MAPPED" or mapping["result"] != "PASS":
+            continue
+        case_name = mapping["case"]
+        if not isinstance(case_name, str) or "::" not in case_name:
+            errors.append(f"passing Node test mapping case is invalid for {case_id}")
+            continue
+        source_name, source_test_id = case_name.rsplit("::", 1)
+        if source_test_id != case_id:
+            errors.append(f"Node test mapping case ID does not match key for {case_id}")
+        other_id = mapped_cases.get(case_name)
+        if other_id is not None:
+            errors.append(f"Node test mapping case is duplicated by {other_id} and {case_id}")
+        mapped_cases[case_name] = case_id
+        source_path = ROOT / source_name
+        if not source_path.is_file():
+            errors.append(f"Node test mapping source does not exist for {case_id}: {source_name}")
+        elif case_id not in source_path.read_text(encoding="utf8"):
+            errors.append(f"Node test mapping source does not contain {case_id}: {source_name}")
+    return errors
+
+
+def node_mapping_mutation_probes(cases: list[dict[str, Any]], mappings: dict[str, Any]) -> dict[str, str]:
+    case_ids = list(mappings)
+    first_id, second_id = case_ids[:2]
+    duplicate = copy.deepcopy(mappings)
+    duplicate[second_id]["case"] = duplicate[first_id]["case"]
+    mismatched = copy.deepcopy(mappings)
+    mismatched[first_id]["case"] = mismatched[first_id]["case"].rsplit("::", 1)[0] + f"::{second_id}"
+    nonexistent = copy.deepcopy(mappings)
+    nonexistent[first_id]["case"] = f"packages/api/test/does-not-exist.test.ts::{first_id}"
+    return {
+        "duplicateNodeCase": "PASS" if node_mapping_errors(cases, duplicate) else "FAIL",
+        "mismatchedNodeCaseId": "PASS" if node_mapping_errors(cases, mismatched) else "FAIL",
+        "nonexistentNodeCaseSource": "PASS" if node_mapping_errors(cases, nonexistent) else "FAIL",
+    }
 
 
 def git_value(*arguments: str) -> str:
@@ -505,6 +555,19 @@ def add_api_mappings(upstream: dict[str, Any], nodriver: dict[str, Any]) -> dict
                     }
                 member["nodeMapping"] = member_mapping
                 member_counts[member_mapping["status"]] += 1
+    add_api_semantic_mappings(upstream)
+    root_counts = Counter(item["nodeMapping"]["status"] for item in upstream["rootExports"])
+    symbol_counts = Counter(
+        symbol["nodeMapping"]["status"]
+        for module in upstream["coreModules"]
+        for symbol in module["symbols"]
+    )
+    member_counts = Counter(
+        member["nodeMapping"]["status"]
+        for module in upstream["coreModules"]
+        for symbol in module["symbols"]
+        for member in symbol.get("members", [])
+    )
     total_counts = root_counts + symbol_counts + member_counts
     return {
         "rootExports": dict(sorted(root_counts.items())),
@@ -514,7 +577,32 @@ def add_api_mappings(upstream: dict[str, Any], nodriver: dict[str, Any]) -> dict
     }
 
 
+def add_api_semantic_mappings(upstream: dict[str, Any]) -> None:
+    semantic_mappings = json.loads(API_SEMANTIC_MAPPINGS.read_text(encoding="utf8"))
+    targets: dict[str, dict[str, Any]] = {}
+    for module in upstream["coreModules"]:
+        for symbol in module["symbols"]:
+            symbol_path = f"{module['name']}.{symbol['name']}"
+            targets[symbol_path] = symbol
+            for member in symbol.get("members", []):
+                targets[f"{symbol_path}.{member['name']}"] = member
+    for semantic in semantic_mappings:
+        target = targets.get(semantic["upstream"])
+        if target is None:
+            raise RuntimeError(f"Unknown upstream semantic mapping: {semantic['upstream']}")
+        target["nodeMapping"] = {
+            **target["nodeMapping"],
+            "status": "VERIFIED",
+            "nodeMember": semantic["nodeMember"],
+            "evidence": "independent passing Node parity cases",
+            "evidenceTestIds": semantic["testIds"],
+            "signatureComparison": target["nodeMapping"].get("signatureComparison", "UNVERIFIED"),
+            "semanticsVerified": True,
+        }
+
+
 def build_test_inventory(node_ids: list[str]) -> dict[str, Any]:
+    mappings = json.loads(NODE_TEST_MAPPINGS.read_text(encoding="utf8"))
     cases = []
     for index, node_id in enumerate(node_ids, start=1):
         file_name, function_with_parameter = node_id.split("::", 1)
@@ -538,6 +626,8 @@ def build_test_inventory(node_ids: list[str]) -> dict[str, Any]:
                 "note": "No independently expressed one-to-one Node parity case has been verified yet.",
             },
         }
+        if case["id"] in mappings:
+            case["nodeParity"] = mappings[case["id"]]
         cases.append(case)
     return {"schemaVersion": 1, "caseCount": len(cases), "cases": cases}
 
@@ -616,6 +706,16 @@ def validate(
             for dependency in dependencies or []
         ):
             errors.append(f"external dependency schema is invalid for {case_id}")
+    mappings = json.loads(NODE_TEST_MAPPINGS.read_text(encoding="utf8"))
+    inventory_by_id = {case["id"]: case["nodeParity"] for case in cases}
+    errors.extend(node_mapping_errors(cases, mappings))
+    for case_id, mapping in mappings.items():
+        if inventory_by_id.get(case_id) != mapping:
+            errors.append(f"generated Node test mapping differs from overlay for {case_id}")
+    mapping_probes = node_mapping_mutation_probes(cases, mappings)
+    failed_mapping_probes = [name for name, status in mapping_probes.items() if status != "PASS"]
+    if failed_mapping_probes:
+        errors.append(f"Node test mapping mutation probes failed: {failed_mapping_probes}")
     if not api_inventory["upstream"]["rootExports"]:
         errors.append("Zendriver root API inventory is empty")
     if not api_inventory["upstream"]["coreModules"]:
@@ -628,6 +728,48 @@ def validate(
     if len(root_names) != len(set(root_names)):
         errors.append("Zendriver root export names are not unique")
     modules = api_inventory["upstream"]["coreModules"]
+    semantic_mappings = json.loads(API_SEMANTIC_MAPPINGS.read_text(encoding="utf8"))
+    known_api_members = set(api_inventory["nodriver"]["declaredSymbols"])
+    known_api_members.update(
+        f"{class_name}.{member['name']}"
+        for class_name, declared_class in api_inventory["nodriver"]["declaredClasses"].items()
+        for member in declared_class["members"]
+    )
+    known_api_members.update(
+        f"{class_name}.{member['name']}"
+        for class_name, declared_class in api_inventory["nodriver"].get("declaredSupportingClasses", {}).items()
+        for member in declared_class["members"]
+    )
+    upstream_targets: dict[str, dict[str, Any]] = {}
+    for module in modules:
+        for symbol in module["symbols"]:
+            symbol_path = f"{module['name']}.{symbol['name']}"
+            upstream_targets[symbol_path] = symbol
+            for member in symbol.get("members", []):
+                upstream_targets[f"{symbol_path}.{member['name']}"] = member
+    if len({entry["upstream"] for entry in semantic_mappings}) != len(semantic_mappings):
+        errors.append("API semantic mappings contain duplicate upstream targets")
+    for entry in semantic_mappings:
+        if set(entry) != {"upstream", "nodeMember", "testIds"}:
+            errors.append(f"API semantic mapping schema is invalid: {entry}")
+            continue
+        target = upstream_targets.get(entry["upstream"])
+        if target is None:
+            errors.append(f"API semantic mapping has unknown upstream target: {entry['upstream']}")
+            continue
+        if entry["nodeMember"] not in known_api_members:
+            errors.append(f"API semantic mapping has unknown Node API member: {entry['nodeMember']}")
+        if not entry["testIds"]:
+            errors.append(f"API semantic mapping has no evidence tests: {entry['upstream']}")
+        for test_id in entry["testIds"]:
+            parity = inventory_by_id.get(test_id)
+            if parity is None or parity["status"] != "MAPPED" or parity["result"] != "PASS":
+                errors.append(f"API semantic evidence is not a passing mapped test: {entry['upstream']} -> {test_id}")
+        mapping = target["nodeMapping"]
+        if not mapping.get("semanticsVerified") or mapping.get("status") != "VERIFIED":
+            errors.append(f"API semantic target is not marked verified: {entry['upstream']}")
+        if mapping.get("nodeMember") != entry["nodeMember"] or mapping.get("evidenceTestIds") != entry["testIds"]:
+            errors.append(f"generated API semantic mapping differs from overlay: {entry['upstream']}")
     core_symbol_count = sum(len(module["symbols"]) for module in modules)
     core_member_count = sum(
         len(symbol.get("members", []))
@@ -747,6 +889,7 @@ def validate(
                 f"{name} fingerprint mismatch: expected {expected}, got {fingerprints.get(name)}"
             )
     probes = mutation_probes(api_inventory, test_inventory, reference_observations)
+    probes.update(mapping_probes)
     failed_probes = [name for name, status in probes.items() if status != "PASS"]
     if failed_probes:
         errors.append(f"mutation probes failed: {failed_probes}")
@@ -783,6 +926,13 @@ def report_markdown(
         any(dep["kind"] == "network-host" for dep in case["externalDependencies"])
         for case in test_inventory["cases"]
     )
+    unmapped_cases = sum(
+        case["nodeParity"]["status"] == "UNMAPPED" for case in test_inventory["cases"]
+    )
+    not_run_cases = sum(
+        case["nodeParity"]["result"] == "NOT_RUN" for case in test_inventory["cases"]
+    )
+    semantic_mappings = json.loads(API_SEMANTIC_MAPPINGS.read_text(encoding="utf8"))
     lines = [
         "# Zendriver v0.15.5 Parity Gap Report",
         "",
@@ -798,11 +948,11 @@ def report_markdown(
         "## Current gaps",
         "",
         f"- Upstream parametrized cases: {test_inventory['caseCount']}",
-        f"- Unmapped Node parity cases: {test_inventory['caseCount']}",
-        f"- Not-run Node parity cases: {test_inventory['caseCount']}",
+        f"- Unmapped Node parity cases: {unmapped_cases}",
+        f"- Not-run Node parity cases: {not_run_cases}",
         f"- Cases requiring a live network host: {external_cases}",
         f"- API mappings by structural status: {json.dumps(api_counts, sort_keys=True)}",
-        "- Semantically verified API mappings: 0",
+        f"- Semantically verified API mappings: {len(semantic_mappings)}",
         "",
         "## Reference environment observations",
         "",
@@ -900,6 +1050,9 @@ def main() -> None:
             case["nodeParity"]["result"] == "NOT_RUN" for case in test_inventory["cases"]
         ),
         "apiMappingCounts": api_counts,
+        "semanticallyVerifiedApiMappings": len(
+            json.loads(API_SEMANTIC_MAPPINGS.read_text(encoding="utf8"))
+        ),
         "referenceObservationCount": len(reference_observations["observations"]),
         "fingerprints": fingerprints,
         "mutationProbes": probes,
@@ -916,8 +1069,13 @@ def main() -> None:
 
     print(f"Upstream: {tag} {commit}")
     print(f"Pytest: {stable_summary}")
-    print(f"Test mapping: {test_inventory['caseCount']} UNMAPPED, {test_inventory['caseCount']} NOT_RUN")
-    print(f"API mapping: {json.dumps(api_counts, sort_keys=True)}; 0 semantically verified")
+    print(
+        "Test mapping: "
+        f"{validation['unmappedTestCases']} UNMAPPED, "
+        f"{validation['notRunTestCases']} NOT_RUN"
+    )
+    semantic_count = len(json.loads(API_SEMANTIC_MAPPINGS.read_text(encoding="utf8")))
+    print(f"API mapping: {json.dumps(api_counts, sort_keys=True)}; {semantic_count} semantically verified")
     print(f"Validation: {validation['status']}")
     if errors:
         for error in errors:

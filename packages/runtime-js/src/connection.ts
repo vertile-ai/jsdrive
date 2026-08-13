@@ -89,6 +89,7 @@ type ErrorHandler = (event: HandlerError) => void;
 export interface RuntimeBackend {
   readonly domainPolicy: DomainPolicy;
   readonly enabledDomains: ReadonlySet<string>;
+  readonly closed: boolean;
   send<M extends ProtocolCommand>(
     method: M,
     ...args: CommandParams<M> extends undefined
@@ -196,6 +197,10 @@ export class CdpConnection implements RuntimeBackend {
 
   public get enabledDomains(): ReadonlySet<string> {
     return new Set([...this.#enabledDomainKeys].map((key) => key.slice(key.indexOf(":") + 1)));
+  }
+
+  public get closed(): boolean {
+    return this.#closed;
   }
 
   public send<M extends ProtocolCommand>(

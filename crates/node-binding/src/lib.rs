@@ -126,6 +126,16 @@ pub async fn poll_events(handle: u32, max_events: Option<u32>) -> Result<Vec<Str
 }
 
 #[napi]
+pub async fn connection_closed(handle: u32) -> Result<bool> {
+    Ok(get_connection(handle).await?.is_closed())
+}
+
+#[napi]
+pub async fn active_connection_count() -> u32 {
+    CONNECTIONS.read().await.len() as u32
+}
+
+#[napi]
 pub async fn close(handle: u32) -> Result<()> {
     let connection = CONNECTIONS
         .write()

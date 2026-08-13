@@ -4,7 +4,13 @@ import { createServer } from "node:net";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { Protocol } from "@nodriver/protocol";
-import { CdpConnection, CdpTimeoutError, type DomainPolicy } from "@nodriver/runtime-js";
+import {
+  CdpConnection,
+  CdpTimeoutError,
+  type DomainPolicy,
+  type RuntimeBackend,
+  type RuntimeBackendFactory,
+} from "@nodriver/runtime-js";
 import { CookieJar } from "./cookies.js";
 import { Tab, TargetClosedError, TargetCrashedError } from "./tab.js";
 
@@ -44,12 +50,14 @@ export interface LaunchOptions {
   readonly connectionMode?: ConnectionMode;
   readonly domainPolicy?: DomainPolicy;
   readonly timeoutMs?: number;
+  readonly backend?: RuntimeBackendFactory;
 }
 
 export interface ConnectOptions extends BrowserEndpoint {
   readonly connectionMode?: ConnectionMode;
   readonly domainPolicy?: DomainPolicy;
   readonly timeoutMs?: number;
+  readonly backend?: RuntimeBackendFactory;
 }
 
 export class Browser {
@@ -59,11 +67,12 @@ export class Browser {
   readonly #tabs = new Map<string, Tab>();
   readonly #targets = new Map<string, Protocol.Target.TargetInfo>();
   readonly #timeoutMs: number;
+  readonly #backend: RuntimeBackendFactory;
   #closed = false;
   public readonly cookies: CookieJar;
 
   private constructor(
-    public readonly connection: CdpConnection,
+    public readonly connection: RuntimeBackend,
     public readonly endpoint: BrowserEndpoint,
     public readonly version: BrowserVersion,
     public readonly protocol: unknown,
@@ -71,9 +80,11 @@ export class Browser {
     public readonly process: BrowserProcessMetadata | undefined,
     childProcess: ChildProcess | undefined,
     timeoutMs: number,
+    backend: RuntimeBackendFactory,
   ) {
     this.#process = childProcess;
     this.#timeoutMs = timeoutMs;
+    this.#backend = backend;
     this.cookies = new CookieJar(connection);
     connection.on("Target.attachedToTarget", (event) => {
       this.#targets.set(event.targetInfo.targetId, event.targetInfo);
@@ -151,7 +162,7 @@ export class Browser {
         temporaryProfile,
         host,
         port,
-      }, child);
+      }, child, options.backend ?? CdpConnection);
       return browser;
     } catch (error) {
       child.kill();
@@ -166,7 +177,7 @@ export class Browser {
       connectionMode: options.connectionMode ?? "direct",
       domainPolicy: options.domainPolicy ?? "manual",
       timeoutMs: options.timeoutMs ?? 10_000,
-    });
+    }, undefined, undefined, options.backend ?? CdpConnection);
   }
 
   public async get(url = "about:blank"): Promise<Tab> {
@@ -196,7 +207,7 @@ export class Browser {
       tab = new Tab(targetId, this.connection, sessionId, this.connection);
     } else {
       const websocket = await this.#waitForTargetWebSocket(targetId);
-      tab = new Tab(targetId, await CdpConnection.connect(websocket, {
+      tab = new Tab(targetId, await this.#backend.connect(websocket, {
         timeoutMs: this.#timeoutMs,
         domainPolicy: this.connection.domainPolicy,
       }), undefined, this.connection, websocket);
@@ -274,15 +285,26 @@ export class Browser {
     options: Required<Pick<ConnectOptions, "host" | "port" | "connectionMode" | "domainPolicy" | "timeoutMs">>,
     metadata?: BrowserProcessMetadata,
     child?: ChildProcess,
+    backend: RuntimeBackendFactory = CdpConnection,
   ): Promise<Browser> {
     const base = `http://${options.host}:${options.port}`;
     const version = await pollJson<BrowserVersion>(`${base}/json/version`, options.timeoutMs);
     const protocol = await fetchJson<unknown>(`${base}/json/protocol`);
-    const connection = await CdpConnection.connect(version.webSocketDebuggerUrl, {
+    const connection = await backend.connect(version.webSocketDebuggerUrl, {
       timeoutMs: options.timeoutMs,
       domainPolicy: options.domainPolicy,
     });
-    const browser = new Browser(connection, options, version, protocol, options.connectionMode, metadata, child, options.timeoutMs);
+    const browser = new Browser(
+      connection,
+      options,
+      version,
+      protocol,
+      options.connectionMode,
+      metadata,
+      child,
+      options.timeoutMs,
+      backend,
+    );
     await connection.send("Target.setDiscoverTargets", { discover: true }, { timeoutMs: options.timeoutMs });
     const { targetInfos } = await connection.send("Target.getTargets", {}, { timeoutMs: options.timeoutMs });
     for (const targetInfo of targetInfos) browser.#targets.set(targetInfo.targetId, targetInfo);

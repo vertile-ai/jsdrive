@@ -12,6 +12,7 @@ import {
   CdpConnection,
   CdpTimeoutError,
   type EventMetadata,
+  type RuntimeBackend,
   type SendOptions,
 } from "@nodriver/runtime-js";
 import { Element } from "./element.js";
@@ -76,9 +77,9 @@ export class Tab {
 
   public constructor(
     public readonly targetId: string,
-    public readonly connection: CdpConnection,
+    public readonly connection: RuntimeBackend,
     public readonly sessionId?: string,
-    public readonly browserConnection: CdpConnection = connection,
+    public readonly browserConnection: RuntimeBackend = connection,
     public readonly webSocketUrl?: string,
   ) {}
 

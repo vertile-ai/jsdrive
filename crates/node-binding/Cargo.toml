@@ -1,0 +1,18 @@
+[package]
+name = "nodriver-node-binding"
+version = "0.0.0"
+edition = "2024"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+napi = { version = "3", features = ["async", "tokio_rt"] }
+napi-derive = "3"
+nodriver-cdp-core = { path = "../cdp-core" }
+serde_json = "1"
+tokio = { version = "1", features = ["sync"] }
+
+[build-dependencies]
+napi-build = "2"

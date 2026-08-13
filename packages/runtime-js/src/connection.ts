@@ -78,13 +78,45 @@ export class CdpAbortError extends Error {
 type EventHandler = (params: unknown, metadata: EventMetadata) => void | Promise<void>;
 type ErrorHandler = (event: HandlerError) => void;
 
+export interface RuntimeBackend {
+  readonly domainPolicy: DomainPolicy;
+  readonly enabledDomains: ReadonlySet<string>;
+  send<M extends ProtocolCommand>(
+    method: M,
+    ...args: CommandParams<M> extends undefined
+      ? [params?: undefined, options?: SendOptions]
+      : [params: CommandParams<M>, options?: SendOptions]
+  ): Promise<CommandResult<M>>;
+  sendRaw(
+    method: string,
+    params?: unknown,
+    options?: SendOptions,
+  ): Promise<Readonly<Record<string, unknown>>>;
+  on<E extends ProtocolEvent>(
+    method: E,
+    handler: (params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>,
+  ): () => void;
+  on(
+    method: string,
+    handler: (params: unknown, metadata: EventMetadata) => void | Promise<void>,
+  ): () => void;
+  enableDomain(domain: string, options?: SendOptions): Promise<void>;
+  disableDomain(domain: string, options?: SendOptions): Promise<void>;
+  acquireDomain(domain: string, options?: SendOptions): Promise<() => Promise<void>>;
+  close(): void;
+}
+
+export interface RuntimeBackendFactory {
+  connect(url: string, options?: ConnectOptions): Promise<RuntimeBackend>;
+}
+
 interface Pending {
   readonly resolve: (value: Readonly<Record<string, unknown>>) => void;
   readonly reject: (reason: unknown) => void;
   readonly cleanup: () => void;
 }
 
-export class CdpConnection {
+export class CdpConnection implements RuntimeBackend {
   readonly #socket: WebSocket;
   readonly #pending = new Map<number, Pending>();
   readonly #handlers = new Map<string, Set<EventHandler>>();

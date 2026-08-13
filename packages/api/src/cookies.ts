@@ -1,12 +1,12 @@
 import { readFile, writeFile } from "node:fs/promises";
 import type { Protocol } from "@nodriver/protocol";
-import type { CdpConnection } from "@nodriver/runtime-js";
+import type { RuntimeBackend } from "@nodriver/runtime-js";
 
 export type Cookie = Protocol.Network.Cookie;
 export type CookieParam = Protocol.Network.CookieParam;
 
 export class CookieJar {
-  public constructor(private readonly connection: CdpConnection) {}
+  public constructor(private readonly connection: RuntimeBackend) {}
 
   public async getAll(): Promise<readonly Cookie[]> {
     return (await this.connection.send("Storage.getCookies", {})).cookies;

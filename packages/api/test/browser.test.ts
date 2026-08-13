@@ -99,6 +99,41 @@ test("Tab commands force their bound session and reject session mismatches", asy
   );
 });
 
+test("network expectations ignore other sessions and clean up listeners and domain leases", async () => {
+  const handlers = new Map<string, Set<(event: unknown, metadata: { readonly sessionId?: string }) => void>>();
+  const calls: string[] = [];
+  const connection = {
+    domainPolicy: "reference-counted",
+    acquireDomain: async (domain: string) => {
+      calls.push(`acquire:${domain}`);
+      return async () => { calls.push(`release:${domain}`); };
+    },
+    on: (method: string, handler: (event: unknown, metadata: { readonly sessionId?: string }) => void) => {
+      const methodHandlers = handlers.get(method) ?? new Set();
+      methodHandlers.add(handler);
+      handlers.set(method, methodHandlers);
+      return () => { calls.push(`off:${method}`); methodHandlers.delete(handler); };
+    },
+  } as unknown as CdpConnection;
+  const tab = new Tab("network-session", connection, "session-1");
+  const expectation = tab.expectRequest("/api", { timeoutMs: 100 });
+  await expectation.ready;
+  const event = {
+    requestId: "request",
+    loaderId: "loader",
+    documentURL: "http://fixture/api",
+    request: { url: "http://fixture/api", method: "GET", headers: {}, initialPriority: "High", referrerPolicy: "no-referrer" },
+    timestamp: 1,
+    wallTime: 1,
+    initiator: { type: "other" },
+    redirectHasExtraInfo: false,
+  } satisfies Protocol.Network.Events.RequestWillBeSentEvent;
+  for (const handler of handlers.get("Network.requestWillBeSent") ?? []) handler(event, { sessionId: "session-2" });
+  for (const handler of handlers.get("Network.requestWillBeSent") ?? []) handler(event, { sessionId: "session-1" });
+  assert.equal((await expectation.value).request.url, "http://fixture/api");
+  assert.deepEqual(calls, ["acquire:Network", "off:Network.requestWillBeSent", "release:Network"]);
+});
+
 test("mouse clicks send the correct pressed-button bitmask", async () => {
   const messages: Array<{ readonly method: string; readonly params: unknown }> = [];
   const connection = {

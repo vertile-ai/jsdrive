@@ -15,6 +15,23 @@ import {
   type SendOptions,
 } from "@nodriver/runtime-js";
 import { Element } from "./element.js";
+import {
+  downloadFile as downloadFileToPath,
+  expectDownload as createDownloadExpectation,
+  setDownloadPath as configureDownloadPath,
+  type DownloadOptions,
+  type DownloadResult,
+} from "./download.js";
+import {
+  expectRequest as createRequestExpectation,
+  expectResponse as createResponseExpectation,
+  FetchInterception,
+  type Expectation,
+  type ExpectedRequest,
+  type ExpectedResponse,
+  type InterceptionOptions,
+  type UrlMatcher,
+} from "./network.js";
 
 export interface WaitOptions {
   readonly timeoutMs?: number;
@@ -55,12 +72,14 @@ export class TargetCrashedError extends Error {
 
 export class Tab {
   #failure: TargetClosedError | TargetCrashedError | undefined;
+  #downloadPath: string | undefined;
 
   public constructor(
     public readonly targetId: string,
-    readonly connection: CdpConnection,
+    public readonly connection: CdpConnection,
     public readonly sessionId?: string,
-    readonly browserConnection: CdpConnection = connection,
+    public readonly browserConnection: CdpConnection = connection,
+    public readonly webSocketUrl?: string,
   ) {}
 
   public get enabledDomains(): ReadonlySet<string> {
@@ -106,6 +125,49 @@ export class Tab {
     return this.connection.on(method, (params: unknown, metadata: EventMetadata) => {
       if (metadata.sessionId === this.sessionId) return handler(params, metadata);
     });
+  }
+
+  public async acquireDomain(domain: string, options: SendOptions = {}): Promise<() => Promise<void>> {
+    const bound = this.#mergeOptions(options);
+    if (this.connection.domainPolicy === "manual") {
+      await this.connection.enableDomain(domain, bound);
+      return async () => {};
+    }
+    return this.connection.acquireDomain(domain, bound);
+  }
+
+  public expectRequest(
+    matcher: UrlMatcher<Protocol.Network.Events.RequestWillBeSentEvent>,
+    options: WaitOptions = {},
+  ): Expectation<ExpectedRequest> {
+    return createRequestExpectation(this, matcher, options);
+  }
+
+  public expectResponse(
+    matcher: UrlMatcher<Protocol.Network.Events.ResponseReceivedEvent>,
+    options: WaitOptions = {},
+  ): Expectation<ExpectedResponse> {
+    return createResponseExpectation(this, matcher, options);
+  }
+
+  public intercept(options: InterceptionOptions = {}): FetchInterception {
+    return new FetchInterception(this, options);
+  }
+
+  public async setDownloadPath(path: string): Promise<string> {
+    this.#downloadPath = await configureDownloadPath(this, path);
+    return this.#downloadPath;
+  }
+
+  public expectDownload(
+    matcher: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent> = () => true,
+    options: DownloadOptions = {},
+  ): Expectation<DownloadResult> {
+    return createDownloadExpectation(this, this.#downloadPath, matcher, options);
+  }
+
+  public downloadFile(url: string, destination: string, options: WaitOptions = {}): Promise<DownloadResult> {
+    return downloadFileToPath(this, url, destination, options);
   }
 
   public async get(url: string, options: WaitOptions = {}): Promise<Protocol.Page.Commands.NavigateResult> {

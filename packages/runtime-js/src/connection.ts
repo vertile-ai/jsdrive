@@ -91,6 +91,8 @@ export class CdpConnection {
   readonly #errorHandlers = new Set<ErrorHandler>();
   readonly #trace: TraceEntry[] = [];
   readonly #domainReferences = new Map<string, number>();
+  readonly #domainEnables = new Map<string, Promise<void>>();
+  readonly #domainDisables = new Map<string, Promise<void>>();
   readonly #enabledDomainKeys = new Set<string>();
   public readonly domainPolicy: DomainPolicy;
   #nextId = 1;
@@ -226,15 +228,41 @@ export class CdpConnection {
   public async acquireDomain(domain: string, options: SendOptions = {}): Promise<() => Promise<void>> {
     if (this.domainPolicy === "manual") return async () => {};
     const key = this.#domainKey(domain, options.sessionId);
+    await this.#domainDisables.get(key);
     const references = this.#domainReferences.get(key) ?? 0;
-    if (references === 0) await this.enableDomain(domain, options);
     this.#domainReferences.set(key, references + 1);
+    let enabling = this.#domainEnables.get(key);
+    if (enabling === undefined && !this.#enabledDomainKeys.has(key)) {
+      enabling = this.enableDomain(domain, options);
+      this.#domainEnables.set(key, enabling);
+      void enabling.then(
+        () => { if (this.#domainEnables.get(key) === enabling) this.#domainEnables.delete(key); },
+        () => { if (this.#domainEnables.get(key) === enabling) this.#domainEnables.delete(key); },
+      );
+    }
+    try {
+      await enabling;
+    } catch (error) {
+      const remaining = (this.#domainReferences.get(key) ?? 1) - 1;
+      if (remaining === 0) this.#domainReferences.delete(key);
+      else this.#domainReferences.set(key, remaining);
+      throw error;
+    }
     let released = false;
     return async () => {
       if (released || this.domainPolicy === "zendriver-compatible") return;
       released = true;
       const remaining = (this.#domainReferences.get(key) ?? 1) - 1;
-      if (remaining === 0) await this.disableDomain(domain, options);
+      if (remaining === 0) {
+        this.#domainReferences.delete(key);
+        const disabling = this.disableDomain(domain, options);
+        this.#domainDisables.set(key, disabling);
+        try {
+          await disabling;
+        } finally {
+          if (this.#domainDisables.get(key) === disabling) this.#domainDisables.delete(key);
+        }
+      }
       else this.#domainReferences.set(key, remaining);
     };
   }

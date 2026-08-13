@@ -1,3 +1,6 @@
 export * from "./browser.js";
+export * from "./cookies.js";
+export * from "./download.js";
 export * from "./element.js";
+export * from "./network.js";
 export type { ReadyState, ScreenshotOptions, WaitForOptions, WaitOptions, WindowState } from "./tab.js";

@@ -179,10 +179,11 @@ test("domain policies expose enabled domains and reference-count releases", asyn
   const referenced = await createPeer({ domainPolicy: "reference-counted" });
   try {
     const firstLease = referenced.connection.acquireDomain("Network", { sessionId: "s1" });
+    const secondLease = referenced.connection.acquireDomain("Network", { sessionId: "s1" });
     const enable = await referenced.nextMessage();
     referenced.socket.send(JSON.stringify({ id: enable.id, result: {} }));
     const releaseFirst = await firstLease;
-    const releaseSecond = await referenced.connection.acquireDomain("Network", { sessionId: "s1" });
+    const releaseSecond = await secondLease;
     await releaseFirst();
     assert.deepEqual([...referenced.connection.enabledDomains], ["Network"]);
     const finalRelease = releaseSecond();
@@ -194,6 +195,55 @@ test("domain policies expose enabled domains and reference-count releases", asyn
     assert.deepEqual([...referenced.connection.enabledDomains], []);
   } finally {
     await referenced.close();
+  }
+});
+
+test("concurrent domain acquire shares enable failure and rolls back reservations", async () => {
+  const peer = await createPeer({ domainPolicy: "reference-counted" });
+  try {
+    const first = peer.connection.acquireDomain("Network");
+    const second = peer.connection.acquireDomain("Network");
+    const failedEnable = await peer.nextMessage();
+    peer.socket.send(JSON.stringify({ id: failedEnable.id, error: { code: -32000, message: "enable failed" } }));
+    await assert.rejects(first, CdpProtocolError);
+    await assert.rejects(second, CdpProtocolError);
+
+    const retry = peer.connection.acquireDomain("Network");
+    const retriedEnable = await peer.nextMessage();
+    assert.equal(retriedEnable.method, "Network.enable");
+    peer.socket.send(JSON.stringify({ id: retriedEnable.id, result: {} }));
+    const release = await retry;
+    const releasing = release();
+    const disable = await peer.nextMessage();
+    peer.socket.send(JSON.stringify({ id: disable.id, result: {} }));
+    await releasing;
+  } finally {
+    await peer.close();
+  }
+});
+
+test("domain acquire waits for an in-flight final disable before enabling again", async () => {
+  const peer = await createPeer({ domainPolicy: "reference-counted" });
+  try {
+    const lease = peer.connection.acquireDomain("Network");
+    const enable = await peer.nextMessage();
+    peer.socket.send(JSON.stringify({ id: enable.id, result: {} }));
+    const release = await lease;
+    const releasing = release();
+    const disable = await peer.nextMessage();
+    const nextLease = peer.connection.acquireDomain("Network");
+    peer.socket.send(JSON.stringify({ id: disable.id, result: {} }));
+    await releasing;
+    const nextEnable = await peer.nextMessage();
+    assert.equal(nextEnable.method, "Network.enable");
+    peer.socket.send(JSON.stringify({ id: nextEnable.id, result: {} }));
+    const nextRelease = await nextLease;
+    const nextReleasing = nextRelease();
+    const nextDisable = await peer.nextMessage();
+    peer.socket.send(JSON.stringify({ id: nextDisable.id, result: {} }));
+    await nextReleasing;
+  } finally {
+    await peer.close();
   }
 });
 

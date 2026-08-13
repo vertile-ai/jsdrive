@@ -25,12 +25,15 @@ test.after(async () => {
   await new Promise<void>((resolve, reject) => server.close((error) => error === undefined ? resolve() : reject(error)));
 });
 
-test("ZDTEST-0003 startup connection failure includes Chrome stderr", { timeout: 30_000 }, async () => {
+test("ZDTEST-0003 startup connection failure includes Chrome stderr", {
+  timeout: 30_000,
+  skip: browserCaseSkipReason(true),
+}, async () => {
   const controlledFailure: RuntimeBackendFactory = {
     connect: async () => { throw new Error("controlled connection failure"); },
   };
   await assert.rejects(
-    Browser.start({ executable, backend: controlledFailure, connectionTimeoutMs: 5_000 }),
+    Browser.start({ executable, headless: true, backend: controlledFailure, connectionTimeoutMs: 5_000 }),
     (error: unknown) => error instanceof Error
       && /Failed to start Chrome.*controlled connection failure/s.test(error.message)
       && /Browser stderr:\s+\S/s.test(error.message)

@@ -9,6 +9,7 @@ import ts from "typescript";
 const parityDirectory = dirname(fileURLToPath(import.meta.url));
 const root = resolve(parityDirectory, "..");
 const api = await import(resolve(root, "packages/api/dist/index.js"));
+const runtimeJs = await import(resolve(root, "packages/runtime-js/dist/index.js"));
 const declarationFiles = [
   ...[
     "browser.d.ts",
@@ -197,10 +198,11 @@ for (const relativePath of declarationFiles) {
   }
 }
 
-const runtimeExports = Object.keys(api)
+function inspectRuntimeExports(runtime, packageName) {
+  return Object.keys(runtime)
   .sort()
   .map((name) => {
-    const value = api[name];
+    const value = runtime[name];
     const prototypeMembers =
       typeof value === "function" && value.prototype
         ? Object.getOwnPropertyNames(value.prototype)
@@ -216,11 +218,22 @@ const runtimeExports = Object.keys(api)
         : [];
     return {
       name,
+      package: packageName,
       kind: typeof value === "function" ? "function-or-class" : typeof value,
       functionLength: typeof value === "function" ? value.length : null,
       prototypeMembers,
     };
   });
+}
+
+const apiRuntimeExports = inspectRuntimeExports(api, "jsdriver");
+const runtimeJsRuntimeExports = inspectRuntimeExports(
+  runtimeJs,
+  "@vertile-ai/jsdriver-runtime-js",
+);
+const runtimeExports = [...apiRuntimeExports, ...runtimeJsRuntimeExports].filter(
+  (item, index, all) => all.findIndex((candidate) => candidate.name === item.name) === index,
+);
 
 process.stdout.write(
   `${JSON.stringify(
@@ -228,6 +241,8 @@ process.stdout.write(
       package: "jsdriver",
       declarationParser: `typescript-${ts.version}`,
       runtimeExports,
+      apiRuntimeExports,
+      runtimeJsRuntimeExports,
       declaredSymbols,
       declaredClasses,
       declaredSupportingClasses,

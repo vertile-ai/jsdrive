@@ -360,31 +360,31 @@
       {"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-CONNECTION-LIFECYCLE-001"}
     ],
     "upstream": "zendriver.core.connection.Connection",
-    "verifiedSemantics": ["defaults", "errors", "return", "signature", "state"]
+    "verifiedSemantics": ["defaults", "errors", "return", "state"]
   },
   {
     "nodeMember": "EventTransaction",
     "testCases": [{"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-TRANSACTION-001"}],
     "upstream": "zendriver.core.connection.EventTransaction",
-    "verifiedSemantics": ["return", "signature", "state"]
+    "verifiedSemantics": ["state"]
   },
   {
     "nodeMember": "Listener",
     "testCases": [{"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-LISTENER-001"}],
     "upstream": "zendriver.core.connection.Listener",
-    "verifiedSemantics": ["defaults", "return", "signature", "state"]
+    "verifiedSemantics": ["defaults", "state"]
   },
   {
     "nodeMember": "ProtocolException",
     "testCases": [{"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-CONNECTION-ERRORS-001"}],
     "upstream": "zendriver.core.connection.ProtocolException",
-    "verifiedSemantics": ["errors", "return", "signature", "state"]
+    "verifiedSemantics": ["errors", "return", "state"]
   },
   {
     "nodeMember": "SettingClassVarNotAllowedException",
     "testCases": [{"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-CONNECTION-ERRORS-001"}],
     "upstream": "zendriver.core.connection.SettingClassVarNotAllowedException",
-    "verifiedSemantics": ["errors", "return", "signature"]
+    "verifiedSemantics": ["errors"]
   },
   {
     "nodeMember": "Transaction",
@@ -393,6 +393,6 @@
       {"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-TRANSACTION-FUTURE-001"}
     ],
     "upstream": "zendriver.core.connection.Transaction",
-    "verifiedSemantics": ["errors", "return", "signature", "state"]
+    "verifiedSemantics": ["errors", "return", "state"]
   }
 ]

@@ -99,6 +99,19 @@ test("ZDAPI-TRANSACTION-001", async () => {
   assert.match(event.toString(), /EventTransaction/);
 });
 
+test("ZDAPI-EVENT-TRANSACTION-THENABLE-001", async () => {
+  const thenableEvent = {
+    then(resolve: (value: string) => void): void {
+      resolve("assimilated-event");
+    },
+  };
+  const event = new EventTransaction(thenableEvent);
+  assert.equal(event.event, thenableEvent);
+  assert.equal(event.result(), thenableEvent);
+  // ECMAScript await assimilates arbitrary thenables even when the transaction preserves identity.
+  assert.equal(await (event as PromiseLike<unknown>), "assimilated-event");
+});
+
 test("ZDAPI-TRANSACTION-FUTURE-001", async () => {
   const transaction = new Transaction("Fixture.command");
   let callbackCount = 0;

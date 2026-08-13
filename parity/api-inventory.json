@@ -25,6 +25,1554 @@
     }
   },
   "nodriver": {
+    "apiRuntimeExports": [
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "BaseFetchInterception",
+        "package": "jsdriver",
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "close"
+          },
+          {
+            "kind": "method",
+            "name": "continueRequest"
+          },
+          {
+            "kind": "method",
+            "name": "continueResponse"
+          },
+          {
+            "kind": "method",
+            "name": "failRequest"
+          },
+          {
+            "kind": "method",
+            "name": "fulfillRequest"
+          },
+          {
+            "kind": "method",
+            "name": "next"
+          },
+          {
+            "kind": "property",
+            "name": "ready"
+          },
+          {
+            "kind": "property",
+            "name": "request"
+          },
+          {
+            "kind": "method",
+            "name": "reset"
+          },
+          {
+            "kind": "property",
+            "name": "responseBody"
+          }
+        ]
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "BaseRequestExpectation",
+        "package": "jsdriver",
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "cancel"
+          },
+          {
+            "kind": "property",
+            "name": "ready"
+          },
+          {
+            "kind": "property",
+            "name": "request"
+          },
+          {
+            "kind": "method",
+            "name": "reset"
+          },
+          {
+            "kind": "property",
+            "name": "response"
+          },
+          {
+            "kind": "property",
+            "name": "responseBody"
+          }
+        ]
+      },
+      {
+        "functionLength": 10,
+        "kind": "function-or-class",
+        "name": "Browser",
+        "package": "jsdriver",
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "close"
+          },
+          {
+            "kind": "method",
+            "name": "closeTab"
+          },
+          {
+            "kind": "method",
+            "name": "createTab"
+          },
+          {
+            "kind": "property",
+            "name": "enabledDomains"
+          },
+          {
+            "kind": "method",
+            "name": "get"
+          },
+          {
+            "kind": "method",
+            "name": "getVersion"
+          },
+          {
+            "kind": "method",
+            "name": "grantAllPermissions"
+          },
+          {
+            "kind": "method",
+            "name": "grantPermissions"
+          },
+          {
+            "kind": "property",
+            "name": "mainTab"
+          },
+          {
+            "kind": "property",
+            "name": "manuallyEnabledDomains"
+          },
+          {
+            "kind": "method",
+            "name": "newTab"
+          },
+          {
+            "kind": "method",
+            "name": "newWindow"
+          },
+          {
+            "kind": "method",
+            "name": "sleep"
+          },
+          {
+            "kind": "method",
+            "name": "stop"
+          },
+          {
+            "kind": "property",
+            "name": "stopped"
+          },
+          {
+            "kind": "property",
+            "name": "tabs"
+          },
+          {
+            "kind": "method",
+            "name": "targetInfo"
+          },
+          {
+            "kind": "property",
+            "name": "targets"
+          },
+          {
+            "kind": "method",
+            "name": "testConnection"
+          },
+          {
+            "kind": "method",
+            "name": "tileWindows"
+          },
+          {
+            "kind": "method",
+            "name": "updateTargets"
+          },
+          {
+            "kind": "method",
+            "name": "wait"
+          },
+          {
+            "kind": "property",
+            "name": "webSocketUrl"
+          }
+        ]
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "CdpTraceRecorder",
+        "package": "jsdriver",
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "compareOutbound"
+          },
+          {
+            "kind": "method",
+            "name": "normalized"
+          },
+          {
+            "kind": "method",
+            "name": "outbound"
+          }
+        ]
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "Config",
+        "package": "jsdriver",
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "addArgument"
+          },
+          {
+            "kind": "method",
+            "name": "addExtension"
+          },
+          {
+            "kind": "property",
+            "name": "browserExecutablePath"
+          },
+          {
+            "kind": "property",
+            "name": "configuredUserDataDir"
+          },
+          {
+            "kind": "method",
+            "name": "toBrowserArgs"
+          },
+          {
+            "kind": "method",
+            "name": "toString"
+          },
+          {
+            "kind": "property",
+            "name": "userDataDir"
+          },
+          {
+            "kind": "property",
+            "name": "usesCustomDataDir"
+          }
+        ]
+      },
+      {
+        "functionLength": 3,
+        "kind": "function-or-class",
+        "name": "Connection",
+        "package": "jsdriver",
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "aClose"
+          },
+          {
+            "kind": "method",
+            "name": "aOpen"
+          },
+          {
+            "kind": "method",
+            "name": "aclose"
+          },
+          {
+            "kind": "method",
+            "name": "addHandler"
+          },
+          {
+            "kind": "method",
+            "name": "add_handler"
+          },
+          {
+            "kind": "method",
+            "name": "aenter"
+          },
+          {
+            "kind": "method",
+            "name": "aexit"
+          },
+          {
+            "kind": "method",
+            "name": "aopen"
+          },
+          {
+            "kind": "property",
+            "name": "attached"
+          },
+          {
+            "kind": "property",
+            "name": "browserContextId"
+          },
+          {
+            "kind": "property",
+            "name": "browser_context_id"
+          },
+          {
+            "kind": "property",
+            "name": "canAccessOpener"
+          },
+          {
+            "kind": "property",
+            "name": "can_access_opener"
+          },
+          {
+            "kind": "property",
+            "name": "closed"
+          },
+          {
+            "kind": "method",
+            "name": "feedCdp"
+          },
+          {
+            "kind": "method",
+            "name": "feed_cdp"
+          },
+          {
+            "kind": "property",
+            "name": "listener"
+          },
+          {
+            "kind": "property",
+            "name": "openerFrameId"
+          },
+          {
+            "kind": "property",
+            "name": "openerId"
+          },
+          {
+            "kind": "property",
+            "name": "opener_frame_id"
+          },
+          {
+            "kind": "property",
+            "name": "opener_id"
+          },
+          {
+            "kind": "property",
+            "name": "owner"
+          },
+          {
+            "kind": "method",
+            "name": "removeHandlers"
+          },
+          {
+            "kind": "method",
+            "name": "remove_handlers"
+          },
+          {
+            "kind": "method",
+            "name": "send"
+          },
+          {
+            "kind": "method",
+            "name": "sleep"
+          },
+          {
+            "kind": "property",
+            "name": "subtype"
+          },
+          {
+            "kind": "property",
+            "name": "target"
+          },
+          {
+            "kind": "property",
+            "name": "targetId"
+          },
+          {
+            "kind": "property",
+            "name": "target_id"
+          },
+          {
+            "kind": "method",
+            "name": "then"
+          },
+          {
+            "kind": "property",
+            "name": "title"
+          },
+          {
+            "kind": "property",
+            "name": "type"
+          },
+          {
+            "kind": "property",
+            "name": "type_"
+          },
+          {
+            "kind": "method",
+            "name": "updateTarget"
+          },
+          {
+            "kind": "method",
+            "name": "update_target"
+          },
+          {
+            "kind": "property",
+            "name": "url"
+          },
+          {
+            "kind": "method",
+            "name": "wait"
+          },
+          {
+            "kind": "property",
+            "name": "websocket"
+          },
+          {
+            "kind": "property",
+            "name": "websocket_url"
+          }
+        ]
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "CookieJar",
+        "package": "jsdriver",
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "clear"
+          },
+          {
+            "kind": "method",
+            "name": "getAll"
+          },
+          {
+            "kind": "method",
+            "name": "load"
+          },
+          {
+            "kind": "method",
+            "name": "save"
+          },
+          {
+            "kind": "method",
+            "name": "setAll"
+          }
+        ]
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "DownloadExpectation",
+        "package": "jsdriver",
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "cancel"
+          },
+          {
+            "kind": "method",
+            "name": "close"
+          },
+          {
+            "kind": "property",
+            "name": "ready"
+          },
+          {
+            "kind": "property",
+            "name": "value"
+          }
+        ]
+      },
+      {
+        "functionLength": 3,
+        "kind": "function-or-class",
+        "name": "Element",
+        "package": "jsdriver",
+        "prototypeMembers": [
+          {
+            "kind": "property",
+            "name": "adoptedStyleSheets"
+          },
+          {
+            "kind": "method",
+            "name": "apply"
+          },
+          {
+            "kind": "property",
+            "name": "assignedSlot"
+          },
+          {
+            "kind": "property",
+            "name": "attributes"
+          },
+          {
+            "kind": "property",
+            "name": "attrs"
+          },
+          {
+            "kind": "property",
+            "name": "baseURL"
+          },
+          {
+            "kind": "property",
+            "name": "baseUrl"
+          },
+          {
+            "kind": "property",
+            "name": "childNodeCount"
+          },
+          {
+            "kind": "property",
+            "name": "children"
+          },
+          {
+            "kind": "method",
+            "name": "clearInput"
+          },
+          {
+            "kind": "method",
+            "name": "clearInputByDeleting"
+          },
+          {
+            "kind": "method",
+            "name": "click"
+          },
+          {
+            "kind": "property",
+            "name": "compatibilityMode"
+          },
+          {
+            "kind": "property",
+            "name": "contentDocument"
+          },
+          {
+            "kind": "property",
+            "name": "distributedNodes"
+          },
+          {
+            "kind": "property",
+            "name": "documentURL"
+          },
+          {
+            "kind": "property",
+            "name": "documentUrl"
+          },
+          {
+            "kind": "method",
+            "name": "domClick"
+          },
+          {
+            "kind": "method",
+            "name": "flash"
+          },
+          {
+            "kind": "method",
+            "name": "focus"
+          },
+          {
+            "kind": "property",
+            "name": "frameId"
+          },
+          {
+            "kind": "method",
+            "name": "get"
+          },
+          {
+            "kind": "method",
+            "name": "getHtml"
+          },
+          {
+            "kind": "method",
+            "name": "getJsAttributes"
+          },
+          {
+            "kind": "method",
+            "name": "getParent"
+          },
+          {
+            "kind": "method",
+            "name": "getPosition"
+          },
+          {
+            "kind": "method",
+            "name": "getRemoteObject"
+          },
+          {
+            "kind": "method",
+            "name": "getText"
+          },
+          {
+            "kind": "method",
+            "name": "getValue"
+          },
+          {
+            "kind": "method",
+            "name": "highlightOverlay"
+          },
+          {
+            "kind": "property",
+            "name": "html"
+          },
+          {
+            "kind": "property",
+            "name": "importedDocument"
+          },
+          {
+            "kind": "property",
+            "name": "internalSubset"
+          },
+          {
+            "kind": "method",
+            "name": "isRecording"
+          },
+          {
+            "kind": "property",
+            "name": "isScrollable"
+          },
+          {
+            "kind": "property",
+            "name": "isSvg"
+          },
+          {
+            "kind": "property",
+            "name": "localName"
+          },
+          {
+            "kind": "method",
+            "name": "mouseClick"
+          },
+          {
+            "kind": "method",
+            "name": "mouseDrag"
+          },
+          {
+            "kind": "method",
+            "name": "mouseMove"
+          },
+          {
+            "kind": "property",
+            "name": "node"
+          },
+          {
+            "kind": "property",
+            "name": "nodeId"
+          },
+          {
+            "kind": "property",
+            "name": "nodeName"
+          },
+          {
+            "kind": "property",
+            "name": "nodeType"
+          },
+          {
+            "kind": "property",
+            "name": "nodeValue"
+          },
+          {
+            "kind": "property",
+            "name": "objectId"
+          },
+          {
+            "kind": "property",
+            "name": "parent"
+          },
+          {
+            "kind": "property",
+            "name": "parentId"
+          },
+          {
+            "kind": "property",
+            "name": "parentNodeId"
+          },
+          {
+            "kind": "property",
+            "name": "pseudoElements"
+          },
+          {
+            "kind": "property",
+            "name": "pseudoIdentifier"
+          },
+          {
+            "kind": "property",
+            "name": "pseudoType"
+          },
+          {
+            "kind": "property",
+            "name": "publicId"
+          },
+          {
+            "kind": "method",
+            "name": "querySelector"
+          },
+          {
+            "kind": "method",
+            "name": "querySelectorAll"
+          },
+          {
+            "kind": "method",
+            "name": "recordVideo"
+          },
+          {
+            "kind": "method",
+            "name": "refresh"
+          },
+          {
+            "kind": "property",
+            "name": "remoteObject"
+          },
+          {
+            "kind": "method",
+            "name": "removeFromDom"
+          },
+          {
+            "kind": "method",
+            "name": "saveScreenshot"
+          },
+          {
+            "kind": "method",
+            "name": "saveToDom"
+          },
+          {
+            "kind": "method",
+            "name": "screenshotB64"
+          },
+          {
+            "kind": "method",
+            "name": "scrollIntoView"
+          },
+          {
+            "kind": "method",
+            "name": "selectOption"
+          },
+          {
+            "kind": "method",
+            "name": "sendFile"
+          },
+          {
+            "kind": "method",
+            "name": "sendKeys"
+          },
+          {
+            "kind": "method",
+            "name": "setText"
+          },
+          {
+            "kind": "method",
+            "name": "setValue"
+          },
+          {
+            "kind": "property",
+            "name": "shadowRootType"
+          },
+          {
+            "kind": "property",
+            "name": "shadowRoots"
+          },
+          {
+            "kind": "property",
+            "name": "systemId"
+          },
+          {
+            "kind": "property",
+            "name": "tag"
+          },
+          {
+            "kind": "property",
+            "name": "tagName"
+          },
+          {
+            "kind": "property",
+            "name": "templateContent"
+          },
+          {
+            "kind": "property",
+            "name": "text"
+          },
+          {
+            "kind": "property",
+            "name": "textAll"
+          },
+          {
+            "kind": "property",
+            "name": "tree"
+          },
+          {
+            "kind": "method",
+            "name": "update"
+          },
+          {
+            "kind": "method",
+            "name": "uploadFiles"
+          },
+          {
+            "kind": "property",
+            "name": "value"
+          },
+          {
+            "kind": "property",
+            "name": "xmlVersion"
+          }
+        ]
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "FetchInterception",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "HTTPApi",
+        "package": "jsdriver",
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "_request"
+          },
+          {
+            "kind": "method",
+            "name": "get"
+          },
+          {
+            "kind": "method",
+            "name": "post"
+          }
+        ]
+      },
+      {
+        "functionLength": 3,
+        "kind": "function-or-class",
+        "name": "InterceptedRequest",
+        "package": "jsdriver",
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "body"
+          },
+          {
+            "kind": "method",
+            "name": "continue"
+          },
+          {
+            "kind": "method",
+            "name": "continueRequest"
+          },
+          {
+            "kind": "method",
+            "name": "continueResponse"
+          },
+          {
+            "kind": "property",
+            "name": "error"
+          },
+          {
+            "kind": "method",
+            "name": "failRequest"
+          },
+          {
+            "kind": "method",
+            "name": "fulfillRequest"
+          },
+          {
+            "kind": "property",
+            "name": "handled"
+          },
+          {
+            "kind": "property",
+            "name": "request"
+          },
+          {
+            "kind": "property",
+            "name": "resourceType"
+          },
+          {
+            "kind": "property",
+            "name": "response"
+          },
+          {
+            "kind": "property",
+            "name": "responseBody"
+          },
+          {
+            "kind": "property",
+            "name": "responseStatusCode"
+          }
+        ]
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "KeyEvents",
+        "package": "jsdriver",
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "basicEventFor"
+          },
+          {
+            "kind": "method",
+            "name": "convToStr"
+          },
+          {
+            "kind": "method",
+            "name": "conv_to_str"
+          },
+          {
+            "kind": "method",
+            "name": "toBasicEvent"
+          },
+          {
+            "kind": "method",
+            "name": "toCdpEvents"
+          },
+          {
+            "kind": "method",
+            "name": "toDownUpSequence"
+          },
+          {
+            "kind": "method",
+            "name": "to_cdp_events"
+          },
+          {
+            "kind": "method",
+            "name": "to_down_up_sequence"
+          }
+        ]
+      },
+      {
+        "functionLength": null,
+        "kind": "object",
+        "name": "KeyModifiers",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": null,
+        "kind": "object",
+        "name": "KeyPressEvent",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "Position",
+        "package": "jsdriver",
+        "prototypeMembers": [
+          {
+            "kind": "property",
+            "name": "center"
+          },
+          {
+            "kind": "property",
+            "name": "height"
+          },
+          {
+            "kind": "method",
+            "name": "toJSON"
+          },
+          {
+            "kind": "method",
+            "name": "toJson"
+          },
+          {
+            "kind": "method",
+            "name": "toViewport"
+          },
+          {
+            "kind": "property",
+            "name": "width"
+          },
+          {
+            "kind": "property",
+            "name": "x"
+          },
+          {
+            "kind": "property",
+            "name": "y"
+          }
+        ]
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "RequestExpectation",
+        "package": "jsdriver",
+        "prototypeMembers": [
+          {
+            "kind": "property",
+            "name": "value"
+          }
+        ]
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "ResponseExpectation",
+        "package": "jsdriver",
+        "prototypeMembers": [
+          {
+            "kind": "property",
+            "name": "value"
+          }
+        ]
+      },
+      {
+        "functionLength": null,
+        "kind": "object",
+        "name": "SpecialKeys",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 3,
+        "kind": "function-or-class",
+        "name": "Tab",
+        "package": "jsdriver",
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "acquireDomain"
+          },
+          {
+            "kind": "method",
+            "name": "activate"
+          },
+          {
+            "kind": "method",
+            "name": "addHandler"
+          },
+          {
+            "kind": "property",
+            "name": "attached"
+          },
+          {
+            "kind": "method",
+            "name": "back"
+          },
+          {
+            "kind": "method",
+            "name": "bringToFront"
+          },
+          {
+            "kind": "property",
+            "name": "browserContextId"
+          },
+          {
+            "kind": "method",
+            "name": "close"
+          },
+          {
+            "kind": "property",
+            "name": "closed"
+          },
+          {
+            "kind": "property",
+            "name": "crashed"
+          },
+          {
+            "kind": "method",
+            "name": "disableDomAgent"
+          },
+          {
+            "kind": "method",
+            "name": "downloadFile"
+          },
+          {
+            "kind": "method",
+            "name": "elementFromNodeId"
+          },
+          {
+            "kind": "property",
+            "name": "enabledDomains"
+          },
+          {
+            "kind": "method",
+            "name": "evaluate"
+          },
+          {
+            "kind": "method",
+            "name": "expectDownload"
+          },
+          {
+            "kind": "method",
+            "name": "expectRequest"
+          },
+          {
+            "kind": "method",
+            "name": "expectResponse"
+          },
+          {
+            "kind": "method",
+            "name": "find"
+          },
+          {
+            "kind": "method",
+            "name": "findAll"
+          },
+          {
+            "kind": "method",
+            "name": "findElementByText"
+          },
+          {
+            "kind": "method",
+            "name": "findElementsByText"
+          },
+          {
+            "kind": "method",
+            "name": "flashPoint"
+          },
+          {
+            "kind": "method",
+            "name": "forward"
+          },
+          {
+            "kind": "method",
+            "name": "fullscreen"
+          },
+          {
+            "kind": "method",
+            "name": "get"
+          },
+          {
+            "kind": "method",
+            "name": "getAllLinkedSources"
+          },
+          {
+            "kind": "method",
+            "name": "getAllUrls"
+          },
+          {
+            "kind": "method",
+            "name": "getContent"
+          },
+          {
+            "kind": "method",
+            "name": "getLocalStorage"
+          },
+          {
+            "kind": "method",
+            "name": "getWindow"
+          },
+          {
+            "kind": "property",
+            "name": "handlers"
+          },
+          {
+            "kind": "method",
+            "name": "inspectorOpen"
+          },
+          {
+            "kind": "property",
+            "name": "inspectorUrl"
+          },
+          {
+            "kind": "method",
+            "name": "intercept"
+          },
+          {
+            "kind": "method",
+            "name": "jsDumps"
+          },
+          {
+            "kind": "property",
+            "name": "manuallyEnabledDomains"
+          },
+          {
+            "kind": "method",
+            "name": "markClosed"
+          },
+          {
+            "kind": "method",
+            "name": "markCrashed"
+          },
+          {
+            "kind": "method",
+            "name": "maximize"
+          },
+          {
+            "kind": "method",
+            "name": "minimize"
+          },
+          {
+            "kind": "method",
+            "name": "mouseClick"
+          },
+          {
+            "kind": "method",
+            "name": "mouseMove"
+          },
+          {
+            "kind": "method",
+            "name": "navigate"
+          },
+          {
+            "kind": "method",
+            "name": "on"
+          },
+          {
+            "kind": "method",
+            "name": "openExternalInspector"
+          },
+          {
+            "kind": "property",
+            "name": "openerFrameId"
+          },
+          {
+            "kind": "property",
+            "name": "openerId"
+          },
+          {
+            "kind": "property",
+            "name": "parentFrameId"
+          },
+          {
+            "kind": "property",
+            "name": "parentId"
+          },
+          {
+            "kind": "method",
+            "name": "printToPdf"
+          },
+          {
+            "kind": "method",
+            "name": "querySelector"
+          },
+          {
+            "kind": "method",
+            "name": "querySelectorAll"
+          },
+          {
+            "kind": "method",
+            "name": "recordScreencast"
+          },
+          {
+            "kind": "method",
+            "name": "reload"
+          },
+          {
+            "kind": "method",
+            "name": "removeHandlers"
+          },
+          {
+            "kind": "method",
+            "name": "saveScreenshot"
+          },
+          {
+            "kind": "method",
+            "name": "saveSnapshot"
+          },
+          {
+            "kind": "method",
+            "name": "screenshotB64"
+          },
+          {
+            "kind": "method",
+            "name": "scrollDown"
+          },
+          {
+            "kind": "method",
+            "name": "scrollUp"
+          },
+          {
+            "kind": "method",
+            "name": "select"
+          },
+          {
+            "kind": "method",
+            "name": "selectAll"
+          },
+          {
+            "kind": "method",
+            "name": "send"
+          },
+          {
+            "kind": "method",
+            "name": "sendRaw"
+          },
+          {
+            "kind": "method",
+            "name": "setDownloadPath"
+          },
+          {
+            "kind": "method",
+            "name": "setLocalStorage"
+          },
+          {
+            "kind": "method",
+            "name": "setUserAgent"
+          },
+          {
+            "kind": "method",
+            "name": "setWindowSize"
+          },
+          {
+            "kind": "method",
+            "name": "setWindowState"
+          },
+          {
+            "kind": "property",
+            "name": "subtype"
+          },
+          {
+            "kind": "property",
+            "name": "targetInfo"
+          },
+          {
+            "kind": "property",
+            "name": "title"
+          },
+          {
+            "kind": "property",
+            "name": "type"
+          },
+          {
+            "kind": "method",
+            "name": "updateTarget"
+          },
+          {
+            "kind": "property",
+            "name": "url"
+          },
+          {
+            "kind": "method",
+            "name": "verifyCf"
+          },
+          {
+            "kind": "method",
+            "name": "waitFor"
+          },
+          {
+            "kind": "method",
+            "name": "waitForIdle"
+          },
+          {
+            "kind": "method",
+            "name": "waitForReadyState"
+          },
+          {
+            "kind": "method",
+            "name": "xpath"
+          }
+        ]
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "TargetClosedError",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 3,
+        "kind": "function-or-class",
+        "name": "TargetCrashedError",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": null,
+        "kind": "object",
+        "name": "ZendriverNetworkDomain",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 4,
+        "kind": "function-or-class",
+        "name": "captureNetworkBootstrap",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "compareTraces",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "connect",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 3,
+        "kind": "function-or-class",
+        "name": "create",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "discoverChromeExecutable",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "dispatchKey",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 3,
+        "kind": "function-or-class",
+        "name": "downloadFile",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "expectDownload",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "expectRequest",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "expectResponse",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "extractRuntimeValue",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "findBinary",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "findExecutable",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "find_binary",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "find_executable",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "hasTrace",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "isRoot",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "is_root",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "keyInputList",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "normalizeTrace",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "resolveNode",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "runProviderPage",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "setDownloadPath",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "start",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "tempProfileDir",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "temp_profile_dir",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "waitForSessionMaterial",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      }
+    ],
     "declarationFiles": [
       "packages/api/dist/browser.d.ts",
       "packages/api/dist/config.d.ts",
@@ -9459,6 +11007,7 @@
         "functionLength": 1,
         "kind": "function-or-class",
         "name": "BaseFetchInterception",
+        "package": "jsdriver",
         "prototypeMembers": [
           {
             "kind": "method",
@@ -9506,6 +11055,7 @@
         "functionLength": 2,
         "kind": "function-or-class",
         "name": "BaseRequestExpectation",
+        "package": "jsdriver",
         "prototypeMembers": [
           {
             "kind": "method",
@@ -9537,6 +11087,7 @@
         "functionLength": 10,
         "kind": "function-or-class",
         "name": "Browser",
+        "package": "jsdriver",
         "prototypeMembers": [
           {
             "kind": "method",
@@ -9636,6 +11187,7 @@
         "functionLength": 1,
         "kind": "function-or-class",
         "name": "CdpTraceRecorder",
+        "package": "jsdriver",
         "prototypeMembers": [
           {
             "kind": "method",
@@ -9655,6 +11207,7 @@
         "functionLength": 0,
         "kind": "function-or-class",
         "name": "Config",
+        "package": "jsdriver",
         "prototypeMembers": [
           {
             "kind": "method",
@@ -9694,6 +11247,7 @@
         "functionLength": 3,
         "kind": "function-or-class",
         "name": "Connection",
+        "package": "jsdriver",
         "prototypeMembers": [
           {
             "kind": "method",
@@ -9861,6 +11415,7 @@
         "functionLength": 1,
         "kind": "function-or-class",
         "name": "CookieJar",
+        "package": "jsdriver",
         "prototypeMembers": [
           {
             "kind": "method",
@@ -9888,6 +11443,7 @@
         "functionLength": 1,
         "kind": "function-or-class",
         "name": "DownloadExpectation",
+        "package": "jsdriver",
         "prototypeMembers": [
           {
             "kind": "method",
@@ -9911,6 +11467,7 @@
         "functionLength": 3,
         "kind": "function-or-class",
         "name": "Element",
+        "package": "jsdriver",
         "prototypeMembers": [
           {
             "kind": "property",
@@ -10242,12 +11799,14 @@
         "functionLength": 0,
         "kind": "function-or-class",
         "name": "FetchInterception",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 1,
         "kind": "function-or-class",
         "name": "HTTPApi",
+        "package": "jsdriver",
         "prototypeMembers": [
           {
             "kind": "method",
@@ -10267,6 +11826,7 @@
         "functionLength": 3,
         "kind": "function-or-class",
         "name": "InterceptedRequest",
+        "package": "jsdriver",
         "prototypeMembers": [
           {
             "kind": "method",
@@ -10326,6 +11886,7 @@
         "functionLength": 1,
         "kind": "function-or-class",
         "name": "KeyEvents",
+        "package": "jsdriver",
         "prototypeMembers": [
           {
             "kind": "method",
@@ -10365,18 +11926,21 @@
         "functionLength": null,
         "kind": "object",
         "name": "KeyModifiers",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": null,
         "kind": "object",
         "name": "KeyPressEvent",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 1,
         "kind": "function-or-class",
         "name": "Position",
+        "package": "jsdriver",
         "prototypeMembers": [
           {
             "kind": "property",
@@ -10416,6 +11980,7 @@
         "functionLength": 0,
         "kind": "function-or-class",
         "name": "RequestExpectation",
+        "package": "jsdriver",
         "prototypeMembers": [
           {
             "kind": "property",
@@ -10427,6 +11992,7 @@
         "functionLength": 0,
         "kind": "function-or-class",
         "name": "ResponseExpectation",
+        "package": "jsdriver",
         "prototypeMembers": [
           {
             "kind": "property",
@@ -10438,12 +12004,14 @@
         "functionLength": null,
         "kind": "object",
         "name": "SpecialKeys",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 3,
         "kind": "function-or-class",
         "name": "Tab",
+        "package": "jsdriver",
         "prototypeMembers": [
           {
             "kind": "method",
@@ -10775,181 +12343,1035 @@
         "functionLength": 1,
         "kind": "function-or-class",
         "name": "TargetClosedError",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 3,
         "kind": "function-or-class",
         "name": "TargetCrashedError",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": null,
         "kind": "object",
         "name": "ZendriverNetworkDomain",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 4,
         "kind": "function-or-class",
         "name": "captureNetworkBootstrap",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 2,
         "kind": "function-or-class",
         "name": "compareTraces",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 1,
         "kind": "function-or-class",
         "name": "connect",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 3,
         "kind": "function-or-class",
         "name": "create",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 0,
         "kind": "function-or-class",
         "name": "discoverChromeExecutable",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 2,
         "kind": "function-or-class",
         "name": "dispatchKey",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 3,
         "kind": "function-or-class",
         "name": "downloadFile",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 2,
         "kind": "function-or-class",
         "name": "expectDownload",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 2,
         "kind": "function-or-class",
         "name": "expectRequest",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 2,
         "kind": "function-or-class",
         "name": "expectResponse",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 2,
         "kind": "function-or-class",
         "name": "extractRuntimeValue",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 1,
         "kind": "function-or-class",
         "name": "findBinary",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 0,
         "kind": "function-or-class",
         "name": "findExecutable",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 1,
         "kind": "function-or-class",
         "name": "find_binary",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 0,
         "kind": "function-or-class",
         "name": "find_executable",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 1,
         "kind": "function-or-class",
         "name": "hasTrace",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 0,
         "kind": "function-or-class",
         "name": "isRoot",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 0,
         "kind": "function-or-class",
         "name": "is_root",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 1,
         "kind": "function-or-class",
         "name": "keyInputList",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 1,
         "kind": "function-or-class",
         "name": "normalizeTrace",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 2,
         "kind": "function-or-class",
         "name": "resolveNode",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 2,
         "kind": "function-or-class",
         "name": "runProviderPage",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 2,
         "kind": "function-or-class",
         "name": "setDownloadPath",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 0,
         "kind": "function-or-class",
         "name": "start",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 0,
         "kind": "function-or-class",
         "name": "tempProfileDir",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 0,
         "kind": "function-or-class",
         "name": "temp_profile_dir",
+        "package": "jsdriver",
         "prototypeMembers": []
       },
       {
         "functionLength": 2,
         "kind": "function-or-class",
         "name": "waitForSessionMaterial",
+        "package": "jsdriver",
         "prototypeMembers": []
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "CancelledError",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "CantTouchThis",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "CdpAbortError",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "CdpConnection",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "acquireDomain"
+          },
+          {
+            "kind": "method",
+            "name": "close"
+          },
+          {
+            "kind": "property",
+            "name": "closed"
+          },
+          {
+            "kind": "method",
+            "name": "disableDomain"
+          },
+          {
+            "kind": "method",
+            "name": "enableDomain"
+          },
+          {
+            "kind": "property",
+            "name": "enabledDomains"
+          },
+          {
+            "kind": "method",
+            "name": "enabledDomainsFor"
+          },
+          {
+            "kind": "method",
+            "name": "forgetAutoDomain"
+          },
+          {
+            "kind": "property",
+            "name": "manuallyEnabledDomains"
+          },
+          {
+            "kind": "method",
+            "name": "manuallyEnabledDomainsFor"
+          },
+          {
+            "kind": "method",
+            "name": "on"
+          },
+          {
+            "kind": "method",
+            "name": "onHandlerError"
+          },
+          {
+            "kind": "method",
+            "name": "removeHandlers"
+          },
+          {
+            "kind": "method",
+            "name": "send"
+          },
+          {
+            "kind": "method",
+            "name": "sendRaw"
+          },
+          {
+            "kind": "method",
+            "name": "sleep"
+          },
+          {
+            "kind": "property",
+            "name": "trace"
+          },
+          {
+            "kind": "method",
+            "name": "wait"
+          },
+          {
+            "kind": "property",
+            "name": "websocket"
+          }
+        ]
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "CdpConnectionClosedError",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "CdpConnectionLostError",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 3,
+        "kind": "function-or-class",
+        "name": "CdpProtocolError",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "CdpTimeoutError",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "EventTransaction",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "toString"
+          }
+        ]
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "Listener",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "cancel"
+          },
+          {
+            "kind": "property",
+            "name": "connection"
+          },
+          {
+            "kind": "method",
+            "name": "listenerLoop"
+          },
+          {
+            "kind": "method",
+            "name": "listener_loop"
+          },
+          {
+            "kind": "method",
+            "name": "observe"
+          },
+          {
+            "kind": "method",
+            "name": "run"
+          },
+          {
+            "kind": "property",
+            "name": "running"
+          },
+          {
+            "kind": "property",
+            "name": "timeBeforeConsideredIdle"
+          },
+          {
+            "kind": "property",
+            "name": "time_before_considered_idle"
+          },
+          {
+            "kind": "method",
+            "name": "toString"
+          },
+          {
+            "kind": "method",
+            "name": "waitIdle"
+          }
+        ]
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "ProtocolException",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "toString"
+          }
+        ]
+      },
+      {
+        "functionLength": null,
+        "kind": "symbol",
+        "name": "RUNTIME_BACKEND_INTERNAL_SEND",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "SettingClassVarNotAllowedException",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "Transaction",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "addDoneCallback"
+          },
+          {
+            "kind": "method",
+            "name": "add_done_callback"
+          },
+          {
+            "kind": "method",
+            "name": "call"
+          },
+          {
+            "kind": "method",
+            "name": "cancel"
+          },
+          {
+            "kind": "method",
+            "name": "cancelled"
+          },
+          {
+            "kind": "method",
+            "name": "catch"
+          },
+          {
+            "kind": "method",
+            "name": "done"
+          },
+          {
+            "kind": "method",
+            "name": "exception"
+          },
+          {
+            "kind": "method",
+            "name": "finally"
+          },
+          {
+            "kind": "method",
+            "name": "getLoop"
+          },
+          {
+            "kind": "method",
+            "name": "get_loop"
+          },
+          {
+            "kind": "property",
+            "name": "hasException"
+          },
+          {
+            "kind": "property",
+            "name": "has_exception"
+          },
+          {
+            "kind": "property",
+            "name": "message"
+          },
+          {
+            "kind": "method",
+            "name": "removeDoneCallback"
+          },
+          {
+            "kind": "method",
+            "name": "remove_done_callback"
+          },
+          {
+            "kind": "method",
+            "name": "resolve"
+          },
+          {
+            "kind": "method",
+            "name": "result"
+          },
+          {
+            "kind": "method",
+            "name": "setException"
+          },
+          {
+            "kind": "method",
+            "name": "setResult"
+          },
+          {
+            "kind": "method",
+            "name": "set_exception"
+          },
+          {
+            "kind": "method",
+            "name": "set_result"
+          },
+          {
+            "kind": "method",
+            "name": "then"
+          },
+          {
+            "kind": "method",
+            "name": "toString"
+          }
+        ]
+      }
+    ],
+    "runtimeJsRuntimeExports": [
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "CancelledError",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "CantTouchThis",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "CdpAbortError",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "CdpConnection",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "acquireDomain"
+          },
+          {
+            "kind": "method",
+            "name": "close"
+          },
+          {
+            "kind": "property",
+            "name": "closed"
+          },
+          {
+            "kind": "method",
+            "name": "disableDomain"
+          },
+          {
+            "kind": "method",
+            "name": "enableDomain"
+          },
+          {
+            "kind": "property",
+            "name": "enabledDomains"
+          },
+          {
+            "kind": "method",
+            "name": "enabledDomainsFor"
+          },
+          {
+            "kind": "method",
+            "name": "forgetAutoDomain"
+          },
+          {
+            "kind": "property",
+            "name": "manuallyEnabledDomains"
+          },
+          {
+            "kind": "method",
+            "name": "manuallyEnabledDomainsFor"
+          },
+          {
+            "kind": "method",
+            "name": "on"
+          },
+          {
+            "kind": "method",
+            "name": "onHandlerError"
+          },
+          {
+            "kind": "method",
+            "name": "removeHandlers"
+          },
+          {
+            "kind": "method",
+            "name": "send"
+          },
+          {
+            "kind": "method",
+            "name": "sendRaw"
+          },
+          {
+            "kind": "method",
+            "name": "sleep"
+          },
+          {
+            "kind": "property",
+            "name": "trace"
+          },
+          {
+            "kind": "method",
+            "name": "wait"
+          },
+          {
+            "kind": "property",
+            "name": "websocket"
+          }
+        ]
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "CdpConnectionClosedError",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "CdpConnectionLostError",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 3,
+        "kind": "function-or-class",
+        "name": "CdpProtocolError",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "CdpTimeoutError",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 3,
+        "kind": "function-or-class",
+        "name": "Connection",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "aClose"
+          },
+          {
+            "kind": "method",
+            "name": "aOpen"
+          },
+          {
+            "kind": "method",
+            "name": "aclose"
+          },
+          {
+            "kind": "method",
+            "name": "addHandler"
+          },
+          {
+            "kind": "method",
+            "name": "add_handler"
+          },
+          {
+            "kind": "method",
+            "name": "aenter"
+          },
+          {
+            "kind": "method",
+            "name": "aexit"
+          },
+          {
+            "kind": "method",
+            "name": "aopen"
+          },
+          {
+            "kind": "property",
+            "name": "attached"
+          },
+          {
+            "kind": "property",
+            "name": "browserContextId"
+          },
+          {
+            "kind": "property",
+            "name": "browser_context_id"
+          },
+          {
+            "kind": "property",
+            "name": "canAccessOpener"
+          },
+          {
+            "kind": "property",
+            "name": "can_access_opener"
+          },
+          {
+            "kind": "property",
+            "name": "closed"
+          },
+          {
+            "kind": "method",
+            "name": "feedCdp"
+          },
+          {
+            "kind": "method",
+            "name": "feed_cdp"
+          },
+          {
+            "kind": "property",
+            "name": "listener"
+          },
+          {
+            "kind": "property",
+            "name": "openerFrameId"
+          },
+          {
+            "kind": "property",
+            "name": "openerId"
+          },
+          {
+            "kind": "property",
+            "name": "opener_frame_id"
+          },
+          {
+            "kind": "property",
+            "name": "opener_id"
+          },
+          {
+            "kind": "property",
+            "name": "owner"
+          },
+          {
+            "kind": "method",
+            "name": "removeHandlers"
+          },
+          {
+            "kind": "method",
+            "name": "remove_handlers"
+          },
+          {
+            "kind": "method",
+            "name": "send"
+          },
+          {
+            "kind": "method",
+            "name": "sleep"
+          },
+          {
+            "kind": "property",
+            "name": "subtype"
+          },
+          {
+            "kind": "property",
+            "name": "target"
+          },
+          {
+            "kind": "property",
+            "name": "targetId"
+          },
+          {
+            "kind": "property",
+            "name": "target_id"
+          },
+          {
+            "kind": "method",
+            "name": "then"
+          },
+          {
+            "kind": "property",
+            "name": "title"
+          },
+          {
+            "kind": "property",
+            "name": "type"
+          },
+          {
+            "kind": "property",
+            "name": "type_"
+          },
+          {
+            "kind": "method",
+            "name": "updateTarget"
+          },
+          {
+            "kind": "method",
+            "name": "update_target"
+          },
+          {
+            "kind": "property",
+            "name": "url"
+          },
+          {
+            "kind": "method",
+            "name": "wait"
+          },
+          {
+            "kind": "property",
+            "name": "websocket"
+          },
+          {
+            "kind": "property",
+            "name": "websocket_url"
+          }
+        ]
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "EventTransaction",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "toString"
+          }
+        ]
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "Listener",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "cancel"
+          },
+          {
+            "kind": "property",
+            "name": "connection"
+          },
+          {
+            "kind": "method",
+            "name": "listenerLoop"
+          },
+          {
+            "kind": "method",
+            "name": "listener_loop"
+          },
+          {
+            "kind": "method",
+            "name": "observe"
+          },
+          {
+            "kind": "method",
+            "name": "run"
+          },
+          {
+            "kind": "property",
+            "name": "running"
+          },
+          {
+            "kind": "property",
+            "name": "timeBeforeConsideredIdle"
+          },
+          {
+            "kind": "property",
+            "name": "time_before_considered_idle"
+          },
+          {
+            "kind": "method",
+            "name": "toString"
+          },
+          {
+            "kind": "method",
+            "name": "waitIdle"
+          }
+        ]
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "ProtocolException",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "toString"
+          }
+        ]
+      },
+      {
+        "functionLength": null,
+        "kind": "symbol",
+        "name": "RUNTIME_BACKEND_INTERNAL_SEND",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "SettingClassVarNotAllowedException",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "Transaction",
+        "package": "@vertile-ai/jsdriver-runtime-js",
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "addDoneCallback"
+          },
+          {
+            "kind": "method",
+            "name": "add_done_callback"
+          },
+          {
+            "kind": "method",
+            "name": "call"
+          },
+          {
+            "kind": "method",
+            "name": "cancel"
+          },
+          {
+            "kind": "method",
+            "name": "cancelled"
+          },
+          {
+            "kind": "method",
+            "name": "catch"
+          },
+          {
+            "kind": "method",
+            "name": "done"
+          },
+          {
+            "kind": "method",
+            "name": "exception"
+          },
+          {
+            "kind": "method",
+            "name": "finally"
+          },
+          {
+            "kind": "method",
+            "name": "getLoop"
+          },
+          {
+            "kind": "method",
+            "name": "get_loop"
+          },
+          {
+            "kind": "property",
+            "name": "hasException"
+          },
+          {
+            "kind": "property",
+            "name": "has_exception"
+          },
+          {
+            "kind": "property",
+            "name": "message"
+          },
+          {
+            "kind": "method",
+            "name": "removeDoneCallback"
+          },
+          {
+            "kind": "method",
+            "name": "remove_done_callback"
+          },
+          {
+            "kind": "method",
+            "name": "resolve"
+          },
+          {
+            "kind": "method",
+            "name": "result"
+          },
+          {
+            "kind": "method",
+            "name": "setException"
+          },
+          {
+            "kind": "method",
+            "name": "setResult"
+          },
+          {
+            "kind": "method",
+            "name": "set_exception"
+          },
+          {
+            "kind": "method",
+            "name": "set_result"
+          },
+          {
+            "kind": "method",
+            "name": "then"
+          },
+          {
+            "kind": "method",
+            "name": "toString"
+          }
+        ]
       }
     ]
   },
@@ -13645,7 +16067,7 @@
               "nodeKind": "class",
               "nodeMember": "CantTouchThis",
               "nodeSymbol": "CantTouchThis",
-              "runtimeExport": false,
+              "runtimeExport": true,
               "semanticsCoverage": [
                 "errors",
                 "return",
@@ -14304,7 +16726,6 @@
                 "defaults",
                 "errors",
                 "return",
-                "signature",
                 "state"
               ],
               "semanticsVerified": true,
@@ -14888,10 +17309,8 @@
               "nodeKind": "class",
               "nodeMember": "EventTransaction",
               "nodeSymbol": "EventTransaction",
-              "runtimeExport": false,
+              "runtimeExport": true,
               "semanticsCoverage": [
-                "return",
-                "signature",
                 "state"
               ],
               "semanticsVerified": true,
@@ -15129,11 +17548,9 @@
               "nodeKind": "class",
               "nodeMember": "Listener",
               "nodeSymbol": "Listener",
-              "runtimeExport": false,
+              "runtimeExport": true,
               "semanticsCoverage": [
                 "defaults",
-                "return",
-                "signature",
                 "state"
               ],
               "semanticsVerified": true,
@@ -15320,11 +17737,10 @@
               "nodeKind": "class",
               "nodeMember": "ProtocolException",
               "nodeSymbol": "ProtocolException",
-              "runtimeExport": false,
+              "runtimeExport": true,
               "semanticsCoverage": [
                 "errors",
                 "return",
-                "signature",
                 "state"
               ],
               "semanticsVerified": true,
@@ -15593,11 +18009,9 @@
               "nodeKind": "class",
               "nodeMember": "SettingClassVarNotAllowedException",
               "nodeSymbol": "SettingClassVarNotAllowedException",
-              "runtimeExport": false,
+              "runtimeExport": true,
               "semanticsCoverage": [
-                "errors",
-                "return",
-                "signature"
+                "errors"
               ],
               "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
@@ -16271,11 +18685,10 @@
               "nodeKind": "class",
               "nodeMember": "Transaction",
               "nodeSymbol": "Transaction",
-              "runtimeExport": false,
+              "runtimeExport": true,
               "semanticsCoverage": [
                 "errors",
                 "return",
-                "signature",
                 "state"
               ],
               "semanticsVerified": true,

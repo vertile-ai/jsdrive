@@ -186,7 +186,7 @@ test("native backend runs DOM, input, capture, cookies, network, and download in
   const executable = await discoverChromeExecutable();
   try {
     for (const connectionMode of ["direct", "flattened"] satisfies readonly ConnectionMode[]) {
-      const browser = await Browser.start({ executable, connectionMode, backend: NativeConnection });
+      const browser = await Browser.start({ executable, headless: true, connectionTimeoutMs: 30_000, connectionMode, backend: NativeConnection });
       try {
         const tab = await browser.get(baseUrl);
         const input = await tab.select("#input");

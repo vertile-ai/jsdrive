@@ -65,7 +65,7 @@ test("ZDAPI-HTTP-001", async () => {
 
 test("ZDAPI-BROWSER-001", { timeout: 90_000 }, async () => {
   const executable = await discoverChromeExecutable();
-  const rootBrowser = await start({ executable, headless: true });
+  const rootBrowser = await start({ executable, headless: true, connectionTimeoutMs: 30_000 });
   try {
     assert.ok(rootBrowser.mainTab);
   } finally {
@@ -73,7 +73,7 @@ test("ZDAPI-BROWSER-001", { timeout: 90_000 }, async () => {
   }
   for (const [backendName, backend] of [["js", undefined], ["native", NativeConnection]] as const satisfies readonly [string, RuntimeBackendFactory | undefined][]) {
     for (const connectionMode of ["direct", "flattened"] satisfies readonly ConnectionMode[]) {
-      const browser = await Browser.create({ executable, headless: true, connectionMode, ...(backend === undefined ? {} : { backend }) });
+      const browser = await Browser.create({ executable, headless: true, connectionTimeoutMs: 30_000, connectionMode, ...(backend === undefined ? {} : { backend }) });
       try {
         assert.equal(await browser.testConnection(), true, `${backendName}/${connectionMode}`);
         assert.match((await browser.getVersion()).product, /Chrome|Chromium/i);

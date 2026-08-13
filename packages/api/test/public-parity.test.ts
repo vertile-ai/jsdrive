@@ -57,7 +57,7 @@ test("lifecycle, special keys, and iframe queries work in both connection modes"
   const executable = await discoverChromeExecutable();
   try {
     for (const connectionMode of ["direct", "flattened"] satisfies readonly ConnectionMode[]) {
-      const browser = await Browser.start({ executable, connectionMode });
+      const browser = await Browser.start({ executable, headless: true, connectionTimeoutMs: 30_000, connectionMode });
       try {
         const initial = browser.mainTab;
         assert.ok(initial);

@@ -26,7 +26,7 @@ test("provider primitives capture runtime, network, cookie, and storage material
   assert.ok(typeof address === "object" && address !== null);
   let browser: Browser | undefined;
   try {
-    browser = await Browser.start({ domainPolicy: "reference-counted" });
+    browser = await Browser.start({ headless: true, connectionTimeoutMs: 30_000, domainPolicy: "reference-counted" });
     const result = await runProviderPage<{ readonly token: string; readonly capture: NetworkBootstrap }>(browser, {
       url: `http://127.0.0.1:${address.port}`,
       bootstrap: async (tab) => { await tab.waitForReadyState("complete"); },

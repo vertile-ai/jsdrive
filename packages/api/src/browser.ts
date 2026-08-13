@@ -202,7 +202,7 @@ export class Browser {
       return browser;
     } catch (error) {
       await stopChildProcess(child);
-      if (temporaryProfile) await rm(profilePath, { recursive: true, force: true });
+      if (temporaryProfile) await rm(profilePath, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
       const detail = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
       throw new Error(`Failed to start Chrome: ${detail}\nBrowser stderr:\n${browserStderr.trim() || "(empty)"}`, { cause: error });
     }
@@ -362,7 +362,7 @@ export class Browser {
     this.connection.close();
     if (this.#process !== undefined) await stopChildProcess(this.#process);
     if (this.process?.temporaryProfile === true) {
-      await rm(this.process.profile, { recursive: true, force: true });
+      await rm(this.process.profile, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
     }
   }
 

@@ -46,7 +46,7 @@ test("DOM, input, and capture journey works in direct and flattened modes", { ti
 
   try {
     for (const connectionMode of ["direct", "flattened"] satisfies readonly ConnectionMode[]) {
-      const browser = await Browser.start({ executable, connectionMode, domainPolicy: "zendriver-compatible" });
+      const browser = await Browser.start({ executable, headless: true, connectionTimeoutMs: 30_000, connectionMode, domainPolicy: "zendriver-compatible" });
       try {
         const tab = await browser.get(baseUrl);
         assert.match(await tab.getContent(), /Nodriver fixture/);

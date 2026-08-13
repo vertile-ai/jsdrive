@@ -42,7 +42,7 @@ test("cookies, network expectations, interception, and downloads work in direct 
 
   try {
     for (const connectionMode of ["direct", "flattened"] satisfies readonly ConnectionMode[]) {
-      const browser = await Browser.start({ executable, connectionMode, domainPolicy: "reference-counted" });
+      const browser = await Browser.start({ executable, headless: true, connectionTimeoutMs: 30_000, connectionMode, domainPolicy: "reference-counted" });
       try {
         const tab = await browser.newTab(baseUrl);
         assert.equal(await browser.testConnection(), true);

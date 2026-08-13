@@ -1,0 +1,21 @@
+{
+  "name": "@nodriver/runtime-js",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "files": ["dist"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsc -p tsconfig.test.json && node --test dist-test/test/runtime.test.js"
+  },
+  "dependencies": {
+    "@nodriver/protocol": "0.0.0",
+    "ws": "8.21.3"
+  }
+}

@@ -10,13 +10,15 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "npm run build --workspace=@nodriver/protocol",
+    "build": "npm run build --workspace=@nodriver/protocol && npm run build --workspace=@nodriver/runtime-js && npm run build --workspace=@nodriver/api",
     "generate": "npm run generate --workspace=@nodriver/protocol-codegen",
-    "test": "npm run test --workspace=@nodriver/protocol-codegen",
+    "test": "npm run test --workspace=@nodriver/protocol-codegen && npm run test --workspace=@nodriver/runtime-js && npm run test --workspace=@nodriver/api",
+    "smoke:m2": "npm run build && npm run smoke --workspace=@nodriver/api",
     "typecheck": "tsc -p tsconfig.json"
   },
   "devDependencies": {
     "@types/node": "22.20.1",
+    "@types/ws": "8.18.1",
     "devtools-protocol": "0.0.1677763",
     "typescript": "5.9.3"
   }

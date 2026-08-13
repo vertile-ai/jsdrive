@@ -19,6 +19,7 @@ import {
   type HandlerError,
   type RuntimeBackend,
   type SendOptions,
+  type TraceEntry,
 } from "@nodriver/runtime-js";
 
 interface NativeBinding {
@@ -72,6 +73,8 @@ export class NativeConnection implements RuntimeBackend {
   readonly #domainReferences = new Map<string, number>();
   readonly #domainEnables = new Map<string, Promise<void>>();
   readonly #domainDisables = new Map<string, Promise<void>>();
+  readonly #trace: TraceEntry[] = [];
+  #nextTraceId = 1;
   #closed = false;
 
   private constructor(
@@ -115,6 +118,10 @@ export class NativeConnection implements RuntimeBackend {
     return new Set([...this.#enabledDomainKeys].map((key) => key.slice(key.indexOf(":") + 1)));
   }
 
+  public get trace(): readonly TraceEntry[] {
+    return this.#trace;
+  }
+
   public send<M extends ProtocolCommand>(
     method: M,
     ...args: CommandParams<M> extends undefined
@@ -135,6 +142,17 @@ export class NativeConnection implements RuntimeBackend {
       throw new CdpAbortError(method, { cause: signal.reason });
     }
     const paramsJson = params === undefined ? undefined : JSON.stringify(params);
+    const traceId = this.#nextTraceId++;
+    this.#trace.push({
+      direction: "send",
+      timestamp: Date.now(),
+      message: {
+        id: traceId,
+        method,
+        ...(params === undefined ? {} : { params }),
+        ...(options.sessionId === undefined ? {} : { sessionId: options.sessionId }),
+      },
+    });
     const cancellationId = signal === undefined ? undefined : binding.createCancellation();
     let wasAborted = false;
     const abort = (): void => {
@@ -151,7 +169,13 @@ export class NativeConnection implements RuntimeBackend {
         options.timeoutMs,
         cancellationId,
       );
-      return JSON.parse(resultJson) as Readonly<Record<string, unknown>>;
+      const result = JSON.parse(resultJson) as Readonly<Record<string, unknown>>;
+      this.#trace.push({
+        direction: "receive",
+        timestamp: Date.now(),
+        message: { id: traceId, result, ...(options.sessionId === undefined ? {} : { sessionId: options.sessionId }) },
+      });
+      return result;
     } catch (error) {
       if (wasAborted) {
         throw new CdpAbortError(method, { cause: signal?.reason });
@@ -263,6 +287,15 @@ export class NativeConnection implements RuntimeBackend {
   }
 
   #dispatch(event: WireEvent): void {
+    this.#trace.push({
+      direction: "receive",
+      timestamp: Date.now(),
+      message: {
+        method: event.method,
+        params: event.params,
+        ...(event.sessionId === undefined ? {} : { sessionId: event.sessionId }),
+      },
+    });
     const metadata: EventMetadata = event.sessionId === undefined ? {} : { sessionId: event.sessionId };
     for (const handler of this.#handlers.get(event.method) ?? []) {
       Promise.resolve(handler(event.params, metadata)).catch((error: unknown) => {

@@ -3,4 +3,6 @@ export * from "./cookies.js";
 export * from "./download.js";
 export * from "./element.js";
 export * from "./network.js";
+export * from "./provider.js";
+export * from "./trace.js";
 export type { ReadyState, ScreenshotOptions, WaitForOptions, WaitOptions, WindowState } from "./tab.js";

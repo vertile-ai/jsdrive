@@ -17,6 +17,7 @@
     "conformance:network": "npm run build --workspace=@nodriver/runtime-js && tsc -p packages/api/tsconfig.test.json && node --test packages/api/dist-test/test/network-conformance.test.js",
     "smoke:m2": "npm run build && npm run smoke --workspace=@nodriver/api",
     "smoke:native": "npm run build && npm run smoke --workspace=@nodriver/runtime-native",
+    "differential": "npm run build && tsc -p packages/api/tsconfig.test.json && node packages/api/dist-test/differential/run.js",
     "typecheck": "tsc -p tsconfig.json"
   },
   "devDependencies": {

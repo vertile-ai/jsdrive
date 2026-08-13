@@ -91,6 +91,26 @@ test("serialization failures do not retain cancellation registrations", async ()
   }
 });
 
+test("records backend-neutral command results and events in the native wrapper", async () => {
+  const peer = await createPeer((message, socket) => {
+    socket.send(JSON.stringify({ id: message.id, result: { ok: true } }));
+    socket.send(JSON.stringify({ method: "Runtime.consoleAPICalled", params: { type: "log" }, sessionId: "fixture-session" }));
+  });
+  try {
+    await peer.connection.sendRaw("Runtime.evaluate", { expression: "42" }, { sessionId: "fixture-session" });
+    await waitFor(() => peer.connection.trace.length === 3, 500);
+    const outbound = peer.connection.trace.filter(({ direction }) => direction === "send");
+    assert.deepEqual(outbound.map(({ message }) => message.method), ["Runtime.evaluate"]);
+    const commandId = outbound[0]?.message.id;
+    assert.equal(peer.connection.trace.some(({ direction, message }) => direction === "receive"
+      && message.id === commandId && message.sessionId === "fixture-session"), true);
+    assert.equal(peer.connection.trace.some(({ direction, message }) => direction === "receive"
+      && message.method === "Runtime.consoleAPICalled" && message.sessionId === "fixture-session"), true);
+  } finally {
+    await peer.close();
+  }
+});
+
 interface Peer {
   readonly connection: NativeConnection;
   readonly close: () => Promise<void>;

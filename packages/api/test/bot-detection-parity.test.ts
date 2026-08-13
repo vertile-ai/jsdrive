@@ -7,6 +7,7 @@ import type { RuntimeBackendFactory } from "@vertile-ai/jsdriver-runtime-js";
 import { CdpConnection } from "@vertile-ai/jsdriver-runtime-js";
 import { NativeConnection } from "@vertile-ai/jsdriver-runtime-native";
 import { Browser, discoverChromeExecutable, type ConnectionMode, type Tab } from "../src/index.js";
+import { browserCaseSkipReason } from "./support/persistent-harness.js";
 
 const TARGET_URL = "https://www.browserscan.net/bot-detection";
 const OBSERVATION = String.raw`
@@ -46,7 +47,8 @@ for (const [id, parameter, headless] of [
   ["ZDTEST-0001", "headless0", true],
   ["ZDTEST-0002", "headless1", false],
 ] as const) {
-  test(`${id} BrowserScan reports Normal [${parameter}]`, { timeout: 240_000 }, async () => {
+  const skip = browserCaseSkipReason(headless);
+  test(`${id} BrowserScan reports Normal [${parameter}]`, { timeout: 240_000, skip }, async () => {
     const reference = await observeZendriver(headless);
     assert.equal(reference.result, "Normal", JSON.stringify(reference));
 

@@ -3,6 +3,7 @@ import { createServer, type Server } from "node:http";
 import test from "node:test";
 import { CdpProtocolError, CdpTimeoutError, type RuntimeBackend } from "@vertile-ai/jsdriver-runtime-js";
 import { Browser, discoverChromeExecutable, Tab, type ConnectionMode } from "../src/index.js";
+import { browserCaseSkipReason } from "./support/persistent-harness.js";
 
 const groceries = `<!doctype html><title>Groceries</title><ul>
   <li aria-label="Apples (42)">Apples</li><li>Bananas</li><li>Carrots</li>
@@ -68,7 +69,8 @@ for (const [parameter, headless, ids] of [
   ["headless0", true, ["ZDTEST-0027", "ZDTEST-0029", "ZDTEST-0031", "ZDTEST-0033", "ZDTEST-0035", "ZDTEST-0038", "ZDTEST-0040", "ZDTEST-0054", "ZDTEST-0074", "ZDTEST-0076", "ZDTEST-0078", "ZDTEST-0080", "ZDTEST-0082"]],
   ["headless1", false, ["ZDTEST-0028", "ZDTEST-0030", "ZDTEST-0032", "ZDTEST-0034", "ZDTEST-0036", "ZDTEST-0039", "ZDTEST-0041", "ZDTEST-0055", "ZDTEST-0075", "ZDTEST-0077", "ZDTEST-0079", "ZDTEST-0081", "ZDTEST-0083"]],
 ] as const) {
-  test(`${ids[0]} setUserAgent overrides all supplied navigator values [${parameter}]`, { timeout: 30_000 }, async () => {
+  const skip = browserCaseSkipReason(headless);
+  test(`${ids[0]} setUserAgent overrides all supplied navigator values [${parameter}]`, { timeout: 30_000, skip }, async () => {
     await usingBrowser(headless, async (browser) => {
       const tab = browser.mainTab;
       assert.ok(tab);
@@ -84,7 +86,7 @@ for (const [parameter, headless, ids] of [
     });
   });
 
-  test(`${ids[1]} setUserAgent preserves the current UA when omitted [${parameter}]`, { timeout: 30_000 }, async () => {
+  test(`${ids[1]} setUserAgent preserves the current UA when omitted [${parameter}]`, { timeout: 30_000, skip }, async () => {
     await usingBrowser(headless, async (browser) => {
       const tab = browser.mainTab;
       assert.ok(tab);
@@ -97,7 +99,7 @@ for (const [parameter, headless, ids] of [
     });
   });
 
-  test(`${ids[2]} find returns the visible enclosing element with matching text [${parameter}]`, { timeout: 30_000 }, async () => {
+  test(`${ids[2]} find returns the visible enclosing element with matching text [${parameter}]`, { timeout: 30_000, skip }, async () => {
     await usingPage(headless, "/groceries", async (tab) => {
       const result = await tab.find("  Apples  ", true, true);
       assert.equal(result.tag, "li");
@@ -111,13 +113,13 @@ for (const [parameter, headless, ids] of [
     });
   });
 
-  test(`${ids[3]} find rejects with the typed timeout error when text is absent [${parameter}]`, { timeout: 30_000 }, async () => {
+  test(`${ids[3]} find rejects with the typed timeout error when text is absent [${parameter}]`, { timeout: 30_000, skip }, async () => {
     await usingPage(headless, "/groceries", async (tab) => {
       await assert.rejects(tab.find("Clothes", true, true, { timeoutMs: 100 }), CdpTimeoutError);
     });
   });
 
-  test(`${ids[4]} select returns an element with exact tag and text semantics [${parameter}]`, { timeout: 30_000 }, async () => {
+  test(`${ids[4]} select returns an element with exact tag and text semantics [${parameter}]`, { timeout: 30_000, skip }, async () => {
     await usingPage(headless, "/groceries", async (tab) => {
       const result = await tab.select("li[aria-label^='Apples']");
       assert.equal(result.tag, "li");
@@ -128,7 +130,7 @@ for (const [parameter, headless, ids] of [
     });
   });
 
-  test(`${ids[5]} xpath returns the matching element [${parameter}]`, { timeout: 30_000 }, async () => {
+  test(`${ids[5]} xpath returns the matching element [${parameter}]`, { timeout: 30_000, skip }, async () => {
     await usingPage(headless, "/groceries", async (tab) => {
       const results = await tab.xpath('//li[@aria-label="Apples (42)"]');
       assert.equal(results.length, 1);
@@ -137,21 +139,21 @@ for (const [parameter, headless, ids] of [
     });
   });
 
-  test(`${ids[6]} xpath returns an empty list after its search window [${parameter}]`, { timeout: 30_000 }, async () => {
+  test(`${ids[6]} xpath returns an empty list after its search window [${parameter}]`, { timeout: 30_000, skip }, async () => {
     await usingPage(headless, "/groceries", async (tab) => {
       assert.deepEqual(await tab.xpath('//li[@aria-label="Nonexistent Item"]'), []);
       assert.deepEqual(await tab.xpath("//*[", { timeoutMs: 100 }), []);
     });
   });
 
-  test(`${ids[7]} waitForReadyState resolves true at the exact requested state [${parameter}]`, { timeout: 30_000 }, async () => {
+  test(`${ids[7]} waitForReadyState resolves true at the exact requested state [${parameter}]`, { timeout: 30_000, skip }, async () => {
     await usingPage(headless, "/groceries", async (tab) => {
       assert.equal(await tab.waitForReadyState("complete"), true);
       assert.equal(await tab.evaluate("document.readyState"), "complete");
     });
   });
 
-  test(`${ids[8]} evaluate deep-serializes complex DOM objects without an error [${parameter}]`, { timeout: 30_000 }, async () => {
+  test(`${ids[8]} evaluate deep-serializes complex DOM objects without an error [${parameter}]`, { timeout: 30_000, skip }, async () => {
     await usingPage(headless, "/complex", async (tab) => {
       assert.ok(await tab.evaluate("document.querySelector('body:not(.pending)')", false, false));
       assert.ok(await tab.evaluate("document.body", false, false));
@@ -160,7 +162,7 @@ for (const [parameter, headless, ids] of [
     });
   });
 
-  test(`${ids[9]} evaluate rejects complex by-value serialization and supports deep serialization [${parameter}]`, { timeout: 30_000 }, async () => {
+  test(`${ids[9]} evaluate rejects complex by-value serialization and supports deep serialization [${parameter}]`, { timeout: 30_000, skip }, async () => {
     await usingPage(headless, "/complex", async (tab) => {
       const expression = "document.querySelector('body:not(.pending)')";
       await assert.rejects(tab.evaluate(expression, false, true), CdpProtocolError);
@@ -170,7 +172,7 @@ for (const [parameter, headless, ids] of [
     });
   });
 
-  test(`${ids[10]} evaluate returns exact JSON and deep-serialized representations [${parameter}]`, { timeout: 30_000 }, async () => {
+  test(`${ids[10]} evaluate returns exact JSON and deep-serialized representations [${parameter}]`, { timeout: 30_000, skip }, async () => {
     await usingPage(headless, "/simple-json", async (tab) => {
       const expression = "JSON.parse(document.querySelector('#obj').textContent)";
       assert.deepEqual(await tab.evaluate(expression, false, true), { a: "x", b: 3.14159 });
@@ -181,7 +183,7 @@ for (const [parameter, headless, ids] of [
     });
   });
 
-  test(`${ids[11]} evaluate preserves falsy by-value results [${parameter}]`, { timeout: 30_000 }, async () => {
+  test(`${ids[11]} evaluate preserves falsy by-value results [${parameter}]`, { timeout: 30_000, skip }, async () => {
     await usingPage(headless, "/simple-json", async (tab) => {
       const parsed = (selector: string): Promise<unknown> => tab.evaluate(`JSON.parse(document.querySelector('${selector}').textContent)`);
       assert.equal(await parsed("#zero"), 0);
@@ -190,7 +192,7 @@ for (const [parameter, headless, ids] of [
     });
   });
 
-  test(`${ids[12]} evaluate handles repeated complex and scalar expressions [${parameter}]`, { timeout: 30_000 }, async () => {
+  test(`${ids[12]} evaluate handles repeated complex and scalar expressions [${parameter}]`, { timeout: 30_000, skip }, async () => {
     await usingPage(headless, "/complex", async (tab) => {
       for (const expression of [
         "document.querySelector('body:not(.pending)')",
@@ -210,7 +212,7 @@ for (const [parameter, headless, ids] of [
   });
 }
 
-test("ZDTEST-0037 querySelectorAll traverses content documents but excludes cross-origin child targets", { timeout: 30_000 }, async () => {
+test("ZDTEST-0037 querySelectorAll traverses content documents but excludes cross-origin child targets", { timeout: 30_000, skip: browserCaseSkipReason(true) }, async () => {
   for (const connectionMode of ["direct", "flattened"] satisfies readonly ConnectionMode[]) {
     await usingPage(true, "/frames", async (tab) => {
       const results = await tab.querySelectorAll(".match", { includeFrames: true });
@@ -245,7 +247,7 @@ test("evaluate sends the exact Zendriver serialization controls", async () => {
   });
 });
 
-test("waitFor text defaults to the first match and opts into best matching", { timeout: 30_000 }, async () => {
+test("waitFor text defaults to the first match and opts into best matching", { timeout: 30_000, skip: browserCaseSkipReason(true) }, async () => {
   await usingPage(true, "/groceries", async (tab) => {
     assert.equal((await tab.waitFor({ text: "needle" })).attributes.id, "outer");
     assert.equal((await tab.waitFor({ text: "needle", bestMatch: true })).attributes.id, "inner");

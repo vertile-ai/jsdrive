@@ -1,9 +1,9 @@
-# jsdriver
+# Guanine
 
-`jsdriver` is a strict TypeScript object API over the repository's raw Chrome DevTools Protocol runtime. It has no browser-driver subprocess and supports direct page WebSockets and flattened browser sessions.
+`guanine` is a strict TypeScript object API over the repository's raw Chrome DevTools Protocol runtime. It has no browser-driver subprocess and supports direct page WebSockets and flattened browser sessions. The `jsdriver` compatibility package re-exports this API.
 
 ```ts
-import { Browser, KeyEvents, KeyModifiers, SpecialKeys } from "jsdriver";
+import { Browser, KeyEvents, KeyModifiers, SpecialKeys } from "guanine";
 
 const browser = await Browser.start({ connectionMode: "flattened" });
 try {
@@ -52,6 +52,6 @@ console.log(await action);
 
 ## Local conformance
 
-From the workspace root, `npm test --workspace=jsdriver` launches local Chrome against an HTTP fixture and runs the primary DOM, input, storage, history, window, and capture journey in both connection modes.
+From the workspace root, `npm test --workspace=guanine` launches local Chrome against an HTTP fixture and runs the primary DOM, input, storage, history, window, and capture journey in both connection modes.
 
 `npm run conformance:network` runs Cookie persistence, request/response body expectations, streaming, Fetch fulfill/rewrite/fail, and explicit-path download journeys in direct and flattened modes.

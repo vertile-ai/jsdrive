@@ -3,6 +3,7 @@ import { createServer, type Server } from "node:http";
 import test from "node:test";
 import type { RuntimeBackendFactory } from "@vertile-ai/jsdriver-runtime-js";
 import { Browser, Config, discoverChromeExecutable } from "../src/index.js";
+import { browserCaseSkipReason } from "./support/persistent-harness.js";
 
 let executable = "";
 let server: Server;
@@ -41,14 +42,15 @@ for (const [parameter, headless, ids] of [
   ["headless0", true, ["ZDTEST-0004", "ZDTEST-0006", "ZDTEST-0008", "ZDTEST-0010", "ZDTEST-0012", "ZDTEST-0014"]],
   ["headless1", false, ["ZDTEST-0005", "ZDTEST-0007", "ZDTEST-0009", "ZDTEST-0011", "ZDTEST-0013", "ZDTEST-0015"]],
 ] as const) {
-  test(`${ids[0]} content begins with a doctype [${parameter}]`, { timeout: 30_000 }, async () => {
+  const skip = browserCaseSkipReason(headless);
+  test(`${ids[0]} content begins with a doctype [${parameter}]`, { timeout: 30_000, skip }, async () => {
     await usingBrowser(headless, async (browser) => {
       const content = await (await browser.get(fixtureUrl)).getContent();
       assert.equal(content.toLowerCase().startsWith("<!doctype html>"), true);
     });
   });
 
-  test(`${ids[1]} refreshing target metadata exposes the document title [${parameter}]`, { timeout: 30_000 }, async () => {
+  test(`${ids[1]} refreshing target metadata exposes the document title [${parameter}]`, { timeout: 30_000, skip }, async () => {
     await usingBrowser(headless, async (browser) => {
       const tab = await browser.get(fixtureUrl);
       assert.equal((await tab.updateTarget()).title, "Example Domain");
@@ -56,7 +58,7 @@ for (const [parameter, headless, ids] of [
     });
   });
 
-  test(`${ids[2]} stop succeeds after the browser connection is closed [${parameter}]`, { timeout: 30_000 }, async () => {
+  test(`${ids[2]} stop succeeds after the browser connection is closed [${parameter}]`, { timeout: 30_000, skip }, async () => {
     const browser = await Browser.start({ executable, headless });
     await browser.get(fixtureUrl);
     assert.equal(browser.connection.closed, false);
@@ -66,7 +68,7 @@ for (const [parameter, headless, ids] of [
     assert.equal(browser.stopped, true);
   });
 
-  test(`${ids[3]} stop is idempotent [${parameter}]`, { timeout: 30_000 }, async () => {
+  test(`${ids[3]} stop is idempotent [${parameter}]`, { timeout: 30_000, skip }, async () => {
     const browser = await Browser.start({ executable, headless });
     await browser.get(fixtureUrl);
     await browser.stop();
@@ -75,7 +77,7 @@ for (const [parameter, headless, ids] of [
     assert.equal(browser.stopped, true);
   });
 
-  test(`${ids[4]} stopped becomes true after stop [${parameter}]`, { timeout: 30_000 }, async () => {
+  test(`${ids[4]} stopped becomes true after stop [${parameter}]`, { timeout: 30_000, skip }, async () => {
     const browser = await Browser.start({ executable, headless });
     await browser.get(fixtureUrl);
     assert.equal(browser.stopped, false);
@@ -83,7 +85,7 @@ for (const [parameter, headless, ids] of [
     assert.equal(browser.stopped, true);
   });
 
-  test(`${ids[5]} stopped tracks an external Browser.close [${parameter}]`, { timeout: 30_000 }, async () => {
+  test(`${ids[5]} stopped tracks an external Browser.close [${parameter}]`, { timeout: 30_000, skip }, async () => {
     const browser = await Browser.start({ executable, headless });
     await browser.get(fixtureUrl);
     assert.equal(browser.stopped, false);
@@ -95,7 +97,10 @@ for (const [parameter, headless, ids] of [
   });
 }
 
-test("ZDTEST-0020 one Config launches three isolated browsers", { timeout: 60_000 }, async () => {
+test("ZDTEST-0020 one Config launches three isolated browsers", {
+  timeout: 60_000,
+  skip: process.env.NODRIVER_SKIP_MULTI_BROWSER === "1" ? "Repository isolation permits only one managed Chromium" : false,
+}, async () => {
   const shared = new Config({ executable, headless: true });
   const browsers: Browser[] = [];
   try {

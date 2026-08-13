@@ -1,6 +1,6 @@
-# Releasing jsdriver
+# Releasing Guanine and jsdriver
 
-jsdriver uses Changesets to turn unreleased changes on `dev` into version and
+Guanine uses Changesets to turn unreleased changes on `dev` into version and
 changelog updates. After those changes reach `main`,
 `.github/workflows/release.yml` selects one of two paths:
 
@@ -15,8 +15,9 @@ Trusted Publishing does not support self-hosted runners.
 ## One-time owner setup
 
 The first version of each package must be published by an npm owner before a
-Trusted Publisher can be attached. Then configure each package on npmjs.com
-with these values:
+Trusted Publisher can be attached. Publish the supporting packages first, then
+`guanine`, and finally the `jsdriver` compatibility package because it depends
+on `guanine`. Configure every package on npmjs.com with these values:
 
 | npm field | Value |
 | --- | --- |

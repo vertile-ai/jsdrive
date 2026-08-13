@@ -1,5 +1,5 @@
 {
-  "name": "jsdriver",
+  "name": "guanine",
   "version": "0.15.5",
   "description": "Typed clean-room Chrome DevTools Protocol browser automation API",
   "private": false,
@@ -23,8 +23,12 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "test": "tsc -p tsconfig.test.json && node --test --test-concurrency=1 dist-test/test/api-surface-parity.test.js dist-test/test/browser.test.js dist-test/test/conformance.test.js dist-test/test/connection-api-parity.test.js dist-test/test/element-api-parity.test.js dist-test/test/expectation-interception-api-parity.test.js dist-test/test/keys-api-parity.test.js dist-test/test/network-conformance.test.js dist-test/test/provider.test.js dist-test/test/public-parity.test.js dist-test/test/trace.test.js",
-    "test:parity": "tsc -p tsconfig.test.json && node --test --test-concurrency=1 dist-test/test/*.test.js",
+    "test": "tsc -p tsconfig.test.json && node --test --test-concurrency=1 dist-test/test/browser.test.js dist-test/test/connection-api-parity.test.js dist-test/test/keys-api-parity.test.js dist-test/test/persistent-harness.test.js dist-test/test/trace.test.js && node dist-test/test/support/run-persistent-tests.js dist-test/test/api-surface-parity.test.js dist-test/test/conformance.test.js dist-test/test/element-api-parity.test.js dist-test/test/expectation-interception-api-parity.test.js dist-test/test/network-conformance.test.js dist-test/test/provider.test.js dist-test/test/public-parity.test.js",
+    "test:persistent-smoke": "tsc -p tsconfig.test.json && node dist-test/test/support/run-persistent-tests.js dist-test/test/persistent-harness-smoke.test.js",
+    "test:parity": "tsc -p tsconfig.test.json && node --test --test-concurrency=1 dist-test/test/connection-api-parity.test.js dist-test/test/keys-api-parity.test.js dist-test/test/persistent-harness.test.js && node dist-test/test/support/run-persistent-tests.js dist-test/test/api-surface-parity.test.js dist-test/test/element-api-parity.test.js dist-test/test/expectation-interception-api-parity.test.js dist-test/test/handlers-domain-parity.test.js dist-test/test/input-react-parity.test.js dist-test/test/network-expectation-parity.test.js dist-test/test/tab-selector-evaluate-parity.test.js dist-test/test/tutorial-parity.test.js && node dist-test/test/support/run-exclusive-tests.js dist-test/test/browser-core-parity.test.js dist-test/test/bot-detection-parity.test.js",
+    "test:parity:headful": "tsc -p tsconfig.test.json && node dist-test/test/support/run-persistent-tests.js --headful dist-test/test/handlers-domain-parity.test.js dist-test/test/input-react-parity.test.js dist-test/test/network-expectation-parity.test.js dist-test/test/tab-selector-evaluate-parity.test.js dist-test/test/tutorial-parity.test.js && node dist-test/test/support/run-exclusive-tests.js --headful dist-test/test/browser-core-parity.test.js dist-test/test/bot-detection-parity.test.js",
+    "test:parity:exclusive": "tsc -p tsconfig.test.json && node dist-test/test/support/run-exclusive-tests.js dist-test/test/browser-core-parity.test.js dist-test/test/bot-detection-parity.test.js",
+    "test:persistent-cleanup-smoke": "tsc -p tsconfig.test.json && node dist-test/test/support/run-persistent-tests.js --expect-failure dist-test/test/support/intentional-failure.test.js",
     "smoke": "node dist/smoke.js"
   },
   "dependencies": {

@@ -5,6 +5,7 @@ import type { Protocol } from "@vertile-ai/jsdriver-protocol";
 import type { RuntimeBackendFactory } from "@vertile-ai/jsdriver-runtime-js";
 import { NativeConnection } from "@vertile-ai/jsdriver-runtime-native";
 import { Browser, discoverChromeExecutable, type ConnectionMode, type Element, type Tab, type TabEventHandler } from "../src/index.js";
+import { browserCaseSkipReason } from "./support/persistent-harness.js";
 
 const loginPage = `<!doctype html><html><head><title>Account tutorial</title></head><body>
 <section id="login-panel">
@@ -129,7 +130,8 @@ for (const [parameter, headless, ids] of [
   ["headless0", true, ["ZDTEST-0084", "ZDTEST-0086", "ZDTEST-0088", "ZDTEST-0090", "ZDTEST-0092", "ZDTEST-0094", "ZDTEST-0096", "ZDTEST-0098", "ZDTEST-0100"]],
   ["headless1", false, ["ZDTEST-0085", "ZDTEST-0087", "ZDTEST-0089", "ZDTEST-0091", "ZDTEST-0093", "ZDTEST-0095", "ZDTEST-0097", "ZDTEST-0099", "ZDTEST-0101"]],
 ] as const) {
-  test(`${ids[0]} account tutorial opens the controlled login page [${parameter}]`, { timeout: 120_000 }, async () => {
+  const skip = browserCaseSkipReason(headless);
+  test(`${ids[0]} account tutorial opens the controlled login page [${parameter}]`, { timeout: 120_000, skip }, async () => {
     await usingRuntimeMatrix(headless, async (browser) => {
       const page = await browser.get(`${baseUrl}/login`);
       assert.equal((await page.updateTarget()).title, "Account tutorial");
@@ -137,7 +139,7 @@ for (const [parameter, headless, ids] of [
     });
   });
 
-  test(`${ids[1]} account tutorial signs up and logs in [${parameter}]`, { timeout: 120_000 }, async () => {
+  test(`${ids[1]} account tutorial signs up and logs in [${parameter}]`, { timeout: 120_000, skip }, async () => {
     await usingRuntimeMatrix(headless, async (browser) => {
       const page = await browser.get(`${baseUrl}/login`);
       const signUpLink = (await page.selectAll("a")).find((element) => element.text.includes("Sign up"));
@@ -159,14 +161,14 @@ for (const [parameter, headless, ids] of [
     });
   });
 
-  test(`${ids[2]} API tutorial opens the request page [${parameter}]`, { timeout: 120_000 }, async () => {
+  test(`${ids[2]} API tutorial opens the request page [${parameter}]`, { timeout: 120_000, skip }, async () => {
     await usingRuntimeMatrix(headless, async (browser) => {
       const page = await browser.get(`${baseUrl}/api-request`);
       assert.equal((await page.updateTarget()).title, "API response tutorial");
     });
   });
 
-  test(`${ids[3]} API tutorial reads the matching response body [${parameter}]`, { timeout: 120_000 }, async () => {
+  test(`${ids[3]} API tutorial reads the matching response body [${parameter}]`, { timeout: 120_000, skip }, async () => {
     await usingRuntimeMatrix(headless, async (browser) => {
       const page = browser.mainTab;
       assert.ok(page);
@@ -182,7 +184,7 @@ for (const [parameter, headless, ids] of [
     });
   });
 
-  test(`${ids[4]} CDP tutorial enables Runtime through typed commands [${parameter}]`, { timeout: 120_000 }, async () => {
+  test(`${ids[4]} CDP tutorial enables Runtime through typed commands [${parameter}]`, { timeout: 120_000, skip }, async () => {
     await usingRuntimeMatrix(headless, async (browser) => {
       const page = await browser.get(`${baseUrl}/console`);
       await page.send("Runtime.enable");
@@ -191,7 +193,7 @@ for (const [parameter, headless, ids] of [
     });
   });
 
-  test(`${ids[5]} CDP tutorial receives the button console event [${parameter}]`, { timeout: 120_000 }, async () => {
+  test(`${ids[5]} CDP tutorial receives the button console event [${parameter}]`, { timeout: 120_000, skip }, async () => {
     await usingRuntimeMatrix(headless, async (browser) => {
       const page = await browser.get(`${baseUrl}/console`);
       await page.send("Runtime.enable");
@@ -211,14 +213,14 @@ for (const [parameter, headless, ids] of [
     });
   });
 
-  test(`${ids[6]} scrolling tutorial starts with no cards [${parameter}]`, { timeout: 120_000 }, async () => {
+  test(`${ids[6]} scrolling tutorial starts with no cards [${parameter}]`, { timeout: 120_000, skip }, async () => {
     await usingRuntimeMatrix(headless, async (browser) => {
       const page = await browser.get(`${baseUrl}/scrollable-cards`);
       assert.deepEqual((await page.select("#card-container")).children, []);
     });
   });
 
-  test(`${ids[7]} scrolling tutorial reads the first ten cards [${parameter}]`, { timeout: 120_000 }, async () => {
+  test(`${ids[7]} scrolling tutorial reads the first ten cards [${parameter}]`, { timeout: 120_000, skip }, async () => {
     await usingRuntimeMatrix(headless, async (browser) => {
       const page = await browser.get(`${baseUrl}/scrollable-cards`);
       const cards = await waitForCards(page, 0);
@@ -226,7 +228,7 @@ for (const [parameter, headless, ids] of [
     });
   });
 
-  test(`${ids[8]} scrolling tutorial finds lucky card 27 after three batches [${parameter}]`, { timeout: 120_000 }, async () => {
+  test(`${ids[8]} scrolling tutorial finds lucky card 27 after three batches [${parameter}]`, { timeout: 120_000, skip }, async () => {
     await usingRuntimeMatrix(headless, async (browser) => {
       const page = await browser.get(`${baseUrl}/scrollable-cards`);
       let cards = await waitForCards(page, 0);

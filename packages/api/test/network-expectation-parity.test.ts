@@ -5,6 +5,7 @@ import type { Protocol } from "@vertile-ai/jsdriver-protocol";
 import { Browser, discoverChromeExecutable, type ConnectionMode, type Tab } from "../src/index.js";
 import { NativeConnection } from "@vertile-ai/jsdriver-runtime-native";
 import type { RuntimeBackendFactory } from "@vertile-ai/jsdriver-runtime-js";
+import { browserCaseSkipReason } from "./support/persistent-harness.js";
 
 const pageHtml = `<!doctype html>
 <title>Network parity fixture</title>
@@ -62,7 +63,8 @@ for (const [parameter, headless, ids] of [
   ["headless0", true, ["ZDTEST-0056", "ZDTEST-0058", "ZDTEST-0060", "ZDTEST-0062", "ZDTEST-0064", "ZDTEST-0066"]],
   ["headless1", false, ["ZDTEST-0057", "ZDTEST-0059", "ZDTEST-0061", "ZDTEST-0063", "ZDTEST-0065", "ZDTEST-0067"]],
 ] as const) {
-  test(`${ids[0]} expectRequest resolves the matching request [${parameter}]`, { timeout: 30_000 }, async () => {
+  const skip = browserCaseSkipReason(headless);
+  test(`${ids[0]} expectRequest resolves the matching request [${parameter}]`, { timeout: 30_000, skip }, async () => {
     await usingBrowser(headless, async (tab) => {
       const expectation = tab.expectRequest(`${baseUrl}/api`);
       await expectation.ready;
@@ -85,7 +87,7 @@ for (const [parameter, headless, ids] of [
     });
   });
 
-  test(`${ids[1]} expectResponse resolves the response and body tuple [${parameter}]`, { timeout: 30_000 }, async () => {
+  test(`${ids[1]} expectResponse resolves the response and body tuple [${parameter}]`, { timeout: 30_000, skip }, async () => {
     await usingBrowser(headless, async (tab) => {
       const expectation = tab.expectResponse(`${baseUrl}/api`);
       await expectation.ready;
@@ -110,7 +112,7 @@ for (const [parameter, headless, ids] of [
     });
   });
 
-  test(`${ids[2]} expectResponse reset observes a subsequent reload [${parameter}]`, { timeout: 30_000 }, async () => {
+  test(`${ids[2]} expectResponse reset observes a subsequent reload [${parameter}]`, { timeout: 30_000, skip }, async () => {
     await usingBrowser(headless, async (tab) => {
       const expectation = tab.expectResponse((event) => event.response.url === `${baseUrl}/`);
       await expectation.ready;
@@ -125,7 +127,7 @@ for (const [parameter, headless, ids] of [
     });
   });
 
-  test(`${ids[3]} expectDownload resolves the next DownloadWillBegin event [${parameter}]`, { timeout: 30_000 }, async () => {
+  test(`${ids[3]} expectDownload resolves the next DownloadWillBegin event [${parameter}]`, { timeout: 30_000, skip }, async () => {
     await usingBrowser(headless, async (tab) => {
       const expectation = tab.expectDownload();
       await expectation.ready;
@@ -140,7 +142,7 @@ for (const [parameter, headless, ids] of [
     });
   });
 
-  test(`${ids[4]} response interception exposes body and continues [${parameter}]`, { timeout: 30_000 }, async () => {
+  test(`${ids[4]} response interception exposes body and continues [${parameter}]`, { timeout: 30_000, skip }, async () => {
     await usingBrowser(headless, async (tab) => {
       const interception = tab.intercept("*/user-data.json", "Response", "XHR");
       await interception.ready;
@@ -156,7 +158,7 @@ for (const [parameter, headless, ids] of [
     });
   });
 
-  test(`${ids[5]} response interception reset observes a subsequent fetch [${parameter}]`, { timeout: 30_000 }, async () => {
+  test(`${ids[5]} response interception reset observes a subsequent fetch [${parameter}]`, { timeout: 30_000, skip }, async () => {
     await usingBrowser(headless, async (tab) => {
       const interception = tab.intercept("*/user-data.json", "Response", "XHR");
       await interception.ready;

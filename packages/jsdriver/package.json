@@ -1,0 +1,34 @@
+{
+  "name": "jsdriver",
+  "version": "0.15.5",
+  "description": "Compatibility package for the Guanine browser automation API",
+  "private": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vertile-ai/jsdrive.git",
+    "directory": "packages/jsdriver"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    }
+  },
+  "dependencies": {
+    "guanine": "0.15.5"
+  }
+}

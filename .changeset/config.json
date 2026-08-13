@@ -4,6 +4,7 @@
   "commit": false,
   "fixed": [
     [
+      "guanine",
       "jsdriver",
       "@vertile-ai/jsdriver-protocol",
       "@vertile-ai/jsdriver-runtime-js",

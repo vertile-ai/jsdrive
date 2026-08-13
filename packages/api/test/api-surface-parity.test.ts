@@ -15,9 +15,9 @@ import {
   findExecutable,
   isRoot,
   tempProfileDir,
-  start,
   type ConnectionMode,
 } from "../src/index.js";
+import { withPersistentBrowser } from "./support/persistent-harness.js";
 
 test("ZDAPI-CONFIG-001", async () => {
   const config = new Config({ executable: process.execPath, browserArgs: ["--fixture"] });
@@ -65,16 +65,12 @@ test("ZDAPI-HTTP-001", async () => {
 
 test("ZDAPI-BROWSER-001", { timeout: 90_000 }, async () => {
   const executable = await discoverChromeExecutable();
-  const rootBrowser = await start({ executable, headless: true, connectionTimeoutMs: 30_000 });
-  try {
+  await withPersistentBrowser({ executable, headless: true, connectionTimeoutMs: 30_000 }, async (rootBrowser) => {
     assert.ok(rootBrowser.mainTab);
-  } finally {
-    await rootBrowser.stop();
-  }
+  });
   for (const [backendName, backend] of [["js", undefined], ["native", NativeConnection]] as const satisfies readonly [string, RuntimeBackendFactory | undefined][]) {
     for (const connectionMode of ["direct", "flattened"] satisfies readonly ConnectionMode[]) {
-      const browser = await Browser.create({ executable, headless: true, connectionTimeoutMs: 30_000, connectionMode, ...(backend === undefined ? {} : { backend }) });
-      try {
+      await withPersistentBrowser({ executable, headless: true, connectionTimeoutMs: 30_000, connectionMode, ...(backend === undefined ? {} : { backend }) }, async (browser) => {
         assert.equal(await browser.testConnection(), true, `${backendName}/${connectionMode}`);
         assert.match((await browser.getVersion()).product, /Chrome|Chromium/i);
         assert.equal(await browser.wait(0.001), browser);
@@ -100,9 +96,7 @@ test("ZDAPI-BROWSER-001", { timeout: 90_000 }, async () => {
         } finally {
           await rm(cookieDir, { recursive: true, force: true });
         }
-      } finally {
-        await browser.stop();
-      }
+      });
     }
   }
 });

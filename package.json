@@ -1,5 +1,5 @@
 {
-  "name": "jsdriver-monorepo",
+  "name": "guanine-monorepo",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -14,17 +14,17 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "npm run build --workspace=@vertile-ai/jsdriver-protocol && npm run build --workspace=@vertile-ai/jsdriver-runtime-js && npm run build --workspace=jsdriver && npm run build --workspace=@vertile-ai/jsdriver-runtime-native",
+    "build": "npm run build --workspace=@vertile-ai/jsdriver-protocol && npm run build --workspace=@vertile-ai/jsdriver-runtime-js && npm run build --workspace=guanine && npm run build --workspace=@vertile-ai/jsdriver-runtime-native",
     "changeset": "changeset",
     "generate": "npm run generate --workspace=@vertile-ai/jsdriver-protocol-codegen",
-    "test": "npm run test --workspace=@vertile-ai/jsdriver-protocol-codegen && npm run test --workspace=@vertile-ai/jsdriver-runtime-js && npm run test --workspace=jsdriver && npm run test --workspace=@vertile-ai/jsdriver-runtime-native",
-    "conformance:dom": "npm run test --workspace=jsdriver",
-    "conformance:network": "npm run build --workspace=@vertile-ai/jsdriver-runtime-js && tsc -p packages/api/tsconfig.test.json && node --test --test-concurrency=1 packages/api/dist-test/test/network-conformance.test.js",
-    "smoke:m2": "npm run build && npm run smoke --workspace=jsdriver",
+    "test": "npm run test --workspace=@vertile-ai/jsdriver-protocol-codegen && npm run test --workspace=@vertile-ai/jsdriver-runtime-js && npm run test --workspace=guanine && npm run test --workspace=@vertile-ai/jsdriver-runtime-native",
+    "conformance:dom": "npm run test --workspace=guanine",
+    "conformance:network": "npm run build --workspace=@vertile-ai/jsdriver-runtime-js && tsc -p packages/api/tsconfig.test.json && node packages/api/dist-test/test/support/run-persistent-tests.js packages/api/dist-test/test/network-conformance.test.js",
+    "smoke:m2": "npm run build && npm run smoke --workspace=guanine",
     "smoke:native": "npm run build && npm run smoke --workspace=@vertile-ai/jsdriver-runtime-native",
     "differential": "npm run build && tsc -p packages/api/tsconfig.test.json && node packages/api/dist-test/differential/run.js",
     "parity:inventory": "python3 parity/generate.py",
-    "typecheck": "npm run build --workspace=@vertile-ai/jsdriver-protocol && npm run build --workspace=@vertile-ai/jsdriver-runtime-js && npm run build --workspace=jsdriver && npm run build --workspace=@vertile-ai/jsdriver-runtime-native && tsc -p tsconfig.json"
+    "typecheck": "npm run build --workspace=@vertile-ai/jsdriver-protocol && npm run build --workspace=@vertile-ai/jsdriver-runtime-js && npm run build --workspace=guanine && npm run build --workspace=@vertile-ai/jsdriver-runtime-native && tsc -p tsconfig.json"
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.0",

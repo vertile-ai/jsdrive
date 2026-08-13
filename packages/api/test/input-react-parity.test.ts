@@ -13,6 +13,7 @@ import {
   type ConnectionMode,
   type Tab,
 } from "../src/index.js";
+import { browserCaseSkipReason } from "./support/persistent-harness.js";
 
 const controlledInputPage = `<!doctype html>
 <title>Controlled field parity</title>
@@ -145,7 +146,8 @@ for (const [parameter, headless, ids] of [
   ["headless0", true, { visible: "ZDTEST-0016", clear: "ZDTEST-0021", deleting: "ZDTEST-0023", fill: "ZDTEST-0025", escape: "ZDTEST-0018" }],
   ["headless1", false, { visible: "ZDTEST-0017", clear: "ZDTEST-0022", deleting: "ZDTEST-0024", fill: "ZDTEST-0026", escape: "ZDTEST-0019" }],
 ] as const) {
-  test(`${ids.visible} preserves the visible editing structure after copy, cursor motion, and paste [${parameter}]`, { timeout: 60_000 }, async () => {
+  const skip = browserCaseSkipReason(headless);
+  test(`${ids.visible} preserves the visible editing structure after copy, cursor motion, and paste [${parameter}]`, { timeout: 60_000, skip }, async () => {
     await forEachBrowser(headless, async (tab, label) => {
       await open(tab, "/editor");
       const editor = await tab.select("#draft");
@@ -173,7 +175,7 @@ for (const [parameter, headless, ids] of [
     });
   });
 
-  test(`${ids.clear} clears a controlled field through the native value setter [${parameter}]`, { timeout: 60_000 }, async () => {
+  test(`${ids.clear} clears a controlled field through the native value setter [${parameter}]`, { timeout: 60_000, skip }, async () => {
     await forEachBrowser(headless, async (tab, label) => {
       await open(tab, "/controlled");
       const field = await tab.select("#amount");
@@ -188,7 +190,7 @@ for (const [parameter, headless, ids] of [
     });
   });
 
-  test(`${ids.deleting} removes a controlled value with visible Backspace input [${parameter}]`, { timeout: 60_000 }, async () => {
+  test(`${ids.deleting} removes a controlled value with visible Backspace input [${parameter}]`, { timeout: 60_000, skip }, async () => {
     await forEachBrowser(headless, async (tab, label) => {
       await open(tab, "/controlled");
       const field = await tab.select("#amount");
@@ -201,7 +203,7 @@ for (const [parameter, headless, ids] of [
     });
   });
 
-  test(`${ids.fill} fills a controlled field after a render commit [${parameter}]`, { timeout: 60_000 }, async () => {
+  test(`${ids.fill} fills a controlled field after a render commit [${parameter}]`, { timeout: 60_000, skip }, async () => {
     await forEachBrowser(headless, async (tab, label) => {
       await open(tab, "/controlled");
       const field = await tab.select("#amount");
@@ -215,7 +217,7 @@ for (const [parameter, headless, ids] of [
     });
   });
 
-  test(`${ids.escape} dispatches Escape as keydown then keyup and closes the panel [${parameter}]`, { timeout: 60_000 }, async () => {
+  test(`${ids.escape} dispatches Escape as keydown then keyup and closes the panel [${parameter}]`, { timeout: 60_000, skip }, async () => {
     await forEachBrowser(headless, async (tab, label) => {
       await open(tab, "/escape");
       assert.equal(await tab.evaluate<string>("document.querySelector('#status').textContent"), "ready", label);

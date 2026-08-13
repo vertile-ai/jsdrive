@@ -36,4 +36,6 @@ jobs:
         run: npm test
 
       - name: Validate package contents
-        run: npm pack --workspace=jsdriver --dry-run
+        run: |
+          npm pack --workspace=guanine --dry-run
+          npm pack --workspace=jsdriver --dry-run

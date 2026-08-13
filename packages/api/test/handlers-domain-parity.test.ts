@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { createServer, type Server } from "node:http";
 import test from "node:test";
 import { Browser, ZendriverNetworkDomain, discoverChromeExecutable, type ConnectionMode, type Tab, type TabEventHandler } from "../src/index.js";
+import { browserCaseSkipReason } from "./support/persistent-harness.js";
 
 // Stable parity case IDs retained individually for the inventory validator:
 // ZDTEST-0043 ZDTEST-0045 ZDTEST-0047 ZDTEST-0049 ZDTEST-0051 ZDTEST-0053 ZDTEST-0069 ZDTEST-0071 ZDTEST-0073
@@ -27,6 +28,7 @@ test.after(async () => {
 });
 
 for (const [label, headless] of [["headless0", true], ["headless1", false]] as const) {
+  const skip = browserCaseSkipReason(headless);
   const addHandlerId = headless ? "ZDTEST-0042" : "ZDTEST-0043";
   const networkDomainId = headless ? "ZDTEST-0044" : "ZDTEST-0045";
   const removeAllId = headless ? "ZDTEST-0046" : "ZDTEST-0047";
@@ -37,7 +39,7 @@ for (const [label, headless] of [["headless0", true], ["headless1", false]] as c
   const manualDisableId = headless ? "ZDTEST-0070" : "ZDTEST-0071";
   const autoEnableId = headless ? "ZDTEST-0072" : "ZDTEST-0073";
 
-  test(`${addHandlerId} [${label}] addHandler keeps typed event handlers and dispatches them`, { timeout: 30_000 }, async () => {
+  test(`${addHandlerId} [${label}] addHandler keeps typed event handlers and dispatches them`, { timeout: 30_000, skip }, async () => {
     for (const connectionMode of ["direct", "flattened"] as const) await withBrowser(headless, async (browser) => {
       const tab = browser.mainTab;
       assert.ok(tab);
@@ -55,7 +57,7 @@ for (const [label, headless] of [["headless0", true], ["headless1", false]] as c
     }, connectionMode);
   });
 
-  test(`${networkDomainId} [${label}] ZendriverNetworkDomain registers exact pinned 29 inert slots`, { timeout: 30_000 }, async () => {
+  test(`${networkDomainId} [${label}] ZendriverNetworkDomain registers exact pinned 29 inert slots`, { timeout: 30_000, skip }, async () => {
     await withBrowser(headless, async (browser) => {
       const tab = browser.mainTab;
       assert.ok(tab);
@@ -81,7 +83,7 @@ for (const [label, headless] of [["headless0", true], ["headless1", false]] as c
     });
   });
 
-  test(`${removeAllId} [${label}] removeHandlers clears every handler`, { timeout: 30_000 }, async () => {
+  test(`${removeAllId} [${label}] removeHandlers clears every handler`, { timeout: 30_000, skip }, async () => {
     await withBrowser(headless, async (browser) => {
       const tab = browser.mainTab;
       assert.ok(tab);
@@ -94,7 +96,7 @@ for (const [label, headless] of [["headless0", true], ["headless1", false]] as c
     });
   });
 
-  test(`${removeEventId} [${label}] removeHandlers(event) clears one event`, { timeout: 30_000 }, async () => {
+  test(`${removeEventId} [${label}] removeHandlers(event) clears one event`, { timeout: 30_000, skip }, async () => {
     await withBrowser(headless, async (browser) => {
       const tab = browser.mainTab;
       assert.ok(tab);
@@ -106,7 +108,7 @@ for (const [label, headless] of [["headless0", true], ["headless1", false]] as c
     });
   });
 
-  test(`${removeSpecificId} [${label}] removeHandlers(event, handler) removes only one`, { timeout: 30_000 }, async () => {
+  test(`${removeSpecificId} [${label}] removeHandlers(event, handler) removes only one`, { timeout: 30_000, skip }, async () => {
     await withBrowser(headless, async (browser) => {
       const tab = browser.mainTab;
       assert.ok(tab);
@@ -119,7 +121,7 @@ for (const [label, headless] of [["headless0", true], ["headless1", false]] as c
     });
   });
 
-  test(`${removeWithoutEventId} [${label}] removeHandlers(handler) reports the Zendriver error`, { timeout: 30_000 }, async () => {
+  test(`${removeWithoutEventId} [${label}] removeHandlers(handler) reports the Zendriver error`, { timeout: 30_000, skip }, async () => {
     await withBrowser(headless, async (browser) => {
       const tab = browser.mainTab;
       assert.ok(tab);
@@ -132,7 +134,7 @@ for (const [label, headless] of [["headless0", true], ["headless1", false]] as c
     });
   });
 
-  test(`${customFetchId} [${label}] custom manual Fetch enable is not replaced`, { timeout: 30_000 }, async () => {
+  test(`${customFetchId} [${label}] custom manual Fetch enable is not replaced`, { timeout: 30_000, skip }, async () => {
     await withBrowser(headless, async (browser) => {
       const tab = browser.mainTab;
       assert.ok(tab);
@@ -149,7 +151,7 @@ for (const [label, headless] of [["headless0", true], ["headless1", false]] as c
     });
   });
 
-  test(`${manualDisableId} [${label}] explicit domain disable clears auto and manual views`, { timeout: 30_000 }, async () => {
+  test(`${manualDisableId} [${label}] explicit domain disable clears auto and manual views`, { timeout: 30_000, skip }, async () => {
     for (const connectionMode of ["direct", "flattened"] as const) await withBrowser(headless, async (browser) => {
       const tab = browser.mainTab;
       assert.ok(tab);
@@ -164,7 +166,7 @@ for (const [label, headless] of [["headless0", true], ["headless1", false]] as c
     }, connectionMode);
   });
 
-  test(`${autoEnableId} [${label}] handler automatically enables its domain`, { timeout: 30_000 }, async () => {
+  test(`${autoEnableId} [${label}] handler automatically enables its domain`, { timeout: 30_000, skip }, async () => {
     for (const connectionMode of ["direct", "flattened"] as const) await withBrowser(headless, async (browser) => {
       const tab = browser.mainTab;
       assert.ok(tab);
@@ -182,7 +184,7 @@ for (const [label, headless] of [["headless0", true], ["headless1", false]] as c
   });
 }
 
-test("flattened handler and domain state stays isolated per target session", { timeout: 30_000 }, async () => {
+test("flattened handler and domain state stays isolated per target session", { timeout: 30_000, skip: browserCaseSkipReason(true) }, async () => {
   await withBrowser(true, async (browser) => {
     const first = browser.mainTab;
     assert.ok(first);

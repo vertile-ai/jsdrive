@@ -55,3 +55,5 @@ console.log(await action);
 From the workspace root, `npm test --workspace=guanine` launches local Chrome against an HTTP fixture and runs the primary DOM, input, storage, history, window, and capture journey in both connection modes.
 
 `npm run conformance:network` runs Cookie persistence, request/response body expectations, streaming, Fetch fulfill/rewrite/fail, and explicit-path download journeys in direct and flattened modes.
+
+Browser suites must run through the package scripts. The persistent runner owns one Chromium for the whole phase and serializes child leases across JavaScript/native and direct/flattened cases. Tests that must own or restart Chromium run afterward through the exclusive runner. Headful parity is a separate, per-run authorized command: `NODRIVER_ALLOW_HEADFUL=1 npm run test:parity:headful --workspace=guanine`.

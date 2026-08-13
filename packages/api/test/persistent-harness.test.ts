@@ -36,6 +36,7 @@ test("lease options preserve the shared endpoint and requested backend mode", ()
   const environment = {
     NODRIVER_ALLOW_HEADFUL: "1",
     NODRIVER_HARNESS_HEADFUL: "1",
+    NODRIVER_HARNESS_PHASE: "headful",
     [HARNESS_ENDPOINT_ENV]: JSON.stringify({ host: "127.0.0.7", port: 9222 }),
   };
   assert.deepEqual(connectOptionsForLease({ headless: false, connectionMode: "flattened" }, environment), {
@@ -45,6 +46,10 @@ test("lease options preserve the shared endpoint and requested backend mode", ()
     domainPolicy: "manual",
     timeoutMs: 10_000,
   });
+  assert.throws(
+    () => connectOptionsForLease({ headless: true }, environment),
+    /headless lease cannot run in the headful harness phase/,
+  );
 });
 
 test("lock release refuses to remove ownership replaced by another token", async () => {

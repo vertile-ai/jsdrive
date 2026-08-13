@@ -107,7 +107,8 @@ The Node production runtime has one external npm dependency, `ws`; the other pro
 | `npm run generate` | Regenerate TypeScript and Rust protocol bindings from the pinned schemas. |
 | `npm run typecheck` | Type-check the strict TypeScript workspace. |
 | `npm test` | Run deterministic tests and single-instance headless browser conformance journeys. |
-| `npm run test:parity --workspace=guanine` | Run the complete parity suite, including explicitly authorized headful and live-site cases. |
+| `npm run test:parity --workspace=guanine` | Run headless parity with one persistent Chromium, followed by exclusive lifecycle and live-site cases. |
+| `NODRIVER_ALLOW_HEADFUL=1 npm run test:parity:headful --workspace=guanine` | Run the separately authorized headful phase. Only use this after explicit approval for that run. |
 | `npm run conformance:dom` | Run DOM/input/capture conformance. |
 | `npm run conformance:network` | Run cookies/network/interception/download conformance. |
 | `npm run smoke:m2` | Launch Chrome with the JavaScript backend. |
@@ -115,6 +116,8 @@ The Node production runtime has one external npm dependency, `ws`; the other pro
 | `npm run differential` | Run one provider-shaped fixture through JS/native, compare normalized outcome and outbound trace, and run Zendriver 0.15.5 outcome-only when available. |
 
 For the optional Zendriver run, install exactly version `0.15.5` in `.tmp/zendriver-ref` (or `.tmp/zendriver-0.15.5`), or set `ZENDRIVER_PYTHON` to its Python executable. Zendriver does not expose this runtime's backend-neutral trace, so the report labels its trace `unavailable` and compares its observable outcome only.
+
+The package test scripts own the browser lifecycle. Persistent phases start one parent-owned Chromium and give serial child tests endpoint leases; lifecycle and Zendriver comparison cases run only after that owner exits under the same exclusive lock. Run browser suites through these scripts rather than invoking compiled browser test files directly.
 
 ## Clean-room and licenses
 

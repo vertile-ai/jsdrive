@@ -13,6 +13,8 @@
 
 - Never run more than one nodriver-managed Chromium instance at a time across the entire repository, including parallel agents and backend/mode matrices.
 - Reuse one Chromium instance when a test can exercise multiple runtimes or connection modes against it; otherwise run browser cases strictly serially.
+- Run browser suites through the package scripts so the persistent or exclusive harness owns the repository-wide lock; do not invoke compiled browser test files directly.
+- Keep headless and headful cases in separate harness phases. Persistent cases lease the parent-owned endpoint; lifecycle and external-reference cases run afterward through the exclusive runner.
 - Browser tests must use headless mode by default. A headful run requires an explicit user request for that specific run.
 - Tests and implementation code must never activate a browser window, bring it to the front, request application focus, or otherwise steal desktop focus. Do not call `Browser.activate`, `Page.bringToFront`, window-focus helpers, or OS-level focus commands from tests.
 - If a behavior cannot be verified without stealing focus, stop and report that limitation instead of running the test.

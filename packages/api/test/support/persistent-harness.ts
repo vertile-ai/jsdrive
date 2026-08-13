@@ -51,6 +51,10 @@ export function browserCaseSkipReason(headless: boolean, environment: NodeJS.Pro
 export function connectOptionsForLease(options: LaunchOptions | Config = {}, environment: NodeJS.ProcessEnv = process.env): ConnectOptions {
   const config = options instanceof Config ? options : new Config(options);
   assertHeadfulAuthorized(config.headless, environment);
+  const phase = environment[HARNESS_PHASE_ENV];
+  if (phase !== undefined && config.headless !== (phase === "headless")) {
+    throw new Error(`A ${config.headless ? "headless" : "headful"} lease cannot run in the ${phase} harness phase`);
+  }
   return {
     ...persistentEndpoint(environment),
     connectionMode: config.connectionMode,

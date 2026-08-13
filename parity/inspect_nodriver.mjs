@@ -24,6 +24,7 @@ const declarationFiles = [
     "trace.d.ts",
   ].map((file) => `packages/api/dist/${file}`),
   "packages/runtime-js/dist/connection.d.ts",
+  "packages/runtime-js/dist/connection-compat.d.ts",
 ];
 
 function normalizedText(node, sourceFile) {
@@ -152,7 +153,6 @@ for (const relativePath of declarationFiles) {
           .filter(Boolean);
         declaredSupportingClasses[statement.name.text] = { file: relativePath, members, nonPublicMembers: [] };
       }
-      continue;
     }
     if (ts.isClassDeclaration(statement) && statement.name) {
       const name = statement.name.text;

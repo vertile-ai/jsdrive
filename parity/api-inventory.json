@@ -1,27 +1,27 @@
 {
   "mappingCounts": {
     "coreMembers": {
-      "CANDIDATE": 128,
-      "MISSING": 70,
-      "UNKNOWN": 227,
+      "CANDIDATE": 146,
+      "MISSING": 112,
+      "UNKNOWN": 167,
       "VERIFIED": 47
     },
     "coreSymbols": {
       "CANDIDATE": 12,
-      "MISSING": 22,
+      "MISSING": 15,
       "UNKNOWN": 3,
-      "VERIFIED": 8
+      "VERIFIED": 15
     },
     "rootExports": {
       "CANDIDATE": 6,
-      "MISSING": 7,
-      "VERIFIED": 3
+      "MISSING": 6,
+      "VERIFIED": 4
     },
     "total": {
-      "CANDIDATE": 146,
-      "MISSING": 99,
-      "UNKNOWN": 230,
-      "VERIFIED": 58
+      "CANDIDATE": 164,
+      "MISSING": 133,
+      "UNKNOWN": 170,
+      "VERIFIED": 66
     }
   },
   "nodriver": {
@@ -37,7 +37,8 @@
       "packages/api/dist/provider.d.ts",
       "packages/api/dist/tab.d.ts",
       "packages/api/dist/trace.d.ts",
-      "packages/runtime-js/dist/connection.d.ts"
+      "packages/runtime-js/dist/connection.d.ts",
+      "packages/runtime-js/dist/connection-compat.d.ts"
     ],
     "declarationParser": "typescript-5.9.3",
     "declaredClasses": {
@@ -1146,6 +1147,768 @@
             "typeParameters": []
           }
         ]
+      },
+      "CancelledError": {
+        "file": "packages/runtime-js/dist/connection-compat.d.ts",
+        "members": [
+          {
+            "declaration": "constructor(message?: string);",
+            "kind": "constructor",
+            "name": "constructor",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "message",
+                "optional": true,
+                "rest": false,
+                "type": "string"
+              }
+            ],
+            "returnType": null,
+            "typeParameters": []
+          }
+        ],
+        "nonPublicMembers": []
+      },
+      "CantTouchThis": {
+        "file": "packages/runtime-js/dist/connection-compat.d.ts",
+        "members": [
+          {
+            "declaration": "static rejectClassAssignment(className: string, attribute: string): never;",
+            "kind": "method",
+            "name": "rejectClassAssignment",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "className",
+                "optional": false,
+                "rest": false,
+                "type": "string"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "attribute",
+                "optional": false,
+                "rest": false,
+                "type": "string"
+              }
+            ],
+            "returnType": "never",
+            "static": true,
+            "typeParameters": []
+          }
+        ],
+        "nonPublicMembers": [
+          {
+            "declaration": "private constructor();",
+            "kind": "constructor",
+            "name": "constructor",
+            "parameters": [],
+            "returnType": null,
+            "typeParameters": []
+          }
+        ]
+      },
+      "CdpAbortError": {
+        "file": "packages/runtime-js/dist/connection.d.ts",
+        "members": [
+          {
+            "declaration": "readonly operation: string;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "operation",
+            "optional": false,
+            "readonly": true,
+            "type": "string"
+          },
+          {
+            "declaration": "constructor(operation: string, options?: ErrorOptions);",
+            "kind": "constructor",
+            "name": "constructor",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "operation",
+                "optional": false,
+                "rest": false,
+                "type": "string"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "options",
+                "optional": true,
+                "rest": false,
+                "type": "ErrorOptions"
+              }
+            ],
+            "returnType": null,
+            "typeParameters": []
+          }
+        ],
+        "nonPublicMembers": []
+      },
+      "CdpConnection": {
+        "file": "packages/runtime-js/dist/connection.d.ts",
+        "members": [
+          {
+            "declaration": "readonly domainPolicy: DomainPolicy;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "domainPolicy",
+            "optional": false,
+            "readonly": true,
+            "type": "DomainPolicy"
+          },
+          {
+            "declaration": "static connect(url: string, options?: ConnectOptions): Promise<CdpConnection>;",
+            "kind": "method",
+            "name": "connect",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "url",
+                "optional": false,
+                "rest": false,
+                "type": "string"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "options",
+                "optional": true,
+                "rest": false,
+                "type": "ConnectOptions"
+              }
+            ],
+            "returnType": "Promise<CdpConnection>",
+            "static": true,
+            "typeParameters": []
+          },
+          {
+            "access": "get",
+            "declaration": "get trace(): readonly TraceEntry[];",
+            "kind": "property",
+            "name": "trace",
+            "parameters": [],
+            "returnType": "readonly TraceEntry[]",
+            "typeParameters": []
+          },
+          {
+            "access": "get",
+            "declaration": "get enabledDomains(): ReadonlySet<string>;",
+            "kind": "property",
+            "name": "enabledDomains",
+            "parameters": [],
+            "returnType": "ReadonlySet<string>",
+            "typeParameters": []
+          },
+          {
+            "access": "get",
+            "declaration": "get manuallyEnabledDomains(): ReadonlySet<string>;",
+            "kind": "property",
+            "name": "manuallyEnabledDomains",
+            "parameters": [],
+            "returnType": "ReadonlySet<string>",
+            "typeParameters": []
+          },
+          {
+            "declaration": "enabledDomainsFor(sessionId?: string): ReadonlySet<string>;",
+            "kind": "method",
+            "name": "enabledDomainsFor",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "sessionId",
+                "optional": true,
+                "rest": false,
+                "type": "string"
+              }
+            ],
+            "returnType": "ReadonlySet<string>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "manuallyEnabledDomainsFor(sessionId?: string): ReadonlySet<string>;",
+            "kind": "method",
+            "name": "manuallyEnabledDomainsFor",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "sessionId",
+                "optional": true,
+                "rest": false,
+                "type": "string"
+              }
+            ],
+            "returnType": "ReadonlySet<string>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "access": "get",
+            "declaration": "get closed(): boolean;",
+            "kind": "property",
+            "name": "closed",
+            "parameters": [],
+            "returnType": "boolean",
+            "typeParameters": []
+          },
+          {
+            "access": "get",
+            "declaration": "get websocket(): WebSocket | null;",
+            "kind": "property",
+            "name": "websocket",
+            "parameters": [],
+            "returnType": "WebSocket | null",
+            "typeParameters": []
+          },
+          {
+            "declaration": "send<M extends ProtocolCommand>(method: M, ...args: CommandParams<M> extends undefined ? [params?: undefined, options?: SendOptions] : [params: CommandParams<M>, options?: SendOptions]): Promise<CommandResult<M>>;",
+            "kind": "method",
+            "name": "send",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "method",
+                "optional": false,
+                "rest": false,
+                "type": "M"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "args",
+                "optional": false,
+                "rest": true,
+                "type": "CommandParams<M> extends undefined ? [params?: undefined, options?: SendOptions] : [params: CommandParams<M>, options?: SendOptions]"
+              }
+            ],
+            "returnType": "Promise<CommandResult<M>>",
+            "static": false,
+            "typeParameters": [
+              "M extends ProtocolCommand"
+            ]
+          },
+          {
+            "declaration": "sendRaw(method: string, params?: unknown, options?: SendOptions): Promise<Readonly<Record<string, unknown>>>;",
+            "kind": "method",
+            "name": "sendRaw",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "method",
+                "optional": false,
+                "rest": false,
+                "type": "string"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "params",
+                "optional": true,
+                "rest": false,
+                "type": "unknown"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "options",
+                "optional": true,
+                "rest": false,
+                "type": "SendOptions"
+              }
+            ],
+            "returnType": "Promise<Readonly<Record<string, unknown>>>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "[RUNTIME_BACKEND_INTERNAL_SEND](method: string, params?: unknown, options?: SendOptions): Promise<Readonly<Record<string, unknown>>>;",
+            "kind": "method",
+            "name": "[RUNTIME_BACKEND_INTERNAL_SEND]",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "method",
+                "optional": false,
+                "rest": false,
+                "type": "string"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "params",
+                "optional": true,
+                "rest": false,
+                "type": "unknown"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "options",
+                "optional": true,
+                "rest": false,
+                "type": "SendOptions"
+              }
+            ],
+            "returnType": "Promise<Readonly<Record<string, unknown>>>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "enableDomain(domain: string, options?: SendOptions, source?: DomainEnableSource): Promise<void>;",
+            "kind": "method",
+            "name": "enableDomain",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "domain",
+                "optional": false,
+                "rest": false,
+                "type": "string"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "options",
+                "optional": true,
+                "rest": false,
+                "type": "SendOptions"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "source",
+                "optional": true,
+                "rest": false,
+                "type": "DomainEnableSource"
+              }
+            ],
+            "returnType": "Promise<void>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "disableDomain(domain: string, options?: SendOptions): Promise<void>;",
+            "kind": "method",
+            "name": "disableDomain",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "domain",
+                "optional": false,
+                "rest": false,
+                "type": "string"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "options",
+                "optional": true,
+                "rest": false,
+                "type": "SendOptions"
+              }
+            ],
+            "returnType": "Promise<void>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "acquireDomain(domain: string, options?: SendOptions): Promise<() => Promise<void>>;",
+            "kind": "method",
+            "name": "acquireDomain",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "domain",
+                "optional": false,
+                "rest": false,
+                "type": "string"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "options",
+                "optional": true,
+                "rest": false,
+                "type": "SendOptions"
+              }
+            ],
+            "returnType": "Promise<() => Promise<void>>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "forgetAutoDomain(domain: string, options?: SendOptions): void;",
+            "kind": "method",
+            "name": "forgetAutoDomain",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "domain",
+                "optional": false,
+                "rest": false,
+                "type": "string"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "options",
+                "optional": true,
+                "rest": false,
+                "type": "SendOptions"
+              }
+            ],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "on<E extends ProtocolEvent>(method: E, handler: (params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>): () => void;",
+            "kind": "method",
+            "name": "on",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "method",
+                "optional": false,
+                "rest": false,
+                "type": "E"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "handler",
+                "optional": false,
+                "rest": false,
+                "type": "(params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>"
+              }
+            ],
+            "returnType": "() => void",
+            "static": false,
+            "typeParameters": [
+              "E extends ProtocolEvent"
+            ]
+          },
+          {
+            "declaration": "on(method: string, handler: EventHandler): () => void;",
+            "kind": "method",
+            "name": "on",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "method",
+                "optional": false,
+                "rest": false,
+                "type": "string"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "handler",
+                "optional": false,
+                "rest": false,
+                "type": "EventHandler"
+              }
+            ],
+            "returnType": "() => void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "removeHandlers(method?: string): void;",
+            "kind": "method",
+            "name": "removeHandlers",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "method",
+                "optional": true,
+                "rest": false,
+                "type": "string"
+              }
+            ],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "wait(milliseconds: number, signal?: AbortSignal): Promise<void>;",
+            "kind": "method",
+            "name": "wait",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "milliseconds",
+                "optional": false,
+                "rest": false,
+                "type": "number"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "signal",
+                "optional": true,
+                "rest": false,
+                "type": "AbortSignal"
+              }
+            ],
+            "returnType": "Promise<void>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "sleep(milliseconds: number, signal?: AbortSignal): Promise<void>;",
+            "kind": "method",
+            "name": "sleep",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "milliseconds",
+                "optional": false,
+                "rest": false,
+                "type": "number"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "signal",
+                "optional": true,
+                "rest": false,
+                "type": "AbortSignal"
+              }
+            ],
+            "returnType": "Promise<void>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "onHandlerError(handler: ErrorHandler): () => void;",
+            "kind": "method",
+            "name": "onHandlerError",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "handler",
+                "optional": false,
+                "rest": false,
+                "type": "ErrorHandler"
+              }
+            ],
+            "returnType": "() => void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "close(): void;",
+            "kind": "method",
+            "name": "close",
+            "parameters": [],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          }
+        ],
+        "nonPublicMembers": [
+          {
+            "declaration": "#private;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "#private",
+            "optional": false,
+            "readonly": false,
+            "type": null
+          },
+          {
+            "declaration": "private constructor();",
+            "kind": "constructor",
+            "name": "constructor",
+            "parameters": [],
+            "returnType": null,
+            "typeParameters": []
+          }
+        ]
+      },
+      "CdpConnectionClosedError": {
+        "file": "packages/runtime-js/dist/connection.d.ts",
+        "members": [
+          {
+            "declaration": "constructor(message?: string);",
+            "kind": "constructor",
+            "name": "constructor",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "message",
+                "optional": true,
+                "rest": false,
+                "type": "string"
+              }
+            ],
+            "returnType": null,
+            "typeParameters": []
+          }
+        ],
+        "nonPublicMembers": []
+      },
+      "CdpConnectionLostError": {
+        "file": "packages/runtime-js/dist/connection.d.ts",
+        "members": [
+          {
+            "declaration": "constructor(message?: string);",
+            "kind": "constructor",
+            "name": "constructor",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "message",
+                "optional": true,
+                "rest": false,
+                "type": "string"
+              }
+            ],
+            "returnType": null,
+            "typeParameters": []
+          }
+        ],
+        "nonPublicMembers": []
+      },
+      "CdpProtocolError": {
+        "file": "packages/runtime-js/dist/connection.d.ts",
+        "members": [
+          {
+            "declaration": "readonly code: number;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "code",
+            "optional": false,
+            "readonly": true,
+            "type": "number"
+          },
+          {
+            "declaration": "readonly data?: unknown | undefined;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "data",
+            "optional": true,
+            "readonly": true,
+            "type": "unknown | undefined"
+          },
+          {
+            "declaration": "constructor(code: number, message: string, data?: unknown | undefined);",
+            "kind": "constructor",
+            "name": "constructor",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "code",
+                "optional": false,
+                "rest": false,
+                "type": "number"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "message",
+                "optional": false,
+                "rest": false,
+                "type": "string"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "data",
+                "optional": true,
+                "rest": false,
+                "type": "unknown | undefined"
+              }
+            ],
+            "returnType": null,
+            "typeParameters": []
+          }
+        ],
+        "nonPublicMembers": []
+      },
+      "CdpTimeoutError": {
+        "file": "packages/runtime-js/dist/connection.d.ts",
+        "members": [
+          {
+            "declaration": "readonly operation: string;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "operation",
+            "optional": false,
+            "readonly": true,
+            "type": "string"
+          },
+          {
+            "declaration": "readonly timeoutMs: number;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "timeoutMs",
+            "optional": false,
+            "readonly": true,
+            "type": "number"
+          },
+          {
+            "declaration": "constructor(operation: string, timeoutMs: number);",
+            "kind": "constructor",
+            "name": "constructor",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "operation",
+                "optional": false,
+                "rest": false,
+                "type": "string"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "timeoutMs",
+                "optional": false,
+                "rest": false,
+                "type": "number"
+              }
+            ],
+            "returnType": null,
+            "typeParameters": []
+          }
+        ],
+        "nonPublicMembers": []
       },
       "CdpTraceRecorder": {
         "file": "packages/api/dist/trace.d.ts",
@@ -2974,6 +3737,58 @@
           }
         ]
       },
+      "EventTransaction": {
+        "file": "packages/runtime-js/dist/connection-compat.d.ts",
+        "members": [
+          {
+            "declaration": "readonly event: T;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "event",
+            "optional": false,
+            "readonly": true,
+            "type": "T"
+          },
+          {
+            "declaration": "readonly value: T;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "value",
+            "optional": false,
+            "readonly": true,
+            "type": "T"
+          },
+          {
+            "declaration": "constructor(eventObject: T);",
+            "kind": "constructor",
+            "name": "constructor",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "eventObject",
+                "optional": false,
+                "rest": false,
+                "type": "T"
+              }
+            ],
+            "returnType": null,
+            "typeParameters": []
+          },
+          {
+            "declaration": "toString(): string;",
+            "kind": "method",
+            "name": "toString",
+            "parameters": [],
+            "returnType": "string",
+            "static": false,
+            "typeParameters": []
+          }
+        ],
+        "nonPublicMembers": []
+      },
       "FetchInterception": {
         "file": "packages/api/dist/network.d.ts",
         "members": [],
@@ -4034,6 +4849,168 @@
           }
         ]
       },
+      "Listener": {
+        "file": "packages/runtime-js/dist/connection-compat.d.ts",
+        "members": [
+          {
+            "declaration": "readonly max_history = 1000;",
+            "declaredDefault": "1000",
+            "hasDeclaredDefault": true,
+            "kind": "property",
+            "name": "max_history",
+            "optional": false,
+            "readonly": true,
+            "type": null
+          },
+          {
+            "declaration": "readonly maxHistory = 1000;",
+            "declaredDefault": "1000",
+            "hasDeclaredDefault": true,
+            "kind": "property",
+            "name": "maxHistory",
+            "optional": false,
+            "readonly": true,
+            "type": null
+          },
+          {
+            "declaration": "constructor(connection: ConnectionImpl);",
+            "kind": "constructor",
+            "name": "constructor",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "connection",
+                "optional": false,
+                "rest": false,
+                "type": "ConnectionImpl"
+              }
+            ],
+            "returnType": null,
+            "typeParameters": []
+          },
+          {
+            "declaration": "run(): void;",
+            "kind": "method",
+            "name": "run",
+            "parameters": [],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "cancel(): void;",
+            "kind": "method",
+            "name": "cancel",
+            "parameters": [],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "access": "get",
+            "declaration": "get running(): boolean;",
+            "kind": "property",
+            "name": "running",
+            "parameters": [],
+            "returnType": "boolean",
+            "typeParameters": []
+          },
+          {
+            "access": "get",
+            "declaration": "get time_before_considered_idle(): number;",
+            "kind": "property",
+            "name": "time_before_considered_idle",
+            "parameters": [],
+            "returnType": "number",
+            "typeParameters": []
+          },
+          {
+            "access": "get",
+            "declaration": "get timeBeforeConsideredIdle(): number;",
+            "kind": "property",
+            "name": "timeBeforeConsideredIdle",
+            "parameters": [],
+            "returnType": "number",
+            "typeParameters": []
+          },
+          {
+            "declaration": "observe(event: unknown): void;",
+            "kind": "method",
+            "name": "observe",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "event",
+                "optional": false,
+                "rest": false,
+                "type": "unknown"
+              }
+            ],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "listener_loop(): Promise<void>;",
+            "kind": "method",
+            "name": "listener_loop",
+            "parameters": [],
+            "returnType": "Promise<void>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "listenerLoop(): Promise<void>;",
+            "kind": "method",
+            "name": "listenerLoop",
+            "parameters": [],
+            "returnType": "Promise<void>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "waitIdle(): Promise<void>;",
+            "kind": "method",
+            "name": "waitIdle",
+            "parameters": [],
+            "returnType": "Promise<void>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "toString(): string;",
+            "kind": "method",
+            "name": "toString",
+            "parameters": [],
+            "returnType": "string",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "access": "get",
+            "declaration": "get connection(): ConnectionImpl;",
+            "kind": "property",
+            "name": "connection",
+            "parameters": [],
+            "returnType": "ConnectionImpl",
+            "typeParameters": []
+          }
+        ],
+        "nonPublicMembers": [
+          {
+            "declaration": "#private;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "#private",
+            "optional": false,
+            "readonly": false,
+            "type": null
+          }
+        ]
+      },
       "Position": {
         "file": "packages/api/dist/element.d.ts",
         "members": [
@@ -4165,6 +5142,58 @@
         ],
         "nonPublicMembers": []
       },
+      "ProtocolException": {
+        "file": "packages/runtime-js/dist/connection-compat.d.ts",
+        "members": [
+          {
+            "declaration": "readonly code: number | null;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "code",
+            "optional": false,
+            "readonly": true,
+            "type": "number | null"
+          },
+          {
+            "declaration": "readonly data: unknown;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "data",
+            "optional": false,
+            "readonly": true,
+            "type": "unknown"
+          },
+          {
+            "declaration": "constructor(...args: readonly unknown[]);",
+            "kind": "constructor",
+            "name": "constructor",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "args",
+                "optional": false,
+                "rest": true,
+                "type": "readonly unknown[]"
+              }
+            ],
+            "returnType": null,
+            "typeParameters": []
+          },
+          {
+            "declaration": "toString(): string;",
+            "kind": "method",
+            "name": "toString",
+            "parameters": [],
+            "returnType": "string",
+            "static": false,
+            "typeParameters": []
+          }
+        ],
+        "nonPublicMembers": []
+      },
       "RequestExpectation": {
         "file": "packages/api/dist/network.d.ts",
         "members": [
@@ -4190,6 +5219,29 @@
             "name": "value",
             "parameters": [],
             "returnType": "Promise<ExpectedResponse>",
+            "typeParameters": []
+          }
+        ],
+        "nonPublicMembers": []
+      },
+      "SettingClassVarNotAllowedException": {
+        "file": "packages/runtime-js/dist/connection-compat.d.ts",
+        "members": [
+          {
+            "declaration": "constructor(message?: string);",
+            "kind": "constructor",
+            "name": "constructor",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "message",
+                "optional": true,
+                "rest": false,
+                "type": "string"
+              }
+            ],
+            "returnType": null,
             "typeParameters": []
           }
         ],
@@ -6186,6 +7238,413 @@
           }
         ],
         "nonPublicMembers": []
+      },
+      "Transaction": {
+        "file": "packages/runtime-js/dist/connection-compat.d.ts",
+        "members": [
+          {
+            "declaration": "readonly [Symbol.toStringTag] = \"Promise\";",
+            "declaredDefault": "\"Promise\"",
+            "hasDeclaredDefault": true,
+            "kind": "property",
+            "name": "[Symbol.toStringTag]",
+            "optional": false,
+            "readonly": true,
+            "type": null
+          },
+          {
+            "declaration": "constructor(command: CommandDescriptor<T> | string, params?: unknown);",
+            "kind": "constructor",
+            "name": "constructor",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "command",
+                "optional": false,
+                "rest": false,
+                "type": "CommandDescriptor<T> | string"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "params",
+                "optional": true,
+                "rest": false,
+                "type": "unknown"
+              }
+            ],
+            "returnType": null,
+            "typeParameters": []
+          },
+          {
+            "access": "get",
+            "declaration": "get message(): string;",
+            "kind": "property",
+            "name": "message",
+            "parameters": [],
+            "returnType": "string",
+            "typeParameters": []
+          },
+          {
+            "access": "get",
+            "declaration": "get has_exception(): boolean;",
+            "kind": "property",
+            "name": "has_exception",
+            "parameters": [],
+            "returnType": "boolean",
+            "typeParameters": []
+          },
+          {
+            "access": "get",
+            "declaration": "get hasException(): boolean;",
+            "kind": "property",
+            "name": "hasException",
+            "parameters": [],
+            "returnType": "boolean",
+            "typeParameters": []
+          },
+          {
+            "declaration": "done(): boolean;",
+            "kind": "method",
+            "name": "done",
+            "parameters": [],
+            "returnType": "boolean",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "cancelled(): boolean;",
+            "kind": "method",
+            "name": "cancelled",
+            "parameters": [],
+            "returnType": "boolean",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "call(response: Readonly<Record<string, unknown>>): void;",
+            "kind": "method",
+            "name": "call",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "response",
+                "optional": false,
+                "rest": false,
+                "type": "Readonly<Record<string, unknown>>"
+              }
+            ],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "resolve(response: Readonly<Record<string, unknown>>): void;",
+            "kind": "method",
+            "name": "resolve",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "response",
+                "optional": false,
+                "rest": false,
+                "type": "Readonly<Record<string, unknown>>"
+              }
+            ],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "set_result(value: T): void;",
+            "kind": "method",
+            "name": "set_result",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "value",
+                "optional": false,
+                "rest": false,
+                "type": "T"
+              }
+            ],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "setResult(value: T): void;",
+            "kind": "method",
+            "name": "setResult",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "value",
+                "optional": false,
+                "rest": false,
+                "type": "T"
+              }
+            ],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "set_exception(error: unknown): void;",
+            "kind": "method",
+            "name": "set_exception",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "error",
+                "optional": false,
+                "rest": false,
+                "type": "unknown"
+              }
+            ],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "setException(error: unknown): void;",
+            "kind": "method",
+            "name": "setException",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "error",
+                "optional": false,
+                "rest": false,
+                "type": "unknown"
+              }
+            ],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "cancel(reason?: unknown): boolean;",
+            "kind": "method",
+            "name": "cancel",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "reason",
+                "optional": true,
+                "rest": false,
+                "type": "unknown"
+              }
+            ],
+            "returnType": "boolean",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "result(): T;",
+            "kind": "method",
+            "name": "result",
+            "parameters": [],
+            "returnType": "T",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "exception(): Error | undefined;",
+            "kind": "method",
+            "name": "exception",
+            "parameters": [],
+            "returnType": "Error | undefined",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "add_done_callback(callback: (future: Transaction<T>) => void): void;",
+            "kind": "method",
+            "name": "add_done_callback",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "callback",
+                "optional": false,
+                "rest": false,
+                "type": "(future: Transaction<T>) => void"
+              }
+            ],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "addDoneCallback(callback: (future: Transaction<T>) => void): void;",
+            "kind": "method",
+            "name": "addDoneCallback",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "callback",
+                "optional": false,
+                "rest": false,
+                "type": "(future: Transaction<T>) => void"
+              }
+            ],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "remove_done_callback(callback: (future: Transaction<T>) => void): number;",
+            "kind": "method",
+            "name": "remove_done_callback",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "callback",
+                "optional": false,
+                "rest": false,
+                "type": "(future: Transaction<T>) => void"
+              }
+            ],
+            "returnType": "number",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "removeDoneCallback(callback: (future: Transaction<T>) => void): number;",
+            "kind": "method",
+            "name": "removeDoneCallback",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "callback",
+                "optional": false,
+                "rest": false,
+                "type": "(future: Transaction<T>) => void"
+              }
+            ],
+            "returnType": "number",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "get_loop(): undefined;",
+            "kind": "method",
+            "name": "get_loop",
+            "parameters": [],
+            "returnType": "undefined",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "getLoop(): undefined;",
+            "kind": "method",
+            "name": "getLoop",
+            "parameters": [],
+            "returnType": "undefined",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | null, onrejected?: ((reason: unknown) => TResult2 | PromiseLike<TResult2>) | null): Promise<TResult1 | TResult2>;",
+            "kind": "method",
+            "name": "then",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "onfulfilled",
+                "optional": true,
+                "rest": false,
+                "type": "((value: T) => TResult1 | PromiseLike<TResult1>) | null"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "onrejected",
+                "optional": true,
+                "rest": false,
+                "type": "((reason: unknown) => TResult2 | PromiseLike<TResult2>) | null"
+              }
+            ],
+            "returnType": "Promise<TResult1 | TResult2>",
+            "static": false,
+            "typeParameters": [
+              "TResult1 = T",
+              "TResult2 = never"
+            ]
+          },
+          {
+            "declaration": "catch<TResult = never>(onrejected?: ((reason: unknown) => TResult | PromiseLike<TResult>) | null): Promise<T | TResult>;",
+            "kind": "method",
+            "name": "catch",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "onrejected",
+                "optional": true,
+                "rest": false,
+                "type": "((reason: unknown) => TResult | PromiseLike<TResult>) | null"
+              }
+            ],
+            "returnType": "Promise<T | TResult>",
+            "static": false,
+            "typeParameters": [
+              "TResult = never"
+            ]
+          },
+          {
+            "declaration": "finally(onfinally?: (() => void) | null): Promise<T>;",
+            "kind": "method",
+            "name": "finally",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "onfinally",
+                "optional": true,
+                "rest": false,
+                "type": "(() => void) | null"
+              }
+            ],
+            "returnType": "Promise<T>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "toString(): string;",
+            "kind": "method",
+            "name": "toString",
+            "parameters": [],
+            "returnType": "string",
+            "static": false,
+            "typeParameters": []
+          }
+        ],
+        "nonPublicMembers": [
+          {
+            "declaration": "#private;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "#private",
+            "optional": false,
+            "readonly": false,
+            "type": null
+          }
+        ]
       }
     },
     "declaredSupportingClasses": {
@@ -6621,12 +8080,75 @@
         "file": "packages/api/dist/browser.d.ts",
         "kind": "interface"
       },
+      "CancelledError": {
+        "declarations": [
+          "export declare class CancelledError extends Error { constructor(message?: string); }"
+        ],
+        "file": "packages/runtime-js/dist/connection-compat.d.ts",
+        "kind": "class"
+      },
+      "CantTouchThis": {
+        "declarations": [
+          "export declare class CantTouchThis { private constructor(); static rejectClassAssignment(className: string, attribute: string): never; }"
+        ],
+        "file": "packages/runtime-js/dist/connection-compat.d.ts",
+        "kind": "class"
+      },
+      "CdpAbortError": {
+        "declarations": [
+          "export declare class CdpAbortError extends Error { readonly operation: string; constructor(operation: string, options?: ErrorOptions); }"
+        ],
+        "file": "packages/runtime-js/dist/connection.d.ts",
+        "kind": "class"
+      },
+      "CdpConnection": {
+        "declarations": [
+          "export declare class CdpConnection implements RuntimeBackend { #private; readonly domainPolicy: DomainPolicy; private constructor(); static connect(url: string, options?: ConnectOptions): Promise<CdpConnection>; get trace(): readonly TraceEntry[]; get enabledDomains(): ReadonlySet<string>; get manuallyEnabledDomains(): ReadonlySet<string>; enabledDomainsFor(sessionId?: string): ReadonlySet<string>; manuallyEnabledDomainsFor(sessionId?: string): ReadonlySet<string>; get closed(): boolean; /** The underlying WebSocket used by this connection, when it is still open. */ get websocket(): WebSocket | null; send<M extends ProtocolCommand>(method: M, ...args: CommandParams<M> extends undefined ? [params?: undefined, options?: SendOptions] : [params: CommandParams<M>, options?: SendOptions]): Promise<CommandResult<M>>; sendRaw(method: string, params?: unknown, options?: SendOptions): Promise<Readonly<Record<string, unknown>>>; [RUNTIME_BACKEND_INTERNAL_SEND](method: string, params?: unknown, options?: SendOptions): Promise<Readonly<Record<string, unknown>>>; enableDomain(domain: string, options?: SendOptions, source?: DomainEnableSource): Promise<void>; disableDomain(domain: string, options?: SendOptions): Promise<void>; acquireDomain(domain: string, options?: SendOptions): Promise<() => Promise<void>>; forgetAutoDomain(domain: string, options?: SendOptions): void; on<E extends ProtocolEvent>(method: E, handler: (params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>): () => void; on(method: string, handler: EventHandler): () => void; removeHandlers(method?: string): void; wait(milliseconds: number, signal?: AbortSignal): Promise<void>; sleep(milliseconds: number, signal?: AbortSignal): Promise<void>; onHandlerError(handler: ErrorHandler): () => void; close(): void; }"
+        ],
+        "file": "packages/runtime-js/dist/connection.d.ts",
+        "kind": "class"
+      },
+      "CdpConnectionClosedError": {
+        "declarations": [
+          "export declare class CdpConnectionClosedError extends Error { constructor(message?: string); }"
+        ],
+        "file": "packages/runtime-js/dist/connection.d.ts",
+        "kind": "class"
+      },
+      "CdpConnectionLostError": {
+        "declarations": [
+          "export declare class CdpConnectionLostError extends Error { constructor(message?: string); }"
+        ],
+        "file": "packages/runtime-js/dist/connection.d.ts",
+        "kind": "class"
+      },
+      "CdpProtocolError": {
+        "declarations": [
+          "export declare class CdpProtocolError extends Error { readonly code: number; readonly data?: unknown | undefined; constructor(code: number, message: string, data?: unknown | undefined); }"
+        ],
+        "file": "packages/runtime-js/dist/connection.d.ts",
+        "kind": "class"
+      },
+      "CdpTimeoutError": {
+        "declarations": [
+          "export declare class CdpTimeoutError extends Error { readonly operation: string; readonly timeoutMs: number; constructor(operation: string, timeoutMs: number); }"
+        ],
+        "file": "packages/runtime-js/dist/connection.d.ts",
+        "kind": "class"
+      },
       "CdpTraceRecorder": {
         "declarations": [
           "export declare class CdpTraceRecorder { private readonly source; constructor(source: TraceSource); normalized(): readonly NormalizedTraceEntry[]; outbound(): readonly NormalizedTraceEntry[]; compareOutbound(other: CdpTraceRecorder, allowedMethods?: readonly string[]): readonly TraceDifference[]; }"
         ],
         "file": "packages/api/dist/trace.d.ts",
         "kind": "class"
+      },
+      "CommandDescriptor": {
+        "declarations": [
+          "export interface CommandDescriptor<T = unknown> { readonly method: string; readonly params?: unknown; readonly decode?: (result: Readonly<Record<string, unknown>>) => T; }"
+        ],
+        "file": "packages/runtime-js/dist/connection-compat.d.ts",
+        "kind": "interface"
       },
       "Config": {
         "declarations": [
@@ -6637,10 +8159,38 @@
       },
       "ConnectOptions": {
         "declarations": [
-          "export interface ConnectOptions extends BrowserEndpoint { readonly connectionMode?: ConnectionMode; readonly domainPolicy?: DomainPolicy; readonly timeoutMs?: number; readonly backend?: RuntimeBackendFactory; }"
+          "export interface ConnectOptions extends BrowserEndpoint { readonly connectionMode?: ConnectionMode; readonly domainPolicy?: DomainPolicy; readonly timeoutMs?: number; readonly backend?: RuntimeBackendFactory; }",
+          "export interface ConnectOptions extends Pick<SendOptions, \"timeoutMs\" | \"signal\"> { readonly domainPolicy?: DomainPolicy; }"
         ],
         "file": "packages/api/dist/browser.d.ts",
         "kind": "interface"
+      },
+      "Connection": {
+        "declarations": [
+          "export type Connection = ConnectionImpl;",
+          {
+            "declaration": "Connection: typeof ConnectionImpl",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "type": "typeof ConnectionImpl"
+          }
+        ],
+        "file": "packages/runtime-js/dist/connection-compat.d.ts",
+        "kind": "type"
+      },
+      "ConnectionCommand": {
+        "declarations": [
+          "export type ConnectionCommand<T = unknown> = CommandDescriptor<T> | string;"
+        ],
+        "file": "packages/runtime-js/dist/connection-compat.d.ts",
+        "kind": "type"
+      },
+      "ConnectionHandler": {
+        "declarations": [
+          "export type ConnectionHandler = (event: unknown, metadata: EventMetadata) => void | Promise<void>;"
+        ],
+        "file": "packages/runtime-js/dist/connection-compat.d.ts",
+        "kind": "type"
       },
       "ConnectionMode": {
         "declarations": [
@@ -6648,6 +8198,13 @@
         ],
         "file": "packages/api/dist/browser.d.ts",
         "kind": "type"
+      },
+      "ConnectionTarget": {
+        "declarations": [
+          "export interface ConnectionTarget { readonly targetId?: string; readonly target_id?: string; readonly type?: string; readonly type_?: string; readonly title?: string; readonly url?: string; readonly attached?: boolean; readonly canAccessOpener?: boolean; readonly can_access_opener?: boolean; readonly openerId?: string; readonly opener_id?: string; readonly openerFrameId?: string; readonly opener_frame_id?: string; readonly browserContextId?: string; readonly browser_context_id?: string; readonly subtype?: string; }"
+        ],
+        "file": "packages/runtime-js/dist/connection-compat.d.ts",
+        "kind": "interface"
       },
       "Cookie": {
         "declarations": [
@@ -6668,6 +8225,20 @@
           "export type CookieParam = Protocol.Network.CookieParam;"
         ],
         "file": "packages/api/dist/cookies.d.ts",
+        "kind": "type"
+      },
+      "DomainEnableSource": {
+        "declarations": [
+          "export type DomainEnableSource = \"manual\" | \"auto\";"
+        ],
+        "file": "packages/runtime-js/dist/connection.d.ts",
+        "kind": "type"
+      },
+      "DomainPolicy": {
+        "declarations": [
+          "export type DomainPolicy = \"manual\" | \"zendriver-compatible\" | \"reference-counted\";"
+        ],
+        "file": "packages/runtime-js/dist/connection.d.ts",
         "kind": "type"
       },
       "DownloadExpectation": {
@@ -6719,6 +8290,20 @@
         "file": "packages/api/dist/tab.d.ts",
         "kind": "interface"
       },
+      "EventMetadata": {
+        "declarations": [
+          "export interface EventMetadata { readonly sessionId?: string; }"
+        ],
+        "file": "packages/runtime-js/dist/connection.d.ts",
+        "kind": "interface"
+      },
+      "EventTransaction": {
+        "declarations": [
+          "export declare class EventTransaction<T = unknown> extends Transaction<T> { readonly event: T; readonly value: T; constructor(eventObject: T); toString(): string; }"
+        ],
+        "file": "packages/runtime-js/dist/connection-compat.d.ts",
+        "kind": "class"
+      },
       "Expectation": {
         "declarations": [
           "export interface Expectation<T> { readonly ready: Promise<void>; readonly value: Promise<T>; cancel(reason?: unknown): Promise<void>; reset(): Promise<void>; [Symbol.asyncDispose](): Promise<void>; }"
@@ -6753,6 +8338,13 @@
         ],
         "file": "packages/api/dist/http-api.d.ts",
         "kind": "class"
+      },
+      "HandlerError": {
+        "declarations": [
+          "export interface HandlerError { readonly error: unknown; readonly method: string; readonly params: unknown; readonly sessionId?: string; }"
+        ],
+        "file": "packages/runtime-js/dist/connection.d.ts",
+        "kind": "interface"
       },
       "InterceptedRequest": {
         "declarations": [
@@ -6831,6 +8423,13 @@
         "file": "packages/api/dist/browser.d.ts",
         "kind": "interface"
       },
+      "Listener": {
+        "declarations": [
+          "export declare class Listener { #private; readonly max_history = 1000; readonly maxHistory = 1000; constructor(connection: ConnectionImpl); run(): void; cancel(): void; get running(): boolean; get time_before_considered_idle(): number; get timeBeforeConsideredIdle(): number; observe(event: unknown): void; listener_loop(): Promise<void>; listenerLoop(): Promise<void>; waitIdle(): Promise<void>; toString(): string; get connection(): ConnectionImpl; }"
+        ],
+        "file": "packages/runtime-js/dist/connection-compat.d.ts",
+        "kind": "class"
+      },
       "NetworkBootstrap": {
         "declarations": [
           "export interface NetworkBootstrap { readonly request: Protocol.Network.Request; readonly response: Protocol.Network.Response; readonly body: string; readonly bodyBase64Encoded: boolean; readonly session: SessionMaterial; json<T = unknown>(): T; bytes(): Buffer; }"
@@ -6866,6 +8465,20 @@
         "file": "packages/api/dist/element.d.ts",
         "kind": "class"
       },
+      "ProtocolErrorPayload": {
+        "declarations": [
+          "export interface ProtocolErrorPayload { readonly code?: number; readonly message?: string; readonly data?: unknown; }"
+        ],
+        "file": "packages/runtime-js/dist/connection-compat.d.ts",
+        "kind": "interface"
+      },
+      "ProtocolException": {
+        "declarations": [
+          "export declare class ProtocolException extends Error { readonly code: number | null; readonly data: unknown; constructor(...args: readonly unknown[]); toString(): string; }"
+        ],
+        "file": "packages/runtime-js/dist/connection-compat.d.ts",
+        "kind": "class"
+      },
       "ProviderPageOptions": {
         "declarations": [
           "export interface ProviderPageOptions<T> { readonly url: string; readonly bootstrap?: (tab: Tab) => void | Promise<void>; readonly action: (tab: Tab) => T | Promise<T>; }"
@@ -6879,6 +8492,18 @@
         ],
         "file": "packages/api/dist/tab.d.ts",
         "kind": "interface"
+      },
+      "RUNTIME_BACKEND_INTERNAL_SEND": {
+        "declarations": [
+          {
+            "declaration": "RUNTIME_BACKEND_INTERNAL_SEND: unique symbol",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "type": "unique symbol"
+          }
+        ],
+        "file": "packages/runtime-js/dist/connection.d.ts",
+        "kind": "const"
       },
       "ReadyState": {
         "declarations": [
@@ -6901,6 +8526,20 @@
         "file": "packages/api/dist/network.d.ts",
         "kind": "class"
       },
+      "RuntimeBackend": {
+        "declarations": [
+          "export interface RuntimeBackend { readonly domainPolicy: DomainPolicy; readonly enabledDomains: ReadonlySet<string>; readonly manuallyEnabledDomains: ReadonlySet<string>; readonly enabledDomainsFor?: (sessionId?: string) => ReadonlySet<string>; readonly manuallyEnabledDomainsFor?: (sessionId?: string) => ReadonlySet<string>; readonly forgetAutoDomain?: (domain: string, options?: SendOptions) => void; readonly closed: boolean; readonly [RUNTIME_BACKEND_INTERNAL_SEND]?: (method: string, params?: unknown, options?: SendOptions) => Promise<Readonly<Record<string, unknown>>>; send<M extends ProtocolCommand>(method: M, ...args: CommandParams<M> extends undefined ? [params?: undefined, options?: SendOptions] : [params: CommandParams<M>, options?: SendOptions]): Promise<CommandResult<M>>; sendRaw(method: string, params?: unknown, options?: SendOptions): Promise<Readonly<Record<string, unknown>>>; on<E extends ProtocolEvent>(method: E, handler: (params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>): () => void; on(method: string, handler: (params: unknown, metadata: EventMetadata) => void | Promise<void>): () => void; removeHandlers(method?: string): void; wait(milliseconds: number, signal?: AbortSignal): Promise<void>; sleep(milliseconds: number, signal?: AbortSignal): Promise<void>; enableDomain(domain: string, options?: SendOptions, source?: DomainEnableSource): Promise<void>; disableDomain(domain: string, options?: SendOptions): Promise<void>; acquireDomain(domain: string, options?: SendOptions): Promise<() => Promise<void>>; close(): void; }"
+        ],
+        "file": "packages/runtime-js/dist/connection.d.ts",
+        "kind": "interface"
+      },
+      "RuntimeBackendFactory": {
+        "declarations": [
+          "export interface RuntimeBackendFactory { connect(url: string, options?: ConnectOptions): Promise<RuntimeBackend>; }"
+        ],
+        "file": "packages/runtime-js/dist/connection.d.ts",
+        "kind": "interface"
+      },
       "ScreencastSession": {
         "declarations": [
           "export interface ScreencastSession { readonly directory: string; readonly frames: readonly string[]; stop(): Promise<readonly string[]>; }"
@@ -6915,12 +8554,26 @@
         "file": "packages/api/dist/tab.d.ts",
         "kind": "interface"
       },
+      "SendOptions": {
+        "declarations": [
+          "export interface SendOptions { readonly sessionId?: string; readonly timeoutMs?: number; readonly signal?: AbortSignal; }"
+        ],
+        "file": "packages/runtime-js/dist/connection.d.ts",
+        "kind": "interface"
+      },
       "SessionMaterial": {
         "declarations": [
           "export interface SessionMaterial { readonly cookies: Readonly<Record<string, string>>; readonly localStorage: Readonly<Record<string, string>>; }"
         ],
         "file": "packages/api/dist/provider.d.ts",
         "kind": "interface"
+      },
+      "SettingClassVarNotAllowedException": {
+        "declarations": [
+          "export declare class SettingClassVarNotAllowedException extends Error { constructor(message?: string); }"
+        ],
+        "file": "packages/runtime-js/dist/connection-compat.d.ts",
+        "kind": "class"
       },
       "SpecialKeyDescriptor": {
         "declarations": [
@@ -6976,12 +8629,26 @@
         "file": "packages/api/dist/trace.d.ts",
         "kind": "interface"
       },
+      "TraceEntry": {
+        "declarations": [
+          "export interface TraceEntry { readonly direction: \"send\" | \"receive\"; readonly timestamp: number; readonly message: Readonly<Record<string, unknown>>; }"
+        ],
+        "file": "packages/runtime-js/dist/connection.d.ts",
+        "kind": "interface"
+      },
       "TraceSource": {
         "declarations": [
           "export interface TraceSource { readonly trace: readonly TraceEntry[]; }"
         ],
         "file": "packages/api/dist/trace.d.ts",
         "kind": "interface"
+      },
+      "Transaction": {
+        "declarations": [
+          "export declare class Transaction<T = unknown> implements PromiseLike<T> { #private; readonly [Symbol.toStringTag] = \"Promise\"; constructor(command: CommandDescriptor<T> | string, params?: unknown); /** Command envelope, with the same null id placeholder used by Zendriver. */ get message(): string; get has_exception(): boolean; get hasException(): boolean; done(): boolean; cancelled(): boolean; call(response: Readonly<Record<string, unknown>>): void; resolve(response: Readonly<Record<string, unknown>>): void; set_result(value: T): void; setResult(value: T): void; set_exception(error: unknown): void; setException(error: unknown): void; cancel(reason?: unknown): boolean; result(): T; exception(): Error | undefined; add_done_callback(callback: (future: Transaction<T>) => void): void; addDoneCallback(callback: (future: Transaction<T>) => void): void; remove_done_callback(callback: (future: Transaction<T>) => void): number; removeDoneCallback(callback: (future: Transaction<T>) => void): number; /** Node has no user-visible asyncio loop; the transaction is loop-independent. */ get_loop(): undefined; getLoop(): undefined; then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | null, onrejected?: ((reason: unknown) => TResult2 | PromiseLike<TResult2>) | null): Promise<TResult1 | TResult2>; catch<TResult = never>(onrejected?: ((reason: unknown) => TResult | PromiseLike<TResult>) | null): Promise<T | TResult>; finally(onfinally?: (() => void) | null): Promise<T>; toString(): string; }"
+        ],
+        "file": "packages/runtime-js/dist/connection-compat.d.ts",
+        "kind": "class"
       },
       "UrlMatcher": {
         "declarations": [
@@ -8020,6 +9687,173 @@
           {
             "kind": "property",
             "name": "usesCustomDataDir"
+          }
+        ]
+      },
+      {
+        "functionLength": 3,
+        "kind": "function-or-class",
+        "name": "Connection",
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "aClose"
+          },
+          {
+            "kind": "method",
+            "name": "aOpen"
+          },
+          {
+            "kind": "method",
+            "name": "aclose"
+          },
+          {
+            "kind": "method",
+            "name": "addHandler"
+          },
+          {
+            "kind": "method",
+            "name": "add_handler"
+          },
+          {
+            "kind": "method",
+            "name": "aenter"
+          },
+          {
+            "kind": "method",
+            "name": "aexit"
+          },
+          {
+            "kind": "method",
+            "name": "aopen"
+          },
+          {
+            "kind": "property",
+            "name": "attached"
+          },
+          {
+            "kind": "property",
+            "name": "browserContextId"
+          },
+          {
+            "kind": "property",
+            "name": "browser_context_id"
+          },
+          {
+            "kind": "property",
+            "name": "canAccessOpener"
+          },
+          {
+            "kind": "property",
+            "name": "can_access_opener"
+          },
+          {
+            "kind": "property",
+            "name": "closed"
+          },
+          {
+            "kind": "method",
+            "name": "feedCdp"
+          },
+          {
+            "kind": "method",
+            "name": "feed_cdp"
+          },
+          {
+            "kind": "property",
+            "name": "listener"
+          },
+          {
+            "kind": "property",
+            "name": "openerFrameId"
+          },
+          {
+            "kind": "property",
+            "name": "openerId"
+          },
+          {
+            "kind": "property",
+            "name": "opener_frame_id"
+          },
+          {
+            "kind": "property",
+            "name": "opener_id"
+          },
+          {
+            "kind": "property",
+            "name": "owner"
+          },
+          {
+            "kind": "method",
+            "name": "removeHandlers"
+          },
+          {
+            "kind": "method",
+            "name": "remove_handlers"
+          },
+          {
+            "kind": "method",
+            "name": "send"
+          },
+          {
+            "kind": "method",
+            "name": "sleep"
+          },
+          {
+            "kind": "property",
+            "name": "subtype"
+          },
+          {
+            "kind": "property",
+            "name": "target"
+          },
+          {
+            "kind": "property",
+            "name": "targetId"
+          },
+          {
+            "kind": "property",
+            "name": "target_id"
+          },
+          {
+            "kind": "method",
+            "name": "then"
+          },
+          {
+            "kind": "property",
+            "name": "title"
+          },
+          {
+            "kind": "property",
+            "name": "type"
+          },
+          {
+            "kind": "property",
+            "name": "type_"
+          },
+          {
+            "kind": "method",
+            "name": "updateTarget"
+          },
+          {
+            "kind": "method",
+            "name": "update_target"
+          },
+          {
+            "kind": "property",
+            "name": "url"
+          },
+          {
+            "kind": "method",
+            "name": "wait"
+          },
+          {
+            "kind": "property",
+            "name": "websocket"
+          },
+          {
+            "kind": "property",
+            "name": "websocket_url"
           }
         ]
       },
@@ -11663,11 +13497,11 @@
                 "kind": "method",
                 "name": "__call__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on CantTouchThis",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -11704,11 +13538,11 @@
                 "kind": "method",
                 "name": "__repr__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on CantTouchThis",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -11731,11 +13565,11 @@
                 "kind": "method",
                 "name": "__setattr__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on CantTouchThis",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -11772,11 +13606,11 @@
                 "kind": "method",
                 "name": "mro",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on CantTouchThis",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -11801,11 +13635,25 @@
             ],
             "name": "CantTouchThis",
             "nodeMapping": {
-              "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-              "nodeSymbol": null,
-              "semanticsVerified": false,
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-CONNECTION-ERRORS-001",
+                  "file": "packages/runtime-js/test/connection-compat.test.ts"
+                }
+              ],
+              "nodeKind": "class",
+              "nodeMember": "CantTouchThis",
+              "nodeSymbol": "CantTouchThis",
+              "runtimeExport": false,
+              "semanticsCoverage": [
+                "errors",
+                "return",
+                "signature"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "MISSING"
+              "status": "VERIFIED"
             },
             "signature": null
           },
@@ -12433,11 +14281,35 @@
             ],
             "name": "Connection",
             "nodeMapping": {
-              "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-              "nodeSymbol": null,
-              "semanticsVerified": false,
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-CONNECTION-001",
+                  "file": "packages/runtime-js/test/connection-compat.test.ts"
+                },
+                {
+                  "case": "ZDAPI-CONNECTION-HANDLERS-001",
+                  "file": "packages/runtime-js/test/connection-compat.test.ts"
+                },
+                {
+                  "case": "ZDAPI-CONNECTION-LIFECYCLE-001",
+                  "file": "packages/runtime-js/test/connection-compat.test.ts"
+                }
+              ],
+              "nodeKind": "type",
+              "nodeMember": "Connection",
+              "nodeSymbol": "Connection",
+              "runtimeExport": true,
+              "semanticsCoverage": [
+                "defaults",
+                "errors",
+                "return",
+                "signature",
+                "state"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "MISSING"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -12489,11 +14361,11 @@
                 "kind": "method",
                 "name": "__await__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on EventTransaction",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -12516,11 +14388,11 @@
                 "kind": "method",
                 "name": "__call__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on EventTransaction",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -12550,11 +14422,11 @@
                 "kind": "method",
                 "name": "__del__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on EventTransaction",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -12577,11 +14449,11 @@
                 "kind": "method",
                 "name": "__iter__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on EventTransaction",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -12604,11 +14476,11 @@
                 "kind": "method",
                 "name": "__repr__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on EventTransaction",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -12631,11 +14503,11 @@
                 "kind": "method",
                 "name": "add_done_callback",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on EventTransaction",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": null
               },
@@ -12646,11 +14518,11 @@
                 "kind": "method",
                 "name": "cancel",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on EventTransaction",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -12680,11 +14552,11 @@
                 "kind": "method",
                 "name": "cancelled",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on EventTransaction",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -12707,11 +14579,11 @@
                 "kind": "method",
                 "name": "done",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on EventTransaction",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -12735,11 +14607,23 @@
                 "kind": "attribute",
                 "name": "event",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "readonly event: T;",
+                      "declaredDefault": null,
+                      "hasDeclaredDefault": false,
+                      "kind": "property",
+                      "name": "event",
+                      "optional": false,
+                      "readonly": true,
+                      "type": "T"
+                    }
+                  ],
+                  "nodeMember": "EventTransaction.event",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "signatureComparison": "PROPERTY_KIND_ONLY",
+                  "status": "CANDIDATE"
                 },
                 "valueType": "NoneType"
               },
@@ -12750,11 +14634,11 @@
                 "kind": "method",
                 "name": "exception",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on EventTransaction",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -12777,11 +14661,11 @@
                 "kind": "method",
                 "name": "get_loop",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on EventTransaction",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -12805,11 +14689,11 @@
                 "kind": "property",
                 "name": "has_exception",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on EventTransaction",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 }
               },
               {
@@ -12820,11 +14704,11 @@
                 "kind": "property",
                 "name": "message",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on EventTransaction",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 }
               },
               {
@@ -12834,11 +14718,11 @@
                 "kind": "method",
                 "name": "remove_done_callback",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on EventTransaction",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -12868,11 +14752,11 @@
                 "kind": "method",
                 "name": "result",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on EventTransaction",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -12895,11 +14779,11 @@
                 "kind": "method",
                 "name": "set_exception",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on EventTransaction",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -12929,11 +14813,11 @@
                 "kind": "method",
                 "name": "set_result",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on EventTransaction",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -12964,11 +14848,23 @@
                 "kind": "attribute",
                 "name": "value",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "readonly value: T;",
+                      "declaredDefault": null,
+                      "hasDeclaredDefault": false,
+                      "kind": "property",
+                      "name": "value",
+                      "optional": false,
+                      "readonly": true,
+                      "type": "T"
+                    }
+                  ],
+                  "nodeMember": "EventTransaction.value",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "signatureComparison": "PROPERTY_KIND_ONLY",
+                  "status": "CANDIDATE"
                 },
                 "valueType": "NoneType"
               }
@@ -12982,11 +14878,25 @@
             ],
             "name": "EventTransaction",
             "nodeMapping": {
-              "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-              "nodeSymbol": null,
-              "semanticsVerified": false,
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-TRANSACTION-001",
+                  "file": "packages/runtime-js/test/connection-compat.test.ts"
+                }
+              ],
+              "nodeKind": "class",
+              "nodeMember": "EventTransaction",
+              "nodeSymbol": "EventTransaction",
+              "runtimeExport": false,
+              "semanticsCoverage": [
+                "return",
+                "signature",
+                "state"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "MISSING"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -13015,11 +14925,11 @@
                 "kind": "method",
                 "name": "__repr__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on Listener",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -13042,11 +14952,22 @@
                 "kind": "method",
                 "name": "cancel",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "cancel(): void;",
+                      "kind": "method",
+                      "name": "cancel",
+                      "parameters": [],
+                      "returnType": "void",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Listener.cancel",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "CANDIDATE"
                 },
                 "signature": {
                   "parameters": [
@@ -13069,11 +14990,22 @@
                 "kind": "method",
                 "name": "listener_loop",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "listener_loop(): Promise<void>;",
+                      "kind": "method",
+                      "name": "listener_loop",
+                      "parameters": [],
+                      "returnType": "Promise<void>",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Listener.listener_loop",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "CANDIDATE"
                 },
                 "signature": {
                   "parameters": [
@@ -13096,11 +15028,22 @@
                 "kind": "method",
                 "name": "run",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "run(): void;",
+                      "kind": "method",
+                      "name": "run",
+                      "parameters": [],
+                      "returnType": "void",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Listener.run",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "CANDIDATE"
                 },
                 "signature": {
                   "parameters": [
@@ -13124,11 +15067,22 @@
                 "kind": "property",
                 "name": "running",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "access": "get",
+                      "declaration": "get running(): boolean;",
+                      "kind": "property",
+                      "name": "running",
+                      "parameters": [],
+                      "returnType": "boolean",
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Listener.running",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "signatureComparison": "PROPERTY_KIND_ONLY",
+                  "status": "CANDIDATE"
                 }
               },
               {
@@ -13139,11 +15093,22 @@
                 "kind": "property",
                 "name": "time_before_considered_idle",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "access": "get",
+                      "declaration": "get time_before_considered_idle(): number;",
+                      "kind": "property",
+                      "name": "time_before_considered_idle",
+                      "parameters": [],
+                      "returnType": "number",
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Listener.time_before_considered_idle",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "signatureComparison": "PROPERTY_KIND_ONLY",
+                  "status": "CANDIDATE"
                 }
               }
             ],
@@ -13154,11 +15119,26 @@
             ],
             "name": "Listener",
             "nodeMapping": {
-              "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-              "nodeSymbol": null,
-              "semanticsVerified": false,
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-LISTENER-001",
+                  "file": "packages/runtime-js/test/connection-compat.test.ts"
+                }
+              ],
+              "nodeKind": "class",
+              "nodeMember": "Listener",
+              "nodeSymbol": "Listener",
+              "runtimeExport": false,
+              "semanticsCoverage": [
+                "defaults",
+                "return",
+                "signature",
+                "state"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "MISSING"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -13189,11 +15169,11 @@
                 "kind": "method",
                 "name": "__repr__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on ProtocolException",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -13216,11 +15196,11 @@
                 "kind": "method",
                 "name": "__str__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on ProtocolException",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -13243,11 +15223,11 @@
                 "kind": "method",
                 "name": "add_note",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on ProtocolException",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -13278,11 +15258,11 @@
                 "kind": "attribute",
                 "name": "args",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on ProtocolException",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "valueType": "getset_descriptor"
               },
@@ -13293,11 +15273,11 @@
                 "kind": "method",
                 "name": "with_traceback",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on ProtocolException",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -13330,11 +15310,26 @@
             ],
             "name": "ProtocolException",
             "nodeMapping": {
-              "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-              "nodeSymbol": null,
-              "semanticsVerified": false,
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-CONNECTION-ERRORS-001",
+                  "file": "packages/runtime-js/test/connection-compat.test.ts"
+                }
+              ],
+              "nodeKind": "class",
+              "nodeMember": "ProtocolException",
+              "nodeSymbol": "ProtocolException",
+              "runtimeExport": false,
+              "semanticsCoverage": [
+                "errors",
+                "return",
+                "signature",
+                "state"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "MISSING"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -13365,11 +15360,11 @@
                 "kind": "method",
                 "name": "__repr__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on SettingClassVarNotAllowedException",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -13392,11 +15387,11 @@
                 "kind": "method",
                 "name": "__str__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on SettingClassVarNotAllowedException",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -13419,11 +15414,11 @@
                 "kind": "method",
                 "name": "add_note",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on SettingClassVarNotAllowedException",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -13454,11 +15449,11 @@
                 "kind": "attribute",
                 "name": "args",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on SettingClassVarNotAllowedException",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "valueType": "getset_descriptor"
               },
@@ -13470,11 +15465,11 @@
                 "kind": "attribute",
                 "name": "characters_written",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on SettingClassVarNotAllowedException",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "valueType": "getset_descriptor"
               },
@@ -13486,11 +15481,11 @@
                 "kind": "attribute",
                 "name": "errno",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on SettingClassVarNotAllowedException",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "valueType": "member_descriptor"
               },
@@ -13502,11 +15497,11 @@
                 "kind": "attribute",
                 "name": "filename",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on SettingClassVarNotAllowedException",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "valueType": "member_descriptor"
               },
@@ -13518,11 +15513,11 @@
                 "kind": "attribute",
                 "name": "filename2",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on SettingClassVarNotAllowedException",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "valueType": "member_descriptor"
               },
@@ -13534,11 +15529,11 @@
                 "kind": "attribute",
                 "name": "strerror",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on SettingClassVarNotAllowedException",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "valueType": "member_descriptor"
               },
@@ -13549,11 +15544,11 @@
                 "kind": "method",
                 "name": "with_traceback",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on SettingClassVarNotAllowedException",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -13588,11 +15583,25 @@
             ],
             "name": "SettingClassVarNotAllowedException",
             "nodeMapping": {
-              "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-              "nodeSymbol": null,
-              "semanticsVerified": false,
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-CONNECTION-ERRORS-001",
+                  "file": "packages/runtime-js/test/connection-compat.test.ts"
+                }
+              ],
+              "nodeKind": "class",
+              "nodeMember": "SettingClassVarNotAllowedException",
+              "nodeSymbol": "SettingClassVarNotAllowedException",
+              "runtimeExport": false,
+              "semanticsCoverage": [
+                "errors",
+                "return",
+                "signature"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "MISSING"
+              "status": "VERIFIED"
             },
             "signature": null
           },
@@ -13611,11 +15620,11 @@
                 "kind": "method",
                 "name": "__await__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on Transaction",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -13638,11 +15647,11 @@
                 "kind": "method",
                 "name": "__call__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on Transaction",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -13672,11 +15681,11 @@
                 "kind": "method",
                 "name": "__del__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on Transaction",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -13699,11 +15708,11 @@
                 "kind": "method",
                 "name": "__iter__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on Transaction",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -13726,11 +15735,11 @@
                 "kind": "method",
                 "name": "__repr__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on Transaction",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -13753,10 +15762,30 @@
                 "kind": "method",
                 "name": "add_done_callback",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
+                  "evidence": "name and member kind match, but required arity differs",
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "add_done_callback(callback: (future: Transaction<T>) => void): void;",
+                      "kind": "method",
+                      "name": "add_done_callback",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "callback",
+                          "optional": false,
+                          "rest": false,
+                          "type": "(future: Transaction<T>) => void"
+                        }
+                      ],
+                      "returnType": "void",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Transaction.add_done_callback",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
+                  "signatureComparison": "INCOMPATIBLE_REQUIRED_ARITY",
                   "status": "UNKNOWN"
                 },
                 "signature": null
@@ -13768,11 +15797,31 @@
                 "kind": "method",
                 "name": "cancel",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "cancel(reason?: unknown): boolean;",
+                      "kind": "method",
+                      "name": "cancel",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "reason",
+                          "optional": true,
+                          "rest": false,
+                          "type": "unknown"
+                        }
+                      ],
+                      "returnType": "boolean",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Transaction.cancel",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "CANDIDATE"
                 },
                 "signature": {
                   "parameters": [
@@ -13802,11 +15851,22 @@
                 "kind": "method",
                 "name": "cancelled",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "cancelled(): boolean;",
+                      "kind": "method",
+                      "name": "cancelled",
+                      "parameters": [],
+                      "returnType": "boolean",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Transaction.cancelled",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "CANDIDATE"
                 },
                 "signature": {
                   "parameters": [
@@ -13829,11 +15889,22 @@
                 "kind": "method",
                 "name": "done",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "done(): boolean;",
+                      "kind": "method",
+                      "name": "done",
+                      "parameters": [],
+                      "returnType": "boolean",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Transaction.done",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "CANDIDATE"
                 },
                 "signature": {
                   "parameters": [
@@ -13856,11 +15927,22 @@
                 "kind": "method",
                 "name": "exception",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "exception(): Error | undefined;",
+                      "kind": "method",
+                      "name": "exception",
+                      "parameters": [],
+                      "returnType": "Error | undefined",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Transaction.exception",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "CANDIDATE"
                 },
                 "signature": {
                   "parameters": [
@@ -13883,11 +15965,22 @@
                 "kind": "method",
                 "name": "get_loop",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "get_loop(): undefined;",
+                      "kind": "method",
+                      "name": "get_loop",
+                      "parameters": [],
+                      "returnType": "undefined",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Transaction.get_loop",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "CANDIDATE"
                 },
                 "signature": {
                   "parameters": [
@@ -13911,11 +16004,22 @@
                 "kind": "property",
                 "name": "has_exception",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "access": "get",
+                      "declaration": "get has_exception(): boolean;",
+                      "kind": "property",
+                      "name": "has_exception",
+                      "parameters": [],
+                      "returnType": "boolean",
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Transaction.has_exception",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "signatureComparison": "PROPERTY_KIND_ONLY",
+                  "status": "CANDIDATE"
                 }
               },
               {
@@ -13926,11 +16030,22 @@
                 "kind": "property",
                 "name": "message",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "access": "get",
+                      "declaration": "get message(): string;",
+                      "kind": "property",
+                      "name": "message",
+                      "parameters": [],
+                      "returnType": "string",
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Transaction.message",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "signatureComparison": "PROPERTY_KIND_ONLY",
+                  "status": "CANDIDATE"
                 }
               },
               {
@@ -13940,11 +16055,31 @@
                 "kind": "method",
                 "name": "remove_done_callback",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "remove_done_callback(callback: (future: Transaction<T>) => void): number;",
+                      "kind": "method",
+                      "name": "remove_done_callback",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "callback",
+                          "optional": false,
+                          "rest": false,
+                          "type": "(future: Transaction<T>) => void"
+                        }
+                      ],
+                      "returnType": "number",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Transaction.remove_done_callback",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "CANDIDATE"
                 },
                 "signature": {
                   "parameters": [
@@ -13974,11 +16109,22 @@
                 "kind": "method",
                 "name": "result",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "result(): T;",
+                      "kind": "method",
+                      "name": "result",
+                      "parameters": [],
+                      "returnType": "T",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Transaction.result",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "CANDIDATE"
                 },
                 "signature": {
                   "parameters": [
@@ -14001,11 +16147,31 @@
                 "kind": "method",
                 "name": "set_exception",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "set_exception(error: unknown): void;",
+                      "kind": "method",
+                      "name": "set_exception",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "error",
+                          "optional": false,
+                          "rest": false,
+                          "type": "unknown"
+                        }
+                      ],
+                      "returnType": "void",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Transaction.set_exception",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "CANDIDATE"
                 },
                 "signature": {
                   "parameters": [
@@ -14035,11 +16201,31 @@
                 "kind": "method",
                 "name": "set_result",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "set_result(value: T): void;",
+                      "kind": "method",
+                      "name": "set_result",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "value",
+                          "optional": false,
+                          "rest": false,
+                          "type": "T"
+                        }
+                      ],
+                      "returnType": "void",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Transaction.set_result",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "CANDIDATE"
                 },
                 "signature": {
                   "parameters": [
@@ -14071,11 +16257,30 @@
             ],
             "name": "Transaction",
             "nodeMapping": {
-              "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-              "nodeSymbol": null,
-              "semanticsVerified": false,
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-TRANSACTION-001",
+                  "file": "packages/runtime-js/test/connection-compat.test.ts"
+                },
+                {
+                  "case": "ZDAPI-TRANSACTION-FUTURE-001",
+                  "file": "packages/runtime-js/test/connection-compat.test.ts"
+                }
+              ],
+              "nodeKind": "class",
+              "nodeMember": "Transaction",
+              "nodeSymbol": "Transaction",
+              "runtimeExport": false,
+              "semanticsCoverage": [
+                "errors",
+                "return",
+                "signature",
+                "state"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "MISSING"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -28032,11 +30237,25 @@
         "module": "zendriver.core.connection",
         "name": "Connection",
         "nodeMapping": {
-          "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-          "nodeSymbol": null,
-          "semanticsVerified": false,
+          "evidence": "independent passing Node parity cases",
+          "evidenceCases": [
+            {
+              "case": "ZDAPI-CONNECTION-EXPORT-001",
+              "file": "packages/api/test/connection-api-parity.test.ts"
+            }
+          ],
+          "nodeKind": "type",
+          "nodeMember": "Connection",
+          "nodeSymbol": "Connection",
+          "runtimeExport": true,
+          "semanticsCoverage": [
+            "return",
+            "signature",
+            "state"
+          ],
+          "semanticsVerified": true,
           "signatureComparison": "UNVERIFIED",
-          "status": "MISSING"
+          "status": "VERIFIED"
         },
         "signature": {
           "parameters": [

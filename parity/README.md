@@ -33,3 +33,10 @@ Mapping status definitions:
 - `UNMAPPED`: no independently expressed one-to-one Node parity test is recorded.
 
 Only executable per-item behavior checks may promote a structural candidate to verified parity.
+
+API semantic mappings may cite either an existing passing `ZDTEST-*` case or a dedicated
+`ZDAPI-*` case in a checked-in `packages/*/test/*.test.ts` file. Dedicated cases are used
+when Zendriver exposes a public API capability that its own pytest suite does not exercise;
+the validator requires the exact source file and a unique case title instead of attaching
+an unrelated upstream test ID. Root exports use `zendriver.<name>` targets; core symbols and
+members retain their fully qualified `zendriver.core.*` targets.

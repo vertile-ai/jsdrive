@@ -11,6 +11,7 @@ import re
 import subprocess
 import sys
 from collections import Counter
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
@@ -41,6 +42,7 @@ UPSTREAM = ROOT / ".tmp" / "zendriver-upstream"
 REFERENCE = ROOT / ".tmp" / "zendriver-ref"
 NODE_TEST_MAPPINGS = PARITY / "node-test-mappings.json"
 API_SEMANTIC_MAPPINGS = PARITY / "api-semantic-mappings.json"
+TEST_CASE_INSPECTOR = PARITY / "inspect_test_cases.mjs"
 
 
 def run(command: list[str], cwd: Path = ROOT) -> subprocess.CompletedProcess[str]:
@@ -64,6 +66,12 @@ def write_json(name: str, value: Any) -> None:
 def canonical_fingerprint(value: Any) -> str:
     payload = json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
     return hashlib.sha256(payload.encode("utf8")).hexdigest()
+
+
+@lru_cache(maxsize=None)
+def typescript_test_titles(source_path: Path) -> list[str]:
+    result = run(["node", str(TEST_CASE_INSPECTOR), str(source_path)])
+    return json.loads(require_success(result, f"inspect test cases in {source_path}"))
 
 
 def inventory_fingerprints(
@@ -579,7 +587,9 @@ def add_api_mappings(upstream: dict[str, Any], nodriver: dict[str, Any]) -> dict
 
 def add_api_semantic_mappings(upstream: dict[str, Any]) -> None:
     semantic_mappings = json.loads(API_SEMANTIC_MAPPINGS.read_text(encoding="utf8"))
-    targets: dict[str, dict[str, Any]] = {}
+    targets: dict[str, dict[str, Any]] = {
+        f"zendriver.{item['name']}": item for item in upstream["rootExports"]
+    }
     for module in upstream["coreModules"]:
         for symbol in module["symbols"]:
             symbol_path = f"{module['name']}.{symbol['name']}"
@@ -590,12 +600,17 @@ def add_api_semantic_mappings(upstream: dict[str, Any]) -> None:
         target = targets.get(semantic["upstream"])
         if target is None:
             raise RuntimeError(f"Unknown upstream semantic mapping: {semantic['upstream']}")
+        evidence = (
+            {"evidenceTestIds": semantic["testIds"]}
+            if "testIds" in semantic
+            else {"evidenceCases": semantic["testCases"]}
+        )
         target["nodeMapping"] = {
             **target["nodeMapping"],
             "status": "VERIFIED",
             "nodeMember": semantic["nodeMember"],
             "evidence": "independent passing Node parity cases",
-            "evidenceTestIds": semantic["testIds"],
+            **evidence,
             **(
                 {"semanticsCoverage": semantic["verifiedSemantics"]}
                 if "verifiedSemantics" in semantic
@@ -745,7 +760,10 @@ def validate(
         for class_name, declared_class in api_inventory["nodriver"].get("declaredSupportingClasses", {}).items()
         for member in declared_class["members"]
     )
-    upstream_targets: dict[str, dict[str, Any]] = {}
+    upstream_targets: dict[str, dict[str, Any]] = {
+        f"zendriver.{item['name']}": item
+        for item in api_inventory["upstream"]["rootExports"]
+    }
     for module in modules:
         for symbol in module["symbols"]:
             symbol_path = f"{module['name']}.{symbol['name']}"
@@ -755,10 +773,11 @@ def validate(
     if len({entry["upstream"] for entry in semantic_mappings}) != len(semantic_mappings):
         errors.append("API semantic mappings contain duplicate upstream targets")
     for entry in semantic_mappings:
-        if set(entry) not in (
-            {"upstream", "nodeMember", "testIds"},
-            {"upstream", "nodeMember", "testIds", "verifiedSemantics"},
-        ):
+        evidence_keys = {key for key in ("testIds", "testCases") if key in entry}
+        required_keys = {"upstream", "nodeMember"} | evidence_keys
+        if "verifiedSemantics" in entry:
+            required_keys.add("verifiedSemantics")
+        if set(entry) != required_keys or len(evidence_keys) != 1:
             errors.append(f"API semantic mapping schema is invalid: {entry}")
             continue
         verified_semantics = entry.get("verifiedSemantics")
@@ -778,16 +797,65 @@ def validate(
             continue
         if entry["nodeMember"] not in known_api_members:
             errors.append(f"API semantic mapping has unknown Node API member: {entry['nodeMember']}")
-        if not entry["testIds"]:
+        evidence_items = entry.get("testIds", entry.get("testCases", []))
+        if not evidence_items:
             errors.append(f"API semantic mapping has no evidence tests: {entry['upstream']}")
-        for test_id in entry["testIds"]:
-            parity = inventory_by_id.get(test_id)
-            if parity is None or parity["status"] != "MAPPED" or parity["result"] != "PASS":
-                errors.append(f"API semantic evidence is not a passing mapped test: {entry['upstream']} -> {test_id}")
+        if "testIds" in entry:
+            for test_id in entry["testIds"]:
+                parity = inventory_by_id.get(test_id)
+                if parity is None or parity["status"] != "MAPPED" or parity["result"] != "PASS":
+                    errors.append(f"API semantic evidence is not a passing mapped test: {entry['upstream']} -> {test_id}")
+        else:
+            for evidence_case in entry["testCases"]:
+                if not isinstance(evidence_case, dict) or set(evidence_case) != {"file", "case"}:
+                    errors.append(f"API semantic test case schema is invalid: {entry['upstream']}")
+                    continue
+                source_name = evidence_case["file"]
+                case_name = evidence_case["case"]
+                if (
+                    not isinstance(source_name, str)
+                    or not source_name.startswith("packages/")
+                    or "/test/" not in source_name
+                    or not source_name.endswith(".test.ts")
+                    or not isinstance(case_name, str)
+                    or not case_name.startswith("ZDAPI-")
+                ):
+                    errors.append(f"API semantic test case is invalid: {entry['upstream']} -> {evidence_case}")
+                    continue
+                source_path = ROOT / source_name
+                resolved_source = source_path.resolve()
+                relative_parts = Path(source_name).parts
+                valid_location = (
+                    len(relative_parts) >= 4
+                    and relative_parts[0] == "packages"
+                    and relative_parts[2] == "test"
+                    and ".." not in relative_parts
+                    and resolved_source.is_relative_to(
+                        (ROOT / relative_parts[0] / relative_parts[1] / relative_parts[2]).resolve()
+                    )
+                )
+                if not valid_location:
+                    errors.append(f"API semantic test source is outside packages/*/test: {entry['upstream']} -> {source_name}")
+                elif not resolved_source.is_file():
+                    errors.append(f"API semantic test source does not exist: {entry['upstream']} -> {source_name}")
+                else:
+                    titles = typescript_test_titles(resolved_source)
+                    if titles.count(case_name) != 1:
+                        errors.append(f"API semantic test source must declare its exact case once: {entry['upstream']} -> {case_name}")
         mapping = target["nodeMapping"]
         if not mapping.get("semanticsVerified") or mapping.get("status") != "VERIFIED":
             errors.append(f"API semantic target is not marked verified: {entry['upstream']}")
-        if mapping.get("nodeMember") != entry["nodeMember"] or mapping.get("evidenceTestIds") != entry["testIds"]:
+        expected_evidence = (
+            {"evidenceTestIds": entry["testIds"]}
+            if "testIds" in entry
+            else {"evidenceCases": entry["testCases"]}
+        )
+        actual_evidence_keys = {
+            key for key in ("evidenceTestIds", "evidenceCases") if key in mapping
+        }
+        if mapping.get("nodeMember") != entry["nodeMember"] or actual_evidence_keys != set(expected_evidence) or any(
+            mapping.get(key) != value for key, value in expected_evidence.items()
+        ):
             errors.append(f"generated API semantic mapping differs from overlay: {entry['upstream']}")
         if mapping.get("semanticsCoverage") != verified_semantics:
             errors.append(f"generated API semantic coverage differs from overlay: {entry['upstream']}")

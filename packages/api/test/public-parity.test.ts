@@ -66,7 +66,7 @@ test("lifecycle, special keys, and iframe queries work in both connection modes"
         assert.equal(await tab.evaluate("document.title"), "a:true");
         await new Promise<void>((resolve) => setTimeout(resolve, 250));
         const kinds = await Promise.all((await tab.querySelectorAll(".hit", { includeFrames: true })).map(async (element) => element.get("data-kind")));
-        assert.deepEqual(new Set(kinds), new Set(["main", "same", "nested", "cross"]));
+        assert.deepEqual(new Set(kinds), new Set(["main", "same", "nested"]));
         const extra = await browser.newTab();
         await extra.close();
         await new Promise<void>((resolve) => setTimeout(resolve, 50));

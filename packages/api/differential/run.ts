@@ -53,7 +53,7 @@ async function runScenario(backend: string, factory: RuntimeBackendFactory): Pro
     let trace: readonly NormalizedTraceEntry[] | "unavailable" = "unavailable";
     const outcome = await runProviderPage<Outcome>(browser, {
       url: fixture.url,
-      bootstrap: async (tab) => { await tab.waitForReadyState(); },
+      bootstrap: async (tab) => { await tab.waitForReadyState("complete"); },
       action: async (tab) => {
         const captured = await captureNetworkBootstrap(browser, tab, "/openai-bootstrap", () => tab.evaluate("bootstrapProvider()"), {
           cookieNames: ["geminiSession"], localStorageKeys: ["lmArenaAuth"],

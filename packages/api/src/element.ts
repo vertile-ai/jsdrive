@@ -37,7 +37,7 @@ export class Element {
   public get nodeName(): string { return this.#node.nodeName; }
   public get localName(): string { return this.#node.localName; }
   public get nodeValue(): string { return this.#node.nodeValue; }
-  public get textAll(): string { return flattenNodes(this.#node).map((node) => node.nodeValue).join(""); }
+  public get textAll(): string { return textNodes(this.#node).map((node) => node.nodeValue).join(" "); }
   public get documentURL(): string | undefined { return this.#node.documentURL; }
   public get baseURL(): string | undefined { return this.#node.baseURL; }
   public get publicId(): string | undefined { return this.#node.publicId; }
@@ -73,7 +73,7 @@ export class Element {
     const node = this.#node.importedDocument;
     return node === undefined ? undefined : new Element(this.tab, node.backendNodeId, node);
   }
-  public get text(): string { return this.#node.nodeValue; }
+  public get text(): string { return (this.#node.children ?? []).find((node) => node.nodeType === 3)?.nodeValue ?? ""; }
   public get value(): string | undefined { return this.attributes.value; }
   public get html(): string | undefined { return this.#node.nodeValue || undefined; }
   public get(name: string): string | undefined { return this.attributes[name]; }
@@ -315,6 +315,10 @@ function graphemes(value: string): readonly string[] {
 
 function flattenNodes(node: Protocol.DOM.Node): Protocol.DOM.Node[] {
   return [node, ...(node.children ?? []).flatMap(flattenNodes), ...(node.shadowRoots ?? []).flatMap(flattenNodes), ...(node.contentDocument === undefined ? [] : flattenNodes(node.contentDocument))];
+}
+
+function textNodes(node: Protocol.DOM.Node): Protocol.DOM.Node[] {
+  return flattenNodes(node).filter((candidate) => candidate.nodeType === 3 && candidate.nodeValue !== "");
 }
 
 function findNode(root: Protocol.DOM.Node, nodeId: Protocol.DOM.NodeId): Protocol.DOM.Node | undefined {

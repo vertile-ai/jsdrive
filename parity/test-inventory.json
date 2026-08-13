@@ -632,10 +632,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0027",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0027",
+        "note": "Passed explicit user-agent, language, and platform overrides in real headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_set_user_agent_sets_navigator_values",
@@ -652,10 +652,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0028",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0028",
+        "note": "Passed explicit user-agent, language, and platform overrides in real headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_set_user_agent_sets_navigator_values",
@@ -672,10 +672,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0029",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0029",
+        "note": "Passed omitted-user-agent preservation in real headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_set_user_agent_defaults_existing_user_agent",
@@ -692,10 +692,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0030",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0030",
+        "note": "Passed omitted-user-agent preservation in real headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_set_user_agent_defaults_existing_user_agent",
@@ -716,10 +716,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0031",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0031",
+        "note": "Passed visible text lookup with exact Element tag and text in real headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_find_finds_element_by_text",
@@ -740,10 +740,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0032",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0032",
+        "note": "Passed visible text lookup with exact Element tag and text in real headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_find_finds_element_by_text",
@@ -764,10 +764,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0033",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0033",
+        "note": "Passed typed timeout rejection for absent text in real headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_find_times_out_if_element_not_found",
@@ -788,10 +788,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0034",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0034",
+        "note": "Passed typed timeout rejection for absent text in real headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_find_times_out_if_element_not_found",
@@ -812,10 +812,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0035",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0035",
+        "note": "Passed CSS selection with exact Element tag and text in real headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_select",
@@ -836,10 +836,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0036",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0036",
+        "note": "Passed CSS selection with exact Element tag and text in real headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_select",
@@ -851,10 +851,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0037",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0037",
+        "note": "Passed real three-document nested iframe traversal and owner-document boundary assertions.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": null,
       "testFunction": "test_query_selector_all_include_frames_queries_nested_iframe_documents",
@@ -875,10 +875,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0038",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0038",
+        "note": "Passed XPath match structure in real headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_xpath",
@@ -899,10 +899,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0039",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0039",
+        "note": "Passed XPath match structure in real headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_xpath",
@@ -923,10 +923,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0040",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0040",
+        "note": "Passed empty XPath result after the default search window in real headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_xpath_no_results",
@@ -947,10 +947,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0041",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0041",
+        "note": "Passed empty XPath result after the default search window in real headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_xpath_no_results",
@@ -1259,10 +1259,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0054",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0054",
+        "note": "Passed exact complete-state wait and boolean return in real headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_wait_for_ready_state",
@@ -1283,10 +1283,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0055",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0055",
+        "note": "Passed exact complete-state wait and boolean return in real headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_wait_for_ready_state",
@@ -1763,10 +1763,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0074",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0074",
+        "note": "Passed complex DOM deep serialization without error in real headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_evaluate_complex_object_no_error",
@@ -1787,10 +1787,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0075",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0075",
+        "note": "Passed complex DOM deep serialization without error in real headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_evaluate_complex_object_no_error",
@@ -1811,10 +1811,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0076",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0076",
+        "note": "Passed typed protocol error for complex by-value serialization and deep representation in real headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_evaluate_return_by_value_complex_object",
@@ -1835,10 +1835,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0077",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0077",
+        "note": "Passed typed protocol error for complex by-value serialization and deep representation in real headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_evaluate_return_by_value_complex_object",
@@ -1859,10 +1859,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0078",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0078",
+        "note": "Passed exact JSON value and deep entry-list representations in real headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_evaluate_return_by_value_simple_json",
@@ -1883,10 +1883,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0079",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0079",
+        "note": "Passed exact JSON value and deep entry-list representations in real headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_evaluate_return_by_value_simple_json",
@@ -1907,10 +1907,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0080",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0080",
+        "note": "Passed exact falsy values under default evaluation options in real headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_evaluate_return_by_value_falsy",
@@ -1931,10 +1931,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0081",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0081",
+        "note": "Passed exact falsy values under default evaluation options in real headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_evaluate_return_by_value_falsy",
@@ -1955,10 +1955,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0082",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0082",
+        "note": "Passed the complex/scalar evaluation stress set in real headless Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_evaluate_stress_test_complex_objects",
@@ -1979,10 +1979,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0083",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0083",
+        "note": "Passed the complex/scalar evaluation stress set in real headful Chrome.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_evaluate_stress_test_complex_objects",

@@ -32,7 +32,7 @@ export async function runProviderPage<T>(browser: Browser, options: ProviderPage
 }
 
 export async function extractRuntimeValue<T>(tab: Tab, expression: string, options: WaitOptions = {}): Promise<T> {
-  return tab.evaluate<T>(expression, options.timeoutMs, options.signal);
+  return tab.evaluate<T>(expression, true, true, options);
 }
 
 export async function waitForSessionMaterial(

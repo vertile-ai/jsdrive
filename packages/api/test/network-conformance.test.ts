@@ -61,47 +61,47 @@ test("cookies, network expectations, interception, and downloads work in direct 
         const requestExpectation = tab.expectRequest(/\/api$/);
         const responseExpectation = tab.expectResponse((event) => event.response.url.endsWith("/api"));
         await Promise.all([requestExpectation.ready, responseExpectation.ready]);
-        const apiAction = tab.evaluate(`fetch(${JSON.stringify(`${baseUrl}/api`)}, { headers: { "x-test": "expected" } }).then(r => r.json())`);
+        const apiAction = tab.evaluate(`fetch(${JSON.stringify(`${baseUrl}/api`)}, { headers: { "x-test": "expected" } }).then(r => r.json())`, true);
         assert.equal((await requestExpectation.value).request.headers["x-test"], "expected");
         const expectedResponse = await responseExpectation.value;
         assert.deepEqual(expectedResponse.json(), { source: "server", method: "GET", header: "expected" });
         assert.deepEqual(await apiAction, { source: "server", method: "GET", header: "expected" });
 
         const resetRequest = await requestExpectation.reset();
-        const resetAction = tab.evaluate(`fetch(${JSON.stringify(`${baseUrl}/api`)})`);
+        const resetAction = tab.evaluate(`fetch(${JSON.stringify(`${baseUrl}/api`)})`, true);
         assert.match((await resetRequest.value).request.url, /\/api$/);
         await resetAction;
 
         const streamExpectation = tab.expectResponse("/stream");
         await streamExpectation.ready;
-        const streamAction = tab.evaluate<string>(`fetch(${JSON.stringify(`${baseUrl}/stream`)}).then(r => r.text())`);
+        const streamAction = tab.evaluate<string>(`fetch(${JSON.stringify(`${baseUrl}/stream`)}).then(r => r.text())`, true);
         assert.equal((await streamExpectation.value).body, "first-second");
         assert.equal(await streamAction, "first-second");
 
         const fulfill = tab.intercept({ url: "/intercept", stage: "Request" });
         await fulfill.ready;
-        const fulfillAction = tab.evaluate<string>(`fetch(${JSON.stringify(`${baseUrl}/intercept`)}).then(r => r.text())`);
+        const fulfillAction = tab.evaluate<string>(`fetch(${JSON.stringify(`${baseUrl}/intercept`)}).then(r => r.text())`, true);
         await (await fulfill.next()).fulfillRequest(200, {
           responseHeaders: [{ name: "content-type", value: "text/plain" }],
           body: Buffer.from("fulfilled locally").toString("base64"),
         });
         assert.equal(await fulfillAction, "fulfilled locally");
         const resetFulfill = await fulfill.reset();
-        const resetFulfillAction = tab.evaluate<string>(`fetch(${JSON.stringify(`${baseUrl}/intercept`)}).then(r => r.text())`);
+        const resetFulfillAction = tab.evaluate<string>(`fetch(${JSON.stringify(`${baseUrl}/intercept`)}).then(r => r.text())`, true);
         await (await resetFulfill.next()).fulfillRequest(200, { body: Buffer.from("fulfilled after reset").toString("base64") });
         assert.equal(await resetFulfillAction, "fulfilled after reset");
         await resetFulfill.close();
 
         const rewrite = tab.intercept({ url: "/rewrite", stage: "Request" });
         await rewrite.ready;
-        const rewriteAction = tab.evaluate<{ source: string }>(`fetch(${JSON.stringify(`${baseUrl}/rewrite`)}).then(r => r.json())`);
+        const rewriteAction = tab.evaluate<{ source: string }>(`fetch(${JSON.stringify(`${baseUrl}/rewrite`)}).then(r => r.json())`, true);
         await (await rewrite.next()).continueRequest({ url: `${baseUrl}/api` });
         assert.equal((await rewriteAction).source, "server");
         await rewrite.close();
 
         const failure = tab.intercept({ url: "/fail", stage: "Request" });
         await failure.ready;
-        const failureAction = tab.evaluate<string>(`fetch(${JSON.stringify(`${baseUrl}/fail`)}).then(() => "unexpected", () => "failed")`);
+        const failureAction = tab.evaluate<string>(`fetch(${JSON.stringify(`${baseUrl}/fail`)}).then(() => "unexpected", () => "failed")`, true);
         await (await failure.next()).failRequest("BlockedByClient");
         assert.equal(await failureAction, "failed");
         await failure.close();

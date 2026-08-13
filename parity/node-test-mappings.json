@@ -82,5 +82,167 @@
     "note": "Passed three real Chrome launches from one Config with unique ports, temporary profiles, and independent navigation.",
     "result": "PASS",
     "status": "MAPPED"
+  },
+  "ZDTEST-0027": {
+    "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0027",
+    "note": "Passed explicit user-agent, language, and platform overrides in real headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0028": {
+    "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0028",
+    "note": "Passed explicit user-agent, language, and platform overrides in real headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0029": {
+    "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0029",
+    "note": "Passed omitted-user-agent preservation in real headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0030": {
+    "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0030",
+    "note": "Passed omitted-user-agent preservation in real headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0031": {
+    "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0031",
+    "note": "Passed visible text lookup with exact Element tag and text in real headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0032": {
+    "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0032",
+    "note": "Passed visible text lookup with exact Element tag and text in real headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0033": {
+    "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0033",
+    "note": "Passed typed timeout rejection for absent text in real headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0034": {
+    "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0034",
+    "note": "Passed typed timeout rejection for absent text in real headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0035": {
+    "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0035",
+    "note": "Passed CSS selection with exact Element tag and text in real headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0036": {
+    "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0036",
+    "note": "Passed CSS selection with exact Element tag and text in real headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0037": {
+    "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0037",
+    "note": "Passed real three-document nested iframe traversal and owner-document boundary assertions.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0038": {
+    "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0038",
+    "note": "Passed XPath match structure in real headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0039": {
+    "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0039",
+    "note": "Passed XPath match structure in real headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0040": {
+    "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0040",
+    "note": "Passed empty XPath result after the default search window in real headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0041": {
+    "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0041",
+    "note": "Passed empty XPath result after the default search window in real headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0054": {
+    "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0054",
+    "note": "Passed exact complete-state wait and boolean return in real headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0055": {
+    "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0055",
+    "note": "Passed exact complete-state wait and boolean return in real headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0074": {
+    "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0074",
+    "note": "Passed complex DOM deep serialization without error in real headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0075": {
+    "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0075",
+    "note": "Passed complex DOM deep serialization without error in real headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0076": {
+    "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0076",
+    "note": "Passed typed protocol error for complex by-value serialization and deep representation in real headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0077": {
+    "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0077",
+    "note": "Passed typed protocol error for complex by-value serialization and deep representation in real headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0078": {
+    "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0078",
+    "note": "Passed exact JSON value and deep entry-list representations in real headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0079": {
+    "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0079",
+    "note": "Passed exact JSON value and deep entry-list representations in real headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0080": {
+    "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0080",
+    "note": "Passed exact falsy values under default evaluation options in real headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0081": {
+    "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0081",
+    "note": "Passed exact falsy values under default evaluation options in real headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0082": {
+    "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0082",
+    "note": "Passed the complex/scalar evaluation stress set in real headless Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0083": {
+    "case": "packages/api/test/tab-selector-evaluate-parity.test.ts::ZDTEST-0083",
+    "note": "Passed the complex/scalar evaluation stress set in real headful Chrome.",
+    "result": "PASS",
+    "status": "MAPPED"
   }
 }

@@ -25,7 +25,7 @@ for (const connectionMode of ["direct", "flattened"] satisfies readonly Connecti
     const event = await eventPromise;
 
     const controller = new AbortController();
-    const interrupted = tab.evaluate("new Promise(() => {})", 10_000, controller.signal);
+    const interrupted = tab.evaluate("new Promise(() => {})", true, true, { timeoutMs: 10_000, signal: controller.signal });
     controller.abort(new Error("native smoke cancellation"));
     let cancelled = false;
     try {

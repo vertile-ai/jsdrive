@@ -11,6 +11,7 @@ import type {
 import {
   CdpAbortError,
   CdpConnection,
+  CdpProtocolError,
   CdpTimeoutError,
   type EventMetadata,
   type RuntimeBackend,
@@ -93,7 +94,7 @@ export class Tab {
     public readonly browserConnection: RuntimeBackend = connection,
     public readonly webSocketUrl?: string,
     private readonly closeTarget?: () => Promise<void>,
-    private readonly childFrames: () => readonly Tab[] = () => [],
+    _childFrames: () => readonly Tab[] = () => [],
     private readonly readTargetInfo: () => Protocol.Target.TargetInfo | undefined = () => undefined,
     private readonly writeTargetInfo: (targetInfo: Protocol.Target.TargetInfo) => void = () => {},
   ) {}
@@ -265,14 +266,34 @@ export class Tab {
     return this.send("Page.bringToFront");
   }
 
-  public async evaluate<T = unknown>(expression: string, timeoutMs = 10_000, signal?: AbortSignal): Promise<T> {
+  public async evaluate<T = unknown>(
+    expression: string,
+    awaitPromise = false,
+    returnByValue = true,
+    options: WaitOptions = {},
+  ): Promise<T> {
     const result = await this.send("Runtime.evaluate", {
       expression,
-      returnByValue: true,
-      awaitPromise: true,
-    }, this.#options(timeoutMs, signal));
-    if (result.exceptionDetails !== undefined) throw new Error(result.exceptionDetails.text);
-    return result.result.value as T;
+      returnByValue,
+      awaitPromise,
+      userGesture: true,
+      allowUnsafeEvalBlockedByCSP: true,
+      ...(returnByValue ? {} : {
+        serializationOptions: {
+          serialization: "deep" as const,
+          maxDepth: 10,
+          additionalParameters: { maxNodeDepth: 10, includeShadowTree: "all" },
+        },
+      }),
+    }, this.#options(options.timeoutMs ?? 10_000, options.signal));
+    if (result.exceptionDetails !== undefined) {
+      throw new CdpProtocolError(
+        -32_000,
+        result.exceptionDetails.exception?.description ?? result.exceptionDetails.text,
+        result.exceptionDetails,
+      );
+    }
+    return (returnByValue ? result.result.value : result.result.deepSerializedValue?.value) as T;
   }
 
   public async getContent(): Promise<string> {
@@ -295,9 +316,6 @@ export class Tab {
         return cached === undefined ? this.elementFromNodeId(nodeId) : Promise.resolve(new Element(this, cached.backendNodeId, cached));
       }));
     }));
-    if (includeFrames) {
-      for (const frame of this.childFrames()) groups.push([...(await frame.querySelectorAll(selector, { includeFrames: true }))]);
-    }
     return [...new Map(groups.flat().map((element) => [`${element.tab.targetId}:${element.backendNodeId}`, element])).values()];
   }
 
@@ -312,37 +330,46 @@ export class Tab {
     }, `elements matching ${selector}`, options);
   }
 
-  public async find(text: string, bestMatch = false, options: WaitOptions = {}): Promise<Element> {
+  public async find(
+    text: string,
+    bestMatch = true,
+    returnEnclosingElement = true,
+    options: WaitOptions = {},
+  ): Promise<Element> {
+    const query = text.trim();
     return this.#poll(async () => {
-      const elements = await this.#search(text, true);
+      const elements = await this.#search(query, false, returnEnclosingElement);
       if (elements.length === 0) return undefined;
       if (!bestMatch) return elements[0];
-      const ranked = await Promise.all(elements.map(async (element) => ({ element, length: (await element.getText()).length })));
-      ranked.sort((a, b) => Math.abs(a.length - text.length) - Math.abs(b.length - text.length));
+      const ranked = elements.map((element) => ({ element, length: element.textAll.length }));
+      ranked.sort((a, b) => Math.abs(a.length - query.length) - Math.abs(b.length - query.length));
       return ranked[0]?.element;
-    }, `text ${JSON.stringify(text)}`, options);
+    }, `text ${JSON.stringify(query)}`, options);
   }
 
-  public async findAll(text: string, bestMatch = false, options: WaitOptions = {}): Promise<readonly Element[]> {
-    const elements = await this.#poll(async () => {
-      const found = await this.#search(text, true);
+  public async findAll(text: string, options: WaitOptions = {}): Promise<readonly Element[]> {
+    const query = text.trim();
+    return this.#poll(async () => {
+      const found = await this.#search(query);
       return found.length === 0 ? undefined : found;
-    }, `text ${JSON.stringify(text)}`, options);
-    if (!bestMatch) return elements;
-    const ranked = await Promise.all(elements.map(async (element) => ({ element, length: (await element.getText()).length })));
-    ranked.sort((a, b) => Math.abs(a.length - text.length) - Math.abs(b.length - text.length));
-    return ranked.map(({ element }) => element);
+    }, `text ${JSON.stringify(query)}`, options);
   }
 
-  public async findElementByText(text: string, bestMatch = false): Promise<Element | null> {
-    const elements = await this.findElementsByText(text);
+  public async findElementByText(text: string, bestMatch = false, returnEnclosingElement = true): Promise<Element | null> {
+    const query = text.trim();
+    const elements = await this.#search(query, false, returnEnclosingElement);
     if (!bestMatch) return elements[0] ?? null;
-    const ranked = await Promise.all(elements.map(async (element) => ({ element, length: (await element.getText()).length })));
-    ranked.sort((a, b) => Math.abs(a.length - text.length) - Math.abs(b.length - text.length));
+    const ranked = elements.map((element) => ({ element, length: element.textAll.length }));
+    ranked.sort((a, b) => Math.abs(a.length - query.length) - Math.abs(b.length - query.length));
     return ranked[0]?.element ?? null;
   }
 
-  public findElementsByText(text: string): Promise<readonly Element[]> { return this.#search(text, true); }
+  public async findElementsByText(text: string, tagHint?: string): Promise<readonly Element[]> {
+    const elements = await this.#search(text.trim());
+    if (tagHint === undefined) return elements;
+    const normalizedTag = tagHint.toLowerCase();
+    return elements.filter((element) => element.tag === normalizedTag);
+  }
 
   public getAllLinkedSources(): Promise<readonly Element[]> { return this.querySelectorAll("a,link,img,script,meta,video,audio", { includeFrames: true }); }
 
@@ -371,7 +398,7 @@ export class Tab {
   public openExternalInspector(): string | undefined { return this.inspectorUrl; }
 
   public async flashPoint(x: number, y: number, durationMs = 500, size = 10): Promise<void> {
-    await this.evaluate(`new Promise(resolve => { const p=document.createElement('div'); Object.assign(p.style,{position:'fixed',zIndex:'2147483647',pointerEvents:'none',left:${JSON.stringify(`${x - size / 2}px`)},top:${JSON.stringify(`${y - size / 2}px`)},width:${JSON.stringify(`${size}px`)},height:${JSON.stringify(`${size}px`)},borderRadius:'50%',background:'red'}); document.documentElement.append(p); setTimeout(()=>{p.remove();resolve()},${durationMs}); })`);
+    await this.evaluate(`new Promise(resolve => { const p=document.createElement('div'); Object.assign(p.style,{position:'fixed',zIndex:'2147483647',pointerEvents:'none',left:${JSON.stringify(`${x - size / 2}px`)},top:${JSON.stringify(`${y - size / 2}px`)},width:${JSON.stringify(`${size}px`)},height:${JSON.stringify(`${size}px`)},borderRadius:'50%',background:'red'}); document.documentElement.append(p); setTimeout(()=>{p.remove();resolve()},${durationMs}); })`, true);
   }
 
   public async verifyCf(challengeSelector: string, options: WaitOptions & { readonly clickDelayMs?: number } = {}): Promise<void> {
@@ -396,10 +423,15 @@ export class Tab {
   }
 
   public async xpath(expression: string, options: WaitOptions = {}): Promise<readonly Element[]> {
-    return this.#poll(async () => {
-      const elements = await this.#search(expression);
-      return elements.length === 0 ? undefined : elements;
-    }, `XPath ${expression}`, options);
+    try {
+      return await this.#poll(async () => {
+        const elements = await this.#search(expression);
+        return elements.length === 0 ? undefined : elements;
+      }, `XPath ${expression}`, { ...options, timeoutMs: options.timeoutMs ?? 2_500 });
+    } catch (error) {
+      if (error instanceof CdpAbortError) throw error;
+      return [];
+    }
   }
 
   public waitFor(selector: string, options?: WaitOptions): Promise<Element>;
@@ -417,17 +449,17 @@ export class Tab {
       );
     }
     if (selectorOrOptions.text !== undefined) {
-      return this.find(selectorOrOptions.text, selectorOrOptions.bestMatch ?? false, selectorOrOptions);
+      return this.find(selectorOrOptions.text, selectorOrOptions.bestMatch ?? false, true, selectorOrOptions);
     }
     return Promise.reject(new TypeError("waitFor requires selector or text"));
   }
 
-  public async waitForReadyState(state: ReadyState = "complete", options: WaitOptions = {}): Promise<ReadyState> {
-    const order: readonly ReadyState[] = ["loading", "interactive", "complete"];
-    return this.#poll(async () => {
-      const current = await this.evaluate<ReadyState>("document.readyState", options.timeoutMs, options.signal);
-      return order.indexOf(current) >= order.indexOf(state) ? current : undefined;
+  public async waitForReadyState(state: ReadyState = "interactive", options: WaitOptions = {}): Promise<boolean> {
+    await this.#poll(async () => {
+      const current = await this.evaluate<ReadyState>("document.readyState", false, true, options);
+      return current === state ? true : undefined;
     }, `document readyState ${state}`, options);
+    return true;
   }
 
   public async waitForIdle(options: WaitOptions & { readonly idleMs?: number } = {}): Promise<void> {
@@ -435,8 +467,8 @@ export class Tab {
     let count = -1;
     let unchangedSince = Date.now();
     await this.#poll(async () => {
-      if (await this.evaluate<ReadyState>("document.readyState", options.timeoutMs, options.signal) !== "complete") return undefined;
-      const current = await this.evaluate<number>("performance.getEntriesByType('resource').length", options.timeoutMs, options.signal);
+      if (await this.evaluate<ReadyState>("document.readyState", false, true, options) !== "complete") return undefined;
+      const current = await this.evaluate<number>("performance.getEntriesByType('resource').length", false, true, options);
       if (current !== count) {
         count = current;
         unchangedSince = Date.now();
@@ -453,13 +485,13 @@ export class Tab {
     await this.evaluate(`(() => { for (const [key, value] of Object.entries(${JSON.stringify(values)})) value === null ? localStorage.removeItem(key) : localStorage.setItem(key, value); })()`);
   }
 
-  public setUserAgent(userAgent: string, acceptLanguage?: string, platform?: string): Promise<Protocol.Emulation.Commands.SetUserAgentOverrideResult> {
-    const params: Protocol.Emulation.Commands.SetUserAgentOverrideParams = {
-      userAgent,
+  public async setUserAgent(userAgent?: string, acceptLanguage?: string, platform?: string): Promise<void> {
+    const params: Protocol.Network.Commands.SetUserAgentOverrideParams = {
+      userAgent: userAgent || await this.evaluate<string>("navigator.userAgent"),
       ...(acceptLanguage === undefined ? {} : { acceptLanguage }),
       ...(platform === undefined ? {} : { platform }),
     };
-    return this.send("Emulation.setUserAgentOverride", params);
+    await this.send("Network.setUserAgentOverride", params);
   }
 
   public async screenshotB64(options: ScreenshotOptions = {}): Promise<string> {
@@ -526,7 +558,7 @@ export class Tab {
   }
 
   public async elementFromNodeId(nodeId: Protocol.DOM.NodeId): Promise<Element> {
-    const { node } = await this.send("DOM.describeNode", { nodeId, depth: 0, pierce: true });
+    const { node } = await this.send("DOM.describeNode", { nodeId, depth: -1, pierce: true });
     return new Element(this, node.backendNodeId, node);
   }
 
@@ -583,7 +615,7 @@ export class Tab {
     }
   }
 
-  async #search(query: string, visibleTextOnly = false): Promise<readonly Element[]> {
+  async #search(query: string, visibleTextOnly = false, returnEnclosingElement = true): Promise<readonly Element[]> {
     await this.send("DOM.getDocument", { depth: 0, pierce: true });
     const { searchId, resultCount } = await this.send("DOM.performSearch", { query, includeUserAgentShadowDOM: true });
     try {
@@ -591,8 +623,11 @@ export class Tab {
       const { nodeIds } = await this.send("DOM.getSearchResults", { searchId, fromIndex: 0, toIndex: resultCount });
       const found = await Promise.all(nodeIds.map(async (nodeId) => {
         const element = await this.elementFromNodeId(nodeId);
-        if (element.nodeType === 1) return element;
-        if (element.parentNodeId !== undefined) return this.elementFromNodeId(element.parentNodeId);
+        if (element.nodeType === 1) return { result: element, visibilityElement: element };
+        if (element.parentNodeId !== undefined) {
+          const parent = await this.elementFromNodeId(element.parentNodeId);
+          return { result: returnEnclosingElement ? parent : element, visibilityElement: parent };
+        }
         const { object } = await this.send("DOM.resolveNode", { nodeId });
         const nodeObjectId = object.objectId;
         if (nodeObjectId === undefined) return undefined;
@@ -606,7 +641,12 @@ export class Tab {
           if (parentObjectId === undefined) return undefined;
           try {
             const requested = await this.send("DOM.requestNode", { objectId: parentObjectId });
-            return requested.nodeId === 0 ? undefined : this.elementFromNodeId(requested.nodeId);
+            if (requested.nodeId === 0) return undefined;
+            const parentElement = await this.elementFromNodeId(requested.nodeId);
+            return {
+              result: returnEnclosingElement ? parentElement : element,
+              visibilityElement: parentElement,
+            };
           } finally {
             await this.send("Runtime.releaseObject", { objectId: parentObjectId });
           }
@@ -616,15 +656,15 @@ export class Tab {
       }));
       const elements = [...new Map(
         found
-          .filter((element): element is Element => element?.nodeType === 1)
-          .map((element) => [element.backendNodeId, element]),
+          .filter((entry): entry is { readonly result: Element; readonly visibilityElement: Element } => entry !== undefined)
+          .map((entry) => [entry.result.backendNodeId, entry]),
       ).values()];
-      if (!visibleTextOnly) return elements;
-      const content = elements.filter((element) => !["script", "style", "noscript"].includes(element.tag));
-      const visibility = await Promise.all(content.map((element) => element.apply<boolean>(
+      if (!visibleTextOnly) return elements.map(({ result }) => result);
+      const content = elements.filter(({ visibilityElement }) => !["script", "style", "noscript"].includes(visibilityElement.tag));
+      const visibility = await Promise.all(content.map(({ visibilityElement }) => visibilityElement.apply<boolean>(
         "function () { const style = getComputedStyle(this); return style.display !== 'none' && style.visibility !== 'hidden' && style.visibility !== 'collapse' && this.getClientRects().length > 0; }",
       )));
-      return content.filter((_element, index) => visibility[index] === true);
+      return content.filter((_entry, index) => visibility[index] === true).map(({ result }) => result);
     } finally {
       await this.send("DOM.discardSearchResults", { searchId });
     }

@@ -1,10 +1,10 @@
 {
   "mappingCounts": {
     "coreMembers": {
-      "CANDIDATE": 134,
+      "CANDIDATE": 126,
       "MISSING": 59,
-      "UNKNOWN": 272,
-      "VERIFIED": 7
+      "UNKNOWN": 271,
+      "VERIFIED": 16
     },
     "coreSymbols": {
       "CANDIDATE": 11,
@@ -17,10 +17,10 @@
       "MISSING": 7
     },
     "total": {
-      "CANDIDATE": 154,
+      "CANDIDATE": 146,
       "MISSING": 96,
-      "UNKNOWN": 275,
-      "VERIFIED": 8
+      "UNKNOWN": 274,
+      "VERIFIED": 17
     }
   },
   "nodriver": {
@@ -2459,7 +2459,7 @@
             "type": "string | undefined"
           },
           {
-            "declaration": "constructor(targetId: string, connection: RuntimeBackend, sessionId?: string | undefined, browserConnection?: RuntimeBackend, webSocketUrl?: string | undefined, closeTarget?: (() => Promise<void>) | undefined, childFrames?: () => readonly Tab[], readTargetInfo?: () => Protocol.Target.TargetInfo | undefined, writeTargetInfo?: (targetInfo: Protocol.Target.TargetInfo) => void);",
+            "declaration": "constructor(targetId: string, connection: RuntimeBackend, sessionId?: string | undefined, browserConnection?: RuntimeBackend, webSocketUrl?: string | undefined, closeTarget?: (() => Promise<void>) | undefined, _childFrames?: () => readonly Tab[], readTargetInfo?: () => Protocol.Target.TargetInfo | undefined, writeTargetInfo?: (targetInfo: Protocol.Target.TargetInfo) => void);",
             "kind": "constructor",
             "name": "constructor",
             "parameters": [
@@ -2514,7 +2514,7 @@
               {
                 "declaredDefault": null,
                 "hasDeclaredDefault": false,
-                "name": "childFrames",
+                "name": "_childFrames",
                 "optional": true,
                 "rest": false,
                 "type": "() => readonly Tab[]"
@@ -3105,7 +3105,7 @@
             "typeParameters": []
           },
           {
-            "declaration": "evaluate<T = unknown>(expression: string, timeoutMs?: number, signal?: AbortSignal): Promise<T>;",
+            "declaration": "evaluate<T = unknown>(expression: string, awaitPromise?: boolean, returnByValue?: boolean, options?: WaitOptions): Promise<T>;",
             "kind": "method",
             "name": "evaluate",
             "parameters": [
@@ -3120,18 +3120,26 @@
               {
                 "declaredDefault": null,
                 "hasDeclaredDefault": false,
-                "name": "timeoutMs",
+                "name": "awaitPromise",
                 "optional": true,
                 "rest": false,
-                "type": "number"
+                "type": "boolean"
               },
               {
                 "declaredDefault": null,
                 "hasDeclaredDefault": false,
-                "name": "signal",
+                "name": "returnByValue",
                 "optional": true,
                 "rest": false,
-                "type": "AbortSignal"
+                "type": "boolean"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "options",
+                "optional": true,
+                "rest": false,
+                "type": "WaitOptions"
               }
             ],
             "returnType": "Promise<T>",
@@ -3254,7 +3262,7 @@
             "typeParameters": []
           },
           {
-            "declaration": "find(text: string, bestMatch?: boolean, options?: WaitOptions): Promise<Element>;",
+            "declaration": "find(text: string, bestMatch?: boolean, returnEnclosingElement?: boolean, options?: WaitOptions): Promise<Element>;",
             "kind": "method",
             "name": "find",
             "parameters": [
@@ -3277,6 +3285,14 @@
               {
                 "declaredDefault": null,
                 "hasDeclaredDefault": false,
+                "name": "returnEnclosingElement",
+                "optional": true,
+                "rest": false,
+                "type": "boolean"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
                 "name": "options",
                 "optional": true,
                 "rest": false,
@@ -3288,7 +3304,7 @@
             "typeParameters": []
           },
           {
-            "declaration": "findAll(text: string, bestMatch?: boolean, options?: WaitOptions): Promise<readonly Element[]>;",
+            "declaration": "findAll(text: string, options?: WaitOptions): Promise<readonly Element[]>;",
             "kind": "method",
             "name": "findAll",
             "parameters": [
@@ -3299,14 +3315,6 @@
                 "optional": false,
                 "rest": false,
                 "type": "string"
-              },
-              {
-                "declaredDefault": null,
-                "hasDeclaredDefault": false,
-                "name": "bestMatch",
-                "optional": true,
-                "rest": false,
-                "type": "boolean"
               },
               {
                 "declaredDefault": null,
@@ -3322,7 +3330,7 @@
             "typeParameters": []
           },
           {
-            "declaration": "findElementByText(text: string, bestMatch?: boolean): Promise<Element | null>;",
+            "declaration": "findElementByText(text: string, bestMatch?: boolean, returnEnclosingElement?: boolean): Promise<Element | null>;",
             "kind": "method",
             "name": "findElementByText",
             "parameters": [
@@ -3341,6 +3349,14 @@
                 "optional": true,
                 "rest": false,
                 "type": "boolean"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "returnEnclosingElement",
+                "optional": true,
+                "rest": false,
+                "type": "boolean"
               }
             ],
             "returnType": "Promise<Element | null>",
@@ -3348,7 +3364,7 @@
             "typeParameters": []
           },
           {
-            "declaration": "findElementsByText(text: string): Promise<readonly Element[]>;",
+            "declaration": "findElementsByText(text: string, tagHint?: string): Promise<readonly Element[]>;",
             "kind": "method",
             "name": "findElementsByText",
             "parameters": [
@@ -3357,6 +3373,14 @@
                 "hasDeclaredDefault": false,
                 "name": "text",
                 "optional": false,
+                "rest": false,
+                "type": "string"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "tagHint",
+                "optional": true,
                 "rest": false,
                 "type": "string"
               }
@@ -3605,7 +3629,7 @@
             "typeParameters": []
           },
           {
-            "declaration": "waitForReadyState(state?: ReadyState, options?: WaitOptions): Promise<ReadyState>;",
+            "declaration": "waitForReadyState(state?: ReadyState, options?: WaitOptions): Promise<boolean>;",
             "kind": "method",
             "name": "waitForReadyState",
             "parameters": [
@@ -3626,7 +3650,7 @@
                 "type": "WaitOptions"
               }
             ],
-            "returnType": "Promise<ReadyState>",
+            "returnType": "Promise<boolean>",
             "static": false,
             "typeParameters": []
           },
@@ -3676,7 +3700,7 @@
             "typeParameters": []
           },
           {
-            "declaration": "setUserAgent(userAgent: string, acceptLanguage?: string, platform?: string): Promise<Protocol.Emulation.Commands.SetUserAgentOverrideResult>;",
+            "declaration": "setUserAgent(userAgent?: string, acceptLanguage?: string, platform?: string): Promise<void>;",
             "kind": "method",
             "name": "setUserAgent",
             "parameters": [
@@ -3684,7 +3708,7 @@
                 "declaredDefault": null,
                 "hasDeclaredDefault": false,
                 "name": "userAgent",
-                "optional": false,
+                "optional": true,
                 "rest": false,
                 "type": "string"
               },
@@ -3705,7 +3729,7 @@
                 "type": "string"
               }
             ],
-            "returnType": "Promise<Protocol.Emulation.Commands.SetUserAgentOverrideResult>",
+            "returnType": "Promise<void>",
             "static": false,
             "typeParameters": []
           },
@@ -4070,16 +4094,6 @@
             "kind": "property",
             "name": "closeTarget",
             "optional": true,
-            "readonly": true,
-            "type": null
-          },
-          {
-            "declaration": "private readonly childFrames;",
-            "declaredDefault": null,
-            "hasDeclaredDefault": false,
-            "kind": "property",
-            "name": "childFrames",
-            "optional": false,
             "readonly": true,
             "type": null
           },
@@ -4800,7 +4814,7 @@
       },
       "Tab": {
         "declarations": [
-          "export declare class Tab { #private; readonly targetId: string; readonly connection: RuntimeBackend; readonly sessionId?: string | undefined; readonly browserConnection: RuntimeBackend; readonly webSocketUrl?: string | undefined; private readonly closeTarget?; private readonly childFrames; private readonly readTargetInfo; private readonly writeTargetInfo; constructor(targetId: string, connection: RuntimeBackend, sessionId?: string | undefined, browserConnection?: RuntimeBackend, webSocketUrl?: string | undefined, closeTarget?: (() => Promise<void>) | undefined, childFrames?: () => readonly Tab[], readTargetInfo?: () => Protocol.Target.TargetInfo | undefined, writeTargetInfo?: (targetInfo: Protocol.Target.TargetInfo) => void); get enabledDomains(): ReadonlySet<string>; get closed(): boolean; get crashed(): boolean; get targetInfo(): Protocol.Target.TargetInfo | undefined; get title(): string; get url(): string; get type(): string; get subtype(): string | undefined; get attached(): boolean; get browserContextId(): Protocol.Browser.BrowserContextID | undefined; get openerId(): Protocol.Target.TargetID | undefined; get openerFrameId(): Protocol.Page.FrameId | undefined; get parentId(): Protocol.Target.TargetID | undefined; get parentFrameId(): Protocol.Page.FrameId | undefined; updateTarget(): Promise<Protocol.Target.TargetInfo>; send<M extends ProtocolCommand>(method: M, ...args: CommandParams<M> extends undefined ? [params?: undefined, options?: SendOptions] : [params: CommandParams<M>, options?: SendOptions]): Promise<CommandResult<M>>; sendRaw(method: string, params?: unknown, options?: SendOptions): Promise<Readonly<Record<string, unknown>>>; on<E extends ProtocolEvent>(method: E, handler: (params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>): () => void; on(method: string, handler: (params: unknown, metadata: EventMetadata) => void | Promise<void>): () => void; acquireDomain(domain: string, options?: SendOptions): Promise<() => Promise<void>>; expectRequest(matcher: UrlMatcher<Protocol.Network.Events.RequestWillBeSentEvent>, options?: WaitOptions): Expectation<ExpectedRequest>; expectResponse(matcher: UrlMatcher<Protocol.Network.Events.ResponseReceivedEvent>, options?: WaitOptions): Expectation<ExpectedResponse>; intercept(options?: InterceptionOptions): FetchInterception; setDownloadPath(path: string): Promise<string>; expectDownload(matcher?: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent>, options?: DownloadOptions): Expectation<DownloadResult>; downloadFile(url: string, destination: string, options?: WaitOptions): Promise<DownloadResult>; get(url: string, options?: WaitOptions): Promise<Protocol.Page.Commands.NavigateResult>; navigate(url: string, timeoutMs?: number, signal?: AbortSignal): Promise<Protocol.Page.Commands.NavigateResult>; reload(ignoreCache?: boolean, options?: WaitOptions): Promise<void>; back(options?: WaitOptions): Promise<boolean>; forward(options?: WaitOptions): Promise<boolean>; activate(): Promise<void>; bringToFront(): Promise<Protocol.Page.Commands.BringToFrontResult>; evaluate<T = unknown>(expression: string, timeoutMs?: number, signal?: AbortSignal): Promise<T>; getContent(): Promise<string>; querySelector(selector: string, options?: QueryOptions): Promise<Element | null>; querySelectorAll(selector: string, options?: QueryOptions): Promise<readonly Element[]>; select(selector: string, options?: WaitOptions): Promise<Element>; selectAll(selector: string, options?: WaitOptions & QueryOptions): Promise<readonly Element[]>; find(text: string, bestMatch?: boolean, options?: WaitOptions): Promise<Element>; findAll(text: string, bestMatch?: boolean, options?: WaitOptions): Promise<readonly Element[]>; findElementByText(text: string, bestMatch?: boolean): Promise<Element | null>; findElementsByText(text: string): Promise<readonly Element[]>; getAllLinkedSources(): Promise<readonly Element[]>; getAllUrls(absolute?: boolean): Promise<readonly string[]>; jsDumps<T = unknown>(expression: string): Promise<T>; disableDomAgent(): Promise<void>; get inspectorUrl(): string | undefined; inspectorOpen(): string | undefined; openExternalInspector(): string | undefined; flashPoint(x: number, y: number, durationMs?: number, size?: number): Promise<void>; verifyCf(challengeSelector: string, options?: WaitOptions & { readonly clickDelayMs?: number; }): Promise<void>; recordScreencast(directory: string): Promise<ScreencastSession>; xpath(expression: string, options?: WaitOptions): Promise<readonly Element[]>; waitFor(selector: string, options?: WaitOptions): Promise<Element>; waitFor(options: WaitForOptions): Promise<Element>; waitForReadyState(state?: ReadyState, options?: WaitOptions): Promise<ReadyState>; waitForIdle(options?: WaitOptions & { readonly idleMs?: number; }): Promise<void>; getLocalStorage(): Promise<Record<string, string>>; setLocalStorage(values: Readonly<Record<string, string | null>>): Promise<void>; setUserAgent(userAgent: string, acceptLanguage?: string, platform?: string): Promise<Protocol.Emulation.Commands.SetUserAgentOverrideResult>; screenshotB64(options?: ScreenshotOptions): Promise<string>; saveScreenshot(path: string, options?: ScreenshotOptions): Promise<string>; printToPdf(path?: string, options?: Protocol.Page.Commands.PrintToPDFParams): Promise<string>; saveSnapshot(path?: string): Promise<string>; scrollDown(amount?: number): Promise<void>; scrollUp(amount?: number): Promise<void>; getWindow(): Promise<Protocol.Browser.Commands.GetWindowForTargetResult>; setWindowState(windowState: WindowState): Promise<void>; setWindowSize(width: number, height: number): Promise<void>; maximize(): Promise<void>; minimize(): Promise<void>; fullscreen(): Promise<void>; mouseMove(x: number, y: number, modifiers?: number): Promise<void>; mouseClick(x: number, y: number, button?: Protocol.Input.MouseButton, modifiers?: number): Promise<void>; elementFromNodeId(nodeId: Protocol.DOM.NodeId): Promise<Element>; close(): Promise<void>; markClosed(): void; markCrashed(status: string, errorCode: number): void; }"
+          "export declare class Tab { #private; readonly targetId: string; readonly connection: RuntimeBackend; readonly sessionId?: string | undefined; readonly browserConnection: RuntimeBackend; readonly webSocketUrl?: string | undefined; private readonly closeTarget?; private readonly readTargetInfo; private readonly writeTargetInfo; constructor(targetId: string, connection: RuntimeBackend, sessionId?: string | undefined, browserConnection?: RuntimeBackend, webSocketUrl?: string | undefined, closeTarget?: (() => Promise<void>) | undefined, _childFrames?: () => readonly Tab[], readTargetInfo?: () => Protocol.Target.TargetInfo | undefined, writeTargetInfo?: (targetInfo: Protocol.Target.TargetInfo) => void); get enabledDomains(): ReadonlySet<string>; get closed(): boolean; get crashed(): boolean; get targetInfo(): Protocol.Target.TargetInfo | undefined; get title(): string; get url(): string; get type(): string; get subtype(): string | undefined; get attached(): boolean; get browserContextId(): Protocol.Browser.BrowserContextID | undefined; get openerId(): Protocol.Target.TargetID | undefined; get openerFrameId(): Protocol.Page.FrameId | undefined; get parentId(): Protocol.Target.TargetID | undefined; get parentFrameId(): Protocol.Page.FrameId | undefined; updateTarget(): Promise<Protocol.Target.TargetInfo>; send<M extends ProtocolCommand>(method: M, ...args: CommandParams<M> extends undefined ? [params?: undefined, options?: SendOptions] : [params: CommandParams<M>, options?: SendOptions]): Promise<CommandResult<M>>; sendRaw(method: string, params?: unknown, options?: SendOptions): Promise<Readonly<Record<string, unknown>>>; on<E extends ProtocolEvent>(method: E, handler: (params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>): () => void; on(method: string, handler: (params: unknown, metadata: EventMetadata) => void | Promise<void>): () => void; acquireDomain(domain: string, options?: SendOptions): Promise<() => Promise<void>>; expectRequest(matcher: UrlMatcher<Protocol.Network.Events.RequestWillBeSentEvent>, options?: WaitOptions): Expectation<ExpectedRequest>; expectResponse(matcher: UrlMatcher<Protocol.Network.Events.ResponseReceivedEvent>, options?: WaitOptions): Expectation<ExpectedResponse>; intercept(options?: InterceptionOptions): FetchInterception; setDownloadPath(path: string): Promise<string>; expectDownload(matcher?: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent>, options?: DownloadOptions): Expectation<DownloadResult>; downloadFile(url: string, destination: string, options?: WaitOptions): Promise<DownloadResult>; get(url: string, options?: WaitOptions): Promise<Protocol.Page.Commands.NavigateResult>; navigate(url: string, timeoutMs?: number, signal?: AbortSignal): Promise<Protocol.Page.Commands.NavigateResult>; reload(ignoreCache?: boolean, options?: WaitOptions): Promise<void>; back(options?: WaitOptions): Promise<boolean>; forward(options?: WaitOptions): Promise<boolean>; activate(): Promise<void>; bringToFront(): Promise<Protocol.Page.Commands.BringToFrontResult>; evaluate<T = unknown>(expression: string, awaitPromise?: boolean, returnByValue?: boolean, options?: WaitOptions): Promise<T>; getContent(): Promise<string>; querySelector(selector: string, options?: QueryOptions): Promise<Element | null>; querySelectorAll(selector: string, options?: QueryOptions): Promise<readonly Element[]>; select(selector: string, options?: WaitOptions): Promise<Element>; selectAll(selector: string, options?: WaitOptions & QueryOptions): Promise<readonly Element[]>; find(text: string, bestMatch?: boolean, returnEnclosingElement?: boolean, options?: WaitOptions): Promise<Element>; findAll(text: string, options?: WaitOptions): Promise<readonly Element[]>; findElementByText(text: string, bestMatch?: boolean, returnEnclosingElement?: boolean): Promise<Element | null>; findElementsByText(text: string, tagHint?: string): Promise<readonly Element[]>; getAllLinkedSources(): Promise<readonly Element[]>; getAllUrls(absolute?: boolean): Promise<readonly string[]>; jsDumps<T = unknown>(expression: string): Promise<T>; disableDomAgent(): Promise<void>; get inspectorUrl(): string | undefined; inspectorOpen(): string | undefined; openExternalInspector(): string | undefined; flashPoint(x: number, y: number, durationMs?: number, size?: number): Promise<void>; verifyCf(challengeSelector: string, options?: WaitOptions & { readonly clickDelayMs?: number; }): Promise<void>; recordScreencast(directory: string): Promise<ScreencastSession>; xpath(expression: string, options?: WaitOptions): Promise<readonly Element[]>; waitFor(selector: string, options?: WaitOptions): Promise<Element>; waitFor(options: WaitForOptions): Promise<Element>; waitForReadyState(state?: ReadyState, options?: WaitOptions): Promise<boolean>; waitForIdle(options?: WaitOptions & { readonly idleMs?: number; }): Promise<void>; getLocalStorage(): Promise<Record<string, string>>; setLocalStorage(values: Readonly<Record<string, string | null>>): Promise<void>; setUserAgent(userAgent?: string, acceptLanguage?: string, platform?: string): Promise<void>; screenshotB64(options?: ScreenshotOptions): Promise<string>; saveScreenshot(path: string, options?: ScreenshotOptions): Promise<string>; printToPdf(path?: string, options?: Protocol.Page.Commands.PrintToPDFParams): Promise<string>; saveSnapshot(path?: string): Promise<string>; scrollDown(amount?: number): Promise<void>; scrollUp(amount?: number): Promise<void>; getWindow(): Promise<Protocol.Browser.Commands.GetWindowForTargetResult>; setWindowState(windowState: WindowState): Promise<void>; setWindowSize(width: number, height: number): Promise<void>; maximize(): Promise<void>; minimize(): Promise<void>; fullscreen(): Promise<void>; mouseMove(x: number, y: number, modifiers?: number): Promise<void>; mouseClick(x: number, y: number, button?: Protocol.Input.MouseButton, modifiers?: number): Promise<void>; elementFromNodeId(nodeId: Protocol.DOM.NodeId): Promise<Element>; close(): Promise<void>; markClosed(): void; markCrashed(status: string, errorCode: number): void; }"
         ],
         "file": "packages/api/dist/tab.d.ts",
         "kind": "class"
@@ -13441,7 +13455,15 @@
                 "kind": "property",
                 "name": "tag",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceTestIds": [
+                    "ZDTEST-0031",
+                    "ZDTEST-0032",
+                    "ZDTEST-0035",
+                    "ZDTEST-0036",
+                    "ZDTEST-0038",
+                    "ZDTEST-0039"
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -13454,9 +13476,12 @@
                     }
                   ],
                   "nodeMember": "Element.tag",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -13519,7 +13544,15 @@
                 "kind": "property",
                 "name": "text",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceTestIds": [
+                    "ZDTEST-0031",
+                    "ZDTEST-0032",
+                    "ZDTEST-0035",
+                    "ZDTEST-0036",
+                    "ZDTEST-0038",
+                    "ZDTEST-0039"
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -13532,9 +13565,12 @@
                     }
                   ],
                   "nodeMember": "Element.text",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -20036,10 +20072,22 @@
                 "kind": "method",
                 "name": "evaluate",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceTestIds": [
+                    "ZDTEST-0074",
+                    "ZDTEST-0075",
+                    "ZDTEST-0076",
+                    "ZDTEST-0077",
+                    "ZDTEST-0078",
+                    "ZDTEST-0079",
+                    "ZDTEST-0080",
+                    "ZDTEST-0081",
+                    "ZDTEST-0082",
+                    "ZDTEST-0083"
+                  ],
                   "nodeDeclarations": [
                     {
-                      "declaration": "evaluate<T = unknown>(expression: string, timeoutMs?: number, signal?: AbortSignal): Promise<T>;",
+                      "declaration": "evaluate<T = unknown>(expression: string, awaitPromise?: boolean, returnByValue?: boolean, options?: WaitOptions): Promise<T>;",
                       "kind": "method",
                       "name": "evaluate",
                       "parameters": [
@@ -20054,18 +20102,26 @@
                         {
                           "declaredDefault": null,
                           "hasDeclaredDefault": false,
-                          "name": "timeoutMs",
+                          "name": "awaitPromise",
                           "optional": true,
                           "rest": false,
-                          "type": "number"
+                          "type": "boolean"
                         },
                         {
                           "declaredDefault": null,
                           "hasDeclaredDefault": false,
-                          "name": "signal",
+                          "name": "returnByValue",
                           "optional": true,
                           "rest": false,
-                          "type": "AbortSignal"
+                          "type": "boolean"
+                        },
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "options",
+                          "optional": true,
+                          "rest": false,
+                          "type": "WaitOptions"
                         }
                       ],
                       "returnType": "Promise<T>",
@@ -20076,9 +20132,15 @@
                     }
                   ],
                   "nodeMember": "Tab.evaluate",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "defaults",
+                    "errors",
+                    "return",
+                    "signature"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -20335,10 +20397,16 @@
                 "kind": "method",
                 "name": "find",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceTestIds": [
+                    "ZDTEST-0031",
+                    "ZDTEST-0032",
+                    "ZDTEST-0033",
+                    "ZDTEST-0034"
+                  ],
                   "nodeDeclarations": [
                     {
-                      "declaration": "find(text: string, bestMatch?: boolean, options?: WaitOptions): Promise<Element>;",
+                      "declaration": "find(text: string, bestMatch?: boolean, returnEnclosingElement?: boolean, options?: WaitOptions): Promise<Element>;",
                       "kind": "method",
                       "name": "find",
                       "parameters": [
@@ -20361,6 +20429,14 @@
                         {
                           "declaredDefault": null,
                           "hasDeclaredDefault": false,
+                          "name": "returnEnclosingElement",
+                          "optional": true,
+                          "rest": false,
+                          "type": "boolean"
+                        },
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
                           "name": "options",
                           "optional": true,
                           "rest": false,
@@ -20373,9 +20449,15 @@
                     }
                   ],
                   "nodeMember": "Tab.find",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "defaults",
+                    "errors",
+                    "return",
+                    "signature"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -20429,7 +20511,7 @@
                   "evidence": "compatible member kind in TypeScript AST declaration",
                   "nodeDeclarations": [
                     {
-                      "declaration": "findAll(text: string, bestMatch?: boolean, options?: WaitOptions): Promise<readonly Element[]>;",
+                      "declaration": "findAll(text: string, options?: WaitOptions): Promise<readonly Element[]>;",
                       "kind": "method",
                       "name": "findAll",
                       "parameters": [
@@ -20440,14 +20522,6 @@
                           "optional": false,
                           "rest": false,
                           "type": "string"
-                        },
-                        {
-                          "declaredDefault": null,
-                          "hasDeclaredDefault": false,
-                          "name": "bestMatch",
-                          "optional": true,
-                          "rest": false,
-                          "type": "boolean"
                         },
                         {
                           "declaredDefault": null,
@@ -20506,7 +20580,7 @@
                   "evidence": "compatible member kind in TypeScript AST declaration",
                   "nodeDeclarations": [
                     {
-                      "declaration": "findElementByText(text: string, bestMatch?: boolean): Promise<Element | null>;",
+                      "declaration": "findElementByText(text: string, bestMatch?: boolean, returnEnclosingElement?: boolean): Promise<Element | null>;",
                       "kind": "method",
                       "name": "findElementByText",
                       "parameters": [
@@ -20522,6 +20596,14 @@
                           "declaredDefault": null,
                           "hasDeclaredDefault": false,
                           "name": "bestMatch",
+                          "optional": true,
+                          "rest": false,
+                          "type": "boolean"
+                        },
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "returnEnclosingElement",
                           "optional": true,
                           "rest": false,
                           "type": "boolean"
@@ -20582,7 +20664,7 @@
                   "evidence": "compatible member kind in TypeScript AST declaration",
                   "nodeDeclarations": [
                     {
-                      "declaration": "findElementsByText(text: string): Promise<readonly Element[]>;",
+                      "declaration": "findElementsByText(text: string, tagHint?: string): Promise<readonly Element[]>;",
                       "kind": "method",
                       "name": "findElementsByText",
                       "parameters": [
@@ -20591,6 +20673,14 @@
                           "hasDeclaredDefault": false,
                           "name": "text",
                           "optional": false,
+                          "rest": false,
+                          "type": "string"
+                        },
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "tagHint",
+                          "optional": true,
                           "rest": false,
                           "type": "string"
                         }
@@ -21847,7 +21937,10 @@
                 "kind": "method",
                 "name": "query_selector_all",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceTestIds": [
+                    "ZDTEST-0037"
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "querySelectorAll(selector: string, options?: QueryOptions): Promise<readonly Element[]>;",
@@ -21877,9 +21970,12 @@
                     }
                   ],
                   "nodeMember": "Tab.querySelectorAll",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -22346,7 +22442,11 @@
                 "kind": "method",
                 "name": "select",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceTestIds": [
+                    "ZDTEST-0035",
+                    "ZDTEST-0036"
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "select(selector: string, options?: WaitOptions): Promise<Element>;",
@@ -22376,9 +22476,12 @@
                     }
                   ],
                   "nodeMember": "Tab.select",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -22670,10 +22773,16 @@
                 "kind": "method",
                 "name": "set_user_agent",
                 "nodeMapping": {
-                  "evidence": "name and member kind match, but required arity differs",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceTestIds": [
+                    "ZDTEST-0027",
+                    "ZDTEST-0028",
+                    "ZDTEST-0029",
+                    "ZDTEST-0030"
+                  ],
                   "nodeDeclarations": [
                     {
-                      "declaration": "setUserAgent(userAgent: string, acceptLanguage?: string, platform?: string): Promise<Protocol.Emulation.Commands.SetUserAgentOverrideResult>;",
+                      "declaration": "setUserAgent(userAgent?: string, acceptLanguage?: string, platform?: string): Promise<void>;",
                       "kind": "method",
                       "name": "setUserAgent",
                       "parameters": [
@@ -22681,7 +22790,7 @@
                           "declaredDefault": null,
                           "hasDeclaredDefault": false,
                           "name": "userAgent",
-                          "optional": false,
+                          "optional": true,
                           "rest": false,
                           "type": "string"
                         },
@@ -22702,15 +22811,21 @@
                           "type": "string"
                         }
                       ],
-                      "returnType": "Promise<Protocol.Emulation.Commands.SetUserAgentOverrideResult>",
+                      "returnType": "Promise<void>",
                       "static": false,
                       "typeParameters": []
                     }
                   ],
                   "nodeMember": "Tab.setUserAgent",
-                  "semanticsVerified": false,
-                  "signatureComparison": "INCOMPATIBLE_REQUIRED_ARITY",
-                  "status": "UNKNOWN"
+                  "semanticsCoverage": [
+                    "defaults",
+                    "return",
+                    "signature",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -23353,10 +23468,14 @@
                 "kind": "method",
                 "name": "wait_for_ready_state",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceTestIds": [
+                    "ZDTEST-0054",
+                    "ZDTEST-0055"
+                  ],
                   "nodeDeclarations": [
                     {
-                      "declaration": "waitForReadyState(state?: ReadyState, options?: WaitOptions): Promise<ReadyState>;",
+                      "declaration": "waitForReadyState(state?: ReadyState, options?: WaitOptions): Promise<boolean>;",
                       "kind": "method",
                       "name": "waitForReadyState",
                       "parameters": [
@@ -23377,15 +23496,18 @@
                           "type": "WaitOptions"
                         }
                       ],
-                      "returnType": "Promise<ReadyState>",
+                      "returnType": "Promise<boolean>",
                       "static": false,
                       "typeParameters": []
                     }
                   ],
                   "nodeMember": "Tab.waitForReadyState",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -23438,7 +23560,13 @@
                 "kind": "method",
                 "name": "xpath",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceTestIds": [
+                    "ZDTEST-0038",
+                    "ZDTEST-0039",
+                    "ZDTEST-0040",
+                    "ZDTEST-0041"
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "xpath(expression: string, options?: WaitOptions): Promise<readonly Element[]>;",
@@ -23468,9 +23596,13 @@
                     }
                   ],
                   "nodeMember": "Tab.xpath",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "errors",
+                    "return"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [

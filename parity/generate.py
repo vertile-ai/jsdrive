@@ -596,6 +596,11 @@ def add_api_semantic_mappings(upstream: dict[str, Any]) -> None:
             "nodeMember": semantic["nodeMember"],
             "evidence": "independent passing Node parity cases",
             "evidenceTestIds": semantic["testIds"],
+            **(
+                {"semanticsCoverage": semantic["verifiedSemantics"]}
+                if "verifiedSemantics" in semantic
+                else {}
+            ),
             "signatureComparison": target["nodeMapping"].get("signatureComparison", "UNVERIFIED"),
             "semanticsVerified": True,
         }
@@ -750,9 +755,23 @@ def validate(
     if len({entry["upstream"] for entry in semantic_mappings}) != len(semantic_mappings):
         errors.append("API semantic mappings contain duplicate upstream targets")
     for entry in semantic_mappings:
-        if set(entry) != {"upstream", "nodeMember", "testIds"}:
+        if set(entry) not in (
+            {"upstream", "nodeMember", "testIds"},
+            {"upstream", "nodeMember", "testIds", "verifiedSemantics"},
+        ):
             errors.append(f"API semantic mapping schema is invalid: {entry}")
             continue
+        verified_semantics = entry.get("verifiedSemantics")
+        if verified_semantics is not None and (
+            not isinstance(verified_semantics, list)
+            or not verified_semantics
+            or verified_semantics != sorted(set(verified_semantics))
+            or any(
+                semantic not in {"defaults", "errors", "return", "signature", "state"}
+                for semantic in verified_semantics
+            )
+        ):
+            errors.append(f"API semantic coverage is invalid: {entry['upstream']}")
         target = upstream_targets.get(entry["upstream"])
         if target is None:
             errors.append(f"API semantic mapping has unknown upstream target: {entry['upstream']}")
@@ -770,6 +789,8 @@ def validate(
             errors.append(f"API semantic target is not marked verified: {entry['upstream']}")
         if mapping.get("nodeMember") != entry["nodeMember"] or mapping.get("evidenceTestIds") != entry["testIds"]:
             errors.append(f"generated API semantic mapping differs from overlay: {entry['upstream']}")
+        if mapping.get("semanticsCoverage") != verified_semantics:
+            errors.append(f"generated API semantic coverage differs from overlay: {entry['upstream']}")
     core_symbol_count = sum(len(module["symbols"]) for module in modules)
     core_member_count = sum(
         len(symbol.get("members", []))

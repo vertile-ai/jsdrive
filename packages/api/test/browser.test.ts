@@ -213,9 +213,29 @@ test("text search releases temporary text-node and parent Runtime objects", asyn
       return {};
     },
   } as unknown as CdpConnection;
-  const result = await new Tab("text-release", connection, "session").find("visible", false, { timeoutMs: 10 });
+  const result = await new Tab("text-release", connection, "session").find("visible", false, true, { timeoutMs: 10 });
   assert.equal(result.attributes.id, "visible");
   assert.deepEqual(released, ["temporary-parent", "temporary-text"]);
+});
+
+test("text search can retain a non-element match instead of promoting its parent", async () => {
+  const connection = {
+    sendRaw: async (method: string, params: unknown) => {
+      const values = params as { readonly nodeId?: number; readonly backendNodeId?: number; readonly objectId?: string };
+      if (method === "DOM.getDocument") return { root: domNode(1, 1, "#document", 9) };
+      if (method === "DOM.performSearch") return { searchId: "search", resultCount: 1 };
+      if (method === "DOM.getSearchResults") return { nodeIds: [11] };
+      if (method === "DOM.describeNode" && values.nodeId === 11) return { node: { ...domNode(11, 11, "#text", 3), nodeValue: "visible" } };
+      if (method === "DOM.resolveNode" && values.nodeId === 11) return { object: { type: "object", objectId: "text" } };
+      if (method === "Runtime.callFunctionOn") return { result: { type: "object", objectId: "parent" } };
+      if (method === "DOM.requestNode") return { nodeId: 12 };
+      if (method === "DOM.describeNode" && values.nodeId === 12) return { node: domNode(12, 12, "P", 1) };
+      return {};
+    },
+  } as unknown as CdpConnection;
+  const result = await new Tab("raw-text", connection, "session").find("visible", false, false, { timeoutMs: 10 });
+  assert.equal(result.nodeType, 3);
+  assert.equal(result.nodeValue, "visible");
 });
 
 function domNode(

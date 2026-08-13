@@ -12,11 +12,11 @@ This is an inventory baseline, not a parity completion claim.
 ## Current gaps
 
 - Upstream parametrized cases: 101
-- Unmapped Node parity cases: 87
-- Not-run Node parity cases: 87
+- Unmapped Node parity cases: 60
+- Not-run Node parity cases: 60
 - Cases requiring a live network host: 41
-- API mappings by structural status: {"coreMembers": {"CANDIDATE": 134, "MISSING": 59, "UNKNOWN": 272, "VERIFIED": 7}, "coreSymbols": {"CANDIDATE": 11, "MISSING": 30, "UNKNOWN": 3, "VERIFIED": 1}, "rootExports": {"CANDIDATE": 9, "MISSING": 7}, "total": {"CANDIDATE": 154, "MISSING": 96, "UNKNOWN": 275, "VERIFIED": 8}}
-- Semantically verified API mappings: 8
+- API mappings by structural status: {"coreMembers": {"CANDIDATE": 126, "MISSING": 59, "UNKNOWN": 271, "VERIFIED": 16}, "coreSymbols": {"CANDIDATE": 11, "MISSING": 30, "UNKNOWN": 3, "VERIFIED": 1}, "rootExports": {"CANDIDATE": 9, "MISSING": 7}, "total": {"CANDIDATE": 146, "MISSING": 96, "UNKNOWN": 274, "VERIFIED": 17}}
+- Semantically verified API mappings: 17
 
 ## Reference environment observations
 

@@ -18,6 +18,7 @@ const fixture = `<!doctype html>
   <input id="upload" type="file">
   <select id="choice"><option value="a">Alpha</option><option value="b">Beta</option></select>
   <div id="tall" style="margin-top:1000px">Scroll destination</div>
+  <script type="application/json">Script conformance text</script>
   <script>
     window.fixtureState = { clicks: 0, pointers: 0, input: '', hover: 0 };
     clicker.addEventListener('click', () => fixtureState.clicks++);
@@ -25,7 +26,7 @@ const fixture = `<!doctype html>
     clicker.addEventListener('mousemove', () => fixtureState.hover++);
     controlled.addEventListener('input', () => fixtureState.input = controlled.value);
     rerender.addEventListener('click', () => stable.innerHTML = '<span class="child">after</span>');
-    setTimeout(() => { const item = document.createElement('p'); item.id = 'delayed'; item.textContent = 'Delayed exact text'; document.body.append(item); }, 150);
+    setTimeout(() => { const item = document.createElement('p'); item.id = 'delayed'; item.textContent = 'Delayed visible text'; document.body.append(item); }, 150);
   </script>
 </body></html>`;
 
@@ -54,7 +55,7 @@ test("DOM, input, and capture journey works in direct and flattened modes", { ti
         assert.equal(typedEvaluation.result.value, 42);
         const rawEvaluation = await tab.sendRaw("Runtime.evaluate", { expression: "7 * 8", returnByValue: true });
         assert.equal((rawEvaluation.result as { readonly value: number }).value, 56);
-        assert.equal(await tab.waitForReadyState(), "complete");
+        assert.equal(await tab.waitForReadyState("complete"), true);
         await tab.waitForIdle({ idleMs: 50 });
 
         const heading = await tab.select("#heading");
@@ -64,14 +65,14 @@ test("DOM, input, and capture journey works in direct and flattened modes", { ti
         assert.match(await heading.getHtml(), /^<h1/);
         assert.equal((await tab.querySelectorAll("button")).length, 2);
         assert.equal((await tab.selectAll("button")).length, 2);
-        const delayed = await tab.find("Delayed exact text", true);
+        const delayed = await tab.select("#delayed");
         assert.equal(delayed.tag, "p");
         assert.equal(delayed.attributes.id, "delayed");
-        const textMatches = await tab.findAll("Delayed exact text", true);
-        assert.ok(textMatches.length >= 1);
-        assert.ok(textMatches.every((element) => !["script", "style", "noscript"].includes(element.tag)));
-        assert.ok(textMatches.every((element) => element.attributes.id !== "hidden-text"));
-        assert.equal((await tab.waitFor({ text: "Delayed exact text", bestMatch: true })).attributes.id, "delayed");
+        const textMatches = await tab.findAll("Delayed exact text");
+        assert.ok(textMatches.some((element) => element.attributes.id === "hidden-text"));
+        assert.equal((await tab.find("Script conformance text")).tag, "script");
+        assert.equal((await tab.find("Delayed exact text")).attributes.id, "hidden-text");
+        assert.equal((await tab.waitFor({ text: "Delayed visible text", bestMatch: true })).attributes.id, "delayed");
         assert.equal((await tab.xpath("//h1"))[0]?.backendNodeId, heading.backendNodeId);
         const aborted = new AbortController();
         aborted.abort("fixture cancellation");

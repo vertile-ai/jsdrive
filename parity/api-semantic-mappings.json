@@ -35,6 +35,60 @@
     "upstream": "zendriver.core.tab.Tab.update_target"
   },
   {
+    "nodeMember": "Tab.setUserAgent",
+    "testIds": ["ZDTEST-0027", "ZDTEST-0028", "ZDTEST-0029", "ZDTEST-0030"],
+    "upstream": "zendriver.core.tab.Tab.set_user_agent",
+    "verifiedSemantics": ["defaults", "return", "signature", "state"]
+  },
+  {
+    "nodeMember": "Tab.find",
+    "testIds": ["ZDTEST-0031", "ZDTEST-0032", "ZDTEST-0033", "ZDTEST-0034"],
+    "upstream": "zendriver.core.tab.Tab.find",
+    "verifiedSemantics": ["defaults", "errors", "return", "signature"]
+  },
+  {
+    "nodeMember": "Tab.select",
+    "testIds": ["ZDTEST-0035", "ZDTEST-0036"],
+    "upstream": "zendriver.core.tab.Tab.select",
+    "verifiedSemantics": ["return"]
+  },
+  {
+    "nodeMember": "Tab.querySelectorAll",
+    "testIds": ["ZDTEST-0037"],
+    "upstream": "zendriver.core.tab.Tab.query_selector_all",
+    "verifiedSemantics": ["return"]
+  },
+  {
+    "nodeMember": "Tab.xpath",
+    "testIds": ["ZDTEST-0038", "ZDTEST-0039", "ZDTEST-0040", "ZDTEST-0041"],
+    "upstream": "zendriver.core.tab.Tab.xpath",
+    "verifiedSemantics": ["errors", "return"]
+  },
+  {
+    "nodeMember": "Tab.waitForReadyState",
+    "testIds": ["ZDTEST-0054", "ZDTEST-0055"],
+    "upstream": "zendriver.core.tab.Tab.wait_for_ready_state",
+    "verifiedSemantics": ["return"]
+  },
+  {
+    "nodeMember": "Tab.evaluate",
+    "testIds": ["ZDTEST-0074", "ZDTEST-0075", "ZDTEST-0076", "ZDTEST-0077", "ZDTEST-0078", "ZDTEST-0079", "ZDTEST-0080", "ZDTEST-0081", "ZDTEST-0082", "ZDTEST-0083"],
+    "upstream": "zendriver.core.tab.Tab.evaluate",
+    "verifiedSemantics": ["defaults", "errors", "return", "signature"]
+  },
+  {
+    "nodeMember": "Element.tag",
+    "testIds": ["ZDTEST-0031", "ZDTEST-0032", "ZDTEST-0035", "ZDTEST-0036", "ZDTEST-0038", "ZDTEST-0039"],
+    "upstream": "zendriver.core.element.Element.tag",
+    "verifiedSemantics": ["return"]
+  },
+  {
+    "nodeMember": "Element.text",
+    "testIds": ["ZDTEST-0031", "ZDTEST-0032", "ZDTEST-0035", "ZDTEST-0036", "ZDTEST-0038", "ZDTEST-0039"],
+    "upstream": "zendriver.core.element.Element.text",
+    "verifiedSemantics": ["return"]
+  },
+  {
     "nodeMember": "Config",
     "testIds": ["ZDTEST-0020"],
     "upstream": "zendriver.core.config.Config"

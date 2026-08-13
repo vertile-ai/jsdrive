@@ -3,6 +3,7 @@ import test from "node:test";
 import type { Protocol } from "@vertile-ai/jsdriver-protocol";
 import { CdpAbortError, type CdpConnection, type SendOptions } from "@vertile-ai/jsdriver-runtime-js";
 import { Tab, TargetClosedError, TargetCrashedError } from "../src/browser.js";
+import { expectDownload } from "../src/download.js";
 import { Element } from "../src/element.js";
 
 const unusedConnection = {} as CdpConnection;
@@ -141,6 +142,33 @@ test("network expectations ignore other sessions and clean up listeners and doma
     "off:Network.loadingFailed",
     "release:Network",
   ]);
+});
+
+test("download completion is retained while an asynchronous matcher resolves", async () => {
+  const handlers = new Map<string, (event: unknown) => unknown>();
+  const connection = {
+    on: (method: string, handler: (event: unknown) => unknown) => {
+      handlers.set(method, handler);
+      return () => { handlers.delete(method); };
+    },
+    sendRaw: async (method: string) => method === "Page.getFrameTree"
+      ? { frameTree: { frame: { id: "frame" } } }
+      : {},
+  } as unknown as CdpConnection;
+  const tab = new Tab("download-race", connection, "session");
+  const expectation = expectDownload(tab, process.cwd(), async () => {
+    await Promise.resolve();
+    return true;
+  }, { timeoutMs: 100 });
+  await expectation.ready;
+
+  const begin = handlers.get("Browser.downloadWillBegin");
+  const progress = handlers.get("Browser.downloadProgress");
+  assert.ok(begin !== undefined && progress !== undefined);
+  void begin({ frameId: "frame", guid: "download", url: "https://fixture.test/file", suggestedFilename: "file.txt" });
+  void progress({ guid: "download", state: "completed", receivedBytes: 4, totalBytes: 4, filePath: `${process.cwd()}/file.txt` });
+
+  assert.equal((await expectation.value).guid, "download");
 });
 
 test("mouse clicks send the correct pressed-button bitmask", async () => {

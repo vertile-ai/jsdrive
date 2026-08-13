@@ -104,5 +104,29 @@
     "testIds": ["ZDTEST-0046", "ZDTEST-0047", "ZDTEST-0048", "ZDTEST-0049", "ZDTEST-0050", "ZDTEST-0051", "ZDTEST-0052", "ZDTEST-0053"],
     "upstream": "zendriver.core.tab.Tab.remove_handlers",
     "verifiedSemantics": ["errors", "return", "state"]
+  },
+  {
+    "nodeMember": "Tab.expectRequest",
+    "testIds": ["ZDTEST-0056", "ZDTEST-0057"],
+    "upstream": "zendriver.core.tab.Tab.expect_request",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Tab.expectResponse",
+    "testIds": ["ZDTEST-0058", "ZDTEST-0059", "ZDTEST-0060", "ZDTEST-0061"],
+    "upstream": "zendriver.core.tab.Tab.expect_response",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Tab.expectDownload",
+    "testIds": ["ZDTEST-0062", "ZDTEST-0063"],
+    "upstream": "zendriver.core.tab.Tab.expect_download",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Tab.intercept",
+    "testIds": ["ZDTEST-0064", "ZDTEST-0065", "ZDTEST-0066", "ZDTEST-0067"],
+    "upstream": "zendriver.core.tab.Tab.intercept",
+    "verifiedSemantics": ["return", "state"]
   }
 ]

@@ -1,14 +1,14 @@
 {
   "mappingCounts": {
     "coreMembers": {
-      "CANDIDATE": 126,
-      "MISSING": 57,
+      "CANDIDATE": 128,
+      "MISSING": 51,
       "UNKNOWN": 271,
-      "VERIFIED": 18
+      "VERIFIED": 22
     },
     "coreSymbols": {
-      "CANDIDATE": 11,
-      "MISSING": 30,
+      "CANDIDATE": 12,
+      "MISSING": 29,
       "UNKNOWN": 3,
       "VERIFIED": 1
     },
@@ -17,10 +17,10 @@
       "MISSING": 7
     },
     "total": {
-      "CANDIDATE": 146,
-      "MISSING": 94,
+      "CANDIDATE": 149,
+      "MISSING": 87,
       "UNKNOWN": 274,
-      "VERIFIED": 19
+      "VERIFIED": 23
     }
   },
   "nodriver": {
@@ -1976,14 +1976,13 @@
         "file": "packages/api/dist/network.d.ts",
         "members": [
           {
-            "declaration": "readonly ready: Promise<void>;",
-            "declaredDefault": null,
-            "hasDeclaredDefault": false,
+            "access": "get",
+            "declaration": "get ready(): Promise<void>;",
             "kind": "property",
             "name": "ready",
-            "optional": false,
-            "readonly": true,
-            "type": "Promise<void>"
+            "parameters": [],
+            "returnType": "Promise<void>",
+            "typeParameters": []
           },
           {
             "declaration": "constructor(tab: Tab, options?: InterceptionOptions);",
@@ -2029,6 +2028,104 @@
             "typeParameters": []
           },
           {
+            "access": "get",
+            "declaration": "get request(): Promise<Protocol.Network.Request>;",
+            "kind": "property",
+            "name": "request",
+            "parameters": [],
+            "returnType": "Promise<Protocol.Network.Request>",
+            "typeParameters": []
+          },
+          {
+            "access": "get",
+            "declaration": "get responseBody(): Promise<readonly [string, boolean]>;",
+            "kind": "property",
+            "name": "responseBody",
+            "parameters": [],
+            "returnType": "Promise<readonly [string, boolean]>",
+            "typeParameters": []
+          },
+          {
+            "declaration": "continueRequest(params?: Omit<Protocol.Fetch.Commands.ContinueRequestParams, \"requestId\">): Promise<void>;",
+            "kind": "method",
+            "name": "continueRequest",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "params",
+                "optional": true,
+                "rest": false,
+                "type": "Omit<Protocol.Fetch.Commands.ContinueRequestParams, \"requestId\">"
+              }
+            ],
+            "returnType": "Promise<void>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "continueResponse(params?: Omit<Protocol.Fetch.Commands.ContinueResponseParams, \"requestId\">): Promise<void>;",
+            "kind": "method",
+            "name": "continueResponse",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "params",
+                "optional": true,
+                "rest": false,
+                "type": "Omit<Protocol.Fetch.Commands.ContinueResponseParams, \"requestId\">"
+              }
+            ],
+            "returnType": "Promise<void>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "failRequest(errorReason?: Protocol.Network.ErrorReason): Promise<void>;",
+            "kind": "method",
+            "name": "failRequest",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "errorReason",
+                "optional": true,
+                "rest": false,
+                "type": "Protocol.Network.ErrorReason"
+              }
+            ],
+            "returnType": "Promise<void>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "fulfillRequest(responseCode: number, options?: Omit<Protocol.Fetch.Commands.FulfillRequestParams, \"requestId\" | \"responseCode\">): Promise<void>;",
+            "kind": "method",
+            "name": "fulfillRequest",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "responseCode",
+                "optional": false,
+                "rest": false,
+                "type": "number"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "options",
+                "optional": true,
+                "rest": false,
+                "type": "Omit<Protocol.Fetch.Commands.FulfillRequestParams, \"requestId\" | \"responseCode\">"
+              }
+            ],
+            "returnType": "Promise<void>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
             "declaration": "close(): Promise<void>;",
             "kind": "method",
             "name": "close",
@@ -2047,11 +2144,11 @@
             "typeParameters": []
           },
           {
-            "declaration": "reset(): Promise<FetchInterception>;",
+            "declaration": "reset(): Promise<void>;",
             "kind": "method",
             "name": "reset",
             "parameters": [],
-            "returnType": "Promise<FetchInterception>",
+            "returnType": "Promise<void>",
             "static": false,
             "typeParameters": []
           }
@@ -2167,6 +2264,15 @@
             "name": "handled",
             "parameters": [],
             "returnType": "boolean",
+            "typeParameters": []
+          },
+          {
+            "access": "get",
+            "declaration": "get responseBody(): Promise<readonly [string, boolean]>;",
+            "kind": "property",
+            "name": "responseBody",
+            "parameters": [],
+            "returnType": "Promise<readonly [string, boolean]>",
             "typeParameters": []
           },
           {
@@ -2959,7 +3065,7 @@
             "typeParameters": []
           },
           {
-            "declaration": "expectRequest(matcher: UrlMatcher<Protocol.Network.Events.RequestWillBeSentEvent>, options?: WaitOptions): Expectation<ExpectedRequest>;",
+            "declaration": "expectRequest(matcher: UrlMatcher<Protocol.Network.Events.RequestWillBeSentEvent>, options?: WaitOptions): RequestExpectation;",
             "kind": "method",
             "name": "expectRequest",
             "parameters": [
@@ -2980,12 +3086,12 @@
                 "type": "WaitOptions"
               }
             ],
-            "returnType": "Expectation<ExpectedRequest>",
+            "returnType": "RequestExpectation",
             "static": false,
             "typeParameters": []
           },
           {
-            "declaration": "expectResponse(matcher: UrlMatcher<Protocol.Network.Events.ResponseReceivedEvent>, options?: WaitOptions): Expectation<ExpectedResponse>;",
+            "declaration": "expectResponse(matcher: UrlMatcher<Protocol.Network.Events.ResponseReceivedEvent>, options?: WaitOptions): ResponseExpectation;",
             "kind": "method",
             "name": "expectResponse",
             "parameters": [
@@ -3006,7 +3112,7 @@
                 "type": "WaitOptions"
               }
             ],
-            "returnType": "Expectation<ExpectedResponse>",
+            "returnType": "ResponseExpectation",
             "static": false,
             "typeParameters": []
           },
@@ -3022,6 +3128,40 @@
                 "optional": true,
                 "rest": false,
                 "type": "InterceptionOptions"
+              }
+            ],
+            "returnType": "FetchInterception",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "intercept(url: string, stage: Protocol.Fetch.RequestStage, resourceType: Protocol.Network.ResourceType): FetchInterception;",
+            "kind": "method",
+            "name": "intercept",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "url",
+                "optional": false,
+                "rest": false,
+                "type": "string"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "stage",
+                "optional": false,
+                "rest": false,
+                "type": "Protocol.Fetch.RequestStage"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "resourceType",
+                "optional": false,
+                "rest": false,
+                "type": "Protocol.Network.ResourceType"
               }
             ],
             "returnType": "FetchInterception",
@@ -3047,7 +3187,16 @@
             "typeParameters": []
           },
           {
-            "declaration": "expectDownload(matcher?: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent>, options?: DownloadOptions): Expectation<DownloadResult>;",
+            "declaration": "expectDownload(): DownloadWillBeginExpectation;",
+            "kind": "method",
+            "name": "expectDownload",
+            "parameters": [],
+            "returnType": "DownloadWillBeginExpectation",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "expectDownload(matcher: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent>, options?: DownloadOptions): DownloadResultExpectation;",
             "kind": "method",
             "name": "expectDownload",
             "parameters": [
@@ -3055,7 +3204,7 @@
                 "declaredDefault": null,
                 "hasDeclaredDefault": false,
                 "name": "matcher",
-                "optional": true,
+                "optional": false,
                 "rest": false,
                 "type": "UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent>"
               },
@@ -3068,7 +3217,7 @@
                 "type": "DownloadOptions"
               }
             ],
-            "returnType": "Expectation<DownloadResult>",
+            "returnType": "DownloadResultExpectation",
             "static": false,
             "typeParameters": []
           },
@@ -4724,6 +4873,13 @@
       }
     },
     "declaredSymbols": {
+      "BaseRequestExpectation": {
+        "declarations": [
+          "export interface BaseRequestExpectation<T> extends Expectation<T> { readonly request: Promise<Protocol.Network.Request>; readonly response: Promise<Protocol.Network.Response>; readonly responseBody: Promise<readonly [string, boolean]>; }"
+        ],
+        "file": "packages/api/dist/network.d.ts",
+        "kind": "interface"
+      },
       "Browser": {
         "declarations": [
           "export declare class Browser { #private; readonly connection: RuntimeBackend; readonly endpoint: BrowserEndpoint; readonly version: BrowserVersion; readonly protocol: unknown; readonly connectionMode: ConnectionMode; readonly config: Config; readonly process: BrowserProcessMetadata | undefined; readonly cookies: CookieJar; private constructor(); get targets(): readonly Protocol.Target.TargetInfo[]; get tabs(): readonly Tab[]; get mainTab(): Tab | undefined; get enabledDomains(): ReadonlySet<string>; get manuallyEnabledDomains(): ReadonlySet<string>; get webSocketUrl(): string; get stopped(): boolean; [Symbol.iterator](): Iterator<Tab>; static start(options?: LaunchOptions | Config): Promise<Browser>; static connect(options: ConnectOptions): Promise<Browser>; get(url?: string, options?: { readonly newTab?: boolean; readonly newWindow?: boolean; }): Promise<Tab>; newTab(url?: string): Promise<Tab>; newWindow(url?: string): Promise<Tab>; createTab(url?: string, targetOptions?: Omit<Protocol.Target.Commands.CreateTargetParams, \"url\">): Promise<Tab>; targetInfo(target: string | Tab): Protocol.Target.TargetInfo | undefined; updateTargets(): Promise<readonly Protocol.Target.TargetInfo[]>; testConnection(): Promise<Protocol.Browser.Commands.GetVersionResult>; grantPermissions(permissions: readonly Protocol.Browser.PermissionType[], origin?: string): Promise<void>; grantAllPermissions(origin?: string): Promise<void>; wait(milliseconds: number, signal?: AbortSignal): Promise<void>; sleep(milliseconds: number, signal?: AbortSignal): Promise<void>; tileWindows(windows?: readonly Tab[], options?: { readonly maxColumns?: number; readonly left?: number; readonly top?: number; readonly width?: number; readonly height?: number; }): Promise<readonly Protocol.Browser.Bounds[]>; closeTab(tab: Tab): Promise<void>; close(): Promise<void>; stop(): Promise<void>; }"
@@ -4829,6 +4985,20 @@
         "file": "packages/api/dist/download.d.ts",
         "kind": "interface"
       },
+      "DownloadResultExpectation": {
+        "declarations": [
+          "export interface DownloadResultExpectation { readonly ready: Promise<void>; readonly value: Promise<DownloadResult>; cancel(reason?: unknown): Promise<void>; reset(): Promise<DownloadResultExpectation>; }"
+        ],
+        "file": "packages/api/dist/download.d.ts",
+        "kind": "interface"
+      },
+      "DownloadWillBeginExpectation": {
+        "declarations": [
+          "export interface DownloadWillBeginExpectation { readonly ready: Promise<void>; readonly value: Promise<Protocol.Browser.Events.DownloadWillBeginEvent>; cancel(reason?: unknown): Promise<void>; close(): Promise<void>; [Symbol.asyncDispose](): Promise<void>; }"
+        ],
+        "file": "packages/api/dist/download.d.ts",
+        "kind": "interface"
+      },
       "Element": {
         "declarations": [
           "export declare class Element { #private; readonly tab: Tab; readonly backendNodeId: Protocol.DOM.BackendNodeId; constructor(tab: Tab, backendNodeId: Protocol.DOM.BackendNodeId, node: Protocol.DOM.Node); get nodeId(): Protocol.DOM.NodeId; get node(): Protocol.DOM.Node; get parentNodeId(): Protocol.DOM.NodeId | undefined; get parentId(): Protocol.DOM.NodeId | undefined; get objectId(): Protocol.Runtime.RemoteObjectId | undefined; get nodeType(): number; get tag(): string; get tagName(): string; get nodeName(): string; get localName(): string; get nodeValue(): string; get textAll(): string; get documentURL(): string | undefined; get baseURL(): string | undefined; get publicId(): string | undefined; get systemId(): string | undefined; get internalSubset(): string | undefined; get xmlVersion(): string | undefined; get pseudoType(): Protocol.DOM.PseudoType | undefined; get pseudoIdentifier(): string | undefined; get shadowRootType(): Protocol.DOM.ShadowRootType | undefined; get frameId(): Protocol.Page.FrameId | undefined; get childNodeCount(): number | undefined; get compatibilityMode(): Protocol.DOM.CompatibilityMode | undefined; get isSvg(): boolean; get isScrollable(): boolean | undefined; get assignedSlot(): Protocol.DOM.BackendNode | undefined; get distributedNodes(): readonly Protocol.DOM.BackendNode[]; get adoptedStyleSheets(): readonly Protocol.DOM.StyleSheetId[]; get attributes(): Readonly<Record<string, string>>; get attrs(): Readonly<Record<string, string>>; get children(): readonly Element[]; get tree(): readonly Element[]; get shadowRoots(): readonly Element[]; get pseudoElements(): readonly Element[]; get contentDocument(): Element | undefined; get templateContent(): Element | undefined; get importedDocument(): Element | undefined; get text(): string; get value(): string | undefined; get html(): string | undefined; get(name: string): string | undefined; parent(): Promise<Element | null>; refresh(): Promise<this>; update(): Promise<this>; getText(): Promise<string>; getValue(): Promise<string>; getHtml(): Promise<string>; getRemoteObject(): Promise<Protocol.Runtime.RemoteObject>; getJsAttributes(): Promise<Readonly<Record<string, unknown>>>; saveToDom(outerHtml?: string): Promise<void>; getPosition(): Promise<Position>; querySelector(selector: string): Promise<Element | null>; querySelectorAll(selector: string): Promise<readonly Element[]>; apply<T = unknown>(functionDeclaration: string, ...arguments_: readonly unknown[]): Promise<T>; domClick(): Promise<void>; click(): Promise<void>; mouseClick(button?: Protocol.Input.MouseButton, modifiers?: number): Promise<void>; focus(): Promise<void>; scrollIntoView(): Promise<void>; setValue(value: string): Promise<void>; setText(value: string): Promise<void>; clearInput(): Promise<void>; clearInputByDeleting(): Promise<void>; sendKeys(input: KeyInput | KeyEvents | readonly KeyInput[]): Promise<void>; uploadFiles(files: readonly string[]): Promise<void>; sendFile(...files: readonly string[]): Promise<void>; selectOption(value?: string): Promise<void>; mouseMove(): Promise<void>; flash(durationMs?: number): Promise<void>; highlightOverlay(): Promise<void>; recordVideo(directory: string): Promise<ScreencastSession>; mouseDrag(destination: Element | Position): Promise<void>; screenshotB64(format?: \"jpeg\" | \"png\" | \"webp\"): Promise<string>; saveScreenshot(path: string, format?: \"jpeg\" | \"png\" | \"webp\"): Promise<string>; removeFromDom(): Promise<void>; }"
@@ -4845,42 +5015,42 @@
       },
       "Expectation": {
         "declarations": [
-          "export interface Expectation<T> { readonly ready: Promise<void>; readonly value: Promise<T>; cancel(reason?: unknown): Promise<void>; reset(): Promise<Expectation<T>>; }"
+          "export interface Expectation<T> { readonly ready: Promise<void>; readonly value: Promise<T>; cancel(reason?: unknown): Promise<void>; reset(): Promise<void>; [Symbol.asyncDispose](): Promise<void>; }"
         ],
         "file": "packages/api/dist/network.d.ts",
         "kind": "interface"
       },
       "ExpectedRequest": {
         "declarations": [
-          "export interface ExpectedRequest { readonly event: Protocol.Network.Events.RequestWillBeSentEvent; readonly request: Protocol.Network.Request; }"
+          "export type ExpectedRequest = Protocol.Network.Events.RequestWillBeSentEvent;"
         ],
         "file": "packages/api/dist/network.d.ts",
-        "kind": "interface"
+        "kind": "type"
       },
       "ExpectedResponse": {
         "declarations": [
-          "export interface ExpectedResponse { readonly event: Protocol.Network.Events.ResponseReceivedEvent; readonly request?: Protocol.Network.Events.RequestWillBeSentEvent; readonly response: Protocol.Network.Response; readonly loadingFinished: Protocol.Network.Events.LoadingFinishedEvent; readonly body: string; readonly bodyBase64Encoded: boolean; json<T = unknown>(): T; bytes(): Buffer; }"
+          "export type ExpectedResponse = Protocol.Network.Events.ResponseReceivedEvent;"
         ],
         "file": "packages/api/dist/network.d.ts",
-        "kind": "interface"
+        "kind": "type"
       },
       "FetchInterception": {
         "declarations": [
-          "export declare class FetchInterception { #private; readonly ready: Promise<void>; constructor(tab: Tab, options?: InterceptionOptions); next(options?: NextInterceptionOptions): Promise<InterceptedRequest>; close(): Promise<void>; [Symbol.asyncDispose](): Promise<void>; reset(): Promise<FetchInterception>; }"
+          "export declare class FetchInterception { #private; get ready(): Promise<void>; constructor(tab: Tab, options?: InterceptionOptions); next(options?: NextInterceptionOptions): Promise<InterceptedRequest>; /** The current paused request, matching Zendriver's awaitable interception facade. */ get request(): Promise<Protocol.Network.Request>; get responseBody(): Promise<readonly [string, boolean]>; continueRequest(params?: Omit<Protocol.Fetch.Commands.ContinueRequestParams, \"requestId\">): Promise<void>; continueResponse(params?: Omit<Protocol.Fetch.Commands.ContinueResponseParams, \"requestId\">): Promise<void>; failRequest(errorReason?: Protocol.Network.ErrorReason): Promise<void>; fulfillRequest(responseCode: number, options?: Omit<Protocol.Fetch.Commands.FulfillRequestParams, \"requestId\" | \"responseCode\">): Promise<void>; close(): Promise<void>; [Symbol.asyncDispose](): Promise<void>; reset(): Promise<void>; }"
         ],
         "file": "packages/api/dist/network.d.ts",
         "kind": "class"
       },
       "InterceptedRequest": {
         "declarations": [
-          "export declare class InterceptedRequest { #private; private readonly tab; readonly event: Protocol.Fetch.Events.RequestPausedEvent; readonly stage: Protocol.Fetch.RequestStage; private readonly onHandled; constructor(tab: Tab, event: Protocol.Fetch.Events.RequestPausedEvent, stage: Protocol.Fetch.RequestStage, onHandled?: () => void); get request(): Protocol.Network.Request; get resourceType(): Protocol.Network.ResourceType; get responseStatusCode(): number | undefined; get handled(): boolean; continueRequest(params?: Omit<Protocol.Fetch.Commands.ContinueRequestParams, \"requestId\">): Promise<void>; continueResponse(params?: Omit<Protocol.Fetch.Commands.ContinueResponseParams, \"requestId\">): Promise<void>; continue(): Promise<void>; failRequest(errorReason?: Protocol.Network.ErrorReason): Promise<void>; fulfillRequest(responseCode: number, options?: Omit<Protocol.Fetch.Commands.FulfillRequestParams, \"requestId\" | \"responseCode\">): Promise<void>; body(): Promise<Buffer>; }"
+          "export declare class InterceptedRequest { #private; private readonly tab; readonly event: Protocol.Fetch.Events.RequestPausedEvent; readonly stage: Protocol.Fetch.RequestStage; private readonly onHandled; constructor(tab: Tab, event: Protocol.Fetch.Events.RequestPausedEvent, stage: Protocol.Fetch.RequestStage, onHandled?: () => void); get request(): Protocol.Network.Request; get resourceType(): Protocol.Network.ResourceType; get responseStatusCode(): number | undefined; get handled(): boolean; get responseBody(): Promise<readonly [string, boolean]>; continueRequest(params?: Omit<Protocol.Fetch.Commands.ContinueRequestParams, \"requestId\">): Promise<void>; continueResponse(params?: Omit<Protocol.Fetch.Commands.ContinueResponseParams, \"requestId\">): Promise<void>; continue(): Promise<void>; failRequest(errorReason?: Protocol.Network.ErrorReason): Promise<void>; fulfillRequest(responseCode: number, options?: Omit<Protocol.Fetch.Commands.FulfillRequestParams, \"requestId\" | \"responseCode\">): Promise<void>; body(): Promise<Buffer>; }"
         ],
         "file": "packages/api/dist/network.d.ts",
         "kind": "class"
       },
       "InterceptionOptions": {
         "declarations": [
-          "export interface InterceptionOptions { readonly url?: string | RegExp | ((event: Protocol.Fetch.Events.RequestPausedEvent) => boolean | Promise<boolean>); readonly stage?: Protocol.Fetch.RequestStage; readonly resourceType?: Protocol.Network.ResourceType; }"
+          "export interface InterceptionOptions { readonly url?: string | RegExp | ((event: Protocol.Fetch.Events.RequestPausedEvent) => boolean | Promise<boolean>); readonly urlPattern?: string; readonly stage?: Protocol.Fetch.RequestStage; readonly resourceType?: Protocol.Network.ResourceType; }"
         ],
         "file": "packages/api/dist/network.d.ts",
         "kind": "interface"
@@ -4976,6 +5146,20 @@
         "file": "packages/api/dist/tab.d.ts",
         "kind": "type"
       },
+      "RequestExpectation": {
+        "declarations": [
+          "export interface RequestExpectation extends BaseRequestExpectation<ExpectedRequest> { }"
+        ],
+        "file": "packages/api/dist/network.d.ts",
+        "kind": "interface"
+      },
+      "ResponseExpectation": {
+        "declarations": [
+          "export interface ResponseExpectation extends BaseRequestExpectation<ExpectedResponse> { }"
+        ],
+        "file": "packages/api/dist/network.d.ts",
+        "kind": "interface"
+      },
       "ScreencastSession": {
         "declarations": [
           "export interface ScreencastSession { readonly directory: string; readonly frames: readonly string[]; stop(): Promise<readonly string[]>; }"
@@ -5011,7 +5195,7 @@
       },
       "Tab": {
         "declarations": [
-          "export declare class Tab { #private; readonly targetId: string; readonly connection: RuntimeBackend; readonly sessionId?: string | undefined; readonly browserConnection: RuntimeBackend; readonly webSocketUrl?: string | undefined; private readonly closeTarget?; private readonly readTargetInfo; private readonly writeTargetInfo; constructor(targetId: string, connection: RuntimeBackend, sessionId?: string | undefined, browserConnection?: RuntimeBackend, webSocketUrl?: string | undefined, closeTarget?: (() => Promise<void>) | undefined, _childFrames?: () => readonly Tab[], readTargetInfo?: () => Protocol.Target.TargetInfo | undefined, writeTargetInfo?: (targetInfo: Protocol.Target.TargetInfo) => void); get enabledDomains(): ReadonlySet<string>; get manuallyEnabledDomains(): ReadonlySet<string>; get handlers(): ReadonlyMap<string, readonly TabEventHandler[]>; get closed(): boolean; get crashed(): boolean; get targetInfo(): Protocol.Target.TargetInfo | undefined; get title(): string; get url(): string; get type(): string; get subtype(): string | undefined; get attached(): boolean; get browserContextId(): Protocol.Browser.BrowserContextID | undefined; get openerId(): Protocol.Target.TargetID | undefined; get openerFrameId(): Protocol.Page.FrameId | undefined; get parentId(): Protocol.Target.TargetID | undefined; get parentFrameId(): Protocol.Page.FrameId | undefined; updateTarget(): Promise<Protocol.Target.TargetInfo>; send<M extends ProtocolCommand>(method: M, ...args: CommandParams<M> extends undefined ? [params?: undefined, options?: SendOptions] : [params: CommandParams<M>, options?: SendOptions]): Promise<CommandResult<M>>; sendRaw(method: string, params?: unknown, options?: SendOptions): Promise<Readonly<Record<string, unknown>>>; on<E extends ProtocolEvent>(method: E, handler: (params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>): () => void; on(method: string, handler: (params: unknown, metadata: EventMetadata) => void | Promise<void>): () => void; addHandler<E extends ProtocolEvent>(eventType: E, handler: (params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>): void; addHandler(domain: EventDomain, handler: TabEventHandler): void; removeHandlers(): void; removeHandlers(eventType: undefined, handler: TabEventHandler): void; removeHandlers(eventType: ProtocolEvent | EventDomain, handler?: TabEventHandler): void; acquireDomain(domain: string, options?: SendOptions): Promise<() => Promise<void>>; expectRequest(matcher: UrlMatcher<Protocol.Network.Events.RequestWillBeSentEvent>, options?: WaitOptions): Expectation<ExpectedRequest>; expectResponse(matcher: UrlMatcher<Protocol.Network.Events.ResponseReceivedEvent>, options?: WaitOptions): Expectation<ExpectedResponse>; intercept(options?: InterceptionOptions): FetchInterception; setDownloadPath(path: string): Promise<string>; expectDownload(matcher?: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent>, options?: DownloadOptions): Expectation<DownloadResult>; downloadFile(url: string, destination: string, options?: WaitOptions): Promise<DownloadResult>; get(url: string, options?: WaitOptions): Promise<Protocol.Page.Commands.NavigateResult>; navigate(url: string, timeoutMs?: number, signal?: AbortSignal): Promise<Protocol.Page.Commands.NavigateResult>; reload(ignoreCache?: boolean, options?: WaitOptions): Promise<void>; back(options?: WaitOptions): Promise<boolean>; forward(options?: WaitOptions): Promise<boolean>; activate(): Promise<void>; bringToFront(): Promise<Protocol.Page.Commands.BringToFrontResult>; evaluate<T = unknown>(expression: string, awaitPromise?: boolean, returnByValue?: boolean, options?: WaitOptions): Promise<T>; getContent(): Promise<string>; querySelector(selector: string, options?: QueryOptions): Promise<Element | null>; querySelectorAll(selector: string, options?: QueryOptions): Promise<readonly Element[]>; select(selector: string, options?: WaitOptions): Promise<Element>; selectAll(selector: string, options?: WaitOptions & QueryOptions): Promise<readonly Element[]>; find(text: string, bestMatch?: boolean, returnEnclosingElement?: boolean, options?: WaitOptions): Promise<Element>; findAll(text: string, options?: WaitOptions): Promise<readonly Element[]>; findElementByText(text: string, bestMatch?: boolean, returnEnclosingElement?: boolean): Promise<Element | null>; findElementsByText(text: string, tagHint?: string): Promise<readonly Element[]>; getAllLinkedSources(): Promise<readonly Element[]>; getAllUrls(absolute?: boolean): Promise<readonly string[]>; jsDumps<T = unknown>(expression: string): Promise<T>; disableDomAgent(): Promise<void>; get inspectorUrl(): string | undefined; inspectorOpen(): string | undefined; openExternalInspector(): string | undefined; flashPoint(x: number, y: number, durationMs?: number, size?: number): Promise<void>; verifyCf(challengeSelector: string, options?: WaitOptions & { readonly clickDelayMs?: number; }): Promise<void>; recordScreencast(directory: string): Promise<ScreencastSession>; xpath(expression: string, options?: WaitOptions): Promise<readonly Element[]>; waitFor(selector: string, options?: WaitOptions): Promise<Element>; waitFor(options: WaitForOptions): Promise<Element>; waitForReadyState(state?: ReadyState, options?: WaitOptions): Promise<boolean>; waitForIdle(options?: WaitOptions & { readonly idleMs?: number; }): Promise<void>; getLocalStorage(): Promise<Record<string, string>>; setLocalStorage(values: Readonly<Record<string, string | null>>): Promise<void>; setUserAgent(userAgent?: string, acceptLanguage?: string, platform?: string): Promise<void>; screenshotB64(options?: ScreenshotOptions): Promise<string>; saveScreenshot(path: string, options?: ScreenshotOptions): Promise<string>; printToPdf(path?: string, options?: Protocol.Page.Commands.PrintToPDFParams): Promise<string>; saveSnapshot(path?: string): Promise<string>; scrollDown(amount?: number): Promise<void>; scrollUp(amount?: number): Promise<void>; getWindow(): Promise<Protocol.Browser.Commands.GetWindowForTargetResult>; setWindowState(windowState: WindowState): Promise<void>; setWindowSize(width: number, height: number): Promise<void>; maximize(): Promise<void>; minimize(): Promise<void>; fullscreen(): Promise<void>; mouseMove(x: number, y: number, modifiers?: number): Promise<void>; mouseClick(x: number, y: number, button?: Protocol.Input.MouseButton, modifiers?: number): Promise<void>; elementFromNodeId(nodeId: Protocol.DOM.NodeId): Promise<Element>; close(): Promise<void>; markClosed(): void; markCrashed(status: string, errorCode: number): void; }"
+          "export declare class Tab { #private; readonly targetId: string; readonly connection: RuntimeBackend; readonly sessionId?: string | undefined; readonly browserConnection: RuntimeBackend; readonly webSocketUrl?: string | undefined; private readonly closeTarget?; private readonly readTargetInfo; private readonly writeTargetInfo; constructor(targetId: string, connection: RuntimeBackend, sessionId?: string | undefined, browserConnection?: RuntimeBackend, webSocketUrl?: string | undefined, closeTarget?: (() => Promise<void>) | undefined, _childFrames?: () => readonly Tab[], readTargetInfo?: () => Protocol.Target.TargetInfo | undefined, writeTargetInfo?: (targetInfo: Protocol.Target.TargetInfo) => void); get enabledDomains(): ReadonlySet<string>; get manuallyEnabledDomains(): ReadonlySet<string>; get handlers(): ReadonlyMap<string, readonly TabEventHandler[]>; get closed(): boolean; get crashed(): boolean; get targetInfo(): Protocol.Target.TargetInfo | undefined; get title(): string; get url(): string; get type(): string; get subtype(): string | undefined; get attached(): boolean; get browserContextId(): Protocol.Browser.BrowserContextID | undefined; get openerId(): Protocol.Target.TargetID | undefined; get openerFrameId(): Protocol.Page.FrameId | undefined; get parentId(): Protocol.Target.TargetID | undefined; get parentFrameId(): Protocol.Page.FrameId | undefined; updateTarget(): Promise<Protocol.Target.TargetInfo>; send<M extends ProtocolCommand>(method: M, ...args: CommandParams<M> extends undefined ? [params?: undefined, options?: SendOptions] : [params: CommandParams<M>, options?: SendOptions]): Promise<CommandResult<M>>; sendRaw(method: string, params?: unknown, options?: SendOptions): Promise<Readonly<Record<string, unknown>>>; on<E extends ProtocolEvent>(method: E, handler: (params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>): () => void; on(method: string, handler: (params: unknown, metadata: EventMetadata) => void | Promise<void>): () => void; addHandler<E extends ProtocolEvent>(eventType: E, handler: (params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>): void; addHandler(domain: EventDomain, handler: TabEventHandler): void; removeHandlers(): void; removeHandlers(eventType: undefined, handler: TabEventHandler): void; removeHandlers(eventType: ProtocolEvent | EventDomain, handler?: TabEventHandler): void; acquireDomain(domain: string, options?: SendOptions): Promise<() => Promise<void>>; expectRequest(matcher: UrlMatcher<Protocol.Network.Events.RequestWillBeSentEvent>, options?: WaitOptions): RequestExpectation; expectResponse(matcher: UrlMatcher<Protocol.Network.Events.ResponseReceivedEvent>, options?: WaitOptions): ResponseExpectation; intercept(options?: InterceptionOptions): FetchInterception; intercept(url: string, stage: Protocol.Fetch.RequestStage, resourceType: Protocol.Network.ResourceType): FetchInterception; setDownloadPath(path: string): Promise<string>; expectDownload(): DownloadWillBeginExpectation; expectDownload(matcher: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent>, options?: DownloadOptions): DownloadResultExpectation; downloadFile(url: string, destination: string, options?: WaitOptions): Promise<DownloadResult>; get(url: string, options?: WaitOptions): Promise<Protocol.Page.Commands.NavigateResult>; navigate(url: string, timeoutMs?: number, signal?: AbortSignal): Promise<Protocol.Page.Commands.NavigateResult>; reload(ignoreCache?: boolean, options?: WaitOptions): Promise<void>; back(options?: WaitOptions): Promise<boolean>; forward(options?: WaitOptions): Promise<boolean>; activate(): Promise<void>; bringToFront(): Promise<Protocol.Page.Commands.BringToFrontResult>; evaluate<T = unknown>(expression: string, awaitPromise?: boolean, returnByValue?: boolean, options?: WaitOptions): Promise<T>; getContent(): Promise<string>; querySelector(selector: string, options?: QueryOptions): Promise<Element | null>; querySelectorAll(selector: string, options?: QueryOptions): Promise<readonly Element[]>; select(selector: string, options?: WaitOptions): Promise<Element>; selectAll(selector: string, options?: WaitOptions & QueryOptions): Promise<readonly Element[]>; find(text: string, bestMatch?: boolean, returnEnclosingElement?: boolean, options?: WaitOptions): Promise<Element>; findAll(text: string, options?: WaitOptions): Promise<readonly Element[]>; findElementByText(text: string, bestMatch?: boolean, returnEnclosingElement?: boolean): Promise<Element | null>; findElementsByText(text: string, tagHint?: string): Promise<readonly Element[]>; getAllLinkedSources(): Promise<readonly Element[]>; getAllUrls(absolute?: boolean): Promise<readonly string[]>; jsDumps<T = unknown>(expression: string): Promise<T>; disableDomAgent(): Promise<void>; get inspectorUrl(): string | undefined; inspectorOpen(): string | undefined; openExternalInspector(): string | undefined; flashPoint(x: number, y: number, durationMs?: number, size?: number): Promise<void>; verifyCf(challengeSelector: string, options?: WaitOptions & { readonly clickDelayMs?: number; }): Promise<void>; recordScreencast(directory: string): Promise<ScreencastSession>; xpath(expression: string, options?: WaitOptions): Promise<readonly Element[]>; waitFor(selector: string, options?: WaitOptions): Promise<Element>; waitFor(options: WaitForOptions): Promise<Element>; waitForReadyState(state?: ReadyState, options?: WaitOptions): Promise<boolean>; waitForIdle(options?: WaitOptions & { readonly idleMs?: number; }): Promise<void>; getLocalStorage(): Promise<Record<string, string>>; setLocalStorage(values: Readonly<Record<string, string | null>>): Promise<void>; setUserAgent(userAgent?: string, acceptLanguage?: string, platform?: string): Promise<void>; screenshotB64(options?: ScreenshotOptions): Promise<string>; saveScreenshot(path: string, options?: ScreenshotOptions): Promise<string>; printToPdf(path?: string, options?: Protocol.Page.Commands.PrintToPDFParams): Promise<string>; saveSnapshot(path?: string): Promise<string>; scrollDown(amount?: number): Promise<void>; scrollUp(amount?: number): Promise<void>; getWindow(): Promise<Protocol.Browser.Commands.GetWindowForTargetResult>; setWindowState(windowState: WindowState): Promise<void>; setWindowSize(width: number, height: number): Promise<void>; maximize(): Promise<void>; minimize(): Promise<void>; fullscreen(): Promise<void>; mouseMove(x: number, y: number, modifiers?: number): Promise<void>; mouseClick(x: number, y: number, button?: Protocol.Input.MouseButton, modifiers?: number): Promise<void>; elementFromNodeId(nodeId: Protocol.DOM.NodeId): Promise<Element>; close(): Promise<void>; markClosed(): void; markCrashed(status: string, errorCode: number): void; }"
         ],
         "file": "packages/api/dist/tab.d.ts",
         "kind": "class"
@@ -5291,7 +5475,7 @@
       "expectDownload": {
         "declarations": [
           {
-            "declaration": "export declare function expectDownload(tab: Tab, downloadPath: string | undefined, matcher?: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent>, options?: DownloadOptions): Expectation<DownloadResult>;",
+            "declaration": "export declare function expectDownload(tab: Tab, downloadPath: string, matcher?: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent>, options?: DownloadOptions, previousDownloadPath?: string): DownloadResultExpectation;",
             "parameters": [
               {
                 "declaredDefault": null,
@@ -5307,7 +5491,7 @@
                 "name": "downloadPath",
                 "optional": false,
                 "rest": false,
-                "type": "string | undefined"
+                "type": "string"
               },
               {
                 "declaredDefault": null,
@@ -5324,9 +5508,64 @@
                 "optional": true,
                 "rest": false,
                 "type": "DownloadOptions"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "previousDownloadPath",
+                "optional": true,
+                "rest": false,
+                "type": "string"
               }
             ],
-            "returnType": "Expectation<DownloadResult>",
+            "returnType": "DownloadResultExpectation",
+            "typeParameters": []
+          },
+          {
+            "declaration": "export declare function expectDownload(tab: Tab, downloadPath: undefined, matcher?: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent>, options?: DownloadOptions, previousDownloadPath?: string): DownloadWillBeginExpectation;",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "tab",
+                "optional": false,
+                "rest": false,
+                "type": "Tab"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "downloadPath",
+                "optional": false,
+                "rest": false,
+                "type": "undefined"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "matcher",
+                "optional": true,
+                "rest": false,
+                "type": "UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent>"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "options",
+                "optional": true,
+                "rest": false,
+                "type": "DownloadOptions"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "previousDownloadPath",
+                "optional": true,
+                "rest": false,
+                "type": "string"
+              }
+            ],
+            "returnType": "DownloadWillBeginExpectation",
             "typeParameters": []
           }
         ],
@@ -5336,7 +5575,7 @@
       "expectRequest": {
         "declarations": [
           {
-            "declaration": "export declare function expectRequest(tab: Tab, matcher: UrlMatcher<Protocol.Network.Events.RequestWillBeSentEvent>, options?: WaitOptions): Expectation<ExpectedRequest>;",
+            "declaration": "export declare function expectRequest(tab: Tab, matcher: UrlMatcher<Protocol.Network.Events.RequestWillBeSentEvent>, options?: WaitOptions): RequestExpectation;",
             "parameters": [
               {
                 "declaredDefault": null,
@@ -5363,7 +5602,7 @@
                 "type": "WaitOptions"
               }
             ],
-            "returnType": "Expectation<ExpectedRequest>",
+            "returnType": "RequestExpectation",
             "typeParameters": []
           }
         ],
@@ -5373,7 +5612,7 @@
       "expectResponse": {
         "declarations": [
           {
-            "declaration": "export declare function expectResponse(tab: Tab, matcher: UrlMatcher<Protocol.Network.Events.ResponseReceivedEvent>, options?: WaitOptions): Expectation<ExpectedResponse>;",
+            "declaration": "export declare function expectResponse(tab: Tab, matcher: UrlMatcher<Protocol.Network.Events.ResponseReceivedEvent>, options?: WaitOptions): ResponseExpectation;",
             "parameters": [
               {
                 "declaredDefault": null,
@@ -5400,7 +5639,7 @@
                 "type": "WaitOptions"
               }
             ],
-            "returnType": "Expectation<ExpectedResponse>",
+            "returnType": "ResponseExpectation",
             "typeParameters": []
           }
         ],
@@ -6086,11 +6325,39 @@
           },
           {
             "kind": "method",
+            "name": "continueRequest"
+          },
+          {
+            "kind": "method",
+            "name": "continueResponse"
+          },
+          {
+            "kind": "method",
+            "name": "failRequest"
+          },
+          {
+            "kind": "method",
+            "name": "fulfillRequest"
+          },
+          {
+            "kind": "method",
             "name": "next"
+          },
+          {
+            "kind": "property",
+            "name": "ready"
+          },
+          {
+            "kind": "property",
+            "name": "request"
           },
           {
             "kind": "method",
             "name": "reset"
+          },
+          {
+            "kind": "property",
+            "name": "responseBody"
           }
         ]
       },
@@ -6134,6 +6401,10 @@
           {
             "kind": "property",
             "name": "resourceType"
+          },
+          {
+            "kind": "property",
+            "name": "responseBody"
           },
           {
             "kind": "property",
@@ -15152,11 +15423,13 @@
             ],
             "name": "BaseRequestExpectation",
             "nodeMapping": {
-              "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-              "nodeSymbol": null,
+              "evidence": "compatible TypeScript AST declaration",
+              "nodeKind": "interface",
+              "nodeSymbol": "BaseRequestExpectation",
+              "runtimeExport": false,
               "semanticsVerified": false,
               "signatureComparison": "UNVERIFIED",
-              "status": "MISSING"
+              "status": "CANDIDATE"
             },
             "signature": {
               "parameters": [
@@ -15758,11 +16031,31 @@
                 "kind": "method",
                 "name": "continue_request",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on FetchInterception",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "continueRequest(params?: Omit<Protocol.Fetch.Commands.ContinueRequestParams, \"requestId\">): Promise<void>;",
+                      "kind": "method",
+                      "name": "continueRequest",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "params",
+                          "optional": true,
+                          "rest": false,
+                          "type": "Omit<Protocol.Fetch.Commands.ContinueRequestParams, \"requestId\">"
+                        }
+                      ],
+                      "returnType": "Promise<void>",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "FetchInterception.continueRequest",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "CANDIDATE"
                 },
                 "signature": {
                   "parameters": [
@@ -15820,11 +16113,31 @@
                 "kind": "method",
                 "name": "continue_response",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on FetchInterception",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "continueResponse(params?: Omit<Protocol.Fetch.Commands.ContinueResponseParams, \"requestId\">): Promise<void>;",
+                      "kind": "method",
+                      "name": "continueResponse",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "params",
+                          "optional": true,
+                          "rest": false,
+                          "type": "Omit<Protocol.Fetch.Commands.ContinueResponseParams, \"requestId\">"
+                        }
+                      ],
+                      "returnType": "Promise<void>",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "FetchInterception.continueResponse",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "CANDIDATE"
                 },
                 "signature": {
                   "parameters": [
@@ -15875,11 +16188,31 @@
                 "kind": "method",
                 "name": "fail_request",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on FetchInterception",
-                  "nodeMember": null,
+                  "evidence": "name and member kind match, but required arity differs",
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "failRequest(errorReason?: Protocol.Network.ErrorReason): Promise<void>;",
+                      "kind": "method",
+                      "name": "failRequest",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "errorReason",
+                          "optional": true,
+                          "rest": false,
+                          "type": "Protocol.Network.ErrorReason"
+                        }
+                      ],
+                      "returnType": "Promise<void>",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "FetchInterception.failRequest",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "signatureComparison": "INCOMPATIBLE_REQUIRED_ARITY",
+                  "status": "UNKNOWN"
                 },
                 "signature": {
                   "parameters": [
@@ -15909,11 +16242,39 @@
                 "kind": "method",
                 "name": "fulfill_request",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on FetchInterception",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "fulfillRequest(responseCode: number, options?: Omit<Protocol.Fetch.Commands.FulfillRequestParams, \"requestId\" | \"responseCode\">): Promise<void>;",
+                      "kind": "method",
+                      "name": "fulfillRequest",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "responseCode",
+                          "optional": false,
+                          "rest": false,
+                          "type": "number"
+                        },
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "options",
+                          "optional": true,
+                          "rest": false,
+                          "type": "Omit<Protocol.Fetch.Commands.FulfillRequestParams, \"requestId\" | \"responseCode\">"
+                        }
+                      ],
+                      "returnType": "Promise<void>",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "FetchInterception.fulfillRequest",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "CANDIDATE"
                 },
                 "signature": {
                   "parameters": [
@@ -15972,11 +16333,22 @@
                 "kind": "property",
                 "name": "request",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on FetchInterception",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "access": "get",
+                      "declaration": "get request(): Promise<Protocol.Network.Request>;",
+                      "kind": "property",
+                      "name": "request",
+                      "parameters": [],
+                      "returnType": "Promise<Protocol.Network.Request>",
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "FetchInterception.request",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "signatureComparison": "PROPERTY_KIND_ONLY",
+                  "status": "CANDIDATE"
                 }
               },
               {
@@ -15989,11 +16361,11 @@
                   "evidence": "compatible member kind in TypeScript AST declaration",
                   "nodeDeclarations": [
                     {
-                      "declaration": "reset(): Promise<FetchInterception>;",
+                      "declaration": "reset(): Promise<void>;",
                       "kind": "method",
                       "name": "reset",
                       "parameters": [],
-                      "returnType": "Promise<FetchInterception>",
+                      "returnType": "Promise<void>",
                       "static": false,
                       "typeParameters": []
                     }
@@ -16025,11 +16397,22 @@
                 "kind": "property",
                 "name": "response_body",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on FetchInterception",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "access": "get",
+                      "declaration": "get responseBody(): Promise<readonly [string, boolean]>;",
+                      "kind": "property",
+                      "name": "responseBody",
+                      "parameters": [],
+                      "returnType": "Promise<readonly [string, boolean]>",
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "FetchInterception.responseBody",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "signatureComparison": "PROPERTY_KIND_ONLY",
+                  "status": "CANDIDATE"
                 }
               }
             ],
@@ -20498,39 +20881,30 @@
                 "kind": "method",
                 "name": "expect_download",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceTestIds": [
+                    "ZDTEST-0062",
+                    "ZDTEST-0063"
+                  ],
                   "nodeDeclarations": [
                     {
-                      "declaration": "expectDownload(matcher?: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent>, options?: DownloadOptions): Expectation<DownloadResult>;",
+                      "declaration": "expectDownload(): DownloadWillBeginExpectation;",
                       "kind": "method",
                       "name": "expectDownload",
-                      "parameters": [
-                        {
-                          "declaredDefault": null,
-                          "hasDeclaredDefault": false,
-                          "name": "matcher",
-                          "optional": true,
-                          "rest": false,
-                          "type": "UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent>"
-                        },
-                        {
-                          "declaredDefault": null,
-                          "hasDeclaredDefault": false,
-                          "name": "options",
-                          "optional": true,
-                          "rest": false,
-                          "type": "DownloadOptions"
-                        }
-                      ],
-                      "returnType": "Expectation<DownloadResult>",
+                      "parameters": [],
+                      "returnType": "DownloadWillBeginExpectation",
                       "static": false,
                       "typeParameters": []
                     }
                   ],
                   "nodeMember": "Tab.expectDownload",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -20553,10 +20927,14 @@
                 "kind": "method",
                 "name": "expect_request",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceTestIds": [
+                    "ZDTEST-0056",
+                    "ZDTEST-0057"
+                  ],
                   "nodeDeclarations": [
                     {
-                      "declaration": "expectRequest(matcher: UrlMatcher<Protocol.Network.Events.RequestWillBeSentEvent>, options?: WaitOptions): Expectation<ExpectedRequest>;",
+                      "declaration": "expectRequest(matcher: UrlMatcher<Protocol.Network.Events.RequestWillBeSentEvent>, options?: WaitOptions): RequestExpectation;",
                       "kind": "method",
                       "name": "expectRequest",
                       "parameters": [
@@ -20577,15 +20955,19 @@
                           "type": "WaitOptions"
                         }
                       ],
-                      "returnType": "Expectation<ExpectedRequest>",
+                      "returnType": "RequestExpectation",
                       "static": false,
                       "typeParameters": []
                     }
                   ],
                   "nodeMember": "Tab.expectRequest",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -20615,10 +20997,16 @@
                 "kind": "method",
                 "name": "expect_response",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceTestIds": [
+                    "ZDTEST-0058",
+                    "ZDTEST-0059",
+                    "ZDTEST-0060",
+                    "ZDTEST-0061"
+                  ],
                   "nodeDeclarations": [
                     {
-                      "declaration": "expectResponse(matcher: UrlMatcher<Protocol.Network.Events.ResponseReceivedEvent>, options?: WaitOptions): Expectation<ExpectedResponse>;",
+                      "declaration": "expectResponse(matcher: UrlMatcher<Protocol.Network.Events.ResponseReceivedEvent>, options?: WaitOptions): ResponseExpectation;",
                       "kind": "method",
                       "name": "expectResponse",
                       "parameters": [
@@ -20639,15 +21027,19 @@
                           "type": "WaitOptions"
                         }
                       ],
-                      "returnType": "Expectation<ExpectedResponse>",
+                      "returnType": "ResponseExpectation",
                       "static": false,
                       "typeParameters": []
                     }
                   ],
                   "nodeMember": "Tab.expectResponse",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -21578,20 +21970,42 @@
                 "kind": "method",
                 "name": "intercept",
                 "nodeMapping": {
-                  "evidence": "name and member kind match, but required arity differs",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceTestIds": [
+                    "ZDTEST-0064",
+                    "ZDTEST-0065",
+                    "ZDTEST-0066",
+                    "ZDTEST-0067"
+                  ],
                   "nodeDeclarations": [
                     {
-                      "declaration": "intercept(options?: InterceptionOptions): FetchInterception;",
+                      "declaration": "intercept(url: string, stage: Protocol.Fetch.RequestStage, resourceType: Protocol.Network.ResourceType): FetchInterception;",
                       "kind": "method",
                       "name": "intercept",
                       "parameters": [
                         {
                           "declaredDefault": null,
                           "hasDeclaredDefault": false,
-                          "name": "options",
-                          "optional": true,
+                          "name": "url",
+                          "optional": false,
                           "rest": false,
-                          "type": "InterceptionOptions"
+                          "type": "string"
+                        },
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "stage",
+                          "optional": false,
+                          "rest": false,
+                          "type": "Protocol.Fetch.RequestStage"
+                        },
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "resourceType",
+                          "optional": false,
+                          "rest": false,
+                          "type": "Protocol.Network.ResourceType"
                         }
                       ],
                       "returnType": "FetchInterception",
@@ -21600,9 +22014,13 @@
                     }
                   ],
                   "nodeMember": "Tab.intercept",
-                  "semanticsVerified": false,
-                  "signatureComparison": "INCOMPATIBLE_REQUIRED_ARITY",
-                  "status": "UNKNOWN"
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [

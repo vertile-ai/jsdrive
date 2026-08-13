@@ -317,6 +317,78 @@
     "result": "PASS",
     "status": "MAPPED"
   },
+  "ZDTEST-0056": {
+    "case": "packages/api/test/network-expectation-parity.test.ts::ZDTEST-0056",
+    "note": "Passed raw RequestWillBeSent, request/response accessors, and response-body tuple against a controlled endpoint in real headless Chrome, direct and flattened.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0057": {
+    "case": "packages/api/test/network-expectation-parity.test.ts::ZDTEST-0057",
+    "note": "Passed raw RequestWillBeSent, request/response accessors, and response-body tuple against a controlled endpoint in real headful Chrome, direct and flattened.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0058": {
+    "case": "packages/api/test/network-expectation-parity.test.ts::ZDTEST-0058",
+    "note": "Passed raw ResponseReceived plus request, response, and loading-finished body accessors in real headless Chrome, direct and flattened.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0059": {
+    "case": "packages/api/test/network-expectation-parity.test.ts::ZDTEST-0059",
+    "note": "Passed raw ResponseReceived plus request, response, and loading-finished body accessors in real headful Chrome, direct and flattened.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0060": {
+    "case": "packages/api/test/network-expectation-parity.test.ts::ZDTEST-0060",
+    "note": "Passed same-object response expectation reset and subsequent reload capture in real headless Chrome, direct and flattened.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0061": {
+    "case": "packages/api/test/network-expectation-parity.test.ts::ZDTEST-0061",
+    "note": "Passed same-object response expectation reset and subsequent reload capture in real headful Chrome, direct and flattened.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0062": {
+    "case": "packages/api/test/network-expectation-parity.test.ts::ZDTEST-0062",
+    "note": "Passed no-argument download expectation returning the next raw DownloadWillBegin event in real headless Chrome, direct and flattened.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0063": {
+    "case": "packages/api/test/network-expectation-parity.test.ts::ZDTEST-0063",
+    "note": "Passed no-argument download expectation returning the next raw DownloadWillBegin event in real headful Chrome, direct and flattened.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0064": {
+    "case": "packages/api/test/network-expectation-parity.test.ts::ZDTEST-0064",
+    "note": "Passed response-stage XHR interception, response-body tuple, and continueRequest with the upstream URL glob in real headless Chrome, direct and flattened.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0065": {
+    "case": "packages/api/test/network-expectation-parity.test.ts::ZDTEST-0065",
+    "note": "Passed response-stage XHR interception, response-body tuple, and continueRequest with the upstream URL glob in real headful Chrome, direct and flattened.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0066": {
+    "case": "packages/api/test/network-expectation-parity.test.ts::ZDTEST-0066",
+    "note": "Passed same-object interception reset and a subsequent response-stage XHR capture in real headless Chrome, direct and flattened.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
+  "ZDTEST-0067": {
+    "case": "packages/api/test/network-expectation-parity.test.ts::ZDTEST-0067",
+    "note": "Passed same-object interception reset and a subsequent response-stage XHR capture in real headful Chrome, direct and flattened.",
+    "result": "PASS",
+    "status": "MAPPED"
+  },
   "ZDTEST-0068": {
     "case": "packages/api/test/handlers-domain-parity.test.ts::ZDTEST-0068",
     "note": "Passed custom manual Fetch.enable parameter preservation without an implicit replacement in real headless/headful Chrome.",

@@ -4,31 +4,31 @@ import type { Tab, WaitOptions } from "./tab.js";
 
 export type UrlMatcher<T> = string | RegExp | ((event: T) => boolean | Promise<boolean>);
 
-export interface ExpectedRequest {
-  readonly event: Protocol.Network.Events.RequestWillBeSentEvent;
-  readonly request: Protocol.Network.Request;
-}
+export type ExpectedRequest = Protocol.Network.Events.RequestWillBeSentEvent;
 
-export interface ExpectedResponse {
-  readonly event: Protocol.Network.Events.ResponseReceivedEvent;
-  readonly request?: Protocol.Network.Events.RequestWillBeSentEvent;
-  readonly response: Protocol.Network.Response;
-  readonly loadingFinished: Protocol.Network.Events.LoadingFinishedEvent;
-  readonly body: string;
-  readonly bodyBase64Encoded: boolean;
-  json<T = unknown>(): T;
-  bytes(): Buffer;
-}
+export type ExpectedResponse = Protocol.Network.Events.ResponseReceivedEvent;
 
 export interface Expectation<T> {
   readonly ready: Promise<void>;
   readonly value: Promise<T>;
   cancel(reason?: unknown): Promise<void>;
-  reset(): Promise<Expectation<T>>;
+  reset(): Promise<void>;
+  [Symbol.asyncDispose](): Promise<void>;
 }
+
+export interface BaseRequestExpectation<T> extends Expectation<T> {
+  readonly request: Promise<Protocol.Network.Request>;
+  readonly response: Promise<Protocol.Network.Response>;
+  readonly responseBody: Promise<readonly [string, boolean]>;
+}
+
+export interface RequestExpectation extends BaseRequestExpectation<ExpectedRequest> {}
+
+export interface ResponseExpectation extends BaseRequestExpectation<ExpectedResponse> {}
 
 export interface InterceptionOptions {
   readonly url?: string | RegExp | ((event: Protocol.Fetch.Events.RequestPausedEvent) => boolean | Promise<boolean>);
+  readonly urlPattern?: string;
   readonly stage?: Protocol.Fetch.RequestStage;
   readonly resourceType?: Protocol.Network.ResourceType;
 }
@@ -45,19 +45,29 @@ export class FetchInterception {
     readonly reject: (reason: unknown) => void;
     readonly cleanup: () => void;
   }> = [];
-  readonly #off: () => void;
+  #off: () => void = () => {};
   #closed = false;
-  public readonly ready: Promise<void>;
+  #ready: Promise<void> = Promise.resolve();
+  #current: InterceptedRequest | undefined;
+  #currentPromise: Promise<InterceptedRequest> | undefined;
+
+  public get ready(): Promise<void> { return this.#ready; }
 
   public constructor(tab: Tab, options: InterceptionOptions = {}) {
     this.#tab = tab;
     this.#options = options;
-    this.#off = tab.on("Fetch.requestPaused", (event) => this.#paused(event));
+    this.#install();
+  }
+
+  #install(): void {
+    this.#closed = false;
+    this.#off = this.#tab.on("Fetch.requestPaused", (event) => this.#paused(event));
     const pattern: Protocol.Fetch.RequestPattern = {
-      ...(options.stage === undefined ? {} : { requestStage: options.stage }),
-      ...(options.resourceType === undefined ? {} : { resourceType: options.resourceType }),
+      ...(this.#options.urlPattern === undefined ? {} : { urlPattern: this.#options.urlPattern }),
+      ...(this.#options.stage === undefined ? {} : { requestStage: this.#options.stage }),
+      ...(this.#options.resourceType === undefined ? {} : { resourceType: this.#options.resourceType }),
     };
-    this.ready = tab.send("Fetch.enable", { patterns: [pattern] }).then(() => undefined).catch((error: unknown) => {
+    this.#ready = this.#tab.send("Fetch.enable", { patterns: [pattern] }).then(() => undefined).catch((error: unknown) => {
       this.#off();
       this.#closed = true;
       throw error;
@@ -92,6 +102,53 @@ export class FetchInterception {
     });
   }
 
+  /** The current paused request, matching Zendriver's awaitable interception facade. */
+  public get request(): Promise<Protocol.Network.Request> {
+    return this.#currentRequest().then((request) => request.request);
+  }
+
+  public get responseBody(): Promise<readonly [string, boolean]> {
+    return this.#currentRequest().then((request) => request.responseBody);
+  }
+
+  public continueRequest(
+    params: Omit<Protocol.Fetch.Commands.ContinueRequestParams, "requestId"> = {},
+  ): Promise<void> {
+    return this.#currentRequest().then((request) => request.continueRequest(params));
+  }
+
+  public continueResponse(
+    params: Omit<Protocol.Fetch.Commands.ContinueResponseParams, "requestId"> = {},
+  ): Promise<void> {
+    return this.#currentRequest().then((request) => request.continueResponse(params));
+  }
+
+  public failRequest(errorReason: Protocol.Network.ErrorReason = "Failed"): Promise<void> {
+    return this.#currentRequest().then((request) => request.failRequest(errorReason));
+  }
+
+  public fulfillRequest(
+    responseCode: number,
+    options: Omit<Protocol.Fetch.Commands.FulfillRequestParams, "requestId" | "responseCode"> = {},
+  ): Promise<void> {
+    return this.#currentRequest().then((request) => request.fulfillRequest(responseCode, options));
+  }
+
+  async #currentRequest(): Promise<InterceptedRequest> {
+    if (this.#current?.handled === true) {
+      this.#current = undefined;
+      this.#currentPromise = undefined;
+    }
+    if (this.#current !== undefined) return this.#current;
+    if (this.#currentPromise === undefined) {
+      this.#currentPromise = this.next().then((request) => {
+        this.#current = request;
+        return request;
+      });
+    }
+    return this.#currentPromise;
+  }
+
   public async close(): Promise<void> {
     if (this.#closed) return;
     this.#closed = true;
@@ -111,11 +168,14 @@ export class FetchInterception {
     return this.close();
   }
 
-  public async reset(): Promise<FetchInterception> {
+  public async reset(): Promise<void> {
     await this.close();
-    const fresh = new FetchInterception(this.#tab, this.#options);
-    await fresh.ready;
-    return fresh;
+    this.#queued.length = 0;
+    this.#active.clear();
+    this.#current = undefined;
+    this.#currentPromise = undefined;
+    this.#install();
+    await this.#ready;
   }
 
   async #paused(event: Protocol.Fetch.Events.RequestPausedEvent): Promise<void> {
@@ -127,7 +187,11 @@ export class FetchInterception {
     this.#active.add(request);
     let matchesUrl: boolean;
     try {
-      matchesUrl = await matches(this.#options.url, event.request.url, event);
+      matchesUrl = this.#options.urlPattern !== undefined
+        ? true
+        : typeof this.#options.url === "string"
+        ? event.request.url.includes(this.#options.url)
+        : await matches(this.#options.url, event.request.url, event);
     } catch (error) {
       await request.continue();
       this.#waiters.shift()?.reject(error);
@@ -149,6 +213,7 @@ export class FetchInterception {
 
 export class InterceptedRequest {
   #handled = false;
+  #responseBody: Promise<readonly [string, boolean]> | undefined;
 
   public constructor(
     private readonly tab: Tab,
@@ -161,6 +226,13 @@ export class InterceptedRequest {
   public get resourceType(): Protocol.Network.ResourceType { return this.event.resourceType; }
   public get responseStatusCode(): number | undefined { return this.event.responseStatusCode; }
   public get handled(): boolean { return this.#handled; }
+
+  public get responseBody(): Promise<readonly [string, boolean]> {
+    if (this.#responseBody === undefined) {
+      this.#responseBody = this.tab.send("Fetch.getResponseBody", { requestId: this.event.requestId }).then((result) => [result.body, result.base64Encoded] as const);
+    }
+    return this.#responseBody;
+  }
 
   public continueRequest(params: Omit<Protocol.Fetch.Commands.ContinueRequestParams, "requestId"> = {}): Promise<void> {
     return this.#handle("Fetch.continueRequest", { requestId: this.event.requestId, ...params });
@@ -188,8 +260,8 @@ export class InterceptedRequest {
   public async body(): Promise<Buffer> {
     if (this.stage !== "Response") throw new Error("Response body is only available at the response interception stage");
     if (this.#handled) throw new Error("Intercepted request was already handled");
-    const result = await this.tab.send("Fetch.getResponseBody", { requestId: this.event.requestId });
-    return Buffer.from(result.body, result.base64Encoded ? "base64" : "utf8");
+    const [body, base64Encoded] = await this.responseBody;
+    return Buffer.from(body, base64Encoded ? "base64" : "utf8");
   }
 
   async #handle<M extends "Fetch.continueRequest" | "Fetch.continueResponse" | "Fetch.failRequest" | "Fetch.fulfillRequest">(
@@ -213,116 +285,278 @@ export function expectRequest(
   tab: Tab,
   matcher: UrlMatcher<Protocol.Network.Events.RequestWillBeSentEvent>,
   options: WaitOptions = {},
-): Expectation<ExpectedRequest> {
-  return networkExpectation(tab, `request matching ${describeMatcher(matcher)}`, options, () => expectRequest(tab, matcher, options), (finish) => [
+): RequestExpectation {
+  const bodies = new Map<Protocol.Network.RequestId, Promise<readonly [string, boolean]>>();
+  const responses = new Map<Protocol.Network.RequestId, Promise<Protocol.Network.Response>>();
+  const responseEvents = new Map<Protocol.Network.RequestId, Protocol.Network.Response>();
+  const finished = new Set<Protocol.Network.RequestId>();
+  const failures = new Map<Protocol.Network.RequestId, Error>();
+  const bodyStates = new Map<Protocol.Network.RequestId, {
+    readonly resolve: (value: readonly [string, boolean]) => void;
+    readonly reject: (reason: unknown) => void;
+    started: boolean;
+  }>();
+  const responseStates = new Map<Protocol.Network.RequestId, {
+    readonly resolve: (value: Protocol.Network.Response) => void;
+    readonly reject: (reason: unknown) => void;
+  }>();
+  const loadBody = async (requestId: Protocol.Network.RequestId): Promise<void> => {
+    const state = bodyStates.get(requestId);
+    if (state === undefined || state.started || !finished.has(requestId)) return;
+    state.started = true;
+    try {
+      const body = await tab.send("Network.getResponseBody", { requestId }, commandOptions(options));
+      state.resolve([body.body, body.base64Encoded]);
+    } catch (error) {
+      state.reject(error);
+    }
+  };
+  const expectation = networkExpectation(tab, `request matching ${describeMatcher(matcher)}`, options, (finish, _fail, control) => [
     tab.on("Network.requestWillBeSent", async (event) => {
-      if (await matches(matcher, event.request.url, event)) {
-        void finish({ event, request: event.request });
+      if (await matches(matcher, event.request.url, event) !== true) return;
+      let resolveBody: (value: readonly [string, boolean]) => void = () => {};
+      let rejectBody: (reason: unknown) => void = () => {};
+      let resolveResponse: (value: Protocol.Network.Response) => void = () => {};
+      let rejectResponse: (reason: unknown) => void = () => {};
+      const bodyPromise = new Promise<readonly [string, boolean]>((resolve, reject) => { resolveBody = resolve; rejectBody = reject; });
+      const responsePromise = new Promise<Protocol.Network.Response>((resolve, reject) => { resolveResponse = resolve; rejectResponse = reject; });
+      bodies.set(event.requestId, bodyPromise);
+      responses.set(event.requestId, responsePromise);
+      bodyStates.set(event.requestId, { resolve: resolveBody, reject: rejectBody, started: false });
+      responseStates.set(event.requestId, { resolve: resolveResponse, reject: rejectResponse });
+      const response = responseEvents.get(event.requestId);
+      if (response !== undefined) resolveResponse(response);
+      const failure = failures.get(event.requestId);
+      if (failure !== undefined) {
+        rejectResponse(failure);
+        rejectBody(failure);
+      } else {
+        void loadBody(event.requestId);
       }
+      control.keepAlive(Promise.allSettled([bodyPromise, responsePromise]));
+      control.onAbandon(() => {
+        const error = new Error("Request expectation was reset");
+        rejectResponse(error);
+        rejectBody(error);
+      });
+      void finish(event);
     }),
-  ]);
+    tab.on("Network.responseReceived", (event) => {
+      responseEvents.set(event.requestId, event.response);
+      responseStates.get(event.requestId)?.resolve(event.response);
+    }),
+    tab.on("Network.loadingFinished", (event) => {
+      finished.add(event.requestId);
+      void loadBody(event.requestId);
+    }),
+    tab.on("Network.loadingFailed", (event) => {
+      const error = new Error(`Network request failed: ${event.errorText}`);
+      failures.set(event.requestId, error);
+      responseStates.get(event.requestId)?.reject(error);
+      bodyStates.get(event.requestId)?.reject(error);
+    }),
+  ]) as RequestExpectation;
+  Object.defineProperty(expectation, "responseBody", {
+    enumerable: true,
+    get: (): Promise<readonly [string, boolean]> => expectation.value.then((event) => bodies.get(event.requestId) ?? Promise.reject(new Error("Request body is unavailable"))).then((body) => body),
+  });
+  Object.defineProperty(expectation, "request", {
+    enumerable: true,
+    get: (): Promise<Protocol.Network.Request> => expectation.value.then((event) => event.request),
+  });
+  Object.defineProperty(expectation, "response", {
+    enumerable: true,
+    get: (): Promise<Protocol.Network.Response> => expectation.value.then((event) => responses.get(event.requestId) ?? Promise.reject(new Error("Response is unavailable"))).then((response) => response),
+  });
+  return expectation;
 }
 
 export function expectResponse(
   tab: Tab,
   matcher: UrlMatcher<Protocol.Network.Events.ResponseReceivedEvent>,
   options: WaitOptions = {},
-): Expectation<ExpectedResponse> {
+): ResponseExpectation {
+  const bodies = new Map<Protocol.Network.RequestId, Promise<readonly [string, boolean]>>();
+  const bodyStates = new Map<Protocol.Network.RequestId, {
+    readonly resolve: (value: readonly [string, boolean]) => void;
+    readonly reject: (reason: unknown) => void;
+    started: boolean;
+  }>();
+  const finished = new Set<Protocol.Network.RequestId>();
+  const failures = new Map<Protocol.Network.RequestId, Error>();
   const requests = new Map<Protocol.Network.RequestId, Protocol.Network.Events.RequestWillBeSentEvent>();
-  const responses = new Map<Protocol.Network.RequestId, Protocol.Network.Events.ResponseReceivedEvent>();
-  const responseMatches = new Map<Protocol.Network.RequestId, Promise<boolean>>();
-  return networkExpectation(tab, `response matching ${describeMatcher(matcher)}`, options, () => expectResponse(tab, matcher, options), (finish, fail) => [
-    tab.on("Network.requestWillBeSent", (event) => { requests.set(event.requestId, event); }),
-    tab.on("Network.responseReceived", (event) => {
-      responses.set(event.requestId, event);
-      responseMatches.set(event.requestId, matches(matcher, event.response.url, event));
-    }),
-    tab.on("Network.loadingFinished", async (event) => {
-      if (await responseMatches.get(event.requestId) !== true) return;
+  const expectation = networkExpectation(tab, `response matching ${describeMatcher(matcher)}`, options, (finish, fail, control) => {
+    const matchedRequestIds = new Set<Protocol.Network.RequestId>();
+    const loadBody = async (requestId: Protocol.Network.RequestId): Promise<void> => {
+      const state = bodyStates.get(requestId);
+      if (state === undefined || state.started || !finished.has(requestId)) return;
+      state.started = true;
       try {
-        const body = await tab.send("Network.getResponseBody", { requestId: event.requestId }, commandOptions(options));
-        const response = responses.get(event.requestId);
-        if (response === undefined) return;
-        const request = requests.get(event.requestId);
-        void finish({
-          event: response,
-          ...(request === undefined ? {} : { request }),
-          response: response.response,
-          loadingFinished: event,
-          body: body.body,
-          bodyBase64Encoded: body.base64Encoded,
-          json<T = unknown>(): T { return JSON.parse(Buffer.from(body.body, body.base64Encoded ? "base64" : "utf8").toString("utf8")) as T; },
-          bytes(): Buffer { return Buffer.from(body.body, body.base64Encoded ? "base64" : "utf8"); },
-        });
+        const body = await tab.send("Network.getResponseBody", { requestId }, commandOptions(options));
+        state.resolve([body.body, body.base64Encoded]);
       } catch (error) {
-        void fail(error);
+        state.reject(error);
       }
-    }),
-    tab.on("Network.loadingFailed", async (event) => {
-      if (await responseMatches.get(event.requestId) === true) void fail(new Error(`Network request failed: ${event.errorText}`));
-    }),
-  ]);
+    };
+    return [
+      tab.on("Network.requestWillBeSent", (event) => { requests.set(event.requestId, event); }),
+      tab.on("Network.responseReceived", async (event) => {
+        if (await matches(matcher, event.response.url, event) !== true) return;
+        let resolveBody: (value: readonly [string, boolean]) => void = () => {};
+        let rejectBody: (reason: unknown) => void = () => {};
+        const bodyPromise = new Promise<readonly [string, boolean]>((resolve, reject) => { resolveBody = resolve; rejectBody = reject; });
+        bodies.set(event.requestId, bodyPromise);
+        bodyStates.set(event.requestId, { resolve: resolveBody, reject: rejectBody, started: false });
+        matchedRequestIds.add(event.requestId);
+        const failure = failures.get(event.requestId);
+        if (failure !== undefined) rejectBody(failure);
+        else void loadBody(event.requestId);
+        control.keepAlive(bodyPromise);
+        control.onAbandon(() => { rejectBody(new Error("Response expectation was reset")); });
+        await finish(event);
+      }),
+      tab.on("Network.loadingFinished", (event) => {
+        finished.add(event.requestId);
+        void loadBody(event.requestId);
+      }),
+      tab.on("Network.loadingFailed", async (event) => {
+        const error = new Error(`Network request failed: ${event.errorText}`);
+        failures.set(event.requestId, error);
+        bodyStates.get(event.requestId)?.reject(error);
+        if (matchedRequestIds.has(event.requestId)) await fail(error);
+      }),
+    ];
+  }) as ResponseExpectation;
+  Object.defineProperty(expectation, "responseBody", {
+    enumerable: true,
+    get: (): Promise<readonly [string, boolean]> => expectation.value.then((event) => bodies.get(event.requestId) ?? Promise.reject(new Error("Response body is unavailable"))).then((body) => body),
+  });
+  Object.defineProperty(expectation, "request", {
+    enumerable: true,
+    get: (): Promise<Protocol.Network.Request> => expectation.value.then((event) => requests.get(event.requestId)?.request ?? Promise.reject(new Error("Request is unavailable"))).then((request) => request),
+  });
+  Object.defineProperty(expectation, "response", {
+    enumerable: true,
+    get: (): Promise<Protocol.Network.Response> => expectation.value.then((event) => event.response),
+  });
+  return expectation;
 }
 
 function networkExpectation<T>(
   tab: Tab,
   description: string,
   options: WaitOptions,
-  recreate: () => Expectation<T>,
   listen: (
     finish: (value: T) => Promise<void>,
     fail: (reason: unknown) => Promise<void>,
+    control: {
+      keepAlive(promise: Promise<unknown>): void;
+      onAbandon(cleanup: () => void): void;
+    },
   ) => readonly (() => void)[],
 ): Expectation<T> {
+  type Cycle = {
+    readonly ready: Promise<void>;
+    readonly value: Promise<T>;
+    readonly fail: (reason: unknown) => Promise<void>;
+    readonly abandon: () => Promise<void>;
+  };
   const timeoutMs = options.timeoutMs ?? 10_000;
-  let resolveValue: (value: T) => void = () => {};
-  let rejectValue: (reason: unknown) => void = () => {};
-  let release: (() => Promise<void>) | undefined;
-  let settled = false;
-  const value = new Promise<T>((resolve, reject) => { resolveValue = resolve; rejectValue = reject; });
-  const cleanup = async (): Promise<void> => {
-    clearTimeout(timeout);
-    options.signal?.removeEventListener("abort", abort);
-    for (const off of listeners) off();
-    await release?.();
+  let cycle: Cycle;
+  let activeReady: Promise<void>;
+  let activeValue: Promise<T>;
+  const createCycle = (): Cycle => {
+    let resolveValue: (value: T) => void = () => {};
+    let rejectValue: (reason: unknown) => void = () => {};
+    let release: (() => Promise<void>) | undefined;
+    let settled = false;
+    let timeout: ReturnType<typeof setTimeout> | undefined;
+    let abort: () => void = () => {};
+    let listeners: readonly (() => void)[] = [];
+    let cleanupPromise: Promise<void> | undefined;
+    let abandoned = false;
+    const keepAlive: Promise<unknown>[] = [];
+    const abandoners: (() => void)[] = [];
+    const value = new Promise<T>((resolve, reject) => { resolveValue = resolve; rejectValue = reject; });
+    const cleanup = (): Promise<void> => {
+      if (cleanupPromise !== undefined) return cleanupPromise;
+      if (timeout !== undefined) clearTimeout(timeout);
+      options.signal?.removeEventListener("abort", abort);
+      cleanupPromise = (async () => {
+        await Promise.allSettled(keepAlive);
+        for (const off of listeners) off();
+        await release?.();
+      })();
+      return cleanupPromise;
+    };
+    const finish = async (result: T): Promise<void> => {
+      if (settled) return;
+      settled = true;
+      resolveValue(result);
+      try { await cleanup(); } catch { /* The matched result still settles the expectation. */ }
+    };
+    const fail = async (reason: unknown): Promise<void> => {
+      if (settled) return;
+      settled = true;
+      try { await cleanup(); } catch { /* Preserve the original failure. */ }
+      rejectValue(reason);
+    };
+    const abandon = async (): Promise<void> => {
+      if (abandoned) return cleanup();
+      abandoned = true;
+      for (const cleanup of abandoners) cleanup();
+      if (!settled) {
+        settled = true;
+        rejectValue(new CdpAbortError(`Wait for ${description}`));
+      }
+      try { await cleanup(); } catch { /* Reset must preserve the next cycle. */ }
+    };
+    listeners = listen(finish, fail, {
+      keepAlive: (promise) => { keepAlive.push(promise); },
+      onAbandon: (cleanup) => { abandoners.push(cleanup); },
+    });
+    timeout = setTimeout(() => { void fail(new CdpTimeoutError(`Wait for ${description}`, timeoutMs)); }, timeoutMs);
+    abort = (): void => { void fail(new CdpAbortError(`Wait for ${description}`, { cause: options.signal?.reason })); };
+    options.signal?.addEventListener("abort", abort, { once: true });
+    if (options.signal?.aborted === true) abort();
+    const ready = tab.acquireDomain("Network", commandOptions(options)).then(async (lease) => {
+      release = lease;
+      if (settled) await lease();
+    }).catch(async (error: unknown) => {
+      await fail(error);
+      throw error;
+    });
+    void ready.catch(() => undefined);
+    return { ready, value, fail, abandon };
   };
-  const finish = async (result: T): Promise<void> => {
-    if (settled) return;
-    settled = true;
-    try { await cleanup(); } catch { /* The matched result still settles the expectation. */ }
-    resolveValue(result);
+  cycle = createCycle();
+  activeReady = cycle.ready;
+  activeValue = cycle.value;
+  const dispose = async (): Promise<void> => {
+    if (cycle.value === activeValue) {
+      await cycle.fail(new CdpAbortError(`Wait for ${description}`));
+      await cycle.abandon();
+    }
   };
-  const fail = async (reason: unknown): Promise<void> => {
-    if (settled) return;
-    settled = true;
-    try { await cleanup(); } catch { /* Preserve the original failure. */ }
-    rejectValue(reason);
-  };
-  const listeners = listen(finish, fail);
-  const timeout = setTimeout(() => { void fail(new CdpTimeoutError(`Wait for ${description}`, timeoutMs)); }, timeoutMs);
-  const abort = (): void => { void fail(new CdpAbortError(`Wait for ${description}`, { cause: options.signal?.reason })); };
-  options.signal?.addEventListener("abort", abort, { once: true });
-  if (options.signal?.aborted === true) abort();
-  const ready = tab.acquireDomain("Network", commandOptions(options)).then(async (lease) => {
-    release = lease;
-    if (settled) await lease();
-  }).catch(async (error: unknown) => {
-    await fail(error);
-    throw error;
-  });
-  void ready.catch(() => undefined);
-  return {
-    ready,
-    value,
-    cancel: async (reason?: unknown) => fail(new CdpAbortError(`Wait for ${description}`, { cause: reason })),
-    reset: async () => {
-      void value.catch(() => undefined);
-      await fail(new CdpAbortError(`Reset ${description}`));
-      const fresh = recreate();
-      await fresh.ready;
-      return fresh;
+  const expectation: Expectation<T> = {
+    get ready(): Promise<void> { return activeReady; },
+    get value(): Promise<T> { return activeValue; },
+    cancel: async (reason?: unknown) => {
+      if (reason === undefined) return dispose();
+      await cycle.fail(new CdpAbortError(`Wait for ${description}`, { cause: reason }));
+      await cycle.abandon();
     },
+    reset: async () => {
+      void activeValue.catch(() => undefined);
+      await cycle.abandon();
+      cycle = createCycle();
+      activeReady = cycle.ready;
+      activeValue = cycle.value;
+      await activeReady;
+    },
+    [Symbol.asyncDispose]: dispose,
   };
+  return expectation;
 }
 
 function commandOptions(options: WaitOptions): SendOptions {
@@ -334,10 +568,11 @@ function commandOptions(options: WaitOptions): SendOptions {
 
 async function matches<T>(matcher: UrlMatcher<T> | undefined, url: string, event: T): Promise<boolean> {
   if (matcher === undefined) return true;
-  if (typeof matcher === "string") return url.includes(matcher);
+  if (typeof matcher === "string") return new RegExp(`^(?:${matcher})$`).test(url);
   if (matcher instanceof RegExp) {
     matcher.lastIndex = 0;
-    return matcher.test(url);
+    const match = matcher.exec(url);
+    return match?.[0] === url;
   }
   return matcher(event);
 }

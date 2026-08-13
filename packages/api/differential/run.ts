@@ -55,7 +55,7 @@ async function runScenario(backend: string, factory: RuntimeBackendFactory): Pro
       url: fixture.url,
       bootstrap: async (tab) => { await tab.waitForReadyState("complete"); },
       action: async (tab) => {
-        const captured = await captureNetworkBootstrap(browser, tab, "/openai-bootstrap", () => tab.evaluate("bootstrapProvider()"), {
+        const captured = await captureNetworkBootstrap(browser, tab, ".*/openai-bootstrap", () => tab.evaluate("bootstrapProvider()"), {
           cookieNames: ["geminiSession"], localStorageKeys: ["lmArenaAuth"],
         });
         const token = await extractRuntimeValue<string>(tab, "qwenRuntimeToken");

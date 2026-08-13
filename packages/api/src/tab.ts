@@ -24,14 +24,15 @@ import {
   setDownloadPath as configureDownloadPath,
   type DownloadOptions,
   type DownloadResult,
+  type DownloadResultExpectation,
+  type DownloadWillBeginExpectation,
 } from "./download.js";
 import {
   expectRequest as createRequestExpectation,
   expectResponse as createResponseExpectation,
   FetchInterception,
-  type Expectation,
-  type ExpectedRequest,
-  type ExpectedResponse,
+  type RequestExpectation,
+  type ResponseExpectation,
   type InterceptionOptions,
   type UrlMatcher,
 } from "./network.js";
@@ -283,19 +284,29 @@ export class Tab {
   public expectRequest(
     matcher: UrlMatcher<Protocol.Network.Events.RequestWillBeSentEvent>,
     options: WaitOptions = {},
-  ): Expectation<ExpectedRequest> {
+  ): RequestExpectation {
     return createRequestExpectation(this, matcher, options);
   }
 
   public expectResponse(
     matcher: UrlMatcher<Protocol.Network.Events.ResponseReceivedEvent>,
     options: WaitOptions = {},
-  ): Expectation<ExpectedResponse> {
+  ): ResponseExpectation {
     return createResponseExpectation(this, matcher, options);
   }
 
-  public intercept(options: InterceptionOptions = {}): FetchInterception {
-    return new FetchInterception(this, options);
+  public intercept(options?: InterceptionOptions): FetchInterception;
+  public intercept(url: string, stage: Protocol.Fetch.RequestStage, resourceType: Protocol.Network.ResourceType): FetchInterception;
+  public intercept(
+    optionsOrUrl: InterceptionOptions | string = {},
+    stage?: Protocol.Fetch.RequestStage,
+    resourceType?: Protocol.Network.ResourceType,
+  ): FetchInterception {
+    if (typeof optionsOrUrl === "string") {
+      if (stage === undefined || resourceType === undefined) throw new TypeError("intercept(url, stage, resourceType) requires all arguments");
+      return new FetchInterception(this, { urlPattern: optionsOrUrl, stage, resourceType });
+    }
+    return new FetchInterception(this, optionsOrUrl);
   }
 
   public async setDownloadPath(path: string): Promise<string> {
@@ -303,10 +314,19 @@ export class Tab {
     return this.#downloadPath;
   }
 
+  public expectDownload(): DownloadWillBeginExpectation;
   public expectDownload(
-    matcher: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent> = () => true,
+    matcher: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent>,
+    options?: DownloadOptions,
+  ): DownloadResultExpectation;
+  public expectDownload(
+    matcher?: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent>,
     options: DownloadOptions = {},
-  ): Expectation<DownloadResult> {
+  ): DownloadResultExpectation | DownloadWillBeginExpectation {
+    if (matcher === undefined) return createDownloadExpectation(this, undefined, () => true, options, this.#downloadPath);
+    if (this.#downloadPath === undefined) {
+      throw new Error("Call setDownloadPath with an explicit absolute directory before expecting a completed download");
+    }
     return createDownloadExpectation(this, this.#downloadPath, matcher, options);
   }
 

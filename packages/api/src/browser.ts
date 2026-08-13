@@ -327,6 +327,10 @@ export class Browser {
 
   async #stop(): Promise<void> {
     this.#markStopped();
+    if (this.#process !== undefined && !this.connection.closed) {
+      try { await this.connection.send("Browser.close", undefined, { timeoutMs: this.#timeoutMs }); }
+      catch { /* The owned process is stopped below even if Chrome already disconnected. */ }
+    }
     this.connection.close();
     if (this.#process !== undefined) await stopChildProcess(this.#process);
     if (this.process?.temporaryProfile === true) {
@@ -551,7 +555,22 @@ function delay(ms: number, signal?: AbortSignal): Promise<void> {
 
 async function stopChildProcess(child: ChildProcess): Promise<void> {
   if (child.exitCode !== null || child.signalCode !== null) return;
-  const exited = new Promise<void>((resolve) => child.once("exit", () => resolve()));
+  let resolveExit: () => void = () => {};
+  const exited = new Promise<void>((resolve) => { resolveExit = resolve; });
+  const onExit = (): void => resolveExit();
+  child.once("exit", onExit);
+  if (child.exitCode !== null || child.signalCode !== null) {
+    child.off("exit", onExit);
+    return;
+  }
   child.kill();
+  const graceful = await new Promise<boolean>((resolve) => {
+    const timeout = setTimeout(() => resolve(false), 3_000);
+    void exited.then(() => {
+      clearTimeout(timeout);
+      resolve(true);
+    });
+  });
+  if (!graceful && child.exitCode === null && child.signalCode === null) child.kill("SIGKILL");
   await exited;
 }

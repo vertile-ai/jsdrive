@@ -116,7 +116,7 @@ test("network expectations ignore other sessions and clean up listeners and doma
     },
   } as unknown as CdpConnection;
   const tab = new Tab("network-session", connection, "session-1");
-  const expectation = tab.expectRequest("/api", { timeoutMs: 100 });
+  const expectation = tab.expectRequest(".*/api", { timeoutMs: 100 });
   await expectation.ready;
   const event = {
     requestId: "request",
@@ -131,7 +131,16 @@ test("network expectations ignore other sessions and clean up listeners and doma
   for (const handler of handlers.get("Network.requestWillBeSent") ?? []) handler(event, { sessionId: "session-2" });
   for (const handler of handlers.get("Network.requestWillBeSent") ?? []) handler(event, { sessionId: "session-1" });
   assert.equal((await expectation.value).request.url, "http://fixture/api");
-  assert.deepEqual(calls, ["acquire:Network", "off:Network.requestWillBeSent", "release:Network"]);
+  assert.deepEqual(calls, ["acquire:Network"]);
+  await expectation.cancel();
+  assert.deepEqual(calls, [
+    "acquire:Network",
+    "off:Network.requestWillBeSent",
+    "off:Network.responseReceived",
+    "off:Network.loadingFinished",
+    "off:Network.loadingFailed",
+    "release:Network",
+  ]);
 });
 
 test("mouse clicks send the correct pressed-button bitmask", async () => {

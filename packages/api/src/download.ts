@@ -2,7 +2,7 @@ import { mkdir, rename } from "node:fs/promises";
 import { basename, dirname, isAbsolute, join, resolve } from "node:path";
 import type { Protocol } from "@nodriver/protocol";
 import { CdpAbortError, CdpTimeoutError } from "@nodriver/runtime-js";
-import type { Expectation, UrlMatcher } from "./network.js";
+import type { UrlMatcher } from "./network.js";
 import type { Tab, WaitOptions } from "./tab.js";
 
 export interface DownloadResult {
@@ -15,6 +15,21 @@ export interface DownloadResult {
 
 export interface DownloadOptions extends WaitOptions {
   readonly destination?: string;
+}
+
+export interface DownloadResultExpectation {
+  readonly ready: Promise<void>;
+  readonly value: Promise<DownloadResult>;
+  cancel(reason?: unknown): Promise<void>;
+  reset(): Promise<DownloadResultExpectation>;
+}
+
+export interface DownloadWillBeginExpectation {
+  readonly ready: Promise<void>;
+  readonly value: Promise<Protocol.Browser.Events.DownloadWillBeginEvent>;
+  cancel(reason?: unknown): Promise<void>;
+  close(): Promise<void>;
+  [Symbol.asyncDispose](): Promise<void>;
 }
 
 export async function setDownloadPath(tab: Tab, path: string): Promise<string> {
@@ -30,11 +45,26 @@ export async function setDownloadPath(tab: Tab, path: string): Promise<string> {
 
 export function expectDownload(
   tab: Tab,
+  downloadPath: string,
+  matcher?: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent>,
+  options?: DownloadOptions,
+  previousDownloadPath?: string,
+): DownloadResultExpectation;
+export function expectDownload(
+  tab: Tab,
+  downloadPath: undefined,
+  matcher?: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent>,
+  options?: DownloadOptions,
+  previousDownloadPath?: string,
+): DownloadWillBeginExpectation;
+export function expectDownload(
+  tab: Tab,
   downloadPath: string | undefined,
   matcher: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent> = () => true,
   options: DownloadOptions = {},
-): Expectation<DownloadResult> {
-  if (downloadPath === undefined) throw new Error("Call setDownloadPath with an explicit absolute directory before expecting a download");
+  previousDownloadPath?: string,
+): DownloadResultExpectation | DownloadWillBeginExpectation {
+  if (downloadPath === undefined) return expectDownloadWillBegin(tab, matcher, options, previousDownloadPath);
   if (options.destination !== undefined) assertAbsolute(options.destination, "Download destination");
   const timeoutMs = options.timeoutMs ?? 10_000;
   let begin: Protocol.Browser.Events.DownloadWillBeginEvent | undefined;
@@ -103,6 +133,80 @@ export function expectDownload(
       return fresh;
     },
   };
+}
+
+function expectDownloadWillBegin(
+  tab: Tab,
+  matcher: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent>,
+  options: DownloadOptions,
+  previousDownloadPath?: string,
+): DownloadWillBeginExpectation {
+  const timeoutMs = options.timeoutMs ?? 10_000;
+  let resolveValue: (value: Protocol.Browser.Events.DownloadWillBeginEvent) => void = () => {};
+  let rejectValue: (reason: unknown) => void = () => {};
+  let settled = false;
+  let restored = false;
+  let off = (): void => {};
+  const value = new Promise<Protocol.Browser.Events.DownloadWillBeginEvent>((resolve, reject) => {
+    resolveValue = resolve;
+    rejectValue = reject;
+  });
+  const control = tab.browserConnection;
+  const frameId = tab.send("Page.getFrameTree", undefined, { timeoutMs }).then(({ frameTree }) => frameTree.frame.id);
+  const ready = Promise.all([
+    frameId,
+    control.send("Browser.setDownloadBehavior", { behavior: "deny", eventsEnabled: true }, { timeoutMs }),
+  ]).then(([expectedFrameId]) => {
+    off = control.on("Browser.downloadWillBegin", async (event) => {
+      if (settled || event.frameId !== expectedFrameId || !(await matches(matcher, event.url, event))) return;
+      settled = true;
+      off();
+      resolveValue(event);
+    });
+  }).catch((error: unknown) => {
+    settled = true;
+    rejectValue(error);
+    throw error;
+  });
+  const timeout = setTimeout(() => {
+    if (settled) return;
+    settled = true;
+    off();
+    rejectValue(new CdpTimeoutError("Wait for download", timeoutMs));
+  }, timeoutMs);
+  const restore = async (): Promise<void> => {
+    if (restored) return;
+    restored = true;
+    clearTimeout(timeout);
+    off();
+    await control.send("Browser.setDownloadBehavior", previousDownloadPath === undefined
+      ? { behavior: "default" }
+      : { behavior: "allow", downloadPath: previousDownloadPath, eventsEnabled: true }, { timeoutMs });
+  };
+  const close = async (): Promise<void> => {
+    if (!settled) {
+      settled = true;
+      void value.catch(() => undefined);
+      rejectValue(new CdpAbortError("Download expectation closed"));
+    }
+    await restore();
+  };
+  const expectation: DownloadWillBeginExpectation = {
+    ready,
+    value,
+    cancel: async (reason?: unknown) => {
+      if (!settled) {
+        settled = true;
+        void value.catch(() => undefined);
+        rejectValue(new CdpAbortError("Wait for download", { cause: reason }));
+      }
+      await restore();
+    },
+    close,
+    [Symbol.asyncDispose]: close,
+  };
+  void ready.catch(() => undefined);
+  return expectation;
 }
 
 export async function downloadFile(tab: Tab, url: string, destination: string, options: WaitOptions = {}): Promise<DownloadResult> {

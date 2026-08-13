@@ -76,20 +76,21 @@ export async function captureNetworkBootstrap(
     throw error;
   }
   const captured = await expectation.value;
+  const request = await expectation.request;
+  const [body, bodyBase64Encoded] = await expectation.responseBody;
   const session = await waitForSessionMaterial(browser, tab, options);
-  return networkBootstrap(captured, session);
+  return networkBootstrap(request, captured, session, body, bodyBase64Encoded);
 }
 
-function networkBootstrap(captured: ExpectedResponse, session: SessionMaterial): NetworkBootstrap {
-  if (captured.request === undefined) throw new Error("Matched response has no corresponding request");
+function networkBootstrap(request: Protocol.Network.Request, captured: ExpectedResponse, session: SessionMaterial, body: string, bodyBase64Encoded: boolean): NetworkBootstrap {
   return {
-    request: captured.request.request,
+    request,
     response: captured.response,
-    body: captured.body,
-    bodyBase64Encoded: captured.bodyBase64Encoded,
+    body,
+    bodyBase64Encoded,
     session,
-    json<T = unknown>(): T { return captured.json<T>(); },
-    bytes(): Buffer { return captured.bytes(); },
+    json<T = unknown>(): T { return JSON.parse(Buffer.from(body, bodyBase64Encoded ? "base64" : "utf8").toString("utf8")) as T; },
+    bytes(): Buffer { return Buffer.from(body, bodyBase64Encoded ? "base64" : "utf8"); },
   };
 }
 

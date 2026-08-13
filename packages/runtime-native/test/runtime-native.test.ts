@@ -199,10 +199,13 @@ test("native backend runs DOM, input, capture, cookies, network, and download in
         assert.match(await tab.saveSnapshot(), /multipart\/related/i);
         await browser.cookies.setAll([{ name: "native", value: connectionMode, url: baseUrl }]);
         assert.equal((await browser.cookies.getAll()).find(({ name }) => name === "native")?.value, connectionMode);
-        const expectation = tab.expectResponse("/api");
+        const expectation = tab.expectResponse(".*/api");
         await expectation.ready;
         const fetchAction = tab.evaluate(`fetch(${JSON.stringify(`${baseUrl}/api`)}).then(r => r.json())`, true);
-        assert.deepEqual((await expectation.value).json(), { ok: true });
+        await expectation.value;
+        const [body, base64Encoded] = await expectation.responseBody;
+        assert.equal(base64Encoded, false);
+        assert.deepEqual(JSON.parse(body) as { ok: boolean }, { ok: true });
         assert.deepEqual(await fetchAction, { ok: true });
         const interception = tab.intercept({ url: "/local" });
         await interception.ready;

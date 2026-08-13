@@ -32,7 +32,7 @@ test("provider primitives capture runtime, network, cookie, and storage material
       bootstrap: async (tab) => { await tab.waitForReadyState("complete"); },
       action: async (tab) => ({
         token: await extractRuntimeValue<string>(tab, "window.runtimeToken"),
-        capture: await captureNetworkBootstrap(browser as Browser, tab, "/bootstrap", () => tab.evaluate("runProviderAction()"), {
+        capture: await captureNetworkBootstrap(browser as Browser, tab, ".*/bootstrap", () => tab.evaluate("runProviderAction()"), {
           cookieNames: ["session"], localStorageKeys: ["auth"],
         }),
       }),

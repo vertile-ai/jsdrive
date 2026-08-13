@@ -1307,10 +1307,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0056",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/network-expectation-parity.test.ts::ZDTEST-0056",
+        "note": "Passed raw RequestWillBeSent, request/response accessors, and response-body tuple against a controlled endpoint in real headless Chrome, direct and flattened.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_expect_request",
@@ -1331,10 +1331,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0057",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/network-expectation-parity.test.ts::ZDTEST-0057",
+        "note": "Passed raw RequestWillBeSent, request/response accessors, and response-body tuple against a controlled endpoint in real headful Chrome, direct and flattened.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_expect_request",
@@ -1355,10 +1355,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0058",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/network-expectation-parity.test.ts::ZDTEST-0058",
+        "note": "Passed raw ResponseReceived plus request, response, and loading-finished body accessors in real headless Chrome, direct and flattened.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_expect_response",
@@ -1379,10 +1379,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0059",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/network-expectation-parity.test.ts::ZDTEST-0059",
+        "note": "Passed raw ResponseReceived plus request, response, and loading-finished body accessors in real headful Chrome, direct and flattened.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_expect_response",
@@ -1403,10 +1403,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0060",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/network-expectation-parity.test.ts::ZDTEST-0060",
+        "note": "Passed same-object response expectation reset and subsequent reload capture in real headless Chrome, direct and flattened.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_expect_response_with_reload",
@@ -1427,10 +1427,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0061",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/network-expectation-parity.test.ts::ZDTEST-0061",
+        "note": "Passed same-object response expectation reset and subsequent reload capture in real headful Chrome, direct and flattened.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_expect_response_with_reload",
@@ -1451,10 +1451,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0062",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/network-expectation-parity.test.ts::ZDTEST-0062",
+        "note": "Passed no-argument download expectation returning the next raw DownloadWillBegin event in real headless Chrome, direct and flattened.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_expect_download",
@@ -1475,10 +1475,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0063",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/network-expectation-parity.test.ts::ZDTEST-0063",
+        "note": "Passed no-argument download expectation returning the next raw DownloadWillBegin event in real headful Chrome, direct and flattened.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_expect_download",
@@ -1503,10 +1503,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0064",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/network-expectation-parity.test.ts::ZDTEST-0064",
+        "note": "Passed response-stage XHR interception, response-body tuple, and continueRequest with the upstream URL glob in real headless Chrome, direct and flattened.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_intercept",
@@ -1531,10 +1531,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0065",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/network-expectation-parity.test.ts::ZDTEST-0065",
+        "note": "Passed response-stage XHR interception, response-body tuple, and continueRequest with the upstream URL glob in real headful Chrome, direct and flattened.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_intercept",
@@ -1559,10 +1559,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0066",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/network-expectation-parity.test.ts::ZDTEST-0066",
+        "note": "Passed same-object interception reset and a subsequent response-stage XHR capture in real headless Chrome, direct and flattened.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless0",
       "testFunction": "test_intercept_with_reload",
@@ -1587,10 +1587,10 @@
       "file": "tests/core/test_tab.py",
       "id": "ZDTEST-0067",
       "nodeParity": {
-        "case": null,
-        "note": "No independently expressed one-to-one Node parity case has been verified yet.",
-        "result": "NOT_RUN",
-        "status": "UNMAPPED"
+        "case": "packages/api/test/network-expectation-parity.test.ts::ZDTEST-0067",
+        "note": "Passed same-object interception reset and a subsequent response-stage XHR capture in real headful Chrome, direct and flattened.",
+        "result": "PASS",
+        "status": "MAPPED"
       },
       "parameterization": "headless1",
       "testFunction": "test_intercept_with_reload",

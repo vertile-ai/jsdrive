@@ -116,11 +116,11 @@ V1 不是玩具层，而是一个真实可运行的完整纵向路径：启动�
 ## 当前完整 parity 状态（2026-08-14）
 
 - `PAR-001` 的 checked-in inventory 已清零：16/16 root exports、45/45 core symbols、472/472 core members，共 533/533 项均有 executable semantic evidence；`MISSING`、`UNKNOWN`、`CANDIDATE` 均为 0。
-- `PAR-002` inventory 固定收集 101 个 Zendriver 0.15.5 parametrized cases，报告 0 `UNMAPPED`、0 `NOT_RUN`，generator validation 与 mutation probes 全部通过。
+- `PAR-002` inventory 固定收集 101 个 Zendriver 0.15.5 parametrized cases；当前权威报告为 98 `PASS`、0 `UNMAPPED`，另有 `ZDTEST-0022`、`ZDTEST-0024`、`ZDTEST-0026` 共 3 项处于 `MAPPED` + `NOT_RUN`。generator validation 与 mutation probes 已通过，但这 3 项仍是 `PAR-002` 的阻塞缺口。
 - Connection、Future、exception、keys、Position、Element、expectation/interception、Browser、Tab 与 utility public surface 已补齐；strict TS、JS/native、direct/flattened 和真实 headless Chromium 路径通过。
 - `test_multiple_browsers_diff_userdata` 使用仓库批准的串行等价执行：同一 `Config` 依次启动三个 Chromium，验证三个不同 port/profile/navigation outcome，并由 lifecycle trace 证明 observed max managed-process concurrency 恰为 1；这是 single-managed-Chromium policy 下的 serial equivalence，上游 concurrent multi-browser behavior 未验证。
 - Python 语言层继承被显式映射到 JavaScript：`IntEnum`/`str Enum` 使用 number/string primitives，`list` 使用 `Array`，async context 使用 `aenter/aexit` 与 `Symbol.asyncDispose`，call/await/repr dunder 使用命名方法、PromiseLike 或 `toString`。这些映射由 dedicated `ZDAPI-*` cases 覆盖，不引入 Python interpreter compatibility layer。
 - 保留一个 ECMAScript 规范边界：当 `EventTransaction.event` 本身是 thenable 时，同步 `event`/`result()` 保持 object identity，但 JavaScript `await` 必须递归 assimilate thenable 并返回其 fulfillment value；`ZDAPI-EVENT-TRANSACTION-THENABLE-001` 固定记录该差异。
 - `Tab.activate` / `Tab.bring_to_front` 的 CDP command routing 只用 fake backend 验证；真实调用会违反“不得激活窗口或抢占桌面焦点”的仓库 policy，因此未在 Chromium 上执行。
-- 本轮实际证据：`npm run build`、`npm run typecheck`、`python3 parity/generate.py --validate-only`、root `npm test`、`npm run test:parity:headless --workspace=guanine` 和经明确授权的 `NODRIVER_ALLOW_HEADFUL=1 npm run test:parity:headful --workspace=guanine` 全部通过；headless parity 包括 BrowserScan 四象限和串行 multi-browser case，49 个 headful cases 全部通过，headful BrowserScan 在 JS/native × direct/flattened 四象限均为 `Normal` 且 `webdriver: false`。
-- 两个 browser phase 结束后均无 managed Chromium、harness lock 或本轮临时 profile 遗留。完整 stop condition 仅剩整套最终变更的独立 reviewer verdict。
+- 当前可依赖证据包括 `npm run build`、`npm run typecheck`、`python3 parity/generate.py --validate-only`、root `npm test` 与 `npm run test:parity:headless --workspace=guanine` 通过；headless parity 包括 BrowserScan 四象限和严格串行的 multi-browser equivalence case。当前测试表面已有 49 个 headful declarations，但 M5 fixture/behavior 变更后的最终完整 headful gate 尚未运行；该次运行必须重新取得用户针对本次运行的明确授权，不能沿用先前授权或先前 headful 结果。
+- 剩余步骤按顺序为：取得授权后运行最终完整 headful gate；仅在成功后移除 `EXPECTED_NOT_RUN_TEST_IDS` 中的三项、把对应 mappings 更新为 `PASS` 并刷新 derived artifacts/status；随后重新执行 validation，最后由独立 reviewer 作整套最终变更的只读 verdict。在这些步骤完成前，本 roadmap 不宣称完整 parity 已完成，也不宣称无条件 drop-in equivalence。

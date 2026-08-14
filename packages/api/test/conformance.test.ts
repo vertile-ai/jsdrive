@@ -30,7 +30,7 @@ const fixture = `<!doctype html>
   </script>
 </body></html>`;
 
-test("DOM, input, and capture journey works in direct and flattened modes", { timeout: 60_000 }, async () => {
+test("ZDAPI-CONFORMANCE-001", { timeout: 60_000 }, async () => {
   const server = createServer((request, response) => {
     response.setHeader("content-type", "text/html; charset=utf-8");
     response.end(request.url === "/second" ? "<!doctype html><title>second</title><p>Second page</p>" : fixture);
@@ -63,6 +63,8 @@ test("DOM, input, and capture journey works in direct and flattened modes", { ti
         assert.equal(heading.attributes["data-kind"], "primary");
         assert.equal(await heading.getText(), "Nodriver fixture");
         assert.match(await heading.getHtml(), /^<h1/);
+        assert.equal((await heading.getJsAttributes())?.id, "heading");
+        await heading.saveToDom();
         assert.equal((await tab.querySelectorAll("button")).length, 2);
         assert.equal((await tab.selectAll("button")).length, 2);
         const delayed = await tab.select("#delayed");
@@ -96,6 +98,7 @@ test("DOM, input, and capture journey works in direct and flattened modes", { ti
         assert.ok(clickState.hover >= 1);
 
         const input = await tab.select("#controlled");
+        await input.focus();
         await input.setValue("reset");
         await input.clearInput();
         await input.sendKeys("A👨‍👩‍👧‍👦é");
@@ -104,7 +107,7 @@ test("DOM, input, and capture journey works in direct and flattened modes", { ti
         assert.equal(await input.getValue(), "");
 
         const upload = await tab.select("#upload");
-        await upload.uploadFiles([uploadPath]);
+        await upload.sendFile(uploadPath);
         assert.equal(await upload.apply<string>("function () { return this.files[0].name; }"), "upload.txt");
         await (await tab.select("option[value=b]")).selectOption();
         assert.equal(await (await tab.select("#choice")).getValue(), "b");

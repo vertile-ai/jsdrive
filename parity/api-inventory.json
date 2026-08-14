@@ -1,24 +1,24 @@
 {
   "mappingCounts": {
     "coreMembers": {
-      "CANDIDATE": 110,
-      "MISSING": 32,
-      "UNKNOWN": 10,
-      "VERIFIED": 320
+      "CANDIDATE": 43,
+      "MISSING": 5,
+      "UNKNOWN": 8,
+      "VERIFIED": 416
     },
     "coreSymbols": {
-      "CANDIDATE": 4,
-      "VERIFIED": 41
+      "CANDIDATE": 1,
+      "VERIFIED": 44
     },
     "rootExports": {
-      "CANDIDATE": 2,
-      "VERIFIED": 14
+      "CANDIDATE": 1,
+      "VERIFIED": 15
     },
     "total": {
-      "CANDIDATE": 116,
-      "MISSING": 32,
-      "UNKNOWN": 10,
-      "VERIFIED": 375
+      "CANDIDATE": 45,
+      "MISSING": 5,
+      "UNKNOWN": 8,
+      "VERIFIED": 475
     }
   },
   "nodriver": {
@@ -623,6 +623,10 @@
           },
           {
             "kind": "method",
+            "name": "equals"
+          },
+          {
+            "kind": "method",
             "name": "flash"
           },
           {
@@ -815,6 +819,10 @@
           },
           {
             "kind": "method",
+            "name": "set"
+          },
+          {
+            "kind": "method",
             "name": "setText"
           },
           {
@@ -852,6 +860,10 @@
           {
             "kind": "property",
             "name": "textAll"
+          },
+          {
+            "kind": "method",
+            "name": "toString"
           },
           {
             "kind": "property",
@@ -1081,6 +1093,10 @@
           {
             "kind": "method",
             "name": "toJson"
+          },
+          {
+            "kind": "method",
+            "name": "toString"
           },
           {
             "kind": "method",
@@ -5260,6 +5276,59 @@
             "typeParameters": []
           },
           {
+            "declaration": "set(name: string, value: string): void;",
+            "kind": "method",
+            "name": "set",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "name",
+                "optional": false,
+                "rest": false,
+                "type": "string"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "value",
+                "optional": false,
+                "rest": false,
+                "type": "string"
+              }
+            ],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "equals(other: unknown): boolean;",
+            "kind": "method",
+            "name": "equals",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "other",
+                "optional": false,
+                "rest": false,
+                "type": "unknown"
+              }
+            ],
+            "returnType": "boolean",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "toString(): string;",
+            "kind": "method",
+            "name": "toString",
+            "parameters": [],
+            "returnType": "string",
+            "static": false,
+            "typeParameters": []
+          },
+          {
             "access": "get",
             "declaration": "get remoteObject(): Protocol.Runtime.RemoteObject | undefined;",
             "kind": "property",
@@ -7453,6 +7522,15 @@
             ],
             "returnType": "Position",
             "static": true,
+            "typeParameters": []
+          },
+          {
+            "declaration": "toString(): string;",
+            "kind": "method",
+            "name": "toString",
+            "parameters": [],
+            "returnType": "string",
+            "static": false,
             "typeParameters": []
           },
           {
@@ -11071,7 +11149,7 @@
       },
       "Element": {
         "declarations": [
-          "export declare class Element { #private; readonly backendNodeId: Protocol.DOM.BackendNodeId; constructor(tab: Tab, backendNodeId: Protocol.DOM.BackendNodeId, node: Protocol.DOM.Node); constructor(node: Protocol.DOM.Node, tab: Tab, tree?: Protocol.DOM.Node); readonly tab: Tab; get nodeId(): Protocol.DOM.NodeId; get node(): Protocol.DOM.Node; get parentNodeId(): Protocol.DOM.NodeId | undefined; get parentId(): Protocol.DOM.NodeId | undefined; get objectId(): Protocol.Runtime.RemoteObjectId | undefined; get nodeType(): number; get tag(): string; get tagName(): string; get nodeName(): string; get localName(): string; get nodeValue(): string; get textAll(): string; get documentURL(): string | undefined; get documentUrl(): string | undefined; get baseURL(): string | undefined; get baseUrl(): string | undefined; get publicId(): string | undefined; get systemId(): string | undefined; get internalSubset(): string | undefined; get xmlVersion(): string | undefined; get pseudoType(): Protocol.DOM.PseudoType | undefined; get pseudoIdentifier(): string | undefined; get shadowRootType(): Protocol.DOM.ShadowRootType | undefined; get frameId(): Protocol.Page.FrameId | undefined; get childNodeCount(): number | undefined; get compatibilityMode(): Protocol.DOM.CompatibilityMode | undefined; get isSvg(): boolean; get isScrollable(): boolean | undefined; get assignedSlot(): Protocol.DOM.BackendNode | undefined; get distributedNodes(): readonly Protocol.DOM.BackendNode[]; get adoptedStyleSheets(): readonly Protocol.DOM.StyleSheetId[]; get attributes(): Readonly<Record<string, string>>; get attrs(): Readonly<Record<string, string>>; get children(): readonly Element[]; get tree(): Protocol.DOM.Node | undefined; get shadowRoots(): readonly Element[]; get pseudoElements(): readonly Element[]; get contentDocument(): Element | undefined; get templateContent(): Element | undefined; get importedDocument(): Element | undefined; get text(): string; get value(): string | undefined; get html(): string | undefined; get(name: string): string | undefined; get remoteObject(): Protocol.Runtime.RemoteObject | undefined; get parent(): Element | undefined; getParent(): Promise<Element | null>; refresh(): Promise<this>; update(node?: Protocol.DOM.Node): Promise<this>; getText(): Promise<string>; getValue(): Promise<string>; getHtml(): Promise<string>; getRemoteObject(): Promise<Protocol.Runtime.RemoteObject>; getJsAttributes(): Promise<Readonly<Record<string, unknown>> | undefined>; saveToDom(outerHtml?: string): Promise<void>; getPosition(absolute?: boolean): Promise<Position | undefined>; querySelector(selector: string): Promise<Element | null>; querySelectorAll(selector: string): Promise<readonly Element[]>; apply<T = unknown>(jsFunction: string, ...arguments_: readonly unknown[]): Promise<T>; domClick(): Promise<void>; click(): Promise<void>; mouseClick(button?: Protocol.Input.MouseButton, buttons?: number, modifiers?: number, hold?: boolean): Promise<void>; focus(): Promise<void>; scrollIntoView(): Promise<void>; setValue(value: string): Promise<void>; setText(value: string): Promise<void>; clearInput(): Promise<void>; clearInputByDeleting(): Promise<void>; sendKeys(input: KeyInput | KeyEvents | readonly KeyInput[]): Promise<void>; uploadFiles(files: readonly string[]): Promise<void>; sendFile(...files: readonly string[]): Promise<void>; selectOption(value?: string): Promise<void>; mouseMove(): Promise<void>; flash(duration?: number): Promise<void>; highlightOverlay(): Promise<void>; recordVideo(directory: string): Promise<ScreencastSession>; isRecording(): Promise<boolean | undefined>; mouseDrag(destination: Element | Position | readonly [number, number], relative?: boolean, steps?: number): Promise<void>; screenshotB64(format?: \"jpeg\" | \"png\" | \"webp\", scale?: number): Promise<string>; saveScreenshot(path: string, format?: \"jpeg\" | \"png\" | \"webp\", scale?: number): Promise<string>; saveScreenshot(path?: \"auto\", format?: \"jpeg\" | \"png\" | \"webp\", scale?: number): Promise<string>; removeFromDom(): Promise<void>; }"
+          "export declare class Element { #private; readonly backendNodeId: Protocol.DOM.BackendNodeId; constructor(tab: Tab, backendNodeId: Protocol.DOM.BackendNodeId, node: Protocol.DOM.Node); constructor(node: Protocol.DOM.Node, tab: Tab, tree?: Protocol.DOM.Node); readonly tab: Tab; get nodeId(): Protocol.DOM.NodeId; get node(): Protocol.DOM.Node; get parentNodeId(): Protocol.DOM.NodeId | undefined; get parentId(): Protocol.DOM.NodeId | undefined; get objectId(): Protocol.Runtime.RemoteObjectId | undefined; get nodeType(): number; get tag(): string; get tagName(): string; get nodeName(): string; get localName(): string; get nodeValue(): string; get textAll(): string; get documentURL(): string | undefined; get documentUrl(): string | undefined; get baseURL(): string | undefined; get baseUrl(): string | undefined; get publicId(): string | undefined; get systemId(): string | undefined; get internalSubset(): string | undefined; get xmlVersion(): string | undefined; get pseudoType(): Protocol.DOM.PseudoType | undefined; get pseudoIdentifier(): string | undefined; get shadowRootType(): Protocol.DOM.ShadowRootType | undefined; get frameId(): Protocol.Page.FrameId | undefined; get childNodeCount(): number | undefined; get compatibilityMode(): Protocol.DOM.CompatibilityMode | undefined; get isSvg(): boolean; get isScrollable(): boolean | undefined; get assignedSlot(): Protocol.DOM.BackendNode | undefined; get distributedNodes(): readonly Protocol.DOM.BackendNode[]; get adoptedStyleSheets(): readonly Protocol.DOM.StyleSheetId[]; get attributes(): Readonly<Record<string, string>>; get attrs(): Readonly<Record<string, string>>; get children(): readonly Element[]; get tree(): Protocol.DOM.Node | undefined; get shadowRoots(): readonly Element[]; get pseudoElements(): readonly Element[]; get contentDocument(): Element | undefined; get templateContent(): Element | undefined; get importedDocument(): Element | undefined; get text(): string; get value(): string | undefined; get html(): string | undefined; get(name: string): string | undefined; set(name: string, value: string): void; equals(other: unknown): boolean; toString(): string; get remoteObject(): Protocol.Runtime.RemoteObject | undefined; get parent(): Element | undefined; getParent(): Promise<Element | null>; refresh(): Promise<this>; update(node?: Protocol.DOM.Node): Promise<this>; getText(): Promise<string>; getValue(): Promise<string>; getHtml(): Promise<string>; getRemoteObject(): Promise<Protocol.Runtime.RemoteObject>; getJsAttributes(): Promise<Readonly<Record<string, unknown>> | undefined>; saveToDom(outerHtml?: string): Promise<void>; getPosition(absolute?: boolean): Promise<Position | undefined>; querySelector(selector: string): Promise<Element | null>; querySelectorAll(selector: string): Promise<readonly Element[]>; apply<T = unknown>(jsFunction: string, ...arguments_: readonly unknown[]): Promise<T>; domClick(): Promise<void>; click(): Promise<void>; mouseClick(button?: Protocol.Input.MouseButton, buttons?: number, modifiers?: number, hold?: boolean): Promise<void>; focus(): Promise<void>; scrollIntoView(): Promise<void>; setValue(value: string): Promise<void>; setText(value: string): Promise<void>; clearInput(): Promise<void>; clearInputByDeleting(): Promise<void>; sendKeys(input: KeyInput | KeyEvents | readonly KeyInput[]): Promise<void>; uploadFiles(files: readonly string[]): Promise<void>; sendFile(...files: readonly string[]): Promise<void>; selectOption(value?: string): Promise<void>; mouseMove(): Promise<void>; flash(duration?: number): Promise<void>; highlightOverlay(): Promise<void>; recordVideo(directory: string): Promise<ScreencastSession>; isRecording(): Promise<boolean | undefined>; mouseDrag(destination: Element | Position | readonly [number, number], relative?: boolean, steps?: number): Promise<void>; screenshotB64(format?: \"jpeg\" | \"png\" | \"webp\", scale?: number): Promise<string>; saveScreenshot(path: string, format?: \"jpeg\" | \"png\" | \"webp\", scale?: number): Promise<string>; saveScreenshot(path?: \"auto\", format?: \"jpeg\" | \"png\" | \"webp\", scale?: number): Promise<string>; removeFromDom(): Promise<void>; }"
         ],
         "file": "packages/api/dist/element.d.ts",
         "kind": "class"
@@ -11260,7 +11338,7 @@
       },
       "Position": {
         "declarations": [
-          "export declare class Position extends Array<number> { static get [Symbol.species](): ArrayConstructor; constructor(points: readonly number[]); get x(): number; get y(): number; get width(): number; get height(): number; get center(): readonly [number, number]; append(value: number): void; clear(): void; copy(): number[]; count(value: number): number; extend(values: Iterable<number>): void; index(value: number, start?: number, stop?: number): number; insert(index: number, value: number): void; pop(index?: number): number; remove(value: number): void; reverse(): this; sort(compareFn?: (a: number, b: number) => number): this; toJSON(): number[]; toJson(): number[]; static fromJson(points: readonly number[]): Position; toViewport(scale?: number): Protocol.Page.Viewport; }"
+          "export declare class Position extends Array<number> { static get [Symbol.species](): ArrayConstructor; constructor(points: readonly number[]); get x(): number; get y(): number; get width(): number; get height(): number; get center(): readonly [number, number]; append(value: number): void; clear(): void; copy(): number[]; count(value: number): number; extend(values: Iterable<number>): void; index(value: number, start?: number, stop?: number): number; insert(index: number, value: number): void; pop(index?: number): number; remove(value: number): void; reverse(): this; sort(compareFn?: (a: number, b: number) => number): this; toJSON(): number[]; toJson(): number[]; static fromJson(points: readonly number[]): Position; toString(): string; toViewport(scale?: number): Protocol.Page.Viewport; }"
         ],
         "file": "packages/api/dist/element.d.ts",
         "kind": "class"
@@ -13506,6 +13584,10 @@
           },
           {
             "kind": "method",
+            "name": "equals"
+          },
+          {
+            "kind": "method",
             "name": "flash"
           },
           {
@@ -13698,6 +13780,10 @@
           },
           {
             "kind": "method",
+            "name": "set"
+          },
+          {
+            "kind": "method",
             "name": "setText"
           },
           {
@@ -13735,6 +13821,10 @@
           {
             "kind": "property",
             "name": "textAll"
+          },
+          {
+            "kind": "method",
+            "name": "toString"
           },
           {
             "kind": "property",
@@ -13964,6 +14054,10 @@
           {
             "kind": "method",
             "name": "toJson"
+          },
+          {
+            "kind": "method",
+            "name": "toString"
           },
           {
             "kind": "method",
@@ -15866,11 +15960,21 @@
                 "kind": "method",
                 "name": "__del__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Browser",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-BROWSER-001",
+                      "file": "packages/api/test/api-surface-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Browser",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -15893,7 +15997,13 @@
                 "kind": "method",
                 "name": "__iter__",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-BROWSER-001",
+                      "file": "packages/api/test/api-surface-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "[Symbol.iterator](): Iterator<Tab>;",
@@ -15905,10 +16015,14 @@
                       "typeParameters": []
                     }
                   ],
-                  "nodeMember": "Browser.[Symbol.iterator]",
-                  "semanticsVerified": false,
+                  "nodeMember": "Browser",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -15931,11 +16045,21 @@
                 "kind": "method",
                 "name": "__next__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Browser",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-BROWSER-001",
+                      "file": "packages/api/test/api-surface-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Browser",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -15958,11 +16082,21 @@
                 "kind": "method",
                 "name": "__reversed__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Browser",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-BROWSER-001",
+                      "file": "packages/api/test/api-surface-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Browser",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -16346,7 +16480,13 @@
                 "kind": "method",
                 "name": "grant_all_permissions",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-BROWSER-001",
+                      "file": "packages/api/test/api-surface-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "grantAllPermissions(origin?: string): Promise<void>;",
@@ -16368,9 +16508,13 @@
                     }
                   ],
                   "nodeMember": "Browser.grantAllPermissions",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -16501,7 +16645,13 @@
                 "kind": "method",
                 "name": "start",
                 "nodeMapping": {
-                  "evidence": "name and member kind match, but required arity differs",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-BROWSER-001",
+                      "file": "packages/api/test/api-surface-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "static start(options?: LaunchOptions | Config): Promise<Browser>;",
@@ -16523,9 +16673,13 @@
                     }
                   ],
                   "nodeMember": "Browser.start",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "INCOMPATIBLE_REQUIRED_ARITY",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -16713,7 +16867,13 @@
                 "kind": "method",
                 "name": "tile_windows",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-BROWSER-001",
+                      "file": "packages/api/test/api-surface-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "tileWindows(windows?: readonly Tab[], options?: { readonly maxColumns?: number; readonly left?: number; readonly top?: number; readonly width?: number; readonly height?: number; }): Promise<readonly Protocol.Browser.Bounds[]>;",
@@ -16743,9 +16903,13 @@
                     }
                   ],
                   "nodeMember": "Browser.tileWindows",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -17773,11 +17937,21 @@
                 "kind": "method",
                 "name": "__call__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Config",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFIG-001",
+                      "file": "packages/api/test/api-surface-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Config.toBrowserArgs",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -17800,11 +17974,21 @@
                 "kind": "method",
                 "name": "__repr__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Config",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFIG-001",
+                      "file": "packages/api/test/api-surface-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Config.toString",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -22203,11 +22387,21 @@
                 "kind": "method",
                 "name": "__await__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Element",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Element.refresh",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -22230,11 +22424,21 @@
                 "kind": "method",
                 "name": "__call__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Element",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Element.apply",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -22264,11 +22468,21 @@
                 "kind": "method",
                 "name": "__eq__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Element",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Element.equals",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -22298,11 +22512,21 @@
                 "kind": "method",
                 "name": "__getattr__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Element",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Element.get",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -22332,11 +22556,21 @@
                 "kind": "method",
                 "name": "__getitem__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Element",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Element.get",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -22367,11 +22601,21 @@
                 "kind": "attribute",
                 "name": "__hash__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Element",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Element",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "valueType": "NoneType"
               },
@@ -22382,11 +22626,21 @@
                 "kind": "method",
                 "name": "__repr__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Element",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Element.toString",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -22409,11 +22663,21 @@
                 "kind": "method",
                 "name": "__setattr__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Element",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Element.set",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -22450,11 +22714,21 @@
                 "kind": "method",
                 "name": "__setitem__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Element",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Element.set",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -22491,7 +22765,13 @@
                 "kind": "method",
                 "name": "apply",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-ACTIONS-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "apply<T = unknown>(jsFunction: string, ...arguments_: readonly unknown[]): Promise<T>;",
@@ -22523,9 +22803,13 @@
                     }
                   ],
                   "nodeMember": "Element.apply",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -22570,7 +22854,13 @@
                 "kind": "property",
                 "name": "assigned_slot",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -22583,9 +22873,13 @@
                     }
                   ],
                   "nodeMember": "Element.assignedSlot",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -22596,7 +22890,13 @@
                 "kind": "property",
                 "name": "attributes",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -22609,9 +22909,13 @@
                     }
                   ],
                   "nodeMember": "Element.attributes",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -22622,7 +22926,13 @@
                 "kind": "property",
                 "name": "attrs",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -22635,9 +22945,13 @@
                     }
                   ],
                   "nodeMember": "Element.attrs",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -22648,7 +22962,13 @@
                 "kind": "property",
                 "name": "backend_node_id",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "readonly backendNodeId: Protocol.DOM.BackendNodeId;",
@@ -22662,9 +22982,13 @@
                     }
                   ],
                   "nodeMember": "Element.backendNodeId",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -22675,7 +22999,13 @@
                 "kind": "property",
                 "name": "base_url",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -22688,9 +23018,13 @@
                     }
                   ],
                   "nodeMember": "Element.baseUrl",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -22701,7 +23035,13 @@
                 "kind": "property",
                 "name": "child_node_count",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -22714,9 +23054,13 @@
                     }
                   ],
                   "nodeMember": "Element.childNodeCount",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -22727,7 +23071,13 @@
                 "kind": "property",
                 "name": "children",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -22740,9 +23090,13 @@
                     }
                   ],
                   "nodeMember": "Element.children",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -22846,7 +23200,13 @@
                 "kind": "method",
                 "name": "click",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-ACTIONS-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "click(): Promise<void>;",
@@ -22859,9 +23219,13 @@
                     }
                   ],
                   "nodeMember": "Element.click",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -22885,7 +23249,13 @@
                 "kind": "property",
                 "name": "compatibility_mode",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -22898,9 +23268,13 @@
                     }
                   ],
                   "nodeMember": "Element.compatibilityMode",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -22911,7 +23285,13 @@
                 "kind": "property",
                 "name": "content_document",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -22924,9 +23304,13 @@
                     }
                   ],
                   "nodeMember": "Element.contentDocument",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -22937,7 +23321,13 @@
                 "kind": "property",
                 "name": "distributed_nodes",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -22950,9 +23340,13 @@
                     }
                   ],
                   "nodeMember": "Element.distributedNodes",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -22963,7 +23357,13 @@
                 "kind": "property",
                 "name": "document_url",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -22976,9 +23376,13 @@
                     }
                   ],
                   "nodeMember": "Element.documentUrl",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -22988,7 +23392,13 @@
                 "kind": "method",
                 "name": "flash",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-ACTIONS-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "flash(duration?: number): Promise<void>;",
@@ -23010,9 +23420,13 @@
                     }
                   ],
                   "nodeMember": "Element.flash",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -23042,7 +23456,13 @@
                 "kind": "method",
                 "name": "focus",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-ACTIONS-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "focus(): Promise<void>;",
@@ -23055,9 +23475,13 @@
                     }
                   ],
                   "nodeMember": "Element.focus",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -23081,7 +23505,13 @@
                 "kind": "property",
                 "name": "frame_id",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -23094,9 +23524,13 @@
                     }
                   ],
                   "nodeMember": "Element.frameId",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -23106,7 +23540,13 @@
                 "kind": "method",
                 "name": "get",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "get(name: string): string | undefined;",
@@ -23128,9 +23568,13 @@
                     }
                   ],
                   "nodeMember": "Element.get",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -23160,7 +23604,13 @@
                 "kind": "method",
                 "name": "get_html",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-ACTIONS-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "getHtml(): Promise<string>;",
@@ -23173,9 +23623,13 @@
                     }
                   ],
                   "nodeMember": "Element.getHtml",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -23198,7 +23652,13 @@
                 "kind": "method",
                 "name": "get_js_attributes",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-ACTIONS-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "getJsAttributes(): Promise<Readonly<Record<string, unknown>> | undefined>;",
@@ -23211,9 +23671,13 @@
                     }
                   ],
                   "nodeMember": "Element.getJsAttributes",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -23236,7 +23700,13 @@
                 "kind": "method",
                 "name": "get_position",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-ACTIONS-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "getPosition(absolute?: boolean): Promise<Position | undefined>;",
@@ -23258,9 +23728,13 @@
                     }
                   ],
                   "nodeMember": "Element.getPosition",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -23290,7 +23764,13 @@
                 "kind": "method",
                 "name": "highlight_overlay",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-ACTIONS-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "highlightOverlay(): Promise<void>;",
@@ -23303,9 +23783,13 @@
                     }
                   ],
                   "nodeMember": "Element.highlightOverlay",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -23329,7 +23813,13 @@
                 "kind": "property",
                 "name": "imported_document",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -23342,9 +23832,13 @@
                     }
                   ],
                   "nodeMember": "Element.importedDocument",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -23355,7 +23849,13 @@
                 "kind": "property",
                 "name": "internal_subset",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -23368,9 +23868,13 @@
                     }
                   ],
                   "nodeMember": "Element.internalSubset",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -23380,7 +23884,13 @@
                 "kind": "method",
                 "name": "is_recording",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-ACTIONS-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "isRecording(): Promise<boolean | undefined>;",
@@ -23393,9 +23903,13 @@
                     }
                   ],
                   "nodeMember": "Element.isRecording",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -23419,7 +23933,13 @@
                 "kind": "property",
                 "name": "is_svg",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -23432,9 +23952,13 @@
                     }
                   ],
                   "nodeMember": "Element.isSvg",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -23445,7 +23969,13 @@
                 "kind": "property",
                 "name": "local_name",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -23458,9 +23988,13 @@
                     }
                   ],
                   "nodeMember": "Element.localName",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -23470,7 +24004,13 @@
                 "kind": "method",
                 "name": "mouse_click",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-ACTIONS-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "mouseClick(button?: Protocol.Input.MouseButton, buttons?: number, modifiers?: number, hold?: boolean): Promise<void>;",
@@ -23516,9 +24056,13 @@
                     }
                   ],
                   "nodeMember": "Element.mouseClick",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -23576,7 +24120,13 @@
                 "kind": "method",
                 "name": "mouse_drag",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-ACTIONS-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "mouseDrag(destination: Element | Position | readonly [number, number], relative?: boolean, steps?: number): Promise<void>;",
@@ -23614,9 +24164,13 @@
                     }
                   ],
                   "nodeMember": "Element.mouseDrag",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -23660,7 +24214,13 @@
                 "kind": "method",
                 "name": "mouse_move",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-ACTIONS-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "mouseMove(): Promise<void>;",
@@ -23673,9 +24233,13 @@
                     }
                   ],
                   "nodeMember": "Element.mouseMove",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -23699,7 +24263,13 @@
                 "kind": "property",
                 "name": "node",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -23712,9 +24282,13 @@
                     }
                   ],
                   "nodeMember": "Element.node",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -23725,7 +24299,13 @@
                 "kind": "property",
                 "name": "node_id",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -23738,9 +24318,13 @@
                     }
                   ],
                   "nodeMember": "Element.nodeId",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -23751,7 +24335,13 @@
                 "kind": "property",
                 "name": "node_name",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -23764,9 +24354,13 @@
                     }
                   ],
                   "nodeMember": "Element.nodeName",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -23777,7 +24371,13 @@
                 "kind": "property",
                 "name": "node_type",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -23790,9 +24390,13 @@
                     }
                   ],
                   "nodeMember": "Element.nodeType",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -23803,7 +24407,13 @@
                 "kind": "property",
                 "name": "node_value",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -23816,9 +24426,13 @@
                     }
                   ],
                   "nodeMember": "Element.nodeValue",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -23829,7 +24443,13 @@
                 "kind": "property",
                 "name": "object_id",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-ACTIONS-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -23842,9 +24462,13 @@
                     }
                   ],
                   "nodeMember": "Element.objectId",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -23855,7 +24479,13 @@
                 "kind": "property",
                 "name": "parent",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -23868,9 +24498,13 @@
                     }
                   ],
                   "nodeMember": "Element.parent",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -23881,7 +24515,13 @@
                 "kind": "property",
                 "name": "parent_id",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -23894,9 +24534,13 @@
                     }
                   ],
                   "nodeMember": "Element.parentId",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -23907,7 +24551,13 @@
                 "kind": "property",
                 "name": "pseudo_elements",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -23920,9 +24570,13 @@
                     }
                   ],
                   "nodeMember": "Element.pseudoElements",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -23933,7 +24587,13 @@
                 "kind": "property",
                 "name": "pseudo_identifier",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -23946,9 +24606,13 @@
                     }
                   ],
                   "nodeMember": "Element.pseudoIdentifier",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -23959,7 +24623,13 @@
                 "kind": "property",
                 "name": "pseudo_type",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -23972,9 +24642,13 @@
                     }
                   ],
                   "nodeMember": "Element.pseudoType",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -23985,7 +24659,13 @@
                 "kind": "property",
                 "name": "public_id",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -23998,9 +24678,13 @@
                     }
                   ],
                   "nodeMember": "Element.publicId",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -24010,7 +24694,13 @@
                 "kind": "method",
                 "name": "query_selector",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-ACTIONS-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "querySelector(selector: string): Promise<Element | null>;",
@@ -24032,9 +24722,13 @@
                     }
                   ],
                   "nodeMember": "Element.querySelector",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -24064,7 +24758,13 @@
                 "kind": "method",
                 "name": "query_selector_all",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-ACTIONS-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "querySelectorAll(selector: string): Promise<readonly Element[]>;",
@@ -24086,9 +24786,13 @@
                     }
                   ],
                   "nodeMember": "Element.querySelectorAll",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -24118,7 +24822,13 @@
                 "kind": "method",
                 "name": "record_video",
                 "nodeMapping": {
-                  "evidence": "name and member kind match, but required arity differs",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-ACTIONS-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "recordVideo(directory: string): Promise<ScreencastSession>;",
@@ -24140,9 +24850,13 @@
                     }
                   ],
                   "nodeMember": "Element.recordVideo",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "INCOMPATIBLE_REQUIRED_ARITY",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -24187,7 +24901,13 @@
                 "kind": "property",
                 "name": "remote_object",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-ACTIONS-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -24200,9 +24920,13 @@
                     }
                   ],
                   "nodeMember": "Element.remoteObject",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -24212,7 +24936,13 @@
                 "kind": "method",
                 "name": "remove_from_dom",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "removeFromDom(): Promise<void>;",
@@ -24225,9 +24955,13 @@
                     }
                   ],
                   "nodeMember": "Element.removeFromDom",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -24250,7 +24984,13 @@
                 "kind": "method",
                 "name": "save_screenshot",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-ACTIONS-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "saveScreenshot(path?: \"auto\", format?: \"jpeg\" | \"png\" | \"webp\", scale?: number): Promise<string>;",
@@ -24288,9 +25028,13 @@
                     }
                   ],
                   "nodeMember": "Element.saveScreenshot",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -24334,7 +25078,13 @@
                 "kind": "method",
                 "name": "save_to_dom",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "saveToDom(outerHtml?: string): Promise<void>;",
@@ -24356,9 +25106,13 @@
                     }
                   ],
                   "nodeMember": "Element.saveToDom",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -24381,7 +25135,13 @@
                 "kind": "method",
                 "name": "screenshot_b64",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-ACTIONS-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "screenshotB64(format?: \"jpeg\" | \"png\" | \"webp\", scale?: number): Promise<string>;",
@@ -24411,9 +25171,13 @@
                     }
                   ],
                   "nodeMember": "Element.screenshotB64",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -24450,7 +25214,13 @@
                 "kind": "method",
                 "name": "scroll_into_view",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-ACTIONS-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "scrollIntoView(): Promise<void>;",
@@ -24463,9 +25233,13 @@
                     }
                   ],
                   "nodeMember": "Element.scrollIntoView",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -24488,7 +25262,13 @@
                 "kind": "method",
                 "name": "select_option",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "selectOption(value?: string): Promise<void>;",
@@ -24510,9 +25290,13 @@
                     }
                   ],
                   "nodeMember": "Element.selectOption",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -24535,7 +25319,13 @@
                 "kind": "method",
                 "name": "send_file",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "sendFile(...files: readonly string[]): Promise<void>;",
@@ -24557,9 +25347,13 @@
                     }
                   ],
                   "nodeMember": "Element.sendFile",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -24655,7 +25449,13 @@
                 "kind": "method",
                 "name": "set_text",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "setText(value: string): Promise<void>;",
@@ -24677,9 +25477,13 @@
                     }
                   ],
                   "nodeMember": "Element.setText",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -24709,7 +25513,13 @@
                 "kind": "method",
                 "name": "set_value",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "setValue(value: string): Promise<void>;",
@@ -24731,9 +25541,13 @@
                     }
                   ],
                   "nodeMember": "Element.setValue",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -24764,7 +25578,13 @@
                 "kind": "property",
                 "name": "shadow_root_type",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -24777,9 +25597,13 @@
                     }
                   ],
                   "nodeMember": "Element.shadowRootType",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -24790,7 +25614,13 @@
                 "kind": "property",
                 "name": "shadow_roots",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -24803,9 +25633,13 @@
                     }
                   ],
                   "nodeMember": "Element.shadowRoots",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -24816,7 +25650,13 @@
                 "kind": "property",
                 "name": "system_id",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -24829,9 +25669,13 @@
                     }
                   ],
                   "nodeMember": "Element.systemId",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -24842,7 +25686,13 @@
                 "kind": "property",
                 "name": "tab",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "readonly tab: Tab;",
@@ -24856,9 +25706,13 @@
                     }
                   ],
                   "nodeMember": "Element.tab",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -24906,7 +25760,13 @@
                 "kind": "property",
                 "name": "tag_name",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -24919,9 +25779,13 @@
                     }
                   ],
                   "nodeMember": "Element.tagName",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -24932,7 +25796,13 @@
                 "kind": "property",
                 "name": "template_content",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -24945,9 +25815,13 @@
                     }
                   ],
                   "nodeMember": "Element.templateContent",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -24995,7 +25869,13 @@
                 "kind": "property",
                 "name": "text_all",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -25008,9 +25888,13 @@
                     }
                   ],
                   "nodeMember": "Element.textAll",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -25021,7 +25905,13 @@
                 "kind": "property",
                 "name": "tree",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -25034,9 +25924,13 @@
                     }
                   ],
                   "nodeMember": "Element.tree",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -25046,7 +25940,13 @@
                 "kind": "method",
                 "name": "update",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-ACTIONS-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "update(node?: Protocol.DOM.Node): Promise<this>;",
@@ -25068,9 +25968,13 @@
                     }
                   ],
                   "nodeMember": "Element.update",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -25101,7 +26005,13 @@
                 "kind": "property",
                 "name": "value",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -25114,9 +26024,13 @@
                     }
                   ],
                   "nodeMember": "Element.value",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -25127,7 +26041,13 @@
                 "kind": "property",
                 "name": "xml_version",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-ELEMENT-METADATA-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -25140,9 +26060,13 @@
                     }
                   ],
                   "nodeMember": "Element.xmlVersion",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               }
             ],
@@ -25153,13 +26077,24 @@
             ],
             "name": "Element",
             "nodeMapping": {
-              "evidence": "compatible TypeScript AST declaration",
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-ELEMENT-METADATA-001",
+                  "file": "packages/api/test/element-api-parity.test.ts"
+                }
+              ],
               "nodeKind": "class",
+              "nodeMember": "Element",
               "nodeSymbol": "Element",
               "runtimeExport": true,
-              "semanticsVerified": false,
+              "semanticsCoverage": [
+                "return",
+                "state"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "CANDIDATE"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -25204,11 +26139,21 @@
                 "kind": "method",
                 "name": "__contains__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Position",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-POSITION-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Position",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -25238,11 +26183,21 @@
                 "kind": "method",
                 "name": "__eq__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Position",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-POSITION-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Position",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -25272,11 +26227,21 @@
                 "kind": "method",
                 "name": "__ge__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Position",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-POSITION-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Position",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -25306,11 +26271,21 @@
                 "kind": "method",
                 "name": "__getitem__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Position",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-POSITION-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Position",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -25340,11 +26315,21 @@
                 "kind": "method",
                 "name": "__gt__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Position",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-POSITION-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Position",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -25375,11 +26360,21 @@
                 "kind": "attribute",
                 "name": "__hash__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Position",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-POSITION-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Position",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "valueType": "NoneType"
               },
@@ -25390,11 +26385,21 @@
                 "kind": "method",
                 "name": "__iter__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Position",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-POSITION-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Position",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -25417,11 +26422,21 @@
                 "kind": "method",
                 "name": "__le__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Position",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-POSITION-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Position",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -25451,11 +26466,21 @@
                 "kind": "method",
                 "name": "__len__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Position",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-POSITION-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Position",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -25478,11 +26503,21 @@
                 "kind": "method",
                 "name": "__lt__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Position",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-POSITION-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Position",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -25512,11 +26547,21 @@
                 "kind": "method",
                 "name": "__repr__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Position",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-POSITION-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Position",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -25539,11 +26584,21 @@
                 "kind": "method",
                 "name": "__reversed__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Position",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-POSITION-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Position",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -25566,11 +26621,21 @@
                 "kind": "method",
                 "name": "__setitem__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Position",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-POSITION-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Position",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -26537,13 +27602,24 @@
             "module": "zendriver.core.element",
             "name": "create",
             "nodeMapping": {
-              "evidence": "compatible TypeScript AST declaration",
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-ELEMENT-ACTIONS-001",
+                  "file": "packages/api/test/element-api-parity.test.ts"
+                }
+              ],
               "nodeKind": "function",
+              "nodeMember": "create",
               "nodeSymbol": "create",
               "runtimeExport": true,
-              "semanticsVerified": false,
+              "semanticsCoverage": [
+                "return",
+                "state"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "CANDIDATE"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -26579,13 +27655,24 @@
             "module": "zendriver.core.element",
             "name": "resolve_node",
             "nodeMapping": {
-              "evidence": "compatible TypeScript AST declaration",
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-ELEMENT-ACTIONS-001",
+                  "file": "packages/api/test/element-api-parity.test.ts"
+                }
+              ],
               "nodeKind": "function",
+              "nodeMember": "resolveNode",
               "nodeSymbol": "resolveNode",
               "runtimeExport": true,
-              "semanticsVerified": false,
+              "semanticsCoverage": [
+                "return",
+                "state"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "CANDIDATE"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -39015,13 +40102,24 @@
         "module": "zendriver.core.element",
         "name": "Element",
         "nodeMapping": {
-          "evidence": "compatible TypeScript AST declaration",
+          "evidence": "independent passing Node parity cases",
+          "evidenceCases": [
+            {
+              "case": "ZDAPI-ELEMENT-METADATA-001",
+              "file": "packages/api/test/element-api-parity.test.ts"
+            }
+          ],
           "nodeKind": "class",
+          "nodeMember": "Element",
           "nodeSymbol": "Element",
           "runtimeExport": true,
-          "semanticsVerified": false,
+          "semanticsCoverage": [
+            "return",
+            "state"
+          ],
+          "semanticsVerified": true,
           "signatureComparison": "UNVERIFIED",
-          "status": "CANDIDATE"
+          "status": "VERIFIED"
         },
         "signature": {
           "parameters": [

@@ -56,6 +56,14 @@ test("ZDAPI-POSITION-001", () => {
   assert.deepEqual(Position.fromJson([1, 2, 5, 2, 5, 8, 1, 8]), position);
   assert.deepEqual(position.center, [3, 5]);
   assert.deepEqual(position.toViewport(2), { x: 1, y: 2, width: 4, height: 6, scale: 2 });
+  assert.equal(position.includes(5), true);
+  assert.equal(position[0], 1);
+  position[0] = 0;
+  assert.equal(position.length, 8);
+  assert.deepEqual([...position].reverse(), [8, 1, 8, 5, 2, 5, 2, 0]);
+  assert.equal(position.toString(), "<Position(x=1, y=2, width=4, height=6)>");
+  const identityMap = new Map<Position, string>([[position, "position"]]);
+  assert.equal(identityMap.get(position), "position");
   const list = new Position([1, 2, 3, 4, 5, 6, 7, 8]);
   list.append(9);
   list.extend([10, 11]);
@@ -71,6 +79,104 @@ test("ZDAPI-POSITION-001", () => {
   assert.deepEqual(list.copy(), []);
   assert.throws(() => list.pop(), /empty/);
   assert.throws(() => new Position([1, 2, 3]), RangeError);
+});
+
+test("ZDAPI-ELEMENT-METADATA-001", () => {
+  const text = (nodeId: number, value: string): Protocol.DOM.Node => ({
+    nodeId,
+    backendNodeId: nodeId,
+    nodeType: 3,
+    nodeName: "#text",
+    localName: "",
+    nodeValue: value,
+  });
+  const nested = (nodeId: number, nodeName: string): Protocol.DOM.Node => ({
+    nodeId,
+    backendNodeId: nodeId,
+    nodeType: 1,
+    nodeName,
+    localName: nodeName.toLowerCase(),
+    nodeValue: "",
+  });
+  const node: Protocol.DOM.Node = {
+    ...nested(2, "DIV"),
+    parentId: 1,
+    childNodeCount: 1,
+    children: [text(3, "visible")],
+    attributes: ["id", "subject", "class", "fixture"],
+    documentURL: "https://example.test/document",
+    baseURL: "https://example.test/",
+    publicId: "public",
+    systemId: "system",
+    internalSubset: "subset",
+    xmlVersion: "1.0",
+    pseudoType: "before",
+    pseudoIdentifier: "fixture-pseudo",
+    shadowRootType: "open",
+    frameId: "frame",
+    contentDocument: nested(4, "#document"),
+    shadowRoots: [nested(5, "#document-fragment")],
+    templateContent: nested(6, "#document-fragment"),
+    pseudoElements: [nested(7, "SPAN")],
+    importedDocument: nested(8, "#document"),
+    distributedNodes: [{ backendNodeId: 9, nodeType: 1, nodeName: "SLOT" }],
+    isSVG: true,
+    compatibilityMode: "LimitedQuirksMode",
+    assignedSlot: { backendNodeId: 10, nodeType: 1, nodeName: "SLOT" },
+  };
+  const tree: Protocol.DOM.Node = { ...nested(1, "BODY"), children: [node] };
+  const tab = {} as Tab;
+  const element = create(node, tab, tree);
+  const equal = create(structuredClone(node), tab, tree);
+
+  assert.equal(element.nodeId, 2);
+  assert.equal(element.backendNodeId, 2);
+  assert.equal(element.node, node);
+  assert.equal(element.parentId, 1);
+  assert.equal(element.parent?.tag, "body");
+  assert.equal(element.nodeType, 1);
+  assert.equal(element.nodeName, "DIV");
+  assert.equal(element.localName, "div");
+  assert.equal(element.nodeValue, "");
+  assert.equal(element.tag, "div");
+  assert.equal(element.tagName, "div");
+  assert.equal(element.text, "visible");
+  assert.equal(element.textAll, "visible");
+  assert.equal(element.documentUrl, "https://example.test/document");
+  assert.equal(element.baseUrl, "https://example.test/");
+  assert.equal(element.publicId, "public");
+  assert.equal(element.systemId, "system");
+  assert.equal(element.internalSubset, "subset");
+  assert.equal(element.xmlVersion, "1.0");
+  assert.equal(element.pseudoType, "before");
+  assert.equal(element.pseudoIdentifier, "fixture-pseudo");
+  assert.equal(element.shadowRootType, "open");
+  assert.equal(element.frameId, "frame");
+  assert.equal(element.childNodeCount, 1);
+  assert.equal(element.compatibilityMode, "LimitedQuirksMode");
+  assert.equal(element.isSvg, true);
+  assert.equal(element.assignedSlot?.backendNodeId, 10);
+  assert.equal(element.distributedNodes[0]?.backendNodeId, 9);
+  assert.equal(element.children[0]?.nodeValue, "visible");
+  assert.equal(element.shadowRoots[0]?.nodeId, 5);
+  assert.equal(element.pseudoElements[0]?.nodeId, 7);
+  assert.equal(element.contentDocument?.nodeId, 4);
+  assert.equal(element.templateContent?.nodeId, 6);
+  assert.equal(element.importedDocument?.nodeId, 8);
+  assert.equal(element.tree, tree);
+  assert.deepEqual(element.attrs, { id: "subject", class: "fixture" });
+  assert.equal(element.get("id"), "subject");
+  assert.equal(element.equals(equal), true);
+  assert.equal(element.equals({}), false);
+  element.set("id", "changed");
+  element.set("data-state", "ready");
+  assert.equal(element.get("id"), "changed");
+  assert.equal(element.get("data-state"), "ready");
+  assert.equal(element.value, undefined);
+  assert.equal(element.remoteObject, undefined);
+  assert.equal(element.objectId, undefined);
+  assert.equal(element.tab, tab);
+  assert.equal(element.toString(), '<div id="changed" class="fixture" data-state="ready">visible</div>');
 });
 
 test("textAll visits DOM children and shadow roots but not iframe documents", () => {
@@ -89,60 +195,81 @@ test("textAll visits DOM children and shadow roots but not iframe documents", ()
   assert.equal(element.textAll, "child shadow");
 });
 
+test("ZDAPI-ELEMENT-ACTIONS-001", { timeout: 45_000 }, () => usingBrowser(undefined, "direct", exerciseElementSurface));
+
 for (const [backendName, backend] of [["js", undefined], ["native", NativeConnection]] satisfies readonly [string, RuntimeBackendFactory | undefined][]) {
   for (const connectionMode of ["direct", "flattened"] satisfies readonly ConnectionMode[]) {
-    test(`Element public surface runs on controlled DOM [${backendName}/${connectionMode}]`, { timeout: 45_000 }, async () => {
-      await usingBrowser(backend, connectionMode, async (tab) => {
-        await tab.get(baseUrl);
-        const selected = await tab.select("#subject");
-        await tab.send("DOM.enable", {});
-        const { root } = await tab.send("DOM.getDocument", { depth: -1, pierce: true });
-        const subjectNode = findByBackendNodeId(root, selected.backendNodeId);
-        assert.ok(subjectNode);
-        const subject = create(subjectNode, tab, root);
-        assert.ok(subject instanceof Element);
-        assert.equal(subject.tag, "button");
-        assert.equal(subject.get("data-kind"), "fixture");
-        assert.equal(subject.text, "direct");
-        assert.equal(subject.textAll, "direct child");
-        assert.equal(subject.textAll.includes("iframe-only"), false);
-        assert.equal(subject.children.length, 3);
-        assert.equal(subject.contentDocument, undefined);
+    if (backendName === "js" && connectionMode === "direct") continue;
+    test(`Element public surface runs on controlled DOM [${backendName}/${connectionMode}]`, { timeout: 45_000 }, () => usingBrowser(backend, connectionMode, exerciseElementSurface));
+  }
+}
 
-        const recreated = create(subject.node, tab, root);
-        assert.equal(recreated.tree, root);
-        assert.equal(recreated.parent?.tag, "body");
-        assert.equal((await resolveNode(tab, subject.nodeId)).backendNodeId, subject.backendNodeId);
+async function exerciseElementSurface(tab: Tab): Promise<void> {
+  await tab.get(baseUrl);
+  const selected = await tab.select("#subject");
+  await tab.send("DOM.enable", {});
+  const { root } = await tab.send("DOM.getDocument", { depth: -1, pierce: true });
+  const subjectNode = findByBackendNodeId(root, selected.backendNodeId);
+  assert.ok(subjectNode);
+  const subject = create(subjectNode, tab, root);
+  assert.ok(subject instanceof Element);
+  assert.equal(subject.tag, "button");
+  assert.equal(subject.get("data-kind"), "fixture");
+  assert.equal(subject.text, "direct");
+  assert.equal(subject.textAll, "direct child");
+  assert.equal(subject.textAll.includes("iframe-only"), false);
+  assert.equal(subject.children.length, 3);
+  assert.equal(subject.contentDocument, undefined);
+  assert.match(await subject.getHtml(), /^<button/);
+  assert.equal((await subject.getJsAttributes())?.id, "subject");
+  assert.equal((await subject.getRemoteObject()).subtype, "node");
+  assert.equal(subject.remoteObject?.subtype, "node");
+  assert.ok(subject.objectId);
+  assert.equal((await subject.getParent())?.tag, "body");
+  assert.equal((await subject.querySelector("span"))?.tag, "span");
+  assert.equal((await subject.querySelectorAll("span")).length, 1);
 
-        assert.equal(await subject.apply<string>("element => element.id"), "subject");
-        assert.equal(await subject.apply<string>("element => Promise.resolve(element.id)", true, { awaitPromise: true }), "subject");
-        const remote = await subject.apply<Protocol.Runtime.RemoteObject>("element => element", false);
-        assert.equal(remote.subtype, "node");
-        assert.ok(remote.objectId);
-        assert.equal(await subject.apply("element => { throw new Error('fixture'); }"), undefined);
+  const recreated = create(subjectNode, tab, root);
+  assert.equal(recreated.tree, root);
+  assert.equal(recreated.parent?.tag, "body");
+  assert.equal((await resolveNode(tab, subject.nodeId)).backendNodeId, subject.backendNodeId);
+  assert.equal(await subject.update(subject.node), subject);
 
-        await subject.click();
-        assert.equal(await tab.evaluate("document.body.dataset.clicked"), "yes");
-        assert.equal(await subject.isRecording(), undefined);
+  assert.equal(await subject.apply<string>("element => element.id"), "subject");
+  assert.equal(await subject.apply<string>("element => Promise.resolve(element.id)", true, { awaitPromise: true }), "subject");
+  const remote = await subject.apply<Protocol.Runtime.RemoteObject>("element => element", false);
+  assert.equal(remote.subtype, "node");
+  assert.ok(remote.objectId);
+  assert.equal(await subject.apply("element => { throw new Error('fixture'); }"), undefined);
 
-        const box = await tab.select("#box");
-        const position = await box.getPosition();
-        assert.ok(position instanceof Position);
-        assert.deepEqual(position.toJSON(), [40, 60, 140, 60, 140, 90, 40, 90]);
-        assert.deepEqual(position.center, [90, 75]);
-        assert.deepEqual((await box.getPosition(true))?.toJSON(), position.toJSON());
+  await subject.click();
+  assert.equal(await tab.evaluate("document.body.dataset.clicked"), "yes");
+  assert.equal(await subject.isRecording(), undefined);
+  await subject.focus();
+  await subject.scrollIntoView();
+  await subject.flash(0);
+  await subject.highlightOverlay();
+  await subject.highlightOverlay();
 
-        const output = await mkdtemp(join(tmpdir(), "nodriver-element-"));
-        try {
-          const screenshot = join(output, "box.png");
-          assert.equal(await box.saveScreenshot(screenshot, "png", 1), screenshot);
-          assert.ok((await readFile(screenshot)).byteLength > 100);
-          assert.ok((await box.screenshotB64("jpeg", 1)).length > 100);
-        } finally {
-          await rm(output, { recursive: true, force: true });
-        }
-      });
-    });
+  const box = await tab.select("#box");
+  const position = await box.getPosition();
+  assert.ok(position instanceof Position);
+  assert.deepEqual(position.toJSON(), [40, 60, 140, 60, 140, 90, 40, 90]);
+  assert.deepEqual(position.center, [90, 75]);
+  assert.deepEqual((await box.getPosition(true))?.toJSON(), position.toJSON());
+  await box.mouseMove();
+  await box.mouseDrag([90, 75]);
+
+  const output = await mkdtemp(join(tmpdir(), "nodriver-element-"));
+  try {
+    const screenshot = join(output, "box.png");
+    assert.equal(await box.saveScreenshot(screenshot, "png", 1), screenshot);
+    assert.ok((await readFile(screenshot)).byteLength > 100);
+    assert.ok((await box.screenshotB64("jpeg", 1)).length > 100);
+    const recording = await box.recordVideo(join(output, "recording"));
+    assert.equal(Array.isArray(await recording.stop()), true);
+  } finally {
+    await rm(output, { recursive: true, force: true });
   }
 }
 

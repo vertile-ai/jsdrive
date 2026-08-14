@@ -32,6 +32,9 @@ test("ZDAPI-CONFIG-001", async () => {
   assert.deepEqual(config.toBrowserArgs(), ["--fixture"]);
   assert.equal(config.addArgument("--fixture-2"), undefined);
   assert.throws(() => config.addArgument("--headless=new"), TypeError);
+  assert.deepEqual(config.toBrowserArgs(), ["--fixture", "--fixture-2"]);
+  assert.match(config.toString(), /^Config\n/);
+  assert.match(config.toString(), /browserArgs = --fixture,--fixture-2/);
   assert.equal(findBinary(["/path/that/does/not/exist", process.execPath]), process.execPath);
   assert.equal(findExecutable("auto"), findExecutable("auto"));
   assert.equal(typeof isRoot(), "boolean");
@@ -77,6 +80,8 @@ test("ZDAPI-BROWSER-001", { timeout: 90_000 }, async () => {
   await withPersistentBrowser({ executable, headless: true, connectionTimeoutMs: 30_000 }, async (rootBrowser) => {
     assert.ok(rootBrowser.mainTab);
     assert.equal(rootBrowser.aenter(), rootBrowser);
+    assert.deepEqual([...rootBrowser].map(({ targetId }) => targetId), rootBrowser.tabs.map(({ targetId }) => targetId));
+    assert.deepEqual([...rootBrowser].reverse().map(({ targetId }) => targetId), rootBrowser.tabs.map(({ targetId }) => targetId).reverse());
     assert.equal(rootBrowser.websocket_url, rootBrowser.webSocketUrl);
     assert.equal(getRegisteredInstances().has(rootBrowser), true);
     const attached = await create_from_undetected_chromedriver({
@@ -101,6 +106,32 @@ test("ZDAPI-BROWSER-001", { timeout: 90_000 }, async () => {
         assert.equal(await browser.wait(0.001), browser);
         assert.equal(await browser.sleep(0.001), browser);
         const tab = await browser.get("data:text/html,<title>api</title><main>api</main>");
+        const mutableConnection = browser.connection as unknown as {
+          send(method: string, params?: unknown, options?: unknown): Promise<unknown>;
+        };
+        const originalSend = mutableConnection.send;
+        let grantedPermissions: unknown;
+        mutableConnection.send = async function (method, params, options): Promise<unknown> {
+          if (method === "Browser.grantPermissions") {
+            grantedPermissions = params;
+            return {};
+          }
+          return originalSend.call(this, method, params, options);
+        };
+        try {
+          await browser.grantAllPermissions("https://example.test");
+        } finally {
+          mutableConnection.send = originalSend;
+        }
+        assert.equal((grantedPermissions as { readonly origin?: string }).origin, "https://example.test");
+        assert.ok((grantedPermissions as { readonly permissions: readonly string[] }).permissions.includes("geolocation"));
+        assert.deepEqual(await browser.tileWindows([tab], { width: 800, height: 600 }), [{
+          left: 0,
+          top: 0,
+          width: 800,
+          height: 600,
+          windowState: "normal",
+        }]);
         assert.equal(tab.aenter(), tab);
         await tab.aopen();
         assert.equal(tab.browser, browser);

@@ -53,6 +53,9 @@ export class Position extends Array<number> {
   public toJSON(): number[] { return [...this]; }
   public toJson(): number[] { return this.toJSON(); }
   public static fromJson(points: readonly number[]): Position { return new Position(points); }
+  public override toString(): string {
+    return `<Position(x=${this.x}, y=${this.y}, width=${this.width}, height=${this.height})>`;
+  }
   public toViewport(scale = 1): Protocol.Page.Viewport {
     return { x: this.x, y: this.y, width: this.width, height: this.height, scale };
   }
@@ -150,6 +153,17 @@ export class Element {
   public get value(): string | undefined { return this.attributes.value; }
   public get html(): string | undefined { return this.#node.nodeValue || undefined; }
   public get(name: string): string | undefined { return this.attributes[name]; }
+  public set(name: string, value: string): void {
+    const attributes = [...(this.#node.attributes ?? [])];
+    const index = attributes.findIndex((attribute, itemIndex) => itemIndex % 2 === 0 && attribute === name);
+    if (index < 0) attributes.push(name, value);
+    else attributes[index + 1] = value;
+    this.#node = { ...this.#node, attributes };
+  }
+  public equals(other: unknown): boolean {
+    return other instanceof Element && JSON.stringify(this.#node) === JSON.stringify(other.#node);
+  }
+  public toString(): string { return serializeNode(this.#node); }
   public get remoteObject(): Protocol.Runtime.RemoteObject | undefined { return this.#remoteObject; }
   public get parent(): Element | undefined {
     if (this.#tree === undefined || this.parentId === undefined) return undefined;
@@ -158,8 +172,10 @@ export class Element {
   }
 
   public async getParent(): Promise<Element | null> {
+    const knownParentId = this.parentNodeId;
     await this.refresh();
-    return this.parentNodeId === undefined ? null : this.tab.elementFromNodeId(this.parentNodeId);
+    const parentId = this.parentNodeId ?? knownParentId;
+    return parentId === undefined ? null : this.tab.elementFromNodeId(parentId);
   }
 
   public async refresh(): Promise<this> {
@@ -443,6 +459,18 @@ function attributesFrom(values: readonly string[] | undefined): Readonly<Record<
     if (name !== undefined && value !== undefined) attributes[name] = value;
   }
   return attributes;
+}
+
+function serializeNode(node: Protocol.DOM.Node): string {
+  if (node.nodeType === 3) return node.nodeValue;
+  if (node.nodeType === 8) return `<!--${node.nodeValue}-->`;
+  const tag = node.nodeName.toLowerCase();
+  if (node.nodeType !== 1 || tag === "") return (node.children ?? []).map(serializeNode).join("");
+  const attributes = Object.entries(attributesFrom(node.attributes))
+    .map(([name, value]) => ` ${name}="${value.replaceAll("&", "&amp;").replaceAll('"', "&quot;")}"`)
+    .join("");
+  const children = (node.children ?? []).map(serializeNode).join("");
+  return `<${tag}${attributes}>${children}</${tag}>`;
 }
 
 function graphemes(value: string): readonly string[] {

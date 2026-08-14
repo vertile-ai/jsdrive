@@ -1,24 +1,24 @@
 {
   "apiMappingCounts": {
     "coreMembers": {
-      "CANDIDATE": 110,
-      "MISSING": 32,
-      "UNKNOWN": 10,
-      "VERIFIED": 320
+      "CANDIDATE": 43,
+      "MISSING": 5,
+      "UNKNOWN": 8,
+      "VERIFIED": 416
     },
     "coreSymbols": {
-      "CANDIDATE": 4,
-      "VERIFIED": 41
+      "CANDIDATE": 1,
+      "VERIFIED": 44
     },
     "rootExports": {
-      "CANDIDATE": 2,
-      "VERIFIED": 14
+      "CANDIDATE": 1,
+      "VERIFIED": 15
     },
     "total": {
-      "CANDIDATE": 116,
-      "MISSING": 32,
-      "UNKNOWN": 10,
-      "VERIFIED": 375
+      "CANDIDATE": 45,
+      "MISSING": 5,
+      "UNKNOWN": 8,
+      "VERIFIED": 475
     }
   },
   "errors": [],
@@ -45,7 +45,7 @@
   },
   "notRunTestCases": 0,
   "referenceObservationCount": 1,
-  "semanticallyVerifiedApiMappings": 375,
+  "semanticallyVerifiedApiMappings": 475,
   "status": "PASS",
   "testCases": 101,
   "unmappedTestCases": 0

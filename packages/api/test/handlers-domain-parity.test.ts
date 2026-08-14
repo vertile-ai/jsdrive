@@ -3,6 +3,7 @@ import { createServer, type Server } from "node:http";
 import test from "node:test";
 import { Browser, ZendriverNetworkDomain, discoverChromeExecutable, type ConnectionMode, type Tab, type TabEventHandler } from "../src/index.js";
 import { browserCaseSkipReason } from "./support/persistent-harness.js";
+import { runTransportMatrix } from "./support/transport-matrix.js";
 
 // Stable parity case IDs retained individually for the inventory validator:
 // ZDTEST-0043 ZDTEST-0045 ZDTEST-0047 ZDTEST-0049 ZDTEST-0051 ZDTEST-0053 ZDTEST-0069 ZDTEST-0071 ZDTEST-0073
@@ -40,7 +41,7 @@ for (const [label, headless] of [["headless0", true], ["headless1", false]] as c
   const autoEnableId = headless ? "ZDTEST-0072" : "ZDTEST-0073";
 
   test(`${addHandlerId} [${label}] addHandler keeps typed event handlers and dispatches them`, { timeout: 30_000, skip }, async () => {
-    for (const connectionMode of ["direct", "flattened"] as const) await withBrowser(headless, async (browser) => {
+    await runTransportMatrix(addHandlerId, { executable, headless }, async (browser) => {
       const tab = browser.mainTab;
       assert.ok(tab);
       let first = 0;
@@ -54,11 +55,11 @@ for (const [label, headless] of [["headless0", true], ["headless1", false]] as c
       await tab.get(pageUrl);
       assert.ok(first > 0);
       assert.ok(second > 0);
-    }, connectionMode);
+    });
   });
 
   test(`${networkDomainId} [${label}] ZendriverNetworkDomain registers exact pinned 29 inert slots`, { timeout: 30_000, skip }, async () => {
-    await withBrowser(headless, async (browser) => {
+    await runTransportMatrix(networkDomainId, { executable, headless }, async (browser) => {
       const tab = browser.mainTab;
       assert.ok(tab);
       const handler: TabEventHandler = () => {};
@@ -84,7 +85,7 @@ for (const [label, headless] of [["headless0", true], ["headless1", false]] as c
   });
 
   test(`${removeAllId} [${label}] removeHandlers clears every handler`, { timeout: 30_000, skip }, async () => {
-    await withBrowser(headless, async (browser) => {
+    await runTransportMatrix(removeAllId, { executable, headless }, async (browser) => {
       const tab = browser.mainTab;
       assert.ok(tab);
       tab.addHandler("Network.requestWillBeSent", () => {});
@@ -97,7 +98,7 @@ for (const [label, headless] of [["headless0", true], ["headless1", false]] as c
   });
 
   test(`${removeEventId} [${label}] removeHandlers(event) clears one event`, { timeout: 30_000, skip }, async () => {
-    await withBrowser(headless, async (browser) => {
+    await runTransportMatrix(removeEventId, { executable, headless }, async (browser) => {
       const tab = browser.mainTab;
       assert.ok(tab);
       tab.addHandler("Network.requestWillBeSent", () => {});
@@ -109,7 +110,7 @@ for (const [label, headless] of [["headless0", true], ["headless1", false]] as c
   });
 
   test(`${removeSpecificId} [${label}] removeHandlers(event, handler) removes only one`, { timeout: 30_000, skip }, async () => {
-    await withBrowser(headless, async (browser) => {
+    await runTransportMatrix(removeSpecificId, { executable, headless }, async (browser) => {
       const tab = browser.mainTab;
       assert.ok(tab);
       const first: TabEventHandler = () => {};
@@ -122,7 +123,7 @@ for (const [label, headless] of [["headless0", true], ["headless1", false]] as c
   });
 
   test(`${removeWithoutEventId} [${label}] removeHandlers(handler) reports the Zendriver error`, { timeout: 30_000, skip }, async () => {
-    await withBrowser(headless, async (browser) => {
+    await runTransportMatrix(removeWithoutEventId, { executable, headless }, async (browser) => {
       const tab = browser.mainTab;
       assert.ok(tab);
       const handler: TabEventHandler = () => {};
@@ -135,7 +136,7 @@ for (const [label, headless] of [["headless0", true], ["headless1", false]] as c
   });
 
   test(`${customFetchId} [${label}] custom manual Fetch enable is not replaced`, { timeout: 30_000, skip }, async () => {
-    await withBrowser(headless, async (browser) => {
+    await runTransportMatrix(customFetchId, { executable, headless }, async (browser) => {
       const tab = browser.mainTab;
       assert.ok(tab);
       tab.addHandler("Fetch.requestPaused", () => {});
@@ -152,7 +153,7 @@ for (const [label, headless] of [["headless0", true], ["headless1", false]] as c
   });
 
   test(`${manualDisableId} [${label}] explicit domain disable clears auto and manual views`, { timeout: 30_000, skip }, async () => {
-    for (const connectionMode of ["direct", "flattened"] as const) await withBrowser(headless, async (browser) => {
+    await runTransportMatrix(manualDisableId, { executable, headless }, async (browser) => {
       const tab = browser.mainTab;
       assert.ok(tab);
       tab.addHandler("Network.requestWillBeSent", () => {});
@@ -163,11 +164,11 @@ for (const [label, headless] of [["headless0", true], ["headless1", false]] as c
       assert.equal(tab.manuallyEnabledDomains.has("Network"), false);
       await tab.send("Runtime.enable");
       assert.equal(tab.enabledDomains.has("Network"), true);
-    }, connectionMode);
+    });
   });
 
   test(`${autoEnableId} [${label}] handler automatically enables its domain`, { timeout: 30_000, skip }, async () => {
-    for (const connectionMode of ["direct", "flattened"] as const) await withBrowser(headless, async (browser) => {
+    await runTransportMatrix(autoEnableId, { executable, headless }, async (browser) => {
       const tab = browser.mainTab;
       assert.ok(tab);
       tab.addHandler("Network.requestWillBeSent", () => {});
@@ -180,7 +181,7 @@ for (const [label, headless] of [["headless0", true], ["headless1", false]] as c
       assert.ok(pageEvents > 0);
       assert.equal(tab.enabledDomains.has("Page"), true);
       assert.equal(tab.manuallyEnabledDomains.has("Page"), false);
-    }, connectionMode);
+    });
   });
 }
 

@@ -1,19 +1,16 @@
 import assert from "node:assert/strict";
 import { createServer, type Server } from "node:http";
 import test from "node:test";
-import type { RuntimeBackendFactory } from "@vertile-ai/jsdriver-runtime-js";
-import { NativeConnection } from "@vertile-ai/jsdriver-runtime-native";
 import {
-  Browser,
   discoverChromeExecutable,
   KeyEvents,
   KeyModifiers,
   KeyPressEvent,
   SpecialKeys,
-  type ConnectionMode,
   type Tab,
 } from "../src/index.js";
 import { browserCaseSkipReason } from "./support/persistent-harness.js";
+import { runTransportMatrix } from "./support/transport-matrix.js";
 
 const controlledInputPage = `<!doctype html>
 <title>Controlled field parity</title>
@@ -148,7 +145,10 @@ for (const [parameter, headless, ids] of [
 ] as const) {
   const skip = browserCaseSkipReason(headless);
   test(`${ids.visible} preserves the visible editing structure after copy, cursor motion, and paste [${parameter}]`, { timeout: 60_000, skip }, async () => {
-    await forEachBrowser(headless, async (tab, label) => {
+    await runTransportMatrix(ids.visible, { executable, headless }, async (browser, quadrant) => {
+      const tab = browser.mainTab;
+      assert.ok(tab, `${quadrant.backend}/${quadrant.connectionMode} has a main tab`);
+      const label = `${quadrant.backend}/${quadrant.connectionMode}`;
       await open(tab, "/editor");
       const editor = await tab.select("#draft");
       await editor.mouseClick();
@@ -176,7 +176,10 @@ for (const [parameter, headless, ids] of [
   });
 
   test(`${ids.clear} clears a controlled field through the native value setter [${parameter}]`, { timeout: 60_000, skip }, async () => {
-    await forEachBrowser(headless, async (tab, label) => {
+    await runTransportMatrix(ids.clear, { executable, headless }, async (browser, quadrant) => {
+      const tab = browser.mainTab;
+      assert.ok(tab, `${quadrant.backend}/${quadrant.connectionMode} has a main tab`);
+      const label = `${quadrant.backend}/${quadrant.connectionMode}`;
       await open(tab, "/controlled");
       const field = await tab.select("#amount");
       assert.equal(await tab.evaluate<string>("document.querySelector('#model').textContent"), "10", label);
@@ -191,7 +194,10 @@ for (const [parameter, headless, ids] of [
   });
 
   test(`${ids.deleting} removes a controlled value with visible Backspace input [${parameter}]`, { timeout: 60_000, skip }, async () => {
-    await forEachBrowser(headless, async (tab, label) => {
+    await runTransportMatrix(ids.deleting, { executable, headless }, async (browser, quadrant) => {
+      const tab = browser.mainTab;
+      assert.ok(tab, `${quadrant.backend}/${quadrant.connectionMode} has a main tab`);
+      const label = `${quadrant.backend}/${quadrant.connectionMode}`;
       await open(tab, "/controlled");
       const field = await tab.select("#amount");
 
@@ -204,7 +210,10 @@ for (const [parameter, headless, ids] of [
   });
 
   test(`${ids.fill} fills a controlled field after a render commit [${parameter}]`, { timeout: 60_000, skip }, async () => {
-    await forEachBrowser(headless, async (tab, label) => {
+    await runTransportMatrix(ids.fill, { executable, headless }, async (browser, quadrant) => {
+      const tab = browser.mainTab;
+      assert.ok(tab, `${quadrant.backend}/${quadrant.connectionMode} has a main tab`);
+      const label = `${quadrant.backend}/${quadrant.connectionMode}`;
       await open(tab, "/controlled");
       const field = await tab.select("#amount");
 
@@ -218,7 +227,10 @@ for (const [parameter, headless, ids] of [
   });
 
   test(`${ids.escape} dispatches Escape as keydown then keyup and closes the panel [${parameter}]`, { timeout: 60_000, skip }, async () => {
-    await forEachBrowser(headless, async (tab, label) => {
+    await runTransportMatrix(ids.escape, { executable, headless }, async (browser, quadrant) => {
+      const tab = browser.mainTab;
+      assert.ok(tab, `${quadrant.backend}/${quadrant.connectionMode} has a main tab`);
+      const label = `${quadrant.backend}/${quadrant.connectionMode}`;
       await open(tab, "/escape");
       assert.equal(await tab.evaluate<string>("document.querySelector('#status').textContent"), "ready", label);
       await (await tab.select("#open")).mouseClick();
@@ -230,40 +242,6 @@ for (const [parameter, headless, ids] of [
       assert.deepEqual(await tab.evaluate<readonly string[]>("window.escapeEventLog"), ["keydown:Escape", "keyup:Escape"], label);
     });
   });
-}
-
-const backends = [
-  ["js", undefined],
-  ["native", NativeConnection],
-] as const satisfies readonly [string, RuntimeBackendFactory | undefined][];
-
-const connectionModes = ["direct", "flattened"] as const satisfies readonly ConnectionMode[];
-
-async function forEachBrowser(
-  headless: boolean,
-  action: (tab: Tab, label: string) => Promise<void>,
-): Promise<void> {
-  const requestedBackend = process.env.NODRIVER_PARITY_BACKEND;
-  const requestedMode = process.env.NODRIVER_PARITY_CONNECTION_MODE;
-  for (const [backendName, backend] of backends) {
-    if (requestedBackend !== undefined && requestedBackend !== backendName) continue;
-    for (const connectionMode of connectionModes) {
-      if (requestedMode !== undefined && requestedMode !== connectionMode) continue;
-      const browser = await Browser.start({
-        executable,
-        headless,
-        connectionMode,
-        ...(backend === undefined ? {} : { backend }),
-      });
-      try {
-        const tab = browser.mainTab;
-        assert.ok(tab, `${backendName}/${connectionMode} has a main tab`);
-        await action(tab, `${backendName}/${connectionMode}`);
-      } finally {
-        await browser.stop();
-      }
-    }
-  }
 }
 
 async function wait(milliseconds: number): Promise<void> {

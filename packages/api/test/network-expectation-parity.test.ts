@@ -2,10 +2,9 @@ import assert from "node:assert/strict";
 import { createServer, type Server } from "node:http";
 import test from "node:test";
 import type { Protocol } from "@vertile-ai/jsdriver-protocol";
-import { Browser, discoverChromeExecutable, type ConnectionMode, type Tab } from "../src/index.js";
-import { NativeConnection } from "@vertile-ai/jsdriver-runtime-native";
-import type { RuntimeBackendFactory } from "@vertile-ai/jsdriver-runtime-js";
+import { discoverChromeExecutable } from "../src/index.js";
 import { browserCaseSkipReason } from "./support/persistent-harness.js";
+import { runTransportMatrix } from "./support/transport-matrix.js";
 
 const pageHtml = `<!doctype html>
 <title>Network parity fixture</title>
@@ -65,7 +64,9 @@ for (const [parameter, headless, ids] of [
 ] as const) {
   const skip = browserCaseSkipReason(headless);
   test(`${ids[0]} expectRequest resolves the matching request [${parameter}]`, { timeout: 30_000, skip }, async () => {
-    await usingBrowser(headless, async (tab) => {
+    await runTransportMatrix(ids[0], { executable, headless }, async (browser) => {
+      const tab = browser.mainTab;
+      assert.ok(tab);
       const expectation = tab.expectRequest(`${baseUrl}/api`);
       await expectation.ready;
       let rawEvent: Protocol.Network.Events.RequestWillBeSentEvent | undefined;
@@ -88,7 +89,9 @@ for (const [parameter, headless, ids] of [
   });
 
   test(`${ids[1]} expectResponse resolves the response and body tuple [${parameter}]`, { timeout: 30_000, skip }, async () => {
-    await usingBrowser(headless, async (tab) => {
+    await runTransportMatrix(ids[1], { executable, headless }, async (browser) => {
+      const tab = browser.mainTab;
+      assert.ok(tab);
       const expectation = tab.expectResponse(`${baseUrl}/api`);
       await expectation.ready;
       let rawEvent: Protocol.Network.Events.ResponseReceivedEvent | undefined;
@@ -113,7 +116,9 @@ for (const [parameter, headless, ids] of [
   });
 
   test(`${ids[2]} expectResponse reset observes a subsequent reload [${parameter}]`, { timeout: 30_000, skip }, async () => {
-    await usingBrowser(headless, async (tab) => {
+    await runTransportMatrix(ids[2], { executable, headless }, async (browser) => {
+      const tab = browser.mainTab;
+      assert.ok(tab);
       const expectation = tab.expectResponse((event) => event.response.url === `${baseUrl}/`);
       await expectation.ready;
       await tab.get(`${baseUrl}/`);
@@ -128,7 +133,9 @@ for (const [parameter, headless, ids] of [
   });
 
   test(`${ids[3]} expectDownload resolves the next DownloadWillBegin event [${parameter}]`, { timeout: 30_000, skip }, async () => {
-    await usingBrowser(headless, async (tab) => {
+    await runTransportMatrix(ids[3], { executable, headless }, async (browser) => {
+      const tab = browser.mainTab;
+      assert.ok(tab);
       const expectation = tab.expectDownload();
       await expectation.ready;
       await tab.get(`${baseUrl}/`);
@@ -143,7 +150,9 @@ for (const [parameter, headless, ids] of [
   });
 
   test(`${ids[4]} response interception exposes body and continues [${parameter}]`, { timeout: 30_000, skip }, async () => {
-    await usingBrowser(headless, async (tab) => {
+    await runTransportMatrix(ids[4], { executable, headless }, async (browser) => {
+      const tab = browser.mainTab;
+      assert.ok(tab);
       const interception = tab.intercept("*/user-data.json", "Response", "XHR");
       await interception.ready;
       await tab.get(`${baseUrl}/`);
@@ -159,7 +168,9 @@ for (const [parameter, headless, ids] of [
   });
 
   test(`${ids[5]} response interception reset observes a subsequent fetch [${parameter}]`, { timeout: 30_000, skip }, async () => {
-    await usingBrowser(headless, async (tab) => {
+    await runTransportMatrix(ids[5], { executable, headless }, async (browser) => {
+      const tab = browser.mainTab;
+      assert.ok(tab);
       const interception = tab.intercept("*/user-data.json", "Response", "XHR");
       await interception.ready;
       await tab.get(`${baseUrl}/`);
@@ -181,24 +192,4 @@ for (const [parameter, headless, ids] of [
 
 function decodeBody([body, base64Encoded]: readonly [string, boolean]): string {
   return Buffer.from(body, base64Encoded ? "base64" : "utf8").toString("utf8");
-}
-
-async function usingBrowser(headless: boolean, action: (tab: Tab) => Promise<void>): Promise<void> {
-  for (const [backend, backendFactory] of [["js", undefined], ["native", NativeConnection]] satisfies readonly [string, RuntimeBackendFactory | undefined][]) {
-    for (const connectionMode of ["direct", "flattened"] satisfies readonly ConnectionMode[]) {
-      const browser = await Browser.start({
-        executable,
-        headless,
-        connectionMode,
-        ...(backendFactory === undefined ? {} : { backend: backendFactory }),
-      });
-      try {
-        const tab = browser.mainTab;
-        assert.ok(tab, `${backend}/${connectionMode} has a main tab`);
-        await action(tab);
-      } finally {
-        await browser.stop();
-      }
-    }
-  }
 }

@@ -9,11 +9,13 @@ import hashlib
 import json
 import re
 import shlex
+import shutil
 import subprocess
 import sys
 from collections import Counter
 from functools import lru_cache
 from pathlib import Path
+from tempfile import TemporaryDirectory
 from typing import Any
 from urllib.parse import urlparse
 
@@ -48,6 +50,8 @@ REFERENCE = ROOT / ".tmp" / "zendriver-ref"
 NODE_TEST_MAPPINGS = PARITY / "node-test-mappings.json"
 API_SEMANTIC_MAPPINGS = PARITY / "api-semantic-mappings.json"
 TEST_CASE_INSPECTOR = PARITY / "inspect_test_cases.mjs"
+TRANSPORT_MATRIX_HELPER = ROOT / "packages/api/test/support/transport-matrix.ts"
+TRANSPORT_MATRIX_REPORT = PARITY / "transport-matrix-report.json"
 TEST_CASE_TEXT_ONLY_FIXTURE = PARITY / "test-fixtures" / "zdtest-text-only.test.ts"
 TEST_CASE_LOCAL_NOOP_FIXTURE = PARITY / "test-fixtures" / "zdtest-local-noop.test.ts"
 TEST_CASE_MUTABLE_BINDING_FIXTURE = PARITY / "test-fixtures" / "zdtest-mutable-binding.test.ts"
@@ -64,6 +68,10 @@ TEST_CASE_SHADOWED_TEST_FIXTURE = PARITY / "test-fixtures" / "zdtest-shadowed-te
 TEST_CASE_UNRESOLVED_TITLE_FIXTURE = PARITY / "test-fixtures" / "zdtest-unresolved-title.test.ts"
 TEST_CASE_TYPE_ONLY_IMPORT_FIXTURE = PARITY / "test-fixtures" / "zdtest-type-only-import.test.ts"
 TEST_CASE_ALL_SOURCES_FIXTURE = PARITY / "test-fixtures" / "all-test-sources"
+TRANSPORT_UNAWAITED_MATRIX_FIXTURE = PARITY / "test-fixtures" / "zdtest-transport-unawaited.test.ts"
+TRANSPORT_MATRIX_SHADOW_FIXTURE = PARITY / "test-fixtures" / "zdtest-transport-matrix-shadow.test.ts"
+TRANSPORT_EXCLUSION_SHADOW_FIXTURE = PARITY / "test-fixtures" / "zdtest-transport-exclusion-shadow.test.ts"
+TRANSPORT_WRONG_CASE_ID_FIXTURE = PARITY / "test-fixtures" / "zdtest-transport-wrong-id.test.ts"
 API_PERMANENT_SKIP_FIXTURE = PARITY / "test-fixtures" / "zdapi-permanent-skip.test.ts"
 TEST_ID_PERMANENT_SKIP_FIXTURE = PARITY / "test-fixtures" / "zdtest-permanent-skip.test.ts"
 API_UNKNOWN_SHORTHAND_SKIP_FIXTURE = PARITY / "test-fixtures" / "zdapi-unknown-shorthand-skip.test.ts"
@@ -92,6 +100,30 @@ API_ITERABLE_MUTATION_FIXTURE = PARITY / "test-fixtures" / "zdapi-iterable-mutat
 API_POST_EVIDENCE_LOOP_EXIT_FIXTURE = PARITY / "test-fixtures" / "zdapi-post-loop-exit.test.ts"
 API_POST_EVIDENCE_LOOP_DUPLICATE_FIXTURE = PARITY / "test-fixtures" / "zdapi-post-loop-duplicate.test.ts"
 NODE_TEST_ID_PATTERN = re.compile(r"^(ZDTEST-\d{4})(?:\s|$)")
+EXPECTED_TRANSPORT_QUADRANTS = [
+    {"backend": "js", "connectionMode": "direct"},
+    {"backend": "js", "connectionMode": "flattened"},
+    {"backend": "native", "connectionMode": "direct"},
+    {"backend": "native", "connectionMode": "flattened"},
+]
+EXPECTED_TRANSPORT_BACKEND_FACTORIES = {
+    "js": "@vertile-ai/jsdriver-runtime-js#CdpConnection",
+    "native": "@vertile-ai/jsdriver-runtime-native#NativeConnection",
+}
+EXPECTED_TRANSPORT_HELPER_MODULE_FINGERPRINT = "0ec2e94444bf734632554d2e0e7ffab9ef47f70d6817d7813daca73adafaeee1"
+EXPECTED_TRANSPORT_HELPER_BODY_FINGERPRINT = "de0719bd2c7cc93d30c7e92e7322144579b7c8314cd3ebfc678e5c5d90b7b737"
+EXPECTED_TRANSPORT_CALLBACK_COUNT = 99
+EXPECTED_TRANSPORT_CALLBACK_FINGERPRINT = "5255a27ba9b23e10c0da0a0d3fd99325adf5c2a367e792d3209249b1486a8456"
+EXPECTED_TRANSPORT_NON_APPLICABLE = {
+    "ZDTEST-0003": {
+        "code": "controlled-backend-failure",
+        "detail": "The assertion injects one intentionally failing backend, so substituting transport quadrants would change the behavior under test.",
+    },
+    "ZDTEST-0020": {
+        "code": "managed-process-isolation",
+        "detail": "The assertion covers serial Chrome process, port, and profile isolation; transport routing is not part of its observable result.",
+    },
+}
 EVIDENCE_EXECUTION_GATES = (
     (
         "root:test:runtime-js",
@@ -157,6 +189,23 @@ def typescript_test_titles(source_path: Path) -> list[str]:
 @lru_cache(maxsize=None)
 def typescript_test_source_rejected(source_path: Path) -> bool:
     return run(["node", str(TEST_CASE_INSPECTOR), str(source_path)]).returncode != 0
+
+
+def inspect_transport_helper(source_path: Path) -> dict[str, Any]:
+    result = run(
+        [
+            "node",
+            str(TEST_CASE_INSPECTOR),
+            "--transport-helper",
+            str(source_path),
+        ]
+    )
+    return json.loads(require_success(result, "inspect transport matrix helper"))
+
+
+@lru_cache(maxsize=None)
+def transport_helper_spec() -> dict[str, Any]:
+    return inspect_transport_helper(TRANSPORT_MATRIX_HELPER)
 
 
 def inventory_fingerprints(
@@ -303,6 +352,21 @@ def node_test_titles_by_source(root: Path = ROOT) -> dict[str, list[str]]:
     )
     return {
         path.relative_to(root).as_posix(): typescript_test_titles(path)
+        for path in sources
+    }
+
+
+def node_test_registrations_by_source(
+    root: Path = ROOT,
+) -> dict[str, list[dict[str, Any]]]:
+    excluded_directories = {"dist", "generated", "node_modules"}
+    sources = sorted(
+        path
+        for path in root.glob("packages/*/test/**/*.test.ts")
+        if not excluded_directories.intersection(path.relative_to(root).parts)
+    )
+    return {
+        path.relative_to(root).as_posix(): typescript_test_registrations(path)
         for path in sources
     }
 
@@ -489,6 +553,474 @@ def execution_gate_for_parameterization(parameterization: Any) -> str:
         if parameterization == "headless1"
         else "root:test:parity:headless"
     )
+
+
+def transport_callback_contract(
+    registrations_by_source: dict[str, list[dict[str, Any]]] | None = None,
+) -> dict[str, Any]:
+    if registrations_by_source is None:
+        registrations_by_source = node_test_registrations_by_source()
+    entries = []
+    for source_name, registrations in registrations_by_source.items():
+        for registration in registrations:
+            case_id = node_test_id(registration["title"])
+            declaration = registration.get("transport")
+            if (
+                case_id is not None
+                and isinstance(declaration, dict)
+                and declaration.get("applicability") == "applicable"
+            ):
+                entries.append(
+                    {
+                        "id": case_id,
+                        "source": source_name,
+                        "callbackFingerprint": declaration.get(
+                            "callbackFingerprint"
+                        ),
+                    }
+                )
+    entries.sort(key=lambda entry: (entry["id"], entry["source"]))
+    return {
+        "count": len(entries),
+        "fingerprint": canonical_fingerprint(entries),
+    }
+
+
+def transport_matrix_report(test_inventory: dict[str, Any]) -> dict[str, Any]:
+    registrations_by_source = node_test_registrations_by_source()
+    registrations: dict[str, list[tuple[str, dict[str, Any]]]] = {}
+    for source_name, source_registrations in registrations_by_source.items():
+        for registration in source_registrations:
+            case_id = node_test_id(registration["title"])
+            if case_id is not None:
+                registrations.setdefault(case_id, []).append(
+                    (source_name, registration)
+                )
+
+    cases = []
+    for inventory_case in test_inventory["cases"]:
+        case_id = inventory_case["id"]
+        case_registrations = registrations.get(case_id, [])
+        source_name = (
+            case_registrations[0][0] if len(case_registrations) == 1 else None
+        )
+        registration = (
+            case_registrations[0][1] if len(case_registrations) == 1 else None
+        )
+        declaration = registration.get("transport") if registration else None
+        case = {
+            "id": case_id,
+            "source": source_name,
+            "title": registration.get("title") if registration else None,
+            "parameterization": inventory_case.get("parameterization"),
+            "executionGate": execution_gate_for_parameterization(
+                inventory_case.get("parameterization")
+            ),
+        }
+        if isinstance(declaration, dict) and declaration.get("applicability") == "applicable":
+            case.update(
+                {
+                    "applicability": "applicable",
+                    "quadrants": copy.deepcopy(EXPECTED_TRANSPORT_QUADRANTS),
+                }
+            )
+        elif isinstance(declaration, dict) and declaration.get("applicability") == "not-applicable":
+            case.update(
+                {
+                    "applicability": "not-applicable",
+                    "quadrants": [],
+                    "reason": declaration.get("reason"),
+                }
+            )
+        else:
+            case.update({"applicability": "undeclared", "quadrants": []})
+        cases.append(case)
+
+    applicable = sum(case["applicability"] == "applicable" for case in cases)
+    not_applicable = sum(
+        case["applicability"] == "not-applicable" for case in cases
+    )
+    return {
+        "schemaVersion": 1,
+        "status": "PASS",
+        "evidenceKind": "executable-source-declarations",
+        "quadrants": copy.deepcopy(EXPECTED_TRANSPORT_QUADRANTS),
+        "summary": {
+            "cases": len(cases),
+            "applicable": applicable,
+            "notApplicable": not_applicable,
+            "declaredQuadrantExecutions": applicable
+            * len(EXPECTED_TRANSPORT_QUADRANTS),
+        },
+        "cases": cases,
+    }
+
+
+def transport_matrix_errors(
+    test_inventory: dict[str, Any],
+    report: dict[str, Any],
+    helper_spec: dict[str, Any],
+    callback_contract: dict[str, Any] | None = None,
+) -> list[str]:
+    errors = []
+    if helper_spec.get("moduleFingerprint") != EXPECTED_TRANSPORT_HELPER_MODULE_FINGERPRINT:
+        errors.append(
+            "transport helper module fingerprint does not match the fixed trusted contract"
+        )
+    if helper_spec.get("bodyFingerprint") != EXPECTED_TRANSPORT_HELPER_BODY_FINGERPRINT:
+        errors.append(
+            "transport helper body does not match the fixed sequential matrix contract"
+        )
+    helper_quadrants = helper_spec.get("quadrants")
+    normalized_helper_quadrants = [
+        {
+            "backend": quadrant.get("backend"),
+            "connectionMode": quadrant.get("connectionMode"),
+        }
+        for quadrant in helper_quadrants
+        if isinstance(quadrant, dict)
+    ] if isinstance(helper_quadrants, list) else []
+    if normalized_helper_quadrants != EXPECTED_TRANSPORT_QUADRANTS:
+        errors.append("transport helper does not declare the exact four JS/native direct/flattened quadrants")
+    if isinstance(helper_quadrants, list):
+        for quadrant in helper_quadrants:
+            if not isinstance(quadrant, dict):
+                continue
+            backend = quadrant.get("backend")
+            if quadrant.get("backendFactory") != EXPECTED_TRANSPORT_BACKEND_FACTORIES.get(backend):
+                errors.append(f"transport helper backend factory is missing or implicit for {backend!r}")
+    explicit_start = helper_spec.get("explicitBrowserStart")
+    if not isinstance(explicit_start, dict) or explicit_start.get("backend") is not True:
+        errors.append("transport helper Browser.start must pass an explicit backend")
+    if not isinstance(explicit_start, dict) or explicit_start.get("connectionMode") is not True:
+        errors.append("transport helper Browser.start must pass an explicit connection mode")
+
+    if callback_contract is None:
+        callback_contract = transport_callback_contract()
+    if callback_contract.get("count") != EXPECTED_TRANSPORT_CALLBACK_COUNT:
+        errors.append(
+            "transport applicable callback contract count changed: "
+            f"expected {EXPECTED_TRANSPORT_CALLBACK_COUNT}, got {callback_contract.get('count')}"
+        )
+    if callback_contract.get("fingerprint") != EXPECTED_TRANSPORT_CALLBACK_FINGERPRINT:
+        errors.append(
+            "transport applicable callback contract fingerprint mismatch: "
+            f"expected {EXPECTED_TRANSPORT_CALLBACK_FINGERPRINT}, got {callback_contract.get('fingerprint')}"
+        )
+
+    expected_ids = [case["id"] for case in test_inventory["cases"]]
+    report_cases = report.get("cases")
+    if not isinstance(report_cases, list):
+        return [*errors, "transport matrix report cases must be a list"]
+    report_ids = [case.get("id") for case in report_cases if isinstance(case, dict)]
+    if report_ids != expected_ids:
+        errors.append("transport matrix report cases do not exactly match the fixed inventory order")
+    by_id = {
+        case.get("id"): case for case in report_cases if isinstance(case, dict)
+    }
+    for case_id in expected_ids:
+        case = by_id.get(case_id)
+        if case is None:
+            continue
+        expected_reason = EXPECTED_TRANSPORT_NON_APPLICABLE.get(case_id)
+        if expected_reason is None:
+            if case.get("applicability") != "applicable":
+                errors.append(f"transport-applicable case lacks an executable matrix declaration: {case_id}")
+            if case.get("quadrants") != EXPECTED_TRANSPORT_QUADRANTS:
+                errors.append(f"transport-applicable case lacks an exact quadrant: {case_id}")
+            for quadrant in case.get("quadrants", []):
+                if not isinstance(quadrant, dict) or quadrant.get("backend") not in {"js", "native"}:
+                    errors.append(f"transport-applicable case has an implicit backend: {case_id}")
+                if not isinstance(quadrant, dict) or quadrant.get("connectionMode") not in {"direct", "flattened"}:
+                    errors.append(f"transport-applicable case has an implicit connection mode: {case_id}")
+        else:
+            if case.get("applicability") != "not-applicable":
+                errors.append(f"transport non-applicable case is not declared per case: {case_id}")
+            if case.get("quadrants") != []:
+                errors.append(f"transport non-applicable case must not claim quadrants: {case_id}")
+            if case.get("reason") != expected_reason:
+                errors.append(f"transport non-applicable case lacks its executable reason: {case_id}")
+
+    expected_summary = {
+        "cases": len(expected_ids),
+        "applicable": len(expected_ids) - len(EXPECTED_TRANSPORT_NON_APPLICABLE),
+        "notApplicable": len(EXPECTED_TRANSPORT_NON_APPLICABLE),
+        "declaredQuadrantExecutions": (
+            len(expected_ids) - len(EXPECTED_TRANSPORT_NON_APPLICABLE)
+        ) * len(EXPECTED_TRANSPORT_QUADRANTS),
+    }
+    if report.get("summary") != expected_summary:
+        errors.append("transport matrix report summary does not match case-level declarations")
+    if report.get("quadrants") != EXPECTED_TRANSPORT_QUADRANTS:
+        errors.append("transport matrix report does not declare the exact four quadrants")
+    return errors
+
+
+def transport_helper_source_mutation_rejected(
+    test_inventory: dict[str, Any],
+    report: dict[str, Any],
+    old: str,
+    new: str,
+) -> bool:
+    source = TRANSPORT_MATRIX_HELPER.read_text(encoding="utf8")
+    if source.count(old) != 1:
+        raise RuntimeError(f"transport helper mutation anchor must occur exactly once: {old!r}")
+    with TemporaryDirectory(prefix="nodriver-transport-probe-") as directory:
+        source_path = Path(directory) / "transport-matrix.ts"
+        source_path.write_text(source.replace(old, new, 1), encoding="utf8")
+        try:
+            helper_spec = inspect_transport_helper(source_path)
+        except RuntimeError:
+            return True
+        return bool(transport_matrix_errors(test_inventory, report, helper_spec))
+
+
+def transport_callback_source_mutation_rejected(
+    source_name: str,
+    old: str,
+    new: str,
+) -> bool:
+    source_path = ROOT / source_name
+    source = source_path.read_text(encoding="utf8")
+    if source.count(old) != 1:
+        raise RuntimeError(f"transport callback mutation anchor must occur exactly once: {old!r}")
+    with TemporaryDirectory(prefix="nodriver-transport-probe-") as directory:
+        mutated_path = Path(directory) / source_path.name
+        mutated_path.write_text(source.replace(old, new, 1), encoding="utf8")
+        try:
+            mutated_registrations = typescript_test_registrations(mutated_path)
+        except RuntimeError:
+            return True
+        registrations_by_source = node_test_registrations_by_source()
+        registrations_by_source[source_name] = mutated_registrations
+        callback_contract = transport_callback_contract(registrations_by_source)
+        return (
+            callback_contract.get("count") == EXPECTED_TRANSPORT_CALLBACK_COUNT
+            and callback_contract.get("fingerprint")
+            != EXPECTED_TRANSPORT_CALLBACK_FINGERPRINT
+        )
+
+
+def isolated_transport_refresh_mutation_probes() -> dict[str, str]:
+    names = (
+        "transportRefreshRejectsHelperTopLevelPop",
+        "transportRefreshRejectsCallbackEarlyReturn",
+    )
+    with TemporaryDirectory(prefix="nodriver-transport-refresh-probe-") as directory:
+        isolated_root = Path(directory) / "repo"
+        shutil.copytree(
+            PARITY,
+            isolated_root / "parity",
+            ignore=shutil.ignore_patterns("__pycache__"),
+        )
+        shutil.copytree(
+            ROOT / "packages",
+            isolated_root / "packages",
+            ignore=shutil.ignore_patterns("dist", "generated", "node_modules"),
+        )
+        shutil.copy2(ROOT / "package.json", isolated_root / "package.json")
+        (isolated_root / "node_modules").symlink_to(
+            ROOT / "node_modules",
+            target_is_directory=True,
+        )
+        artifacts = (
+            isolated_root / "parity" / "validation.json",
+            isolated_root / "parity" / "transport-matrix-report.json",
+            isolated_root / "parity" / "gap-report.md",
+        )
+
+        def rejected_without_refresh(
+            source_name: str,
+            old: str,
+            new: str,
+            expected_error: str,
+        ) -> bool:
+            source_path = isolated_root / source_name
+            source = source_path.read_text(encoding="utf8")
+            if source.count(old) != 1:
+                raise RuntimeError(
+                    f"isolated refresh mutation anchor must occur exactly once: {old!r}"
+                )
+            before = {path: path.read_bytes() for path in artifacts}
+            source_path.write_text(source.replace(old, new, 1), encoding="utf8")
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(isolated_root / "parity" / "generate.py"),
+                    "--refresh-derived",
+                ],
+                cwd=isolated_root,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            source_path.write_text(source, encoding="utf8")
+            return (
+                result.returncode != 0
+                and expected_error in f"{result.stdout}{result.stderr}"
+                and "Derived parity artifacts: refreshed" not in result.stdout
+                and all(path.read_bytes() == before[path] for path in artifacts)
+            )
+
+        helper_rejected = rejected_without_refresh(
+            "packages/api/test/support/transport-matrix.ts",
+            "] as const satisfies readonly TransportQuadrant[];\n",
+            "] as const satisfies readonly TransportQuadrant[];\n\n"
+            "(TRANSPORT_QUADRANTS as unknown as TransportQuadrant[]).pop();\n",
+            "transport helper module fingerprint does not match the fixed trusted contract",
+        )
+        callback_rejected = rejected_without_refresh(
+            "packages/api/test/tab-selector-evaluate-parity.test.ts",
+            '  await runTransportMatrix("ZDTEST-0037",',
+            '  return;\n  await runTransportMatrix("ZDTEST-0037",',
+            "transport applicable callback contract fingerprint mismatch",
+        )
+        return {
+            names[0]: "PASS" if helper_rejected else "FAIL",
+            names[1]: "PASS" if callback_rejected else "FAIL",
+        }
+
+
+def transport_matrix_mutation_probes(
+    test_inventory: dict[str, Any],
+    report: dict[str, Any],
+    helper_spec: dict[str, Any],
+) -> dict[str, str]:
+    probe_names = (
+        "transportCaseMissingQuadrant",
+        "transportCaseImplicitBackend",
+        "transportCaseImplicitConnectionMode",
+        "transportCaseMissingExecutableReason",
+        "transportCaseMissingApplicability",
+        "transportHelperMissingQuadrant",
+        "transportHelperDefaultBackend",
+        "transportHelperDefaultConnectionMode",
+        "transportHelperVoidAction",
+        "transportHelperOmittedAction",
+        "transportHelperConditionalContinue",
+        "transportHelperOmittedStop",
+        "transportHelperUnawaitedStop",
+        "transportHelperUnawaitedStart",
+        "transportHelperTopLevelPop",
+        "transportCallbackEarlyReturn",
+        "transportUnawaitedMatrixCallRejected",
+        "transportMatrixLocalShadowRejected",
+        "transportExclusionLocalShadowRejected",
+        "transportWrongCaseIdRejected",
+    )
+    applicable_index = next((
+        index
+        for index, case in enumerate(report["cases"])
+        if case["applicability"] == "applicable"
+    ), None)
+    not_applicable_index = next((
+        index
+        for index, case in enumerate(report["cases"])
+        if case["applicability"] == "not-applicable"
+    ), None)
+    if applicable_index is None or not_applicable_index is None:
+        return {name: "FAIL" for name in probe_names}
+
+    missing_quadrant = copy.deepcopy(report)
+    missing_quadrant["cases"][applicable_index]["quadrants"].pop()
+    implicit_backend = copy.deepcopy(report)
+    implicit_backend["cases"][applicable_index]["quadrants"][0]["backend"] = None
+    implicit_mode = copy.deepcopy(report)
+    implicit_mode["cases"][applicable_index]["quadrants"][0]["connectionMode"] = None
+    missing_reason = copy.deepcopy(report)
+    del missing_reason["cases"][not_applicable_index]["reason"]["detail"]
+    undeclared = copy.deepcopy(report)
+    undeclared["cases"][applicable_index]["applicability"] = "undeclared"
+
+    candidates = {
+        "transportCaseMissingQuadrant": missing_quadrant,
+        "transportCaseImplicitBackend": implicit_backend,
+        "transportCaseImplicitConnectionMode": implicit_mode,
+        "transportCaseMissingExecutableReason": missing_reason,
+        "transportCaseMissingApplicability": undeclared,
+    }
+    probes = {
+        name: "PASS"
+        if transport_matrix_errors(test_inventory, candidate_report, helper_spec)
+        else "FAIL"
+        for name, candidate_report in candidates.items()
+    }
+    helper_mutations = {
+        "transportHelperMissingQuadrant": (
+            '  { backend: "native", connectionMode: "flattened", backendFactory: NativeConnection },\n',
+            "",
+        ),
+        "transportHelperDefaultBackend": (
+            "      backend: quadrant.backendFactory,\n",
+            "",
+        ),
+        "transportHelperDefaultConnectionMode": (
+            "      connectionMode: quadrant.connectionMode,\n",
+            "",
+        ),
+        "transportHelperVoidAction": (
+            "      await action(browser, quadrant);",
+            "      void action(browser, quadrant);",
+        ),
+        "transportHelperOmittedAction": (
+            "      await action(browser, quadrant);\n",
+            "",
+        ),
+        "transportHelperConditionalContinue": (
+            "    const browser = await Browser.start({",
+            '    if (quadrant.backend === "native" && quadrant.connectionMode === "flattened") continue;\n'
+            "    const browser = await Browser.start({",
+        ),
+        "transportHelperOmittedStop": (
+            "      await browser.stop();\n",
+            "",
+        ),
+        "transportHelperUnawaitedStop": (
+            "      await browser.stop();",
+            "      void browser.stop();",
+        ),
+        "transportHelperUnawaitedStart": (
+            "    const browser = await Browser.start({",
+            "    const browser = Browser.start({",
+        ),
+        "transportHelperTopLevelPop": (
+            "] as const satisfies readonly TransportQuadrant[];\n",
+            "] as const satisfies readonly TransportQuadrant[];\n\n"
+            "(TRANSPORT_QUADRANTS as unknown as TransportQuadrant[]).pop();\n",
+        ),
+    }
+    probes.update(
+        {
+            name: "PASS"
+            if transport_helper_source_mutation_rejected(
+                test_inventory, report, old, new
+            )
+            else "FAIL"
+            for name, (old, new) in helper_mutations.items()
+        }
+    )
+    probes["transportCallbackEarlyReturn"] = (
+        "PASS"
+        if transport_callback_source_mutation_rejected(
+            "packages/api/test/tab-selector-evaluate-parity.test.ts",
+            '  await runTransportMatrix("ZDTEST-0037",',
+            '  return;\n  await runTransportMatrix("ZDTEST-0037",',
+        )
+        else "FAIL"
+    )
+    source_probes = {
+        "transportUnawaitedMatrixCallRejected": TRANSPORT_UNAWAITED_MATRIX_FIXTURE,
+        "transportMatrixLocalShadowRejected": TRANSPORT_MATRIX_SHADOW_FIXTURE,
+        "transportExclusionLocalShadowRejected": TRANSPORT_EXCLUSION_SHADOW_FIXTURE,
+        "transportWrongCaseIdRejected": TRANSPORT_WRONG_CASE_ID_FIXTURE,
+    }
+    probes.update(
+        {
+            name: "PASS" if typescript_test_source_rejected(source) else "FAIL"
+            for name, source in source_probes.items()
+        }
+    )
+    return probes
 
 
 def bound_node_test_ids(
@@ -1845,6 +2377,17 @@ def validate(
     failed_mapping_probes = [name for name, status in mapping_probes.items() if status != "PASS"]
     if failed_mapping_probes:
         errors.append(f"Node test mapping mutation probes failed: {failed_mapping_probes}")
+    matrix_report = transport_matrix_report(test_inventory)
+    helper_spec = transport_helper_spec()
+    errors.extend(transport_matrix_errors(test_inventory, matrix_report, helper_spec))
+    matrix_probes = transport_matrix_mutation_probes(
+        test_inventory, matrix_report, helper_spec
+    )
+    failed_matrix_probes = [
+        name for name, status in matrix_probes.items() if status != "PASS"
+    ]
+    if failed_matrix_probes:
+        errors.append(f"transport matrix mutation probes failed: {failed_matrix_probes}")
     if not api_inventory["upstream"]["rootExports"]:
         errors.append("Zendriver root API inventory is empty")
     if not api_inventory["upstream"]["coreModules"]:
@@ -2062,6 +2605,7 @@ def validate(
             )
     probes = mutation_probes(api_inventory, test_inventory, reference_observations)
     probes.update(mapping_probes)
+    probes.update(matrix_probes)
     probes.update(semantic_probes)
     failed_probes = [name for name, status in probes.items() if status != "PASS"]
     if failed_probes:
@@ -2081,6 +2625,7 @@ def validation_artifact(
     sources_by_gate, _ = evidence_execution_gates()
     gates_by_source = execution_gates_by_source(sources_by_gate)
     evidence_sources = api_semantic_evidence_sources(semantic_mappings, node_mappings)
+    matrix_report = transport_matrix_report(test_inventory)
     return {
         "status": "PASS",
         "errors": [],
@@ -2093,6 +2638,7 @@ def validation_artifact(
             case["nodeParity"]["result"] == "NOT_RUN"
             for case in test_inventory["cases"]
         ),
+        "transportMatrix": matrix_report["summary"],
         "apiMappingCounts": api_counts,
         "apiMappingsWithDeclaredSemanticDimensions": len(semantic_mappings),
         "apiSemanticDimensionCounts": api_semantic_dimension_counts(semantic_mappings),
@@ -2138,6 +2684,14 @@ def validate_existing() -> None:
         reference_observations,
     )
     stored_report = (PARITY / "gap-report.md").read_text(encoding="utf8")
+    expected_matrix_report = canonical_json_text(
+        transport_matrix_report(test_inventory)
+    )
+    stored_matrix_report = (
+        TRANSPORT_MATRIX_REPORT.read_text(encoding="utf8")
+        if TRANSPORT_MATRIX_REPORT.is_file()
+        else ""
+    )
     errors.extend(
         generated_artifact_errors(
             stored_validation,
@@ -2146,6 +2700,10 @@ def validate_existing() -> None:
             expected_report,
         )
     )
+    if stored_matrix_report != expected_matrix_report:
+        errors.append(
+            "checked-in transport-matrix-report.json does not match recomputed executable declarations"
+        )
     forged_validation = copy.deepcopy(expected_validation)
     forged_validation["status"] = "FORGED"
     forged_validation_text = canonical_json_text(forged_validation)
@@ -2187,6 +2745,14 @@ def validate_existing() -> None:
     ]
     if failed_artifact_probes:
         errors.append(f"generated artifact mutation probes failed: {failed_artifact_probes}")
+    refresh_probes = isolated_transport_refresh_mutation_probes()
+    failed_refresh_probes = [
+        name for name, status in refresh_probes.items() if status != "PASS"
+    ]
+    if failed_refresh_probes:
+        errors.append(
+            f"transport refresh mutation probes failed: {failed_refresh_probes}"
+        )
     mappings = json.loads(NODE_TEST_MAPPINGS.read_text(encoding="utf8"))
     semantic_mappings = json.loads(API_SEMANTIC_MAPPINGS.read_text(encoding="utf8"))
     titles_by_source = node_test_titles_by_source()
@@ -2204,6 +2770,12 @@ def validate_existing() -> None:
     print(f"Node test registrations: {len(registered_ids)}/{EXPECTED_TEST_COUNT}")
     print(f"Node test sources scanned: {len(titles_by_source)}")
     print(
+        "Transport matrix: "
+        f"{expected_validation['transportMatrix']['applicable']} applicable, "
+        f"{expected_validation['transportMatrix']['notApplicable']} not applicable, "
+        f"{expected_validation['transportMatrix']['declaredQuadrantExecutions']} declared quadrant executions"
+    )
+    print(
         "API semantic coverage declarations: "
         f"{declared_coverage}/{EXPECTED_API_MAPPING_COUNT}; "
         f"dimensions {json.dumps(api_semantic_dimension_counts(semantic_mappings), sort_keys=True)}"
@@ -2219,6 +2791,7 @@ def validate_existing() -> None:
     print(f"Fingerprints: {json.dumps(fingerprints, sort_keys=True)}")
     print(f"Mutation probes: {json.dumps(probes, sort_keys=True)}")
     print(f"Artifact mutation probes: {json.dumps(artifact_probes, sort_keys=True)}")
+    print(f"Transport refresh mutation probes: {json.dumps(refresh_probes, sort_keys=True)}")
     if errors:
         for error in errors:
             print(f"ERROR: {error}", file=sys.stderr)
@@ -2237,6 +2810,43 @@ def generated_artifact_errors(
     if stored_report != expected_report:
         errors.append("checked-in gap-report.md does not match recomputed report")
     return errors
+
+
+def refresh_derived_artifacts() -> None:
+    baseline = json.loads((PARITY / "baseline.json").read_text(encoding="utf8"))
+    api_inventory = json.loads((PARITY / "api-inventory.json").read_text(encoding="utf8"))
+    test_inventory = json.loads((PARITY / "test-inventory.json").read_text(encoding="utf8"))
+    reference_observations = json.loads(
+        (PARITY / "reference-observations.json").read_text(encoding="utf8")
+    )
+    errors, fingerprints, probes = validate(
+        baseline, api_inventory, test_inventory, reference_observations
+    )
+    if errors:
+        for error in errors:
+            print(f"ERROR: {error}", file=sys.stderr)
+        raise SystemExit(1)
+    write_json("transport-matrix-report.json", transport_matrix_report(test_inventory))
+    write_json(
+        "validation.json",
+        validation_artifact(
+            api_inventory["mappingCounts"],
+            test_inventory,
+            reference_observations,
+            fingerprints,
+            probes,
+        ),
+    )
+    (PARITY / "gap-report.md").write_text(
+        report_markdown(
+            baseline,
+            api_inventory["mappingCounts"],
+            test_inventory,
+            reference_observations,
+        ),
+        encoding="utf8",
+    )
+    print("Derived parity artifacts: refreshed")
 
 
 def report_markdown(
@@ -2265,6 +2875,7 @@ def report_markdown(
     test_id_phase_counts = api_semantic_test_id_phase_counts(
         semantic_mappings, test_inventory
     )
+    matrix_summary = transport_matrix_report(test_inventory)["summary"]
     lines = [
         "# Zendriver v0.15.5 Parity Gap Report",
         "",
@@ -2288,6 +2899,8 @@ def report_markdown(
         f"- Listed semantic dimension counts: {json.dumps(dimension_counts, sort_keys=True)}",
         f"- API evidence source files present in root/parity execution gates: {len(evidence_sources.intersection(gates_by_source))}/{len(evidence_sources)}",
         f"- Phase-bound ZDTEST evidence IDs: {json.dumps(test_id_phase_counts, sort_keys=True)}",
+        f"- Transport-applicable cases with explicit JS/native × direct/flattened declarations: {matrix_summary['applicable']}",
+        f"- Transport non-applicable cases with executable per-case reasons: {matrix_summary['notApplicable']}",
         "",
         "## Reference environment observations",
         "",
@@ -2313,8 +2926,11 @@ def main() -> None:
     if sys.argv[1:] == ["--validate-only"]:
         validate_existing()
         return
+    if sys.argv[1:] == ["--refresh-derived"]:
+        refresh_derived_artifacts()
+        return
     if sys.argv[1:]:
-        raise SystemExit("Usage: parity/generate.py [--validate-only]")
+        raise SystemExit("Usage: parity/generate.py [--validate-only|--refresh-derived]")
     commit = git_value("rev-parse", "HEAD")
     tag = git_value("describe", "--tags", "--exact-match")
     upstream_api = inspect_reference()
@@ -2391,6 +3007,7 @@ def main() -> None:
     write_json("baseline.json", baseline)
     write_json("test-inventory.json", test_inventory)
     write_json("api-inventory.json", api_inventory)
+    write_json("transport-matrix-report.json", transport_matrix_report(test_inventory))
     write_json("validation.json", validation)
     (PARITY / "gap-report.md").write_text(
         report_markdown(baseline, api_counts, test_inventory, reference_observations),

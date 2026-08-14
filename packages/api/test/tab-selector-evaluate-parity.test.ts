@@ -4,6 +4,7 @@ import test from "node:test";
 import { CdpProtocolError, CdpTimeoutError, type RuntimeBackend } from "@vertile-ai/jsdriver-runtime-js";
 import { Browser, discoverChromeExecutable, Tab, type ConnectionMode } from "../src/index.js";
 import { browserCaseSkipReason } from "./support/persistent-harness.js";
+import { runTransportMatrix } from "./support/transport-matrix.js";
 
 const groceries = `<!doctype html><title>Groceries</title><ul>
   <li aria-label="Apples (42)">Apples</li><li>Bananas</li><li>Carrots</li>
@@ -71,7 +72,7 @@ for (const [parameter, headless, ids] of [
 ] as const) {
   const skip = browserCaseSkipReason(headless);
   test(`${ids[0]} setUserAgent overrides all supplied navigator values [${parameter}]`, { timeout: 30_000, skip }, async () => {
-    await usingBrowser(headless, async (browser) => {
+    await runTransportMatrix(ids[0], { executable, headless }, async (browser) => {
       const tab = browser.mainTab;
       assert.ok(tab);
       assert.equal(await tab.setUserAgent("Test user agent", "testLang", "TestPlatform"), undefined);
@@ -87,7 +88,7 @@ for (const [parameter, headless, ids] of [
   });
 
   test(`${ids[1]} setUserAgent preserves the current UA when omitted [${parameter}]`, { timeout: 30_000, skip }, async () => {
-    await usingBrowser(headless, async (browser) => {
+    await runTransportMatrix(ids[1], { executable, headless }, async (browser) => {
       const tab = browser.mainTab;
       assert.ok(tab);
       const original = await tab.evaluate<string>("navigator.userAgent");
@@ -100,7 +101,8 @@ for (const [parameter, headless, ids] of [
   });
 
   test(`${ids[2]} find returns the visible enclosing element with matching text [${parameter}]`, { timeout: 30_000, skip }, async () => {
-    await usingPage(headless, "/groceries", async (tab) => {
+    await runTransportMatrix(ids[2], { executable, headless }, async (browser) => {
+      const tab = await browser.get(`${baseUrl}/groceries`);
       const result = await tab.find("  Apples  ", true, true);
       assert.equal(result.tag, "li");
       assert.equal(result.text, "Apples");
@@ -114,13 +116,15 @@ for (const [parameter, headless, ids] of [
   });
 
   test(`${ids[3]} find rejects with the typed timeout error when text is absent [${parameter}]`, { timeout: 30_000, skip }, async () => {
-    await usingPage(headless, "/groceries", async (tab) => {
+    await runTransportMatrix(ids[3], { executable, headless }, async (browser) => {
+      const tab = await browser.get(`${baseUrl}/groceries`);
       await assert.rejects(tab.find("Clothes", true, true, { timeoutMs: 100 }), CdpTimeoutError);
     });
   });
 
   test(`${ids[4]} select returns an element with exact tag and text semantics [${parameter}]`, { timeout: 30_000, skip }, async () => {
-    await usingPage(headless, "/groceries", async (tab) => {
+    await runTransportMatrix(ids[4], { executable, headless }, async (browser) => {
+      const tab = await browser.get(`${baseUrl}/groceries`);
       const result = await tab.select("li[aria-label^='Apples']");
       assert.equal(result.tag, "li");
       assert.equal(result.text, "Apples");
@@ -131,7 +135,8 @@ for (const [parameter, headless, ids] of [
   });
 
   test(`${ids[5]} xpath returns the matching element [${parameter}]`, { timeout: 30_000, skip }, async () => {
-    await usingPage(headless, "/groceries", async (tab) => {
+    await runTransportMatrix(ids[5], { executable, headless }, async (browser) => {
+      const tab = await browser.get(`${baseUrl}/groceries`);
       const results = await tab.xpath('//li[@aria-label="Apples (42)"]');
       assert.equal(results.length, 1);
       assert.equal(results[0]?.tag, "li");
@@ -140,21 +145,24 @@ for (const [parameter, headless, ids] of [
   });
 
   test(`${ids[6]} xpath returns an empty list after its search window [${parameter}]`, { timeout: 30_000, skip }, async () => {
-    await usingPage(headless, "/groceries", async (tab) => {
+    await runTransportMatrix(ids[6], { executable, headless }, async (browser) => {
+      const tab = await browser.get(`${baseUrl}/groceries`);
       assert.deepEqual(await tab.xpath('//li[@aria-label="Nonexistent Item"]'), []);
       assert.deepEqual(await tab.xpath("//*[", { timeoutMs: 100 }), []);
     });
   });
 
   test(`${ids[7]} waitForReadyState resolves true at the exact requested state [${parameter}]`, { timeout: 30_000, skip }, async () => {
-    await usingPage(headless, "/groceries", async (tab) => {
+    await runTransportMatrix(ids[7], { executable, headless }, async (browser) => {
+      const tab = await browser.get(`${baseUrl}/groceries`);
       assert.equal(await tab.waitForReadyState("complete"), true);
       assert.equal(await tab.evaluate("document.readyState"), "complete");
     });
   });
 
   test(`${ids[8]} evaluate deep-serializes complex DOM objects without an error [${parameter}]`, { timeout: 30_000, skip }, async () => {
-    await usingPage(headless, "/complex", async (tab) => {
+    await runTransportMatrix(ids[8], { executable, headless }, async (browser) => {
+      const tab = await browser.get(`${baseUrl}/complex`);
       assert.ok(await tab.evaluate("document.querySelector('body:not(.pending)')", false, false));
       assert.ok(await tab.evaluate("document.body", false, false));
       assert.equal(await tab.evaluate("Promise.resolve('awaited')", true, true), "awaited");
@@ -163,7 +171,8 @@ for (const [parameter, headless, ids] of [
   });
 
   test(`${ids[9]} evaluate rejects complex by-value serialization and supports deep serialization [${parameter}]`, { timeout: 30_000, skip }, async () => {
-    await usingPage(headless, "/complex", async (tab) => {
+    await runTransportMatrix(ids[9], { executable, headless }, async (browser) => {
+      const tab = await browser.get(`${baseUrl}/complex`);
       const expression = "document.querySelector('body:not(.pending)')";
       await assert.rejects(tab.evaluate(expression, false, true), CdpProtocolError);
       const representation = await tab.evaluate<Record<string, unknown>>(expression, false, false);
@@ -173,7 +182,8 @@ for (const [parameter, headless, ids] of [
   });
 
   test(`${ids[10]} evaluate returns exact JSON and deep-serialized representations [${parameter}]`, { timeout: 30_000, skip }, async () => {
-    await usingPage(headless, "/simple-json", async (tab) => {
+    await runTransportMatrix(ids[10], { executable, headless }, async (browser) => {
+      const tab = await browser.get(`${baseUrl}/simple-json`);
       const expression = "JSON.parse(document.querySelector('#obj').textContent)";
       assert.deepEqual(await tab.evaluate(expression, false, true), { a: "x", b: 3.14159 });
       assert.deepEqual(await tab.evaluate(expression, false, false), [
@@ -184,7 +194,8 @@ for (const [parameter, headless, ids] of [
   });
 
   test(`${ids[11]} evaluate preserves falsy by-value results [${parameter}]`, { timeout: 30_000, skip }, async () => {
-    await usingPage(headless, "/simple-json", async (tab) => {
+    await runTransportMatrix(ids[11], { executable, headless }, async (browser) => {
+      const tab = await browser.get(`${baseUrl}/simple-json`);
       const parsed = (selector: string): Promise<unknown> => tab.evaluate(`JSON.parse(document.querySelector('${selector}').textContent)`);
       assert.equal(await parsed("#zero"), 0);
       assert.deepEqual(await parsed("#empty-array"), []);
@@ -193,7 +204,8 @@ for (const [parameter, headless, ids] of [
   });
 
   test(`${ids[12]} evaluate handles repeated complex and scalar expressions [${parameter}]`, { timeout: 30_000, skip }, async () => {
-    await usingPage(headless, "/complex", async (tab) => {
+    await runTransportMatrix(ids[12], { executable, headless }, async (browser) => {
+      const tab = await browser.get(`${baseUrl}/complex`);
       for (const expression of [
         "document.querySelector('body:not(.pending)')",
         "document.documentElement",
@@ -213,14 +225,13 @@ for (const [parameter, headless, ids] of [
 }
 
 test("ZDTEST-0037 querySelectorAll traverses content documents but excludes cross-origin child targets", { timeout: 30_000, skip: browserCaseSkipReason(true) }, async () => {
-  for (const connectionMode of ["direct", "flattened"] satisfies readonly ConnectionMode[]) {
-    await usingPage(true, "/frames", async (tab) => {
-      const results = await tab.querySelectorAll(".match", { includeFrames: true });
-      assert.deepEqual(new Set(results.map((element) => element.attrs["data-location"])), new Set(["top", "outer", "inner"]));
-      const documents = await Promise.all(results.map((element) => element.apply<string>("function () { return this.ownerDocument.location.pathname; }")));
-      assert.deepEqual(new Set(documents), new Set(["/frames", "/outer", "/inner"]));
-    }, connectionMode);
-  }
+  await runTransportMatrix("ZDTEST-0037", { executable, headless: true }, async (browser) => {
+    const tab = await browser.get(`${baseUrl}/frames`);
+    const results = await tab.querySelectorAll(".match", { includeFrames: true });
+    assert.deepEqual(new Set(results.map((element) => element.attrs["data-location"])), new Set(["top", "outer", "inner"]));
+    const documents = await Promise.all(results.map((element) => element.apply<string>("function () { return this.ownerDocument.location.pathname; }")));
+    assert.deepEqual(new Set(documents), new Set(["/frames", "/outer", "/inner"]));
+  });
 });
 
 test("evaluate sends the exact Zendriver serialization controls", async () => {

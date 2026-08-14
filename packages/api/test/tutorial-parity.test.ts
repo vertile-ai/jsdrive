@@ -2,10 +2,9 @@ import assert from "node:assert/strict";
 import { createServer, type Server } from "node:http";
 import test from "node:test";
 import type { Protocol } from "@vertile-ai/jsdriver-protocol";
-import type { RuntimeBackendFactory } from "@vertile-ai/jsdriver-runtime-js";
-import { NativeConnection } from "@vertile-ai/jsdriver-runtime-native";
-import { Browser, discoverChromeExecutable, type ConnectionMode, type Element, type Tab, type TabEventHandler } from "../src/index.js";
+import { discoverChromeExecutable, type Element, type Tab, type TabEventHandler } from "../src/index.js";
 import { browserCaseSkipReason } from "./support/persistent-harness.js";
+import { runTransportMatrix } from "./support/transport-matrix.js";
 
 const loginPage = `<!doctype html><html><head><title>Account tutorial</title></head><body>
 <section id="login-panel">
@@ -132,7 +131,7 @@ for (const [parameter, headless, ids] of [
 ] as const) {
   const skip = browserCaseSkipReason(headless);
   test(`${ids[0]} account tutorial opens the controlled login page [${parameter}]`, { timeout: 120_000, skip }, async () => {
-    await usingRuntimeMatrix(headless, async (browser) => {
+    await runTransportMatrix(ids[0], { executable, headless }, async (browser) => {
       const page = await browser.get(`${baseUrl}/login`);
       assert.equal((await page.updateTarget()).title, "Account tutorial");
       assert.equal(new URL(page.url).pathname, "/login");
@@ -140,7 +139,7 @@ for (const [parameter, headless, ids] of [
   });
 
   test(`${ids[1]} account tutorial signs up and logs in [${parameter}]`, { timeout: 120_000, skip }, async () => {
-    await usingRuntimeMatrix(headless, async (browser) => {
+    await runTransportMatrix(ids[1], { executable, headless }, async (browser) => {
       const page = await browser.get(`${baseUrl}/login`);
       const signUpLink = (await page.selectAll("a")).find((element) => element.text.includes("Sign up"));
       assert.ok(signUpLink);
@@ -162,14 +161,14 @@ for (const [parameter, headless, ids] of [
   });
 
   test(`${ids[2]} API tutorial opens the request page [${parameter}]`, { timeout: 120_000, skip }, async () => {
-    await usingRuntimeMatrix(headless, async (browser) => {
+    await runTransportMatrix(ids[2], { executable, headless }, async (browser) => {
       const page = await browser.get(`${baseUrl}/api-request`);
       assert.equal((await page.updateTarget()).title, "API response tutorial");
     });
   });
 
   test(`${ids[3]} API tutorial reads the matching response body [${parameter}]`, { timeout: 120_000, skip }, async () => {
-    await usingRuntimeMatrix(headless, async (browser) => {
+    await runTransportMatrix(ids[3], { executable, headless }, async (browser) => {
       const page = browser.mainTab;
       assert.ok(page);
       const expectation = page.expectResponse(".*/user-data\\.json");
@@ -185,7 +184,7 @@ for (const [parameter, headless, ids] of [
   });
 
   test(`${ids[4]} CDP tutorial enables Runtime through typed commands [${parameter}]`, { timeout: 120_000, skip }, async () => {
-    await usingRuntimeMatrix(headless, async (browser) => {
+    await runTransportMatrix(ids[4], { executable, headless }, async (browser) => {
       const page = await browser.get(`${baseUrl}/console`);
       await page.send("Runtime.enable");
       await page.send("Runtime.enable");
@@ -194,7 +193,7 @@ for (const [parameter, headless, ids] of [
   });
 
   test(`${ids[5]} CDP tutorial receives the button console event [${parameter}]`, { timeout: 120_000, skip }, async () => {
-    await usingRuntimeMatrix(headless, async (browser) => {
+    await runTransportMatrix(ids[5], { executable, headless }, async (browser) => {
       const page = await browser.get(`${baseUrl}/console`);
       await page.send("Runtime.enable");
       await page.send("Runtime.enable");
@@ -214,14 +213,14 @@ for (const [parameter, headless, ids] of [
   });
 
   test(`${ids[6]} scrolling tutorial starts with no cards [${parameter}]`, { timeout: 120_000, skip }, async () => {
-    await usingRuntimeMatrix(headless, async (browser) => {
+    await runTransportMatrix(ids[6], { executable, headless }, async (browser) => {
       const page = await browser.get(`${baseUrl}/scrollable-cards`);
       assert.deepEqual((await page.select("#card-container")).children, []);
     });
   });
 
   test(`${ids[7]} scrolling tutorial reads the first ten cards [${parameter}]`, { timeout: 120_000, skip }, async () => {
-    await usingRuntimeMatrix(headless, async (browser) => {
+    await runTransportMatrix(ids[7], { executable, headless }, async (browser) => {
       const page = await browser.get(`${baseUrl}/scrollable-cards`);
       const cards = await waitForCards(page, 0);
       assert.deepEqual(cards.map((card) => card.text), Array.from({ length: 10 }, (_value, index) => `Card ${index + 1}`));
@@ -229,7 +228,7 @@ for (const [parameter, headless, ids] of [
   });
 
   test(`${ids[8]} scrolling tutorial finds lucky card 27 after three batches [${parameter}]`, { timeout: 120_000, skip }, async () => {
-    await usingRuntimeMatrix(headless, async (browser) => {
+    await runTransportMatrix(ids[8], { executable, headless }, async (browser) => {
       const page = await browser.get(`${baseUrl}/scrollable-cards`);
       let cards = await waitForCards(page, 0);
       const loadedCounts = [cards.length];
@@ -264,24 +263,4 @@ async function waitUntil(predicate: () => boolean | Promise<boolean>, timeoutMs:
   const deadline = Date.now() + timeoutMs;
   while (!await predicate() && Date.now() < deadline) await new Promise<void>((resolve) => setTimeout(resolve, 25));
   assert.equal(await predicate(), true, `condition was not met within ${timeoutMs}ms`);
-}
-
-async function usingRuntimeMatrix(headless: boolean, action: (browser: Browser) => Promise<void>): Promise<void> {
-  for (const [backend, backendFactory] of [["js", undefined], ["native", NativeConnection]] satisfies readonly [string, RuntimeBackendFactory | undefined][]) {
-    for (const connectionMode of ["direct", "flattened"] satisfies readonly ConnectionMode[]) {
-      const browser = await Browser.start({
-        executable,
-        headless,
-        connectionMode,
-        ...(backendFactory === undefined ? {} : { backend: backendFactory }),
-      });
-      try {
-        await action(browser);
-      } catch (error) {
-        assert.fail(`${backend}/${connectionMode}: ${error instanceof Error ? error.stack ?? error.message : String(error)}`);
-      } finally {
-        await browser.stop();
-      }
-    }
-  }
 }

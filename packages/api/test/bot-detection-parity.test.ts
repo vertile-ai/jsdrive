@@ -3,11 +3,9 @@ import { execFile } from "node:child_process";
 import { access } from "node:fs/promises";
 import { promisify } from "node:util";
 import test from "node:test";
-import type { RuntimeBackendFactory } from "@vertile-ai/jsdriver-runtime-js";
-import { CdpConnection } from "@vertile-ai/jsdriver-runtime-js";
-import { NativeConnection } from "@vertile-ai/jsdriver-runtime-native";
-import { Browser, discoverChromeExecutable, type ConnectionMode, type Tab } from "../src/index.js";
+import { discoverChromeExecutable, type Tab } from "../src/index.js";
 import { browserCaseSkipReason } from "./support/persistent-harness.js";
+import { runTransportMatrix } from "./support/transport-matrix.js";
 
 const TARGET_URL = "https://www.browserscan.net/bot-detection";
 const OBSERVATION = String.raw`
@@ -51,28 +49,17 @@ for (const [id, parameter, headless] of [
   test(`${id} BrowserScan reports Normal [${parameter}]`, { timeout: 240_000, skip }, async () => {
     const reference = await observeZendriver(headless);
     assert.equal(reference.result, "Normal", JSON.stringify(reference));
-
-    for (const [backend, factory] of [
-      ["js", CdpConnection],
-      ["native", NativeConnection],
-    ] as const) {
-      for (const connectionMode of ["direct", "flattened"] satisfies readonly ConnectionMode[]) {
-        const browser = await Browser.start({ executable, headless, connectionMode, backend: factory });
-        try {
-          const initialTab = browser.mainTab;
-          assert.ok(initialTab !== undefined);
-          assert.deepEqual([...initialTab.enabledDomains], []);
-          assert.deepEqual([...initialTab.manuallyEnabledDomains], []);
-          const observation = await observeTab(await browser.get(TARGET_URL));
-          const evidence = { id, parameter, backend, connectionMode, headless, reference, observation };
-          assert.equal(observation.result, reference.result, JSON.stringify(evidence));
-          assert.equal(observation.result, "Normal", JSON.stringify(evidence));
-          console.log(JSON.stringify(evidence));
-        } finally {
-          await browser.stop();
-        }
-      }
-    }
+    await runTransportMatrix(id, { executable, headless }, async (browser, quadrant) => {
+      const initialTab = browser.mainTab;
+      assert.ok(initialTab !== undefined);
+      assert.deepEqual([...initialTab.enabledDomains], []);
+      assert.deepEqual([...initialTab.manuallyEnabledDomains], []);
+      const observation = await observeTab(await browser.get(TARGET_URL));
+      const evidence = { id, parameter, ...quadrant, headless, reference, observation };
+      assert.equal(observation.result, reference.result, JSON.stringify(evidence));
+      assert.equal(observation.result, "Normal", JSON.stringify(evidence));
+      console.log(JSON.stringify(evidence));
+    });
   });
 }
 

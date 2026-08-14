@@ -1,0 +1,2631 @@
+{
+  "cases": [
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0001",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/bot-detection-parity.test.ts",
+      "title": "ZDTEST-0001 BrowserScan reports Normal [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0002",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/bot-detection-parity.test.ts",
+      "title": "ZDTEST-0002 BrowserScan reports Normal [headless1]"
+    },
+    {
+      "applicability": "not-applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0003",
+      "parameterization": null,
+      "quadrants": [],
+      "reason": {
+        "code": "controlled-backend-failure",
+        "detail": "The assertion injects one intentionally failing backend, so substituting transport quadrants would change the behavior under test."
+      },
+      "source": "packages/api/test/browser-core-parity.test.ts",
+      "title": "ZDTEST-0003 startup connection failure includes Chrome stderr"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0004",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/browser-core-parity.test.ts",
+      "title": "ZDTEST-0004 content begins with a doctype [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0005",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/browser-core-parity.test.ts",
+      "title": "ZDTEST-0005 content begins with a doctype [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0006",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/browser-core-parity.test.ts",
+      "title": "ZDTEST-0006 refreshing target metadata exposes the document title [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0007",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/browser-core-parity.test.ts",
+      "title": "ZDTEST-0007 refreshing target metadata exposes the document title [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0008",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/browser-core-parity.test.ts",
+      "title": "ZDTEST-0008 stop succeeds after the browser connection is closed [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0009",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/browser-core-parity.test.ts",
+      "title": "ZDTEST-0009 stop succeeds after the browser connection is closed [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0010",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/browser-core-parity.test.ts",
+      "title": "ZDTEST-0010 stop is idempotent [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0011",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/browser-core-parity.test.ts",
+      "title": "ZDTEST-0011 stop is idempotent [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0012",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/browser-core-parity.test.ts",
+      "title": "ZDTEST-0012 stopped becomes true after stop [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0013",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/browser-core-parity.test.ts",
+      "title": "ZDTEST-0013 stopped becomes true after stop [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0014",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/browser-core-parity.test.ts",
+      "title": "ZDTEST-0014 stopped tracks an external Browser.close [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0015",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/browser-core-parity.test.ts",
+      "title": "ZDTEST-0015 stopped tracks an external Browser.close [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0016",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/input-react-parity.test.ts",
+      "title": "ZDTEST-0016 preserves the visible editing structure after copy, cursor motion, and paste [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0017",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/input-react-parity.test.ts",
+      "title": "ZDTEST-0017 preserves the visible editing structure after copy, cursor motion, and paste [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0018",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/input-react-parity.test.ts",
+      "title": "ZDTEST-0018 dispatches Escape as keydown then keyup and closes the panel [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0019",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/input-react-parity.test.ts",
+      "title": "ZDTEST-0019 dispatches Escape as keydown then keyup and closes the panel [headless1]"
+    },
+    {
+      "applicability": "not-applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0020",
+      "parameterization": null,
+      "quadrants": [],
+      "reason": {
+        "code": "managed-process-isolation",
+        "detail": "The assertion covers serial Chrome process, port, and profile isolation; transport routing is not part of its observable result."
+      },
+      "source": "packages/api/test/browser-core-parity.test.ts",
+      "title": "ZDTEST-0020 one Config launches three isolated browsers"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0021",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/input-react-parity.test.ts",
+      "title": "ZDTEST-0021 clears a controlled field through the native value setter [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0022",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/input-react-parity.test.ts",
+      "title": "ZDTEST-0022 clears a controlled field through the native value setter [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0023",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/input-react-parity.test.ts",
+      "title": "ZDTEST-0023 removes a controlled value with visible Backspace input [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0024",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/input-react-parity.test.ts",
+      "title": "ZDTEST-0024 removes a controlled value with visible Backspace input [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0025",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/input-react-parity.test.ts",
+      "title": "ZDTEST-0025 fills a controlled field after a render commit [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0026",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/input-react-parity.test.ts",
+      "title": "ZDTEST-0026 fills a controlled field after a render commit [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0027",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tab-selector-evaluate-parity.test.ts",
+      "title": "ZDTEST-0027 setUserAgent overrides all supplied navigator values [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0028",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tab-selector-evaluate-parity.test.ts",
+      "title": "ZDTEST-0028 setUserAgent overrides all supplied navigator values [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0029",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tab-selector-evaluate-parity.test.ts",
+      "title": "ZDTEST-0029 setUserAgent preserves the current UA when omitted [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0030",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tab-selector-evaluate-parity.test.ts",
+      "title": "ZDTEST-0030 setUserAgent preserves the current UA when omitted [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0031",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tab-selector-evaluate-parity.test.ts",
+      "title": "ZDTEST-0031 find returns the visible enclosing element with matching text [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0032",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tab-selector-evaluate-parity.test.ts",
+      "title": "ZDTEST-0032 find returns the visible enclosing element with matching text [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0033",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tab-selector-evaluate-parity.test.ts",
+      "title": "ZDTEST-0033 find rejects with the typed timeout error when text is absent [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0034",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tab-selector-evaluate-parity.test.ts",
+      "title": "ZDTEST-0034 find rejects with the typed timeout error when text is absent [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0035",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tab-selector-evaluate-parity.test.ts",
+      "title": "ZDTEST-0035 select returns an element with exact tag and text semantics [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0036",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tab-selector-evaluate-parity.test.ts",
+      "title": "ZDTEST-0036 select returns an element with exact tag and text semantics [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0037",
+      "parameterization": null,
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tab-selector-evaluate-parity.test.ts",
+      "title": "ZDTEST-0037 querySelectorAll traverses content documents but excludes cross-origin child targets"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0038",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tab-selector-evaluate-parity.test.ts",
+      "title": "ZDTEST-0038 xpath returns the matching element [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0039",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tab-selector-evaluate-parity.test.ts",
+      "title": "ZDTEST-0039 xpath returns the matching element [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0040",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tab-selector-evaluate-parity.test.ts",
+      "title": "ZDTEST-0040 xpath returns an empty list after its search window [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0041",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tab-selector-evaluate-parity.test.ts",
+      "title": "ZDTEST-0041 xpath returns an empty list after its search window [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0042",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/handlers-domain-parity.test.ts",
+      "title": "ZDTEST-0042 [headless0] addHandler keeps typed event handlers and dispatches them"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0043",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/handlers-domain-parity.test.ts",
+      "title": "ZDTEST-0043 [headless1] addHandler keeps typed event handlers and dispatches them"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0044",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/handlers-domain-parity.test.ts",
+      "title": "ZDTEST-0044 [headless0] ZendriverNetworkDomain registers exact pinned 29 inert slots"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0045",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/handlers-domain-parity.test.ts",
+      "title": "ZDTEST-0045 [headless1] ZendriverNetworkDomain registers exact pinned 29 inert slots"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0046",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/handlers-domain-parity.test.ts",
+      "title": "ZDTEST-0046 [headless0] removeHandlers clears every handler"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0047",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/handlers-domain-parity.test.ts",
+      "title": "ZDTEST-0047 [headless1] removeHandlers clears every handler"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0048",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/handlers-domain-parity.test.ts",
+      "title": "ZDTEST-0048 [headless0] removeHandlers(event) clears one event"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0049",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/handlers-domain-parity.test.ts",
+      "title": "ZDTEST-0049 [headless1] removeHandlers(event) clears one event"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0050",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/handlers-domain-parity.test.ts",
+      "title": "ZDTEST-0050 [headless0] removeHandlers(event, handler) removes only one"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0051",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/handlers-domain-parity.test.ts",
+      "title": "ZDTEST-0051 [headless1] removeHandlers(event, handler) removes only one"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0052",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/handlers-domain-parity.test.ts",
+      "title": "ZDTEST-0052 [headless0] removeHandlers(handler) reports the Zendriver error"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0053",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/handlers-domain-parity.test.ts",
+      "title": "ZDTEST-0053 [headless1] removeHandlers(handler) reports the Zendriver error"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0054",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tab-selector-evaluate-parity.test.ts",
+      "title": "ZDTEST-0054 waitForReadyState resolves true at the exact requested state [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0055",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tab-selector-evaluate-parity.test.ts",
+      "title": "ZDTEST-0055 waitForReadyState resolves true at the exact requested state [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0056",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/network-expectation-parity.test.ts",
+      "title": "ZDTEST-0056 expectRequest resolves the matching request [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0057",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/network-expectation-parity.test.ts",
+      "title": "ZDTEST-0057 expectRequest resolves the matching request [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0058",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/network-expectation-parity.test.ts",
+      "title": "ZDTEST-0058 expectResponse resolves the response and body tuple [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0059",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/network-expectation-parity.test.ts",
+      "title": "ZDTEST-0059 expectResponse resolves the response and body tuple [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0060",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/network-expectation-parity.test.ts",
+      "title": "ZDTEST-0060 expectResponse reset observes a subsequent reload [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0061",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/network-expectation-parity.test.ts",
+      "title": "ZDTEST-0061 expectResponse reset observes a subsequent reload [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0062",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/network-expectation-parity.test.ts",
+      "title": "ZDTEST-0062 expectDownload resolves the next DownloadWillBegin event [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0063",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/network-expectation-parity.test.ts",
+      "title": "ZDTEST-0063 expectDownload resolves the next DownloadWillBegin event [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0064",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/network-expectation-parity.test.ts",
+      "title": "ZDTEST-0064 response interception exposes body and continues [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0065",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/network-expectation-parity.test.ts",
+      "title": "ZDTEST-0065 response interception exposes body and continues [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0066",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/network-expectation-parity.test.ts",
+      "title": "ZDTEST-0066 response interception reset observes a subsequent fetch [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0067",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/network-expectation-parity.test.ts",
+      "title": "ZDTEST-0067 response interception reset observes a subsequent fetch [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0068",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/handlers-domain-parity.test.ts",
+      "title": "ZDTEST-0068 [headless0] custom manual Fetch enable is not replaced"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0069",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/handlers-domain-parity.test.ts",
+      "title": "ZDTEST-0069 [headless1] custom manual Fetch enable is not replaced"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0070",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/handlers-domain-parity.test.ts",
+      "title": "ZDTEST-0070 [headless0] explicit domain disable clears auto and manual views"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0071",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/handlers-domain-parity.test.ts",
+      "title": "ZDTEST-0071 [headless1] explicit domain disable clears auto and manual views"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0072",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/handlers-domain-parity.test.ts",
+      "title": "ZDTEST-0072 [headless0] handler automatically enables its domain"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0073",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/handlers-domain-parity.test.ts",
+      "title": "ZDTEST-0073 [headless1] handler automatically enables its domain"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0074",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tab-selector-evaluate-parity.test.ts",
+      "title": "ZDTEST-0074 evaluate deep-serializes complex DOM objects without an error [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0075",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tab-selector-evaluate-parity.test.ts",
+      "title": "ZDTEST-0075 evaluate deep-serializes complex DOM objects without an error [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0076",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tab-selector-evaluate-parity.test.ts",
+      "title": "ZDTEST-0076 evaluate rejects complex by-value serialization and supports deep serialization [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0077",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tab-selector-evaluate-parity.test.ts",
+      "title": "ZDTEST-0077 evaluate rejects complex by-value serialization and supports deep serialization [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0078",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tab-selector-evaluate-parity.test.ts",
+      "title": "ZDTEST-0078 evaluate returns exact JSON and deep-serialized representations [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0079",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tab-selector-evaluate-parity.test.ts",
+      "title": "ZDTEST-0079 evaluate returns exact JSON and deep-serialized representations [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0080",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tab-selector-evaluate-parity.test.ts",
+      "title": "ZDTEST-0080 evaluate preserves falsy by-value results [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0081",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tab-selector-evaluate-parity.test.ts",
+      "title": "ZDTEST-0081 evaluate preserves falsy by-value results [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0082",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tab-selector-evaluate-parity.test.ts",
+      "title": "ZDTEST-0082 evaluate handles repeated complex and scalar expressions [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0083",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tab-selector-evaluate-parity.test.ts",
+      "title": "ZDTEST-0083 evaluate handles repeated complex and scalar expressions [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0084",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tutorial-parity.test.ts",
+      "title": "ZDTEST-0084 account tutorial opens the controlled login page [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0085",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tutorial-parity.test.ts",
+      "title": "ZDTEST-0085 account tutorial opens the controlled login page [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0086",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tutorial-parity.test.ts",
+      "title": "ZDTEST-0086 account tutorial signs up and logs in [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0087",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tutorial-parity.test.ts",
+      "title": "ZDTEST-0087 account tutorial signs up and logs in [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0088",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tutorial-parity.test.ts",
+      "title": "ZDTEST-0088 API tutorial opens the request page [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0089",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tutorial-parity.test.ts",
+      "title": "ZDTEST-0089 API tutorial opens the request page [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0090",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tutorial-parity.test.ts",
+      "title": "ZDTEST-0090 API tutorial reads the matching response body [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0091",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tutorial-parity.test.ts",
+      "title": "ZDTEST-0091 API tutorial reads the matching response body [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0092",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tutorial-parity.test.ts",
+      "title": "ZDTEST-0092 CDP tutorial enables Runtime through typed commands [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0093",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tutorial-parity.test.ts",
+      "title": "ZDTEST-0093 CDP tutorial enables Runtime through typed commands [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0094",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tutorial-parity.test.ts",
+      "title": "ZDTEST-0094 CDP tutorial receives the button console event [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0095",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tutorial-parity.test.ts",
+      "title": "ZDTEST-0095 CDP tutorial receives the button console event [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0096",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tutorial-parity.test.ts",
+      "title": "ZDTEST-0096 scrolling tutorial starts with no cards [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0097",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tutorial-parity.test.ts",
+      "title": "ZDTEST-0097 scrolling tutorial starts with no cards [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0098",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tutorial-parity.test.ts",
+      "title": "ZDTEST-0098 scrolling tutorial reads the first ten cards [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0099",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tutorial-parity.test.ts",
+      "title": "ZDTEST-0099 scrolling tutorial reads the first ten cards [headless1]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "root:test:parity:headless",
+      "id": "ZDTEST-0100",
+      "parameterization": "headless0",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tutorial-parity.test.ts",
+      "title": "ZDTEST-0100 scrolling tutorial finds lucky card 27 after three batches [headless0]"
+    },
+    {
+      "applicability": "applicable",
+      "executionGate": "api:test:parity:headful",
+      "id": "ZDTEST-0101",
+      "parameterization": "headless1",
+      "quadrants": [
+        {
+          "backend": "js",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "js",
+          "connectionMode": "flattened"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "direct"
+        },
+        {
+          "backend": "native",
+          "connectionMode": "flattened"
+        }
+      ],
+      "source": "packages/api/test/tutorial-parity.test.ts",
+      "title": "ZDTEST-0101 scrolling tutorial finds lucky card 27 after three batches [headless1]"
+    }
+  ],
+  "evidenceKind": "executable-source-declarations",
+  "quadrants": [
+    {
+      "backend": "js",
+      "connectionMode": "direct"
+    },
+    {
+      "backend": "js",
+      "connectionMode": "flattened"
+    },
+    {
+      "backend": "native",
+      "connectionMode": "direct"
+    },
+    {
+      "backend": "native",
+      "connectionMode": "flattened"
+    }
+  ],
+  "schemaVersion": 1,
+  "status": "PASS",
+  "summary": {
+    "applicable": 99,
+    "cases": 101,
+    "declaredQuadrantExecutions": 396,
+    "notApplicable": 2
+  }
+}

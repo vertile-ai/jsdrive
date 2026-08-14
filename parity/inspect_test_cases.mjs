@@ -1,12 +1,15 @@
 import fs from "node:fs";
+import { createHash } from "node:crypto";
 import ts from "typescript";
 
-const sourcePath = process.argv[2];
+const helperMode = process.argv[2] === "--transport-helper";
+const sourcePath = helperMode ? process.argv[3] : process.argv[2];
 if (sourcePath === undefined) throw new Error("Expected a TypeScript test file path");
 
+const sourceText = fs.readFileSync(sourcePath, "utf8");
 const source = ts.createSourceFile(
   sourcePath,
-  fs.readFileSync(sourcePath, "utf8"),
+  sourceText,
   ts.ScriptTarget.Latest,
   true,
   ts.ScriptKind.TS,
@@ -15,6 +18,8 @@ const registrations = [];
 const unknown = Symbol("unknown");
 const nodeTestFunction = Symbol("node:test function");
 const skipReasonFunction = Symbol("browser case skip helper");
+const transportMatrixFunction = Symbol("transport matrix helper");
+const transportNotApplicableFunction = Symbol("transport not-applicable helper");
 const jsonBuiltin = Symbol("JSON builtin");
 const stringBuiltin = Symbol("String builtin");
 const undefinedBuiltin = Symbol("undefined builtin");
@@ -24,6 +29,133 @@ const evidencePattern = /(?:ZDTEST-\d{4}|ZDAPI-[A-Z0-9][A-Z0-9-]*)/;
 
 function phaseSkip(headless) {
   return { [phaseSkipMarker]: true, phase: headless ? "headless0" : "headless1" };
+}
+
+function directCall(statement) {
+  if (!ts.isExpressionStatement(statement)) return undefined;
+  let expression = unwrap(statement.expression);
+  const awaited = ts.isAwaitExpression(expression);
+  if (awaited) expression = unwrap(expression.expression);
+  return ts.isCallExpression(expression) ? { call: expression, awaited } : undefined;
+}
+
+function bindingNameTexts(name, result) {
+  if (ts.isIdentifier(name)) {
+    result.add(name.text);
+    return;
+  }
+  if (ts.isArrayBindingPattern(name) || ts.isObjectBindingPattern(name)) {
+    for (const element of name.elements) {
+      if (ts.isBindingElement(element)) bindingNameTexts(element.name, result);
+    }
+  }
+}
+
+function callbackShadowsTransportBinding(callback, scope) {
+  const protectedNames = new Set(
+    [...scope.entries()]
+      .filter(([, value]) => value === transportMatrixFunction || value === transportNotApplicableFunction)
+      .map(([name]) => name),
+  );
+  let shadowed = false;
+  function visit(node) {
+    if (shadowed) return;
+    const names = new Set();
+    if (ts.isParameter(node) || ts.isVariableDeclaration(node) || ts.isBindingElement(node)) {
+      bindingNameTexts(node.name, names);
+    } else if (
+      (ts.isFunctionDeclaration(node) || ts.isClassDeclaration(node))
+      && node.name !== undefined
+    ) names.add(node.name.text);
+    if ([...names].some((name) => protectedNames.has(name))) {
+      shadowed = true;
+      return;
+    }
+    ts.forEachChild(node, visit);
+  }
+  ts.forEachChild(callback, visit);
+  return shadowed;
+}
+
+function transportDeclaration(expression, scope, title) {
+  const caseId = title.match(/^ZDTEST-\d{4}/)?.[0];
+  if (caseId === undefined) return undefined;
+  const callback = [...expression.arguments].reverse().find((argument) => {
+    const candidate = unwrap(argument);
+    return ts.isArrowFunction(candidate) || ts.isFunctionExpression(candidate);
+  });
+  if (callback === undefined) return undefined;
+  const body = unwrap(callback).body;
+  if (!ts.isBlock(body)) return undefined;
+  if (callbackShadowsTransportBinding(callback, scope)) rejectUnsupported(callback);
+
+  const markers = [];
+  for (const statement of body.statements) {
+    const direct = directCall(statement);
+    if (direct === undefined || !ts.isIdentifier(direct.call.expression)) continue;
+    const { call, awaited } = direct;
+    const binding = evaluate(call.expression, scope);
+    if (binding !== transportMatrixFunction && binding !== transportNotApplicableFunction) continue;
+    if (evaluate(call.arguments[0], scope) !== caseId) rejectUnsupported(call);
+    if (binding === transportMatrixFunction) {
+      if (!awaited) rejectUnsupported(call);
+      if (call.arguments.length !== 3) rejectUnsupported(call);
+      const options = unwrap(call.arguments[1]);
+      if (!ts.isObjectLiteralExpression(options)) rejectUnsupported(call.arguments[1]);
+      const optionNames = options.properties.map((property) => {
+        if (ts.isPropertyAssignment(property) || ts.isShorthandPropertyAssignment(property)) {
+          return propertyName(property.name);
+        }
+        return undefined;
+      });
+      if (
+        optionNames.includes(undefined)
+        || optionNames.length !== 2
+        || !optionNames.includes("executable")
+        || !optionNames.includes("headless")
+      ) rejectUnsupported(options);
+      const action = unwrap(call.arguments[2]);
+      if (!ts.isArrowFunction(action) && !ts.isFunctionExpression(action)) {
+        rejectUnsupported(call.arguments[2]);
+      }
+      const normalizedCallback = ts.createPrinter({
+        newLine: ts.NewLineKind.LineFeed,
+        removeComments: true,
+      }).printNode(ts.EmitHint.Unspecified, callback, source);
+      markers.push({
+        applicability: "applicable",
+        callbackFingerprint: createHash("sha256")
+          .update(normalizedCallback)
+          .digest("hex"),
+      });
+      continue;
+    }
+    if (call.arguments.length !== 2) rejectUnsupported(call);
+    const caseArgument = unwrap(call.arguments[0]);
+    const reasonArgument = unwrap(call.arguments[1]);
+    const reason = evaluate(reasonArgument, scope);
+    if (
+      !ts.isStringLiteral(caseArgument)
+      || caseArgument.text !== caseId
+      || !ts.isObjectLiteralExpression(reasonArgument)
+      || reasonArgument.properties.some((property) => (
+        !ts.isPropertyAssignment(property)
+        || !ts.isStringLiteral(unwrap(property.initializer))
+      ))
+      ||
+      reason === null
+      || typeof reason !== "object"
+      || Array.isArray(reason)
+      || Object.keys(reason).sort().join(",") !== "code,detail"
+      || typeof reason.code !== "string"
+      || reason.code.length === 0
+      || typeof reason.detail !== "string"
+      || reason.detail.length === 0
+    ) rejectUnsupported(call.arguments[1]);
+    markers.push({ applicability: "not-applicable", reason });
+  }
+  if (markers.length > 1) rejectUnsupported(callback);
+  return markers[0];
 }
 
 function isPhaseSkip(value) {
@@ -450,6 +582,8 @@ function shadowRuntimeTestDeclarations(statements, scope) {
     if (
       scope.get(name) === nodeTestFunction
       || scope.get(name) === skipReasonFunction
+      || scope.get(name) === transportMatrixFunction
+      || scope.get(name) === transportNotApplicableFunction
       || scope.get(name) === jsonBuiltin
       || scope.get(name) === stringBuiltin
       || scope.get(name) === undefinedBuiltin
@@ -520,7 +654,13 @@ function visitStatement(
     const value = title === undefined ? unknown : evaluate(title, scope);
     if (typeof value === "string") {
       const options = eligibleTestOptions(expression, scope, value);
-      if (options.eligible) registrations.push({ title: value, phase: options.phase });
+      if (options.eligible) registrations.push({
+        title: value,
+        phase: options.phase,
+        ...(nodeTestId(value) === undefined
+          ? {}
+          : { transport: transportDeclaration(expression, scope, value) ?? null }),
+      });
     }
     else if (
       strictRegistrationScope
@@ -571,6 +711,14 @@ function runtimeImports() {
           moduleName === "./support/persistent-harness.js"
           && importedName === "browserCaseSkipReason"
         ) imports.set(element.name.text, skipReasonFunction);
+        if (moduleName === "./support/transport-matrix.js") {
+          if (importedName === "runTransportMatrix") {
+            imports.set(element.name.text, transportMatrixFunction);
+          }
+          if (importedName === "transportNotApplicable") {
+            imports.set(element.name.text, transportNotApplicableFunction);
+          }
+        }
       }
     }
     if (
@@ -581,9 +729,135 @@ function runtimeImports() {
   return imports;
 }
 
-visitStatements(source.statements, runtimeImports());
-registrations.sort((left, right) => left.title.localeCompare(right.title));
-const output = process.argv[3] === "--details"
-  ? registrations
-  : registrations.map((registration) => registration.title);
-process.stdout.write(`${JSON.stringify(output)}\n`);
+function nodeTestId(title) {
+  return title.match(/^ZDTEST-\d{4}(?:\s|$)/)?.[0]?.trim();
+}
+
+function transportHelperSpec() {
+  const importSources = new Map();
+  for (const statement of source.statements) {
+    if (
+      !ts.isImportDeclaration(statement)
+      || !ts.isStringLiteral(statement.moduleSpecifier)
+      || statement.importClause?.namedBindings === undefined
+      || !ts.isNamedImports(statement.importClause.namedBindings)
+    ) continue;
+    for (const element of statement.importClause.namedBindings.elements) {
+      importSources.set(element.name.text, {
+        imported: element.propertyName?.text ?? element.name.text,
+        source: statement.moduleSpecifier.text,
+      });
+    }
+  }
+
+  let quadrantArray;
+  let matrixFunction;
+  for (const statement of source.statements) {
+    if (ts.isVariableStatement(statement)) {
+      for (const declaration of statement.declarationList.declarations) {
+        if (
+          ts.isIdentifier(declaration.name)
+          && declaration.name.text === "TRANSPORT_QUADRANTS"
+          && declaration.initializer !== undefined
+        ) {
+          const initializer = unwrap(declaration.initializer);
+          if (ts.isArrayLiteralExpression(initializer)) quadrantArray = initializer;
+        }
+      }
+    }
+    if (
+      ts.isFunctionDeclaration(statement)
+      && statement.name?.text === "runTransportMatrix"
+    ) matrixFunction = statement;
+  }
+  if (quadrantArray === undefined) throw new Error(`${sourcePath} must declare TRANSPORT_QUADRANTS as an array literal`);
+  if (matrixFunction?.body === undefined) throw new Error(`${sourcePath} must declare runTransportMatrix`);
+
+  const quadrants = quadrantArray.elements.map((element) => {
+    const value = unwrap(element);
+    if (!ts.isObjectLiteralExpression(value)) throw new Error("Transport quadrants must be object literals");
+    const properties = new Map();
+    for (const property of value.properties) {
+      if (!ts.isPropertyAssignment(property)) throw new Error("Transport quadrant fields must be explicit assignments");
+      const name = propertyName(property.name);
+      if (name === undefined || properties.has(name)) throw new Error("Transport quadrant fields must be unique named properties");
+      properties.set(name, unwrap(property.initializer));
+    }
+    if ([...properties.keys()].sort().join(",") !== "backend,backendFactory,connectionMode") {
+      throw new Error("Transport quadrants must explicitly declare backend, backendFactory, and connectionMode");
+    }
+    const backend = properties.get("backend");
+    const connectionMode = properties.get("connectionMode");
+    const backendFactory = properties.get("backendFactory");
+    if (!ts.isStringLiteral(backend) || !ts.isStringLiteral(connectionMode) || !ts.isIdentifier(backendFactory)) {
+      throw new Error("Transport quadrant fields must be static and explicit");
+    }
+    const factoryImport = importSources.get(backendFactory.text);
+    if (factoryImport === undefined) throw new Error("Transport backend factories must be imported");
+    return {
+      backend: backend.text,
+      connectionMode: connectionMode.text,
+      backendFactory: `${factoryImport.source}#${factoryImport.imported}`,
+    };
+  });
+
+  const browserImport = [...importSources.entries()].find(([, value]) => (
+    value.source === "../../src/index.js" && value.imported === "Browser"
+  ))?.[0];
+  if (browserImport === undefined) throw new Error("Transport matrix helper must import Browser");
+  const startCalls = [];
+  function collectStartCalls(node) {
+    if (
+      ts.isCallExpression(node)
+      && ts.isPropertyAccessExpression(node.expression)
+      && ts.isIdentifier(node.expression.expression)
+      && node.expression.expression.text === browserImport
+      && node.expression.name.text === "start"
+    ) startCalls.push(node);
+    ts.forEachChild(node, collectStartCalls);
+  }
+  collectStartCalls(matrixFunction.body);
+  if (startCalls.length !== 1) throw new Error("Transport matrix helper must call Browser.start exactly once");
+  const startOptions = startCalls[0].arguments[0] === undefined ? undefined : unwrap(startCalls[0].arguments[0]);
+  if (!ts.isObjectLiteralExpression(startOptions)) throw new Error("Transport matrix Browser.start options must be explicit");
+  const startProperties = new Map();
+  for (const property of startOptions.properties) {
+    if (ts.isPropertyAssignment(property)) {
+      const name = propertyName(property.name);
+      if (name !== undefined) startProperties.set(name, unwrap(property.initializer));
+    } else if (ts.isShorthandPropertyAssignment(property)) {
+      startProperties.set(property.name.text, property.name);
+    }
+  }
+  const explicitFromQuadrant = (name, field) => {
+    const value = startProperties.get(name);
+    return ts.isPropertyAccessExpression(value)
+      && ts.isIdentifier(value.expression)
+      && value.expression.text === "quadrant"
+      && value.name.text === field;
+  };
+  return {
+    quadrants,
+    moduleFingerprint: createHash("sha256")
+      .update(sourceText)
+      .digest("hex"),
+    bodyFingerprint: createHash("sha256")
+      .update(matrixFunction.body.getText(source))
+      .digest("hex"),
+    explicitBrowserStart: {
+      backend: explicitFromQuadrant("backend", "backendFactory"),
+      connectionMode: explicitFromQuadrant("connectionMode", "connectionMode"),
+    },
+  };
+}
+
+if (helperMode) {
+  process.stdout.write(`${JSON.stringify(transportHelperSpec())}\n`);
+} else {
+  visitStatements(source.statements, runtimeImports());
+  registrations.sort((left, right) => left.title.localeCompare(right.title));
+  const output = process.argv[3] === "--details"
+    ? registrations
+    : registrations.map((registration) => registration.title);
+  process.stdout.write(`${JSON.stringify(output)}\n`);
+}

@@ -1,9 +1,10 @@
 import assert from "node:assert/strict";
 import { createServer, type Server } from "node:http";
 import test from "node:test";
-import type { RuntimeBackendFactory } from "@vertile-ai/jsdriver-runtime-js";
+import { CdpConnection, type RuntimeBackendFactory } from "@vertile-ai/jsdriver-runtime-js";
 import { Browser, Config, discoverChromeExecutable } from "../src/index.js";
 import { browserCaseSkipReason } from "./support/persistent-harness.js";
+import { runTransportMatrix, transportNotApplicable } from "./support/transport-matrix.js";
 
 let executable = "";
 let server: Server;
@@ -29,11 +30,15 @@ test("ZDTEST-0003 startup connection failure includes Chrome stderr", {
   timeout: 30_000,
   skip: browserCaseSkipReason(true),
 }, async () => {
+  transportNotApplicable("ZDTEST-0003", {
+    code: "controlled-backend-failure",
+    detail: "The assertion injects one intentionally failing backend, so substituting transport quadrants would change the behavior under test.",
+  });
   const controlledFailure: RuntimeBackendFactory = {
     connect: async () => { throw new Error("controlled connection failure"); },
   };
   await assert.rejects(
-    Browser.start({ executable, headless: true, backend: controlledFailure, connectionTimeoutMs: 5_000 }),
+    Browser.start({ executable, headless: true, backend: controlledFailure, connectionMode: "direct", connectionTimeoutMs: 5_000 }),
     (error: unknown) => error instanceof Error
       && /Failed to start Chrome.*controlled connection failure/s.test(error.message)
       && /Browser stderr:\s+\S/s.test(error.message)
@@ -47,14 +52,14 @@ for (const [parameter, headless, ids] of [
 ] as const) {
   const skip = browserCaseSkipReason(headless);
   test(`${ids[0]} content begins with a doctype [${parameter}]`, { timeout: 30_000, skip }, async () => {
-    await usingBrowser(headless, async (browser) => {
+    await runTransportMatrix(ids[0], { executable, headless }, async (browser) => {
       const content = await (await browser.get(fixtureUrl)).getContent();
       assert.equal(content.toLowerCase().startsWith("<!doctype html>"), true);
     });
   });
 
   test(`${ids[1]} refreshing target metadata exposes the document title [${parameter}]`, { timeout: 30_000, skip }, async () => {
-    await usingBrowser(headless, async (browser) => {
+    await runTransportMatrix(ids[1], { executable, headless }, async (browser) => {
       const tab = await browser.get(fixtureUrl);
       assert.equal((await tab.updateTarget()).title, "Example Domain");
       assert.equal(tab.title, "Example Domain");
@@ -62,41 +67,45 @@ for (const [parameter, headless, ids] of [
   });
 
   test(`${ids[2]} stop succeeds after the browser connection is closed [${parameter}]`, { timeout: 30_000, skip }, async () => {
-    const browser = await Browser.start({ executable, headless });
-    await browser.get(fixtureUrl);
-    assert.equal(browser.connection.closed, false);
-    browser.connection.close();
-    assert.equal(browser.connection.closed, true);
-    await browser.stop();
-    assert.equal(browser.stopped, true);
+    await runTransportMatrix(ids[2], { executable, headless }, async (browser) => {
+      await browser.get(fixtureUrl);
+      assert.equal(browser.connection.closed, false);
+      browser.connection.close();
+      assert.equal(browser.connection.closed, true);
+      await browser.stop();
+      assert.equal(browser.stopped, true);
+    });
   });
 
   test(`${ids[3]} stop is idempotent [${parameter}]`, { timeout: 30_000, skip }, async () => {
-    const browser = await Browser.start({ executable, headless });
-    await browser.get(fixtureUrl);
-    await browser.stop();
-    assert.equal(browser.stopped, true);
-    await browser.stop();
-    assert.equal(browser.stopped, true);
+    await runTransportMatrix(ids[3], { executable, headless }, async (browser) => {
+      await browser.get(fixtureUrl);
+      await browser.stop();
+      assert.equal(browser.stopped, true);
+      await browser.stop();
+      assert.equal(browser.stopped, true);
+    });
   });
 
   test(`${ids[4]} stopped becomes true after stop [${parameter}]`, { timeout: 30_000, skip }, async () => {
-    const browser = await Browser.start({ executable, headless });
-    await browser.get(fixtureUrl);
-    assert.equal(browser.stopped, false);
-    await browser.stop();
-    assert.equal(browser.stopped, true);
+    await runTransportMatrix(ids[4], { executable, headless }, async (browser) => {
+      await browser.get(fixtureUrl);
+      assert.equal(browser.stopped, false);
+      await browser.stop();
+      assert.equal(browser.stopped, true);
+    });
   });
 
   test(`${ids[5]} stopped tracks an external Browser.close [${parameter}]`, { timeout: 30_000, skip }, async () => {
-    const browser = await Browser.start({ executable, headless });
-    await browser.get(fixtureUrl);
-    assert.equal(browser.stopped, false);
-    await browser.connection.send("Browser.close");
-    await waitUntil(() => browser.stopped, 10_000);
-    assert.equal(browser.stopped, true);
-    assert.equal(browser.connection.closed, true);
-    await browser.stop();
+    await runTransportMatrix(ids[5], { executable, headless }, async (browser) => {
+      await browser.get(fixtureUrl);
+      assert.equal(browser.stopped, false);
+      await browser.connection.send("Browser.close");
+      await waitUntil(() => browser.stopped, 10_000);
+      assert.equal(browser.stopped, true);
+      assert.equal(browser.connection.closed, true);
+      await browser.stop();
+    });
   });
 }
 
@@ -104,7 +113,11 @@ test("ZDTEST-0020 one Config launches three isolated browsers", {
   timeout: 60_000,
   skip: browserCaseSkipReason(true),
 }, async () => {
-  const shared = new Config({ executable, headless: true });
+  transportNotApplicable("ZDTEST-0020", {
+    code: "managed-process-isolation",
+    detail: "The assertion covers serial Chrome process, port, and profile isolation; transport routing is not part of its observable result.",
+  });
+  const shared = new Config({ executable, headless: true, backend: CdpConnection, connectionMode: "direct" });
   const ports = new Set<number>();
   const profiles = new Set<string>();
   const titles: string[] = [];
@@ -127,15 +140,6 @@ test("ZDTEST-0020 one Config launches three isolated browsers", {
   assert.equal(profiles.size, 3);
   assert.deepEqual(titles, ["Example Domain", "Example Domain", "Example Domain"]);
 });
-
-async function usingBrowser(headless: boolean, action: (browser: Browser) => Promise<void>): Promise<void> {
-  const browser = await Browser.start({ executable, headless });
-  try {
-    await action(browser);
-  } finally {
-    await browser.stop();
-  }
-}
 
 async function waitUntil(predicate: () => boolean, timeoutMs: number): Promise<void> {
   const deadline = Date.now() + timeoutMs;

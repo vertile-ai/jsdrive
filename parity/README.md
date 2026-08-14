@@ -16,6 +16,12 @@ Validate the checked-in/generated artifacts without regenerating them:
 python3 parity/generate.py --validate-only
 ```
 
+Refresh reports derived only from the checked-in inventories and Node test declarations:
+
+```sh
+python3 parity/generate.py --refresh-derived
+```
+
 Generated artifacts:
 
 - `baseline.json`: fixed tag, commit, installed version, and stable pytest node IDs with an elapsed-time-free summary.
@@ -24,6 +30,7 @@ Generated artifacts:
 - `validation.json`: fixed upstream fingerprints, schema/count checks, mutation probes, and blocking gap counts.
 - `gap-report.md`: human-readable first gap report.
 - `reference-observations.json`: exact coordinator-run reference evidence, kept separate from pytest collection evidence and fingerprinted against accidental edits.
+- `transport-matrix-report.json`: per-`ZDTEST` executable transport applicability, required quadrants, execution gate, or approved non-applicability reason.
 
 Mapping status definitions:
 

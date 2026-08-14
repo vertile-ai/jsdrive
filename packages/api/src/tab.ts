@@ -36,6 +36,7 @@ import {
   type InterceptionOptions,
   type UrlMatcher,
 } from "./network.js";
+import type { Browser } from "./browser.js";
 
 export interface WaitOptions {
   readonly timeoutMs?: number;
@@ -152,6 +153,7 @@ export class Tab {
     _childFrames: () => readonly Tab[] = () => [],
     private readonly readTargetInfo: () => Protocol.Target.TargetInfo | undefined = () => undefined,
     private readonly writeTargetInfo: (targetInfo: Protocol.Target.TargetInfo) => void = () => {},
+    public readonly browser?: Browser,
   ) {}
 
   public get enabledDomains(): ReadonlySet<string> {
@@ -175,16 +177,47 @@ export class Tab {
   }
 
   public get targetInfo(): Protocol.Target.TargetInfo | undefined { return this.readTargetInfo(); }
+  public get target(): Protocol.Target.TargetInfo | undefined { return this.targetInfo; }
   public get title(): string { return this.targetInfo?.title ?? ""; }
   public get url(): string { return this.targetInfo?.url ?? ""; }
   public get type(): string { return this.targetInfo?.type ?? ""; }
   public get subtype(): string | undefined { return this.targetInfo?.subtype; }
   public get attached(): boolean { return this.targetInfo?.attached ?? false; }
+  public get canAccessOpener(): boolean { return this.targetInfo?.canAccessOpener ?? false; }
+  public get can_access_opener(): boolean { return this.canAccessOpener; }
   public get browserContextId(): Protocol.Browser.BrowserContextID | undefined { return this.targetInfo?.browserContextId; }
   public get openerId(): Protocol.Target.TargetID | undefined { return this.targetInfo?.openerId; }
   public get openerFrameId(): Protocol.Page.FrameId | undefined { return this.targetInfo?.openerFrameId; }
   public get parentId(): Protocol.Target.TargetID | undefined { return this.targetInfo?.parentId; }
   public get parentFrameId(): Protocol.Page.FrameId | undefined { return this.targetInfo?.parentFrameId; }
+  public get websocket(): RuntimeBackend { return this.connection; }
+
+  public aenter(): this { return this; }
+  public aopen(): Promise<void> {
+    this.#assertAvailable();
+    return Promise.resolve();
+  }
+  public aexit(): Promise<void> { return this.close(); }
+  public aclose(): Promise<void> { return this.close(); }
+  public [Symbol.asyncDispose](): Promise<void> { return this.close(); }
+
+  public sleep(seconds = 0.25): Promise<void> {
+    return delay(seconds * 1_000);
+  }
+
+  public wait(seconds: number | null = null): Promise<void> {
+    return this.sleep(seconds ?? 0.25);
+  }
+
+  public feedCdp(command: string | { readonly method: string; readonly params?: unknown }, params?: unknown): void {
+    const method = typeof command === "string" ? command : command.method;
+    const payload = typeof command === "string" ? params : command.params;
+    void this.sendRaw(method, payload);
+  }
+
+  public feed_cdp(command: string | { readonly method: string; readonly params?: unknown }, params?: unknown): void {
+    this.feedCdp(command, params);
+  }
 
   public async updateTarget(): Promise<Protocol.Target.TargetInfo> {
     const { targetInfo } = await this.browserConnection.send("Target.getTargetInfo", { targetId: this.targetId });
@@ -682,6 +715,7 @@ export class Tab {
 
   public maximize(): Promise<void> { return this.setWindowState("maximized"); }
   public minimize(): Promise<void> { return this.setWindowState("minimized"); }
+  public medimize(): Promise<void> { return this.minimize(); }
   public fullscreen(): Promise<void> { return this.setWindowState("fullscreen"); }
 
   public async mouseMove(x: number, y: number, modifiers = 0): Promise<void> {

@@ -13,6 +13,7 @@ import {
   discoverChromeExecutable,
   findBinary,
   findExecutable,
+  getRegisteredInstances,
   isRoot,
   tempProfileDir,
   type ConnectionMode,
@@ -67,6 +68,11 @@ test("ZDAPI-BROWSER-001", { timeout: 90_000 }, async () => {
   const executable = await discoverChromeExecutable();
   await withPersistentBrowser({ executable, headless: true, connectionTimeoutMs: 30_000 }, async (rootBrowser) => {
     assert.ok(rootBrowser.mainTab);
+    assert.equal(rootBrowser.aenter(), rootBrowser);
+    assert.equal(rootBrowser.websocket_url, rootBrowser.webSocketUrl);
+    assert.equal(getRegisteredInstances().has(rootBrowser), true);
+    await rootBrowser.aexit();
+    assert.equal(rootBrowser.stopped, true);
   });
   for (const [backendName, backend] of [["js", undefined], ["native", NativeConnection]] as const satisfies readonly [string, RuntimeBackendFactory | undefined][]) {
     for (const connectionMode of ["direct", "flattened"] satisfies readonly ConnectionMode[]) {
@@ -76,6 +82,14 @@ test("ZDAPI-BROWSER-001", { timeout: 90_000 }, async () => {
         assert.equal(await browser.wait(0.001), browser);
         assert.equal(await browser.sleep(0.001), browser);
         const tab = await browser.get("data:text/html,<title>api</title><main>api</main>");
+        assert.equal(tab.aenter(), tab);
+        await tab.aopen();
+        assert.equal(tab.browser, browser);
+        assert.equal(tab.target, tab.targetInfo);
+        assert.equal(tab.can_access_opener, tab.canAccessOpener);
+        assert.equal(tab.websocket, tab.connection);
+        assert.equal(tab.feed_cdp({ method: "Page.getFrameTree" }), undefined);
+        await tab.wait(0);
         assert.equal(browser.mainTab, tab);
         assert.equal(browser.tabs.includes(tab), true);
         assert.equal((await browser.updateTargets()).some(({ targetId }) => targetId === tab.targetId), true);

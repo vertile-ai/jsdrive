@@ -57,6 +57,8 @@ export interface ConnectOptions extends BrowserEndpoint {
   readonly backend?: RuntimeBackendFactory;
 }
 
+const registeredInstances = new Set<Browser>();
+
 export class Browser {
   readonly #process: ChildProcess | undefined;
   readonly #sessions = new Map<string, string>();
@@ -140,12 +142,28 @@ export class Browser {
     return this.version.webSocketDebuggerUrl;
   }
 
+  public get websocket_url(): string {
+    return this.webSocketUrl;
+  }
+
   public get stopped(): boolean {
     return this.#stopped || (this.#process !== undefined && (this.#process.exitCode !== null || this.#process.signalCode !== null));
   }
 
   public [Symbol.iterator](): Iterator<Tab> {
     return this.tabs[Symbol.iterator]();
+  }
+
+  public aenter(): this {
+    return this;
+  }
+
+  public aexit(): Promise<void> {
+    return this.close();
+  }
+
+  public [Symbol.asyncDispose](): Promise<void> {
+    return this.close();
   }
 
   public static async start(options: LaunchOptions | Config = {}): Promise<Browser> {
@@ -369,6 +387,7 @@ export class Browser {
   #markStopped(): void {
     if (this.#stopped) return;
     this.#stopped = true;
+    registeredInstances.delete(this);
     for (const tab of this.#tabs.values()) tab.markClosed();
     this.#tabs.clear();
   }
@@ -414,6 +433,7 @@ export class Browser {
       if (targetInfo.type !== "page" && targetInfo.type !== "iframe") continue;
       await browser.#ensureTab(targetInfo.targetId);
     }
+    registeredInstances.add(browser);
     return browser;
   }
 
@@ -454,6 +474,7 @@ export class Browser {
         () => this.#frameTabs(targetId),
         () => this.#targets.get(targetId),
         (targetInfo) => this.#targets.set(targetId, targetInfo),
+        this,
       );
     } else {
       const websocket = await this.#waitForTargetWebSocket(targetId);
@@ -471,6 +492,7 @@ export class Browser {
         () => this.#frameTabs(targetId),
         () => this.#targets.get(targetId),
         (targetInfo) => this.#targets.set(targetId, targetInfo),
+        this,
       );
     }
     if (this.#process !== undefined && this.config.headless) await this.#prepareHeadless(tab);
@@ -513,6 +535,12 @@ export class Browser {
 
 export const start = Browser.start;
 export const connect = Browser.connect;
+
+export function getRegisteredInstances(): ReadonlySet<Browser> {
+  return new Set(registeredInstances);
+}
+
+export const get_registered_instances = getRegisteredInstances;
 
 const ALL_PERMISSIONS: readonly Protocol.Browser.PermissionType[] = [
   "ar", "audioCapture", "automaticFullscreen", "backgroundFetch", "backgroundSync", "cameraPanTiltZoom",

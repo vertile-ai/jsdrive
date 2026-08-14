@@ -2,15 +2,15 @@
   "mappingCounts": {
     "coreMembers": {
       "CANDIDATE": 146,
-      "MISSING": 112,
+      "MISSING": 97,
       "UNKNOWN": 167,
-      "VERIFIED": 47
+      "VERIFIED": 62
     },
     "coreSymbols": {
       "CANDIDATE": 12,
-      "MISSING": 15,
+      "MISSING": 14,
       "UNKNOWN": 3,
-      "VERIFIED": 15
+      "VERIFIED": 16
     },
     "rootExports": {
       "CANDIDATE": 6,
@@ -19,9 +19,9 @@
     },
     "total": {
       "CANDIDATE": 164,
-      "MISSING": 133,
+      "MISSING": 117,
       "UNKNOWN": 170,
-      "VERIFIED": 66
+      "VERIFIED": 82
     }
   },
   "nodriver": {
@@ -114,6 +114,14 @@
         "prototypeMembers": [
           {
             "kind": "method",
+            "name": "aenter"
+          },
+          {
+            "kind": "method",
+            "name": "aexit"
+          },
+          {
+            "kind": "method",
             "name": "close"
           },
           {
@@ -203,6 +211,10 @@
           {
             "kind": "property",
             "name": "webSocketUrl"
+          },
+          {
+            "kind": "property",
+            "name": "websocket_url"
           }
         ]
       },
@@ -1038,6 +1050,10 @@
         "prototypeMembers": [
           {
             "kind": "method",
+            "name": "aclose"
+          },
+          {
+            "kind": "method",
             "name": "acquireDomain"
           },
           {
@@ -1047,6 +1063,18 @@
           {
             "kind": "method",
             "name": "addHandler"
+          },
+          {
+            "kind": "method",
+            "name": "aenter"
+          },
+          {
+            "kind": "method",
+            "name": "aexit"
+          },
+          {
+            "kind": "method",
+            "name": "aopen"
           },
           {
             "kind": "property",
@@ -1063,6 +1091,14 @@
           {
             "kind": "property",
             "name": "browserContextId"
+          },
+          {
+            "kind": "property",
+            "name": "canAccessOpener"
+          },
+          {
+            "kind": "property",
+            "name": "can_access_opener"
           },
           {
             "kind": "method",
@@ -1107,6 +1143,14 @@
           {
             "kind": "method",
             "name": "expectResponse"
+          },
+          {
+            "kind": "method",
+            "name": "feedCdp"
+          },
+          {
+            "kind": "method",
+            "name": "feed_cdp"
           },
           {
             "kind": "method",
@@ -1195,6 +1239,10 @@
           {
             "kind": "method",
             "name": "maximize"
+          },
+          {
+            "kind": "method",
+            "name": "medimize"
           },
           {
             "kind": "method",
@@ -1317,8 +1365,16 @@
             "name": "setWindowState"
           },
           {
+            "kind": "method",
+            "name": "sleep"
+          },
+          {
             "kind": "property",
             "name": "subtype"
+          },
+          {
+            "kind": "property",
+            "name": "target"
           },
           {
             "kind": "property",
@@ -1346,6 +1402,10 @@
           },
           {
             "kind": "method",
+            "name": "wait"
+          },
+          {
+            "kind": "method",
             "name": "waitFor"
           },
           {
@@ -1355,6 +1415,10 @@
           {
             "kind": "method",
             "name": "waitForReadyState"
+          },
+          {
+            "kind": "property",
+            "name": "websocket"
           },
           {
             "kind": "method",
@@ -1485,6 +1549,20 @@
         "functionLength": 0,
         "kind": "function-or-class",
         "name": "find_executable",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "getRegisteredInstances",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "get_registered_instances",
         "package": "jsdriver",
         "prototypeMembers": []
       },
@@ -2279,6 +2357,15 @@
           },
           {
             "access": "get",
+            "declaration": "get websocket_url(): string;",
+            "kind": "property",
+            "name": "websocket_url",
+            "parameters": [],
+            "returnType": "string",
+            "typeParameters": []
+          },
+          {
+            "access": "get",
             "declaration": "get stopped(): boolean;",
             "kind": "property",
             "name": "stopped",
@@ -2292,6 +2379,33 @@
             "name": "[Symbol.iterator]",
             "parameters": [],
             "returnType": "Iterator<Tab>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "aenter(): this;",
+            "kind": "method",
+            "name": "aenter",
+            "parameters": [],
+            "returnType": "this",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "aexit(): Promise<void>;",
+            "kind": "method",
+            "name": "aexit",
+            "parameters": [],
+            "returnType": "Promise<void>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "[Symbol.asyncDispose](): Promise<void>;",
+            "kind": "method",
+            "name": "[Symbol.asyncDispose]",
+            "parameters": [],
+            "returnType": "Promise<void>",
             "static": false,
             "typeParameters": []
           },
@@ -6849,7 +6963,17 @@
             "type": "string | undefined"
           },
           {
-            "declaration": "constructor(targetId: string, connection: RuntimeBackend, sessionId?: string | undefined, browserConnection?: RuntimeBackend, webSocketUrl?: string | undefined, closeTarget?: (() => Promise<void>) | undefined, _childFrames?: () => readonly Tab[], readTargetInfo?: () => Protocol.Target.TargetInfo | undefined, writeTargetInfo?: (targetInfo: Protocol.Target.TargetInfo) => void);",
+            "declaration": "readonly browser?: Browser | undefined;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "browser",
+            "optional": true,
+            "readonly": true,
+            "type": "Browser | undefined"
+          },
+          {
+            "declaration": "constructor(targetId: string, connection: RuntimeBackend, sessionId?: string | undefined, browserConnection?: RuntimeBackend, webSocketUrl?: string | undefined, closeTarget?: (() => Promise<void>) | undefined, _childFrames?: () => readonly Tab[], readTargetInfo?: () => Protocol.Target.TargetInfo | undefined, writeTargetInfo?: (targetInfo: Protocol.Target.TargetInfo) => void, browser?: Browser | undefined);",
             "kind": "constructor",
             "name": "constructor",
             "parameters": [
@@ -6924,6 +7048,14 @@
                 "optional": true,
                 "rest": false,
                 "type": "(targetInfo: Protocol.Target.TargetInfo) => void"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "browser",
+                "optional": true,
+                "rest": false,
+                "type": "Browser | undefined"
               }
             ],
             "returnType": null,
@@ -6985,6 +7117,15 @@
           },
           {
             "access": "get",
+            "declaration": "get target(): Protocol.Target.TargetInfo | undefined;",
+            "kind": "property",
+            "name": "target",
+            "parameters": [],
+            "returnType": "Protocol.Target.TargetInfo | undefined",
+            "typeParameters": []
+          },
+          {
+            "access": "get",
             "declaration": "get title(): string;",
             "kind": "property",
             "name": "title",
@@ -7024,6 +7165,24 @@
             "declaration": "get attached(): boolean;",
             "kind": "property",
             "name": "attached",
+            "parameters": [],
+            "returnType": "boolean",
+            "typeParameters": []
+          },
+          {
+            "access": "get",
+            "declaration": "get canAccessOpener(): boolean;",
+            "kind": "property",
+            "name": "canAccessOpener",
+            "parameters": [],
+            "returnType": "boolean",
+            "typeParameters": []
+          },
+          {
+            "access": "get",
+            "declaration": "get can_access_opener(): boolean;",
+            "kind": "property",
+            "name": "can_access_opener",
             "parameters": [],
             "returnType": "boolean",
             "typeParameters": []
@@ -7071,6 +7230,148 @@
             "name": "parentFrameId",
             "parameters": [],
             "returnType": "Protocol.Page.FrameId | undefined",
+            "typeParameters": []
+          },
+          {
+            "access": "get",
+            "declaration": "get websocket(): RuntimeBackend;",
+            "kind": "property",
+            "name": "websocket",
+            "parameters": [],
+            "returnType": "RuntimeBackend",
+            "typeParameters": []
+          },
+          {
+            "declaration": "aenter(): this;",
+            "kind": "method",
+            "name": "aenter",
+            "parameters": [],
+            "returnType": "this",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "aopen(): Promise<void>;",
+            "kind": "method",
+            "name": "aopen",
+            "parameters": [],
+            "returnType": "Promise<void>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "aexit(): Promise<void>;",
+            "kind": "method",
+            "name": "aexit",
+            "parameters": [],
+            "returnType": "Promise<void>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "aclose(): Promise<void>;",
+            "kind": "method",
+            "name": "aclose",
+            "parameters": [],
+            "returnType": "Promise<void>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "[Symbol.asyncDispose](): Promise<void>;",
+            "kind": "method",
+            "name": "[Symbol.asyncDispose]",
+            "parameters": [],
+            "returnType": "Promise<void>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "sleep(seconds?: number): Promise<void>;",
+            "kind": "method",
+            "name": "sleep",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "seconds",
+                "optional": true,
+                "rest": false,
+                "type": "number"
+              }
+            ],
+            "returnType": "Promise<void>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "wait(seconds?: number | null): Promise<void>;",
+            "kind": "method",
+            "name": "wait",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "seconds",
+                "optional": true,
+                "rest": false,
+                "type": "number | null"
+              }
+            ],
+            "returnType": "Promise<void>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "feedCdp(command: string | { readonly method: string; readonly params?: unknown; }, params?: unknown): void;",
+            "kind": "method",
+            "name": "feedCdp",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "command",
+                "optional": false,
+                "rest": false,
+                "type": "string | { readonly method: string; readonly params?: unknown; }"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "params",
+                "optional": true,
+                "rest": false,
+                "type": "unknown"
+              }
+            ],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "feed_cdp(command: string | { readonly method: string; readonly params?: unknown; }, params?: unknown): void;",
+            "kind": "method",
+            "name": "feed_cdp",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "command",
+                "optional": false,
+                "rest": false,
+                "type": "string | { readonly method: string; readonly params?: unknown; }"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "params",
+                "optional": true,
+                "rest": false,
+                "type": "unknown"
+              }
+            ],
+            "returnType": "void",
+            "static": false,
             "typeParameters": []
           },
           {
@@ -8495,6 +8796,15 @@
             "typeParameters": []
           },
           {
+            "declaration": "medimize(): Promise<void>;",
+            "kind": "method",
+            "name": "medimize",
+            "parameters": [],
+            "returnType": "Promise<void>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
             "declaration": "fullscreen(): Promise<void>;",
             "kind": "method",
             "name": "fullscreen",
@@ -9588,7 +9898,7 @@
       },
       "Browser": {
         "declarations": [
-          "export declare class Browser { #private; readonly connection: RuntimeBackend; readonly endpoint: BrowserEndpoint; readonly version: BrowserVersion; readonly protocol: unknown; readonly connectionMode: ConnectionMode; readonly config: Config; readonly process: BrowserProcessMetadata | undefined; readonly cookies: CookieJar; readonly http: HTTPApi; private constructor(); get targets(): readonly Protocol.Target.TargetInfo[]; get tabs(): readonly Tab[]; get mainTab(): Tab | undefined; get enabledDomains(): ReadonlySet<string>; get manuallyEnabledDomains(): ReadonlySet<string>; get webSocketUrl(): string; get stopped(): boolean; [Symbol.iterator](): Iterator<Tab>; static start(options?: LaunchOptions | Config): Promise<Browser>; /** Zendriver-compatible async factory spelling. */ static create(options?: LaunchOptions | Config): Promise<Browser>; static connect(options: ConnectOptions): Promise<Browser>; get(url?: string, newTab?: boolean, newWindow?: boolean): Promise<Tab>; get(url?: string, options?: { readonly newTab?: boolean; readonly newWindow?: boolean; }): Promise<Tab>; newTab(url?: string): Promise<Tab>; newWindow(url?: string): Promise<Tab>; createTab(url?: string, targetOptions?: Omit<Protocol.Target.Commands.CreateTargetParams, \"url\">): Promise<Tab>; targetInfo(target: string | Tab): Protocol.Target.TargetInfo | undefined; updateTargets(): Promise<readonly Protocol.Target.TargetInfo[]>; testConnection(): Promise<boolean>; getVersion(): Promise<Protocol.Browser.Commands.GetVersionResult>; grantPermissions(permissions: readonly Protocol.Browser.PermissionType[], origin?: string): Promise<void>; grantAllPermissions(origin?: string): Promise<void>; wait(time?: number, signal?: AbortSignal): Promise<this>; sleep(time?: number, signal?: AbortSignal): Promise<this>; tileWindows(windows?: readonly Tab[], options?: { readonly maxColumns?: number; readonly left?: number; readonly top?: number; readonly width?: number; readonly height?: number; }): Promise<readonly Protocol.Browser.Bounds[]>; closeTab(tab: Tab): Promise<void>; close(): Promise<void>; stop(): Promise<void>; }"
+          "export declare class Browser { #private; readonly connection: RuntimeBackend; readonly endpoint: BrowserEndpoint; readonly version: BrowserVersion; readonly protocol: unknown; readonly connectionMode: ConnectionMode; readonly config: Config; readonly process: BrowserProcessMetadata | undefined; readonly cookies: CookieJar; readonly http: HTTPApi; private constructor(); get targets(): readonly Protocol.Target.TargetInfo[]; get tabs(): readonly Tab[]; get mainTab(): Tab | undefined; get enabledDomains(): ReadonlySet<string>; get manuallyEnabledDomains(): ReadonlySet<string>; get webSocketUrl(): string; get websocket_url(): string; get stopped(): boolean; [Symbol.iterator](): Iterator<Tab>; aenter(): this; aexit(): Promise<void>; [Symbol.asyncDispose](): Promise<void>; static start(options?: LaunchOptions | Config): Promise<Browser>; /** Zendriver-compatible async factory spelling. */ static create(options?: LaunchOptions | Config): Promise<Browser>; static connect(options: ConnectOptions): Promise<Browser>; get(url?: string, newTab?: boolean, newWindow?: boolean): Promise<Tab>; get(url?: string, options?: { readonly newTab?: boolean; readonly newWindow?: boolean; }): Promise<Tab>; newTab(url?: string): Promise<Tab>; newWindow(url?: string): Promise<Tab>; createTab(url?: string, targetOptions?: Omit<Protocol.Target.Commands.CreateTargetParams, \"url\">): Promise<Tab>; targetInfo(target: string | Tab): Protocol.Target.TargetInfo | undefined; updateTargets(): Promise<readonly Protocol.Target.TargetInfo[]>; testConnection(): Promise<boolean>; getVersion(): Promise<Protocol.Browser.Commands.GetVersionResult>; grantPermissions(permissions: readonly Protocol.Browser.PermissionType[], origin?: string): Promise<void>; grantAllPermissions(origin?: string): Promise<void>; wait(time?: number, signal?: AbortSignal): Promise<this>; sleep(time?: number, signal?: AbortSignal): Promise<this>; tileWindows(windows?: readonly Tab[], options?: { readonly maxColumns?: number; readonly left?: number; readonly top?: number; readonly width?: number; readonly height?: number; }): Promise<readonly Protocol.Browser.Bounds[]>; closeTab(tab: Tab): Promise<void>; close(): Promise<void>; stop(): Promise<void>; }"
         ],
         "file": "packages/api/dist/browser.d.ts",
         "kind": "class"
@@ -10144,7 +10454,7 @@
       },
       "Tab": {
         "declarations": [
-          "export declare class Tab { #private; readonly targetId: string; readonly connection: RuntimeBackend; readonly sessionId?: string | undefined; readonly browserConnection: RuntimeBackend; readonly webSocketUrl?: string | undefined; private readonly closeTarget?; private readonly readTargetInfo; private readonly writeTargetInfo; constructor(targetId: string, connection: RuntimeBackend, sessionId?: string | undefined, browserConnection?: RuntimeBackend, webSocketUrl?: string | undefined, closeTarget?: (() => Promise<void>) | undefined, _childFrames?: () => readonly Tab[], readTargetInfo?: () => Protocol.Target.TargetInfo | undefined, writeTargetInfo?: (targetInfo: Protocol.Target.TargetInfo) => void); get enabledDomains(): ReadonlySet<string>; get manuallyEnabledDomains(): ReadonlySet<string>; get handlers(): ReadonlyMap<string, readonly TabEventHandler[]>; get closed(): boolean; get crashed(): boolean; get targetInfo(): Protocol.Target.TargetInfo | undefined; get title(): string; get url(): string; get type(): string; get subtype(): string | undefined; get attached(): boolean; get browserContextId(): Protocol.Browser.BrowserContextID | undefined; get openerId(): Protocol.Target.TargetID | undefined; get openerFrameId(): Protocol.Page.FrameId | undefined; get parentId(): Protocol.Target.TargetID | undefined; get parentFrameId(): Protocol.Page.FrameId | undefined; updateTarget(): Promise<Protocol.Target.TargetInfo>; send<M extends ProtocolCommand>(method: M, ...args: CommandParams<M> extends undefined ? [params?: undefined, options?: SendOptions] : [params: CommandParams<M>, options?: SendOptions]): Promise<CommandResult<M>>; sendRaw(method: string, params?: unknown, options?: SendOptions): Promise<Readonly<Record<string, unknown>>>; on<E extends ProtocolEvent>(method: E, handler: (params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>): () => void; on(method: string, handler: (params: unknown, metadata: EventMetadata) => void | Promise<void>): () => void; addHandler<E extends ProtocolEvent>(eventType: E, handler: (params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>): void; addHandler(domain: EventDomain, handler: TabEventHandler): void; removeHandlers(): void; removeHandlers(eventType: undefined, handler: TabEventHandler): void; removeHandlers(eventType: ProtocolEvent | EventDomain, handler?: TabEventHandler): void; acquireDomain(domain: string, options?: SendOptions): Promise<() => Promise<void>>; expectRequest(matcher: UrlMatcher<Protocol.Network.Events.RequestWillBeSentEvent>, options?: WaitOptions): RequestExpectation; expectResponse(matcher: UrlMatcher<Protocol.Network.Events.ResponseReceivedEvent>, options?: WaitOptions): ResponseExpectation; intercept(options?: InterceptionOptions): FetchInterception; intercept(url: string, stage: Protocol.Fetch.RequestStage, resourceType: Protocol.Network.ResourceType): FetchInterception; setDownloadPath(path: string): Promise<string>; expectDownload(): DownloadWillBeginExpectation; expectDownload(matcher: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent>, options?: DownloadOptions): DownloadResultExpectation; downloadFile(url: string, destination: string, options?: WaitOptions): Promise<DownloadResult>; get(url: string, options?: WaitOptions): Promise<Protocol.Page.Commands.NavigateResult>; navigate(url: string, timeoutMs?: number, signal?: AbortSignal): Promise<Protocol.Page.Commands.NavigateResult>; reload(ignoreCache?: boolean, options?: WaitOptions): Promise<void>; back(options?: WaitOptions): Promise<boolean>; forward(options?: WaitOptions): Promise<boolean>; activate(): Promise<void>; bringToFront(): Promise<Protocol.Page.Commands.BringToFrontResult>; evaluate<T = unknown>(expression: string, awaitPromise?: boolean, returnByValue?: boolean, options?: WaitOptions): Promise<T>; getContent(): Promise<string>; querySelector(selector: string, options?: QueryOptions): Promise<Element | null>; querySelectorAll(selector: string, options?: QueryOptions): Promise<readonly Element[]>; select(selector: string, options?: WaitOptions): Promise<Element>; selectAll(selector: string, options?: WaitOptions & QueryOptions): Promise<readonly Element[]>; find(text: string, bestMatch?: boolean, returnEnclosingElement?: boolean, options?: WaitOptions): Promise<Element>; findAll(text: string, options?: WaitOptions): Promise<readonly Element[]>; findElementByText(text: string, bestMatch?: boolean, returnEnclosingElement?: boolean): Promise<Element | null>; findElementsByText(text: string, tagHint?: string): Promise<readonly Element[]>; getAllLinkedSources(): Promise<readonly Element[]>; getAllUrls(absolute?: boolean): Promise<readonly string[]>; jsDumps<T = unknown>(expression: string): Promise<T>; disableDomAgent(): Promise<void>; get inspectorUrl(): string | undefined; inspectorOpen(): string | undefined; openExternalInspector(): string | undefined; flashPoint(x: number, y: number, durationMs?: number, size?: number): Promise<void>; verifyCf(challengeSelector: string, options?: WaitOptions & { readonly clickDelayMs?: number; }): Promise<void>; recordScreencast(directory: string): Promise<ScreencastSession>; xpath(expression: string, options?: WaitOptions): Promise<readonly Element[]>; waitFor(selector: string, options?: WaitOptions): Promise<Element>; waitFor(options: WaitForOptions): Promise<Element>; waitForReadyState(state?: ReadyState, options?: WaitOptions): Promise<boolean>; waitForIdle(options?: WaitOptions & { readonly idleMs?: number; }): Promise<void>; getLocalStorage(): Promise<Record<string, string>>; setLocalStorage(values: Readonly<Record<string, string | null>>): Promise<void>; setUserAgent(userAgent?: string, acceptLanguage?: string, platform?: string): Promise<void>; screenshotB64(options?: ScreenshotOptions): Promise<string>; saveScreenshot(path: string, options?: ScreenshotOptions): Promise<string>; printToPdf(path?: string, options?: Protocol.Page.Commands.PrintToPDFParams): Promise<string>; saveSnapshot(path?: string): Promise<string>; scrollDown(amount?: number): Promise<void>; scrollUp(amount?: number): Promise<void>; getWindow(): Promise<Protocol.Browser.Commands.GetWindowForTargetResult>; setWindowState(windowState: WindowState): Promise<void>; setWindowSize(width: number, height: number): Promise<void>; maximize(): Promise<void>; minimize(): Promise<void>; fullscreen(): Promise<void>; mouseMove(x: number, y: number, modifiers?: number): Promise<void>; mouseClick(x: number, y: number, button?: Protocol.Input.MouseButton, modifiers?: number): Promise<void>; elementFromNodeId(nodeId: Protocol.DOM.NodeId): Promise<Element>; close(): Promise<void>; markClosed(): void; markCrashed(status: string, errorCode: number): void; }"
+          "export declare class Tab { #private; readonly targetId: string; readonly connection: RuntimeBackend; readonly sessionId?: string | undefined; readonly browserConnection: RuntimeBackend; readonly webSocketUrl?: string | undefined; private readonly closeTarget?; private readonly readTargetInfo; private readonly writeTargetInfo; readonly browser?: Browser | undefined; constructor(targetId: string, connection: RuntimeBackend, sessionId?: string | undefined, browserConnection?: RuntimeBackend, webSocketUrl?: string | undefined, closeTarget?: (() => Promise<void>) | undefined, _childFrames?: () => readonly Tab[], readTargetInfo?: () => Protocol.Target.TargetInfo | undefined, writeTargetInfo?: (targetInfo: Protocol.Target.TargetInfo) => void, browser?: Browser | undefined); get enabledDomains(): ReadonlySet<string>; get manuallyEnabledDomains(): ReadonlySet<string>; get handlers(): ReadonlyMap<string, readonly TabEventHandler[]>; get closed(): boolean; get crashed(): boolean; get targetInfo(): Protocol.Target.TargetInfo | undefined; get target(): Protocol.Target.TargetInfo | undefined; get title(): string; get url(): string; get type(): string; get subtype(): string | undefined; get attached(): boolean; get canAccessOpener(): boolean; get can_access_opener(): boolean; get browserContextId(): Protocol.Browser.BrowserContextID | undefined; get openerId(): Protocol.Target.TargetID | undefined; get openerFrameId(): Protocol.Page.FrameId | undefined; get parentId(): Protocol.Target.TargetID | undefined; get parentFrameId(): Protocol.Page.FrameId | undefined; get websocket(): RuntimeBackend; aenter(): this; aopen(): Promise<void>; aexit(): Promise<void>; aclose(): Promise<void>; [Symbol.asyncDispose](): Promise<void>; sleep(seconds?: number): Promise<void>; wait(seconds?: number | null): Promise<void>; feedCdp(command: string | { readonly method: string; readonly params?: unknown; }, params?: unknown): void; feed_cdp(command: string | { readonly method: string; readonly params?: unknown; }, params?: unknown): void; updateTarget(): Promise<Protocol.Target.TargetInfo>; send<M extends ProtocolCommand>(method: M, ...args: CommandParams<M> extends undefined ? [params?: undefined, options?: SendOptions] : [params: CommandParams<M>, options?: SendOptions]): Promise<CommandResult<M>>; sendRaw(method: string, params?: unknown, options?: SendOptions): Promise<Readonly<Record<string, unknown>>>; on<E extends ProtocolEvent>(method: E, handler: (params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>): () => void; on(method: string, handler: (params: unknown, metadata: EventMetadata) => void | Promise<void>): () => void; addHandler<E extends ProtocolEvent>(eventType: E, handler: (params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>): void; addHandler(domain: EventDomain, handler: TabEventHandler): void; removeHandlers(): void; removeHandlers(eventType: undefined, handler: TabEventHandler): void; removeHandlers(eventType: ProtocolEvent | EventDomain, handler?: TabEventHandler): void; acquireDomain(domain: string, options?: SendOptions): Promise<() => Promise<void>>; expectRequest(matcher: UrlMatcher<Protocol.Network.Events.RequestWillBeSentEvent>, options?: WaitOptions): RequestExpectation; expectResponse(matcher: UrlMatcher<Protocol.Network.Events.ResponseReceivedEvent>, options?: WaitOptions): ResponseExpectation; intercept(options?: InterceptionOptions): FetchInterception; intercept(url: string, stage: Protocol.Fetch.RequestStage, resourceType: Protocol.Network.ResourceType): FetchInterception; setDownloadPath(path: string): Promise<string>; expectDownload(): DownloadWillBeginExpectation; expectDownload(matcher: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent>, options?: DownloadOptions): DownloadResultExpectation; downloadFile(url: string, destination: string, options?: WaitOptions): Promise<DownloadResult>; get(url: string, options?: WaitOptions): Promise<Protocol.Page.Commands.NavigateResult>; navigate(url: string, timeoutMs?: number, signal?: AbortSignal): Promise<Protocol.Page.Commands.NavigateResult>; reload(ignoreCache?: boolean, options?: WaitOptions): Promise<void>; back(options?: WaitOptions): Promise<boolean>; forward(options?: WaitOptions): Promise<boolean>; activate(): Promise<void>; bringToFront(): Promise<Protocol.Page.Commands.BringToFrontResult>; evaluate<T = unknown>(expression: string, awaitPromise?: boolean, returnByValue?: boolean, options?: WaitOptions): Promise<T>; getContent(): Promise<string>; querySelector(selector: string, options?: QueryOptions): Promise<Element | null>; querySelectorAll(selector: string, options?: QueryOptions): Promise<readonly Element[]>; select(selector: string, options?: WaitOptions): Promise<Element>; selectAll(selector: string, options?: WaitOptions & QueryOptions): Promise<readonly Element[]>; find(text: string, bestMatch?: boolean, returnEnclosingElement?: boolean, options?: WaitOptions): Promise<Element>; findAll(text: string, options?: WaitOptions): Promise<readonly Element[]>; findElementByText(text: string, bestMatch?: boolean, returnEnclosingElement?: boolean): Promise<Element | null>; findElementsByText(text: string, tagHint?: string): Promise<readonly Element[]>; getAllLinkedSources(): Promise<readonly Element[]>; getAllUrls(absolute?: boolean): Promise<readonly string[]>; jsDumps<T = unknown>(expression: string): Promise<T>; disableDomAgent(): Promise<void>; get inspectorUrl(): string | undefined; inspectorOpen(): string | undefined; openExternalInspector(): string | undefined; flashPoint(x: number, y: number, durationMs?: number, size?: number): Promise<void>; verifyCf(challengeSelector: string, options?: WaitOptions & { readonly clickDelayMs?: number; }): Promise<void>; recordScreencast(directory: string): Promise<ScreencastSession>; xpath(expression: string, options?: WaitOptions): Promise<readonly Element[]>; waitFor(selector: string, options?: WaitOptions): Promise<Element>; waitFor(options: WaitForOptions): Promise<Element>; waitForReadyState(state?: ReadyState, options?: WaitOptions): Promise<boolean>; waitForIdle(options?: WaitOptions & { readonly idleMs?: number; }): Promise<void>; getLocalStorage(): Promise<Record<string, string>>; setLocalStorage(values: Readonly<Record<string, string | null>>): Promise<void>; setUserAgent(userAgent?: string, acceptLanguage?: string, platform?: string): Promise<void>; screenshotB64(options?: ScreenshotOptions): Promise<string>; saveScreenshot(path: string, options?: ScreenshotOptions): Promise<string>; printToPdf(path?: string, options?: Protocol.Page.Commands.PrintToPDFParams): Promise<string>; saveSnapshot(path?: string): Promise<string>; scrollDown(amount?: number): Promise<void>; scrollUp(amount?: number): Promise<void>; getWindow(): Promise<Protocol.Browser.Commands.GetWindowForTargetResult>; setWindowState(windowState: WindowState): Promise<void>; setWindowSize(width: number, height: number): Promise<void>; maximize(): Promise<void>; minimize(): Promise<void>; medimize(): Promise<void>; fullscreen(): Promise<void>; mouseMove(x: number, y: number, modifiers?: number): Promise<void>; mouseClick(x: number, y: number, button?: Protocol.Input.MouseButton, modifiers?: number): Promise<void>; elementFromNodeId(nodeId: Protocol.DOM.NodeId): Promise<Element>; close(): Promise<void>; markClosed(): void; markCrashed(status: string, errorCode: number): void; }"
         ],
         "file": "packages/api/dist/tab.d.ts",
         "kind": "class"
@@ -10751,6 +11061,30 @@
         "file": "packages/api/dist/config.d.ts",
         "kind": "const"
       },
+      "getRegisteredInstances": {
+        "declarations": [
+          {
+            "declaration": "export declare function getRegisteredInstances(): ReadonlySet<Browser>;",
+            "parameters": [],
+            "returnType": "ReadonlySet<Browser>",
+            "typeParameters": []
+          }
+        ],
+        "file": "packages/api/dist/browser.d.ts",
+        "kind": "function"
+      },
+      "get_registered_instances": {
+        "declarations": [
+          {
+            "declaration": "get_registered_instances: typeof getRegisteredInstances",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "type": "typeof getRegisteredInstances"
+          }
+        ],
+        "file": "packages/api/dist/browser.d.ts",
+        "kind": "const"
+      },
       "hasTrace": {
         "declarations": [
           {
@@ -11091,6 +11425,14 @@
         "prototypeMembers": [
           {
             "kind": "method",
+            "name": "aenter"
+          },
+          {
+            "kind": "method",
+            "name": "aexit"
+          },
+          {
+            "kind": "method",
             "name": "close"
           },
           {
@@ -11180,6 +11522,10 @@
           {
             "kind": "property",
             "name": "webSocketUrl"
+          },
+          {
+            "kind": "property",
+            "name": "websocket_url"
           }
         ]
       },
@@ -12015,6 +12361,10 @@
         "prototypeMembers": [
           {
             "kind": "method",
+            "name": "aclose"
+          },
+          {
+            "kind": "method",
             "name": "acquireDomain"
           },
           {
@@ -12024,6 +12374,18 @@
           {
             "kind": "method",
             "name": "addHandler"
+          },
+          {
+            "kind": "method",
+            "name": "aenter"
+          },
+          {
+            "kind": "method",
+            "name": "aexit"
+          },
+          {
+            "kind": "method",
+            "name": "aopen"
           },
           {
             "kind": "property",
@@ -12040,6 +12402,14 @@
           {
             "kind": "property",
             "name": "browserContextId"
+          },
+          {
+            "kind": "property",
+            "name": "canAccessOpener"
+          },
+          {
+            "kind": "property",
+            "name": "can_access_opener"
           },
           {
             "kind": "method",
@@ -12084,6 +12454,14 @@
           {
             "kind": "method",
             "name": "expectResponse"
+          },
+          {
+            "kind": "method",
+            "name": "feedCdp"
+          },
+          {
+            "kind": "method",
+            "name": "feed_cdp"
           },
           {
             "kind": "method",
@@ -12172,6 +12550,10 @@
           {
             "kind": "method",
             "name": "maximize"
+          },
+          {
+            "kind": "method",
+            "name": "medimize"
           },
           {
             "kind": "method",
@@ -12294,8 +12676,16 @@
             "name": "setWindowState"
           },
           {
+            "kind": "method",
+            "name": "sleep"
+          },
+          {
             "kind": "property",
             "name": "subtype"
+          },
+          {
+            "kind": "property",
+            "name": "target"
           },
           {
             "kind": "property",
@@ -12323,6 +12713,10 @@
           },
           {
             "kind": "method",
+            "name": "wait"
+          },
+          {
+            "kind": "method",
             "name": "waitFor"
           },
           {
@@ -12332,6 +12726,10 @@
           {
             "kind": "method",
             "name": "waitForReadyState"
+          },
+          {
+            "kind": "property",
+            "name": "websocket"
           },
           {
             "kind": "method",
@@ -12462,6 +12860,20 @@
         "functionLength": 0,
         "kind": "function-or-class",
         "name": "find_executable",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "getRegisteredInstances",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "get_registered_instances",
         "package": "jsdriver",
         "prototypeMembers": []
       },
@@ -13406,11 +13818,21 @@
                 "kind": "method",
                 "name": "__aenter__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Browser",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-BROWSER-001",
+                      "file": "packages/api/test/api-surface-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Browser.aenter",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -13433,11 +13855,21 @@
                 "kind": "method",
                 "name": "__aexit__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Browser",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-BROWSER-001",
+                      "file": "packages/api/test/api-surface-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Browser.aexit",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -14518,11 +14950,32 @@
                 "kind": "property",
                 "name": "websocket_url",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Browser",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-BROWSER-001",
+                      "file": "packages/api/test/api-surface-parity.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "access": "get",
+                      "declaration": "get websocket_url(): string;",
+                      "kind": "property",
+                      "name": "websocket_url",
+                      "parameters": [],
+                      "returnType": "string",
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Browser.websocket_url",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "PROPERTY_KIND_ONLY",
+                  "status": "VERIFIED"
                 }
               }
             ],
@@ -27565,11 +28018,21 @@
                 "kind": "method",
                 "name": "__aenter__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Tab",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Tab.aenter",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -27592,11 +28055,21 @@
                 "kind": "method",
                 "name": "__aexit__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Tab",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Tab.aexit",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -27792,11 +28265,32 @@
                 "kind": "method",
                 "name": "aclose",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Tab",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "aclose(): Promise<void>;",
+                      "kind": "method",
+                      "name": "aclose",
+                      "parameters": [],
+                      "returnType": "Promise<void>",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Tab.aclose",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -27970,11 +28464,32 @@
                 "kind": "method",
                 "name": "aopen",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Tab",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "aopen(): Promise<void>;",
+                      "kind": "method",
+                      "name": "aopen",
+                      "parameters": [],
+                      "returnType": "Promise<void>",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Tab.aopen",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -28108,11 +28623,33 @@
                 "kind": "annotated-attribute",
                 "name": "browser",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Tab",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-BROWSER-001",
+                      "file": "packages/api/test/api-surface-parity.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "readonly browser?: Browser | undefined;",
+                      "declaredDefault": null,
+                      "hasDeclaredDefault": false,
+                      "kind": "property",
+                      "name": "browser",
+                      "optional": true,
+                      "readonly": true,
+                      "type": "Browser | undefined"
+                    }
+                  ],
+                  "nodeMember": "Tab.browser",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "PROPERTY_KIND_ONLY",
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -28149,11 +28686,32 @@
                 "kind": "property",
                 "name": "can_access_opener",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Tab",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "access": "get",
+                      "declaration": "get can_access_opener(): boolean;",
+                      "kind": "property",
+                      "name": "can_access_opener",
+                      "parameters": [],
+                      "returnType": "boolean",
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Tab.can_access_opener",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "PROPERTY_KIND_ONLY",
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -28642,11 +29200,49 @@
                 "kind": "method",
                 "name": "feed_cdp",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Tab",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "feed_cdp(command: string | { readonly method: string; readonly params?: unknown; }, params?: unknown): void;",
+                      "kind": "method",
+                      "name": "feed_cdp",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "command",
+                          "optional": false,
+                          "rest": false,
+                          "type": "string | { readonly method: string; readonly params?: unknown; }"
+                        },
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "params",
+                          "optional": true,
+                          "rest": false,
+                          "type": "unknown"
+                        }
+                      ],
+                      "returnType": "void",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Tab.feed_cdp",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -29738,11 +30334,32 @@
                 "kind": "method",
                 "name": "medimize",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Tab",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "medimize(): Promise<void>;",
+                      "kind": "method",
+                      "name": "medimize",
+                      "parameters": [],
+                      "returnType": "Promise<void>",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Tab.medimize",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -31365,11 +31982,41 @@
                 "kind": "method",
                 "name": "sleep",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Tab",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "sleep(seconds?: number): Promise<void>;",
+                      "kind": "method",
+                      "name": "sleep",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "seconds",
+                          "optional": true,
+                          "rest": false,
+                          "type": "number"
+                        }
+                      ],
+                      "returnType": "Promise<void>",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Tab.sleep",
+                  "semanticsCoverage": [
+                    "defaults",
+                    "return"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -31426,11 +32073,32 @@
                 "kind": "property",
                 "name": "target",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Tab",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "access": "get",
+                      "declaration": "get target(): Protocol.Target.TargetInfo | undefined;",
+                      "kind": "property",
+                      "name": "target",
+                      "parameters": [],
+                      "returnType": "Protocol.Target.TargetInfo | undefined",
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Tab.target",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "PROPERTY_KIND_ONLY",
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -31671,11 +32339,41 @@
                 "kind": "method",
                 "name": "wait",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Tab",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "wait(seconds?: number | null): Promise<void>;",
+                      "kind": "method",
+                      "name": "wait",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "seconds",
+                          "optional": true,
+                          "rest": false,
+                          "type": "number | null"
+                        }
+                      ],
+                      "returnType": "Promise<void>",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Tab.wait",
+                  "semanticsCoverage": [
+                    "defaults",
+                    "return"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -31876,11 +32574,32 @@
                 "kind": "attribute",
                 "name": "websocket",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Tab",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "access": "get",
+                      "declaration": "get websocket(): RuntimeBackend;",
+                      "kind": "property",
+                      "name": "websocket",
+                      "parameters": [],
+                      "returnType": "RuntimeBackend",
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Tab.websocket",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "PROPERTY_KIND_ONLY",
+                  "status": "VERIFIED"
                 },
                 "valueType": "NoneType"
               },
@@ -32249,11 +32968,24 @@
             "module": "zendriver.core.util",
             "name": "get_registered_instances",
             "nodeMapping": {
-              "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-              "nodeSymbol": null,
-              "semanticsVerified": false,
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-BROWSER-001",
+                  "file": "packages/api/test/api-surface-parity.test.ts"
+                }
+              ],
+              "nodeKind": "const",
+              "nodeMember": "getRegisteredInstances",
+              "nodeSymbol": "get_registered_instances",
+              "runtimeExport": true,
+              "semanticsCoverage": [
+                "return",
+                "state"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "MISSING"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [],

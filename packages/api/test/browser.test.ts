@@ -100,6 +100,58 @@ test("Tab commands force their bound session and reject session mismatches", asy
   );
 });
 
+test("ZDAPI-TAB-LIFECYCLE-001", async () => {
+  const calls: Array<{ readonly method: string; readonly params: unknown }> = [];
+  const connection = {
+    send: async (method: string, params: unknown) => {
+      calls.push({ method, params });
+      return method === "Browser.getWindowForTarget" ? { windowId: 7, bounds: {} } : {};
+    },
+    sendRaw: async (method: string, params: unknown) => {
+      calls.push({ method, params });
+      return {};
+    },
+  } as unknown as CdpConnection;
+  const target = {
+    targetId: "target",
+    type: "page",
+    title: "Fixture",
+    url: "about:blank",
+    attached: true,
+    canAccessOpener: true,
+  } satisfies Protocol.Target.TargetInfo;
+  let closed = 0;
+  const tab = new Tab(
+    target.targetId,
+    connection,
+    undefined,
+    connection,
+    "ws://127.0.0.1/devtools/page/target",
+    async () => { closed += 1; },
+    undefined,
+    () => target,
+  );
+
+  assert.equal(tab.aenter(), tab);
+  await tab.aopen();
+  assert.equal(tab.target, target);
+  assert.equal(tab.can_access_opener, true);
+  assert.equal(tab.websocket, connection);
+  assert.equal(tab.feed_cdp("Runtime.enable"), undefined);
+  await new Promise<void>((resolve) => setImmediate(resolve));
+  await tab.medimize();
+  await tab.sleep(0);
+  await tab.wait(0);
+  await tab.aexit();
+  assert.equal(closed, 1);
+  assert.deepEqual(calls.map(({ method }) => method), [
+    "Runtime.enable",
+    "Browser.getWindowForTarget",
+    "Browser.setWindowBounds",
+  ]);
+  assert.deepEqual(calls[2]?.params, { windowId: 7, bounds: { windowState: "minimized" } });
+});
+
 test("network expectations ignore other sessions and clean up listeners and domain leases", async () => {
   const handlers = new Map<string, Set<(event: unknown, metadata: { readonly sessionId?: string }) => void>>();
   const calls: string[] = [];

@@ -394,5 +394,101 @@
     ],
     "upstream": "zendriver.core.connection.Transaction",
     "verifiedSemantics": ["errors", "return", "state"]
+  },
+  {
+    "nodeMember": "Browser.aenter",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-BROWSER-001"}],
+    "upstream": "zendriver.core.browser.Browser.__aenter__",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Browser.aexit",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-BROWSER-001"}],
+    "upstream": "zendriver.core.browser.Browser.__aexit__",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Browser.websocket_url",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-BROWSER-001"}],
+    "upstream": "zendriver.core.browser.Browser.websocket_url",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "getRegisteredInstances",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-BROWSER-001"}],
+    "upstream": "zendriver.core.util.get_registered_instances",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Tab.aenter",
+    "testCases": [{"file": "packages/api/test/browser.test.ts", "case": "ZDAPI-TAB-LIFECYCLE-001"}],
+    "upstream": "zendriver.core.tab.Tab.__aenter__",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Tab.aexit",
+    "testCases": [{"file": "packages/api/test/browser.test.ts", "case": "ZDAPI-TAB-LIFECYCLE-001"}],
+    "upstream": "zendriver.core.tab.Tab.__aexit__",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Tab.aclose",
+    "testCases": [{"file": "packages/api/test/browser.test.ts", "case": "ZDAPI-TAB-LIFECYCLE-001"}],
+    "upstream": "zendriver.core.tab.Tab.aclose",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Tab.aopen",
+    "testCases": [{"file": "packages/api/test/browser.test.ts", "case": "ZDAPI-TAB-LIFECYCLE-001"}],
+    "upstream": "zendriver.core.tab.Tab.aopen",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Tab.can_access_opener",
+    "testCases": [{"file": "packages/api/test/browser.test.ts", "case": "ZDAPI-TAB-LIFECYCLE-001"}],
+    "upstream": "zendriver.core.tab.Tab.can_access_opener",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Tab.browser",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-BROWSER-001"}],
+    "upstream": "zendriver.core.tab.Tab.browser",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Tab.feed_cdp",
+    "testCases": [{"file": "packages/api/test/browser.test.ts", "case": "ZDAPI-TAB-LIFECYCLE-001"}],
+    "upstream": "zendriver.core.tab.Tab.feed_cdp",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Tab.medimize",
+    "testCases": [{"file": "packages/api/test/browser.test.ts", "case": "ZDAPI-TAB-LIFECYCLE-001"}],
+    "upstream": "zendriver.core.tab.Tab.medimize",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Tab.sleep",
+    "testCases": [{"file": "packages/api/test/browser.test.ts", "case": "ZDAPI-TAB-LIFECYCLE-001"}],
+    "upstream": "zendriver.core.tab.Tab.sleep",
+    "verifiedSemantics": ["defaults", "return"]
+  },
+  {
+    "nodeMember": "Tab.target",
+    "testCases": [{"file": "packages/api/test/browser.test.ts", "case": "ZDAPI-TAB-LIFECYCLE-001"}],
+    "upstream": "zendriver.core.tab.Tab.target",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Tab.wait",
+    "testCases": [{"file": "packages/api/test/browser.test.ts", "case": "ZDAPI-TAB-LIFECYCLE-001"}],
+    "upstream": "zendriver.core.tab.Tab.wait",
+    "verifiedSemantics": ["defaults", "return"]
+  },
+  {
+    "nodeMember": "Tab.websocket",
+    "testCases": [{"file": "packages/api/test/browser.test.ts", "case": "ZDAPI-TAB-LIFECYCLE-001"}],
+    "upstream": "zendriver.core.tab.Tab.websocket",
+    "verifiedSemantics": ["return", "state"]
   }
 ]

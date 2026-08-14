@@ -149,6 +149,7 @@ test("ZDAPI-CONNECTION-ERRORS-001", () => {
   assert.equal(permission.filename, "input.txt");
   assert.equal(permission.filename2, "output.txt");
   assert.equal(permission.message, "[Errno 1] denied: input.txt -> output.txt");
+  assert.equal(permission.toString(), "[Errno 1] denied: input.txt -> output.txt");
   assert.throws(() => permission.characters_written, /characters_written/);
   assert.equal(permission.add_note("fixture note"), undefined);
   assert.deepEqual(permission.__notes__, ["fixture note"]);

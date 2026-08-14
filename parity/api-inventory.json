@@ -1,10 +1,10 @@
 {
   "mappingCounts": {
     "coreMembers": {
-      "CANDIDATE": 153,
-      "MISSING": 75,
-      "UNKNOWN": 150,
-      "VERIFIED": 94
+      "CANDIDATE": 135,
+      "MISSING": 45,
+      "UNKNOWN": 125,
+      "VERIFIED": 167
     },
     "coreSymbols": {
       "CANDIDATE": 13,
@@ -15,10 +15,10 @@
       "VERIFIED": 10
     },
     "total": {
-      "CANDIDATE": 172,
-      "MISSING": 75,
-      "UNKNOWN": 150,
-      "VERIFIED": 136
+      "CANDIDATE": 154,
+      "MISSING": 45,
+      "UNKNOWN": 125,
+      "VERIFIED": 209
     }
   },
   "nodriver": {
@@ -7810,6 +7810,15 @@
             "returnType": "this",
             "static": false,
             "typeParameters": []
+          },
+          {
+            "declaration": "toString(): string;",
+            "kind": "method",
+            "name": "toString",
+            "parameters": [],
+            "returnType": "string",
+            "static": false,
+            "typeParameters": []
           }
         ],
         "nonPublicMembers": []
@@ -11361,7 +11370,7 @@
       },
       "SettingClassVarNotAllowedException": {
         "declarations": [
-          "export declare class SettingClassVarNotAllowedException extends Error { readonly args: readonly unknown[]; readonly errno: unknown; readonly strerror: unknown; readonly filename: unknown; readonly filename2: unknown; readonly __notes__: string[]; constructor(...args: readonly unknown[]); get characters_written(): never; add_note(note: string): void; addNote(note: string): void; with_traceback(_traceback: unknown): this; withTraceback(traceback: unknown): this; }"
+          "export declare class SettingClassVarNotAllowedException extends Error { readonly args: readonly unknown[]; readonly errno: unknown; readonly strerror: unknown; readonly filename: unknown; readonly filename2: unknown; readonly __notes__: string[]; constructor(...args: readonly unknown[]); get characters_written(): never; add_note(note: string): void; addNote(note: string): void; with_traceback(_traceback: unknown): this; withTraceback(traceback: unknown): this; toString(): string; }"
         ],
         "file": "packages/runtime-js/dist/connection-compat.d.ts",
         "kind": "class"
@@ -15075,6 +15084,10 @@
           },
           {
             "kind": "method",
+            "name": "toString"
+          },
+          {
+            "kind": "method",
             "name": "withTraceback"
           },
           {
@@ -15606,6 +15619,10 @@
           {
             "kind": "property",
             "name": "characters_written"
+          },
+          {
+            "kind": "method",
+            "name": "toString"
           },
           {
             "kind": "method",
@@ -18365,11 +18382,21 @@
                 "kind": "method",
                 "name": "__call__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on CantTouchThis",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-ERRORS-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "CantTouchThis",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -18406,11 +18433,21 @@
                 "kind": "method",
                 "name": "__repr__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on CantTouchThis",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-ERRORS-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "CantTouchThis",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -18433,11 +18470,21 @@
                 "kind": "method",
                 "name": "__setattr__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on CantTouchThis",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-ERRORS-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "CantTouchThis",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -18474,11 +18521,21 @@
                 "kind": "method",
                 "name": "mro",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on CantTouchThis",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-ERRORS-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "CantTouchThis",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -18538,11 +18595,21 @@
                 "kind": "method",
                 "name": "__aenter__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Connection",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -18565,11 +18632,21 @@
                 "kind": "method",
                 "name": "__aexit__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Connection",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -18613,11 +18690,21 @@
                 "kind": "method",
                 "name": "__await__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Connection",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -18640,11 +18727,21 @@
                 "kind": "method",
                 "name": "aclose",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Connection",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -18667,11 +18764,21 @@
                 "kind": "method",
                 "name": "add_handler",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Connection",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -18708,11 +18815,21 @@
                 "kind": "method",
                 "name": "aopen",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Connection",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -18736,11 +18853,21 @@
                 "kind": "property",
                 "name": "attached",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Connection",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -18751,11 +18878,21 @@
                 "kind": "property",
                 "name": "browser_context_id",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Connection",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -18766,11 +18903,21 @@
                 "kind": "property",
                 "name": "can_access_opener",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Connection",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -18801,11 +18948,21 @@
                 "kind": "method",
                 "name": "feed_cdp",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Connection",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -18836,11 +18993,21 @@
                 "kind": "property",
                 "name": "opener_frame_id",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Connection",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -18851,11 +19018,21 @@
                 "kind": "property",
                 "name": "opener_id",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Connection",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -18865,11 +19042,21 @@
                 "kind": "method",
                 "name": "remove_handlers",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Connection",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -18906,11 +19093,21 @@
                 "kind": "method",
                 "name": "send",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Connection",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -18947,11 +19144,21 @@
                 "kind": "method",
                 "name": "sleep",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Connection",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -18982,11 +19189,21 @@
                 "kind": "property",
                 "name": "subtype",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Connection",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -18997,11 +19214,21 @@
                 "kind": "property",
                 "name": "target",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Connection",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -19012,11 +19239,21 @@
                 "kind": "property",
                 "name": "target_id",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Connection",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -19027,11 +19264,21 @@
                 "kind": "property",
                 "name": "title",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Connection",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -19042,11 +19289,21 @@
                 "kind": "property",
                 "name": "type_",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Connection",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -19056,11 +19313,21 @@
                 "kind": "method",
                 "name": "update_target",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Connection",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -19084,11 +19351,21 @@
                 "kind": "property",
                 "name": "url",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Connection",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -19098,11 +19375,21 @@
                 "kind": "method",
                 "name": "wait",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Connection",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -19133,11 +19420,21 @@
                 "kind": "attribute",
                 "name": "websocket",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Connection",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "valueType": "NoneType"
               }
@@ -19228,11 +19525,21 @@
                 "kind": "method",
                 "name": "__await__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on EventTransaction",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Transaction.then",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -19255,11 +19562,21 @@
                 "kind": "method",
                 "name": "__call__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on EventTransaction",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Transaction.call",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -19289,11 +19606,21 @@
                 "kind": "method",
                 "name": "__del__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on EventTransaction",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Transaction",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -19316,11 +19643,21 @@
                 "kind": "method",
                 "name": "__iter__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on EventTransaction",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Transaction.then",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -19343,11 +19680,21 @@
                 "kind": "method",
                 "name": "__repr__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on EventTransaction",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "EventTransaction.toString",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -19370,11 +19717,21 @@
                 "kind": "method",
                 "name": "add_done_callback",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on EventTransaction",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Transaction.add_done_callback",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": null
               },
@@ -19385,11 +19742,21 @@
                 "kind": "method",
                 "name": "cancel",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on EventTransaction",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Transaction.cancel",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -19419,11 +19786,21 @@
                 "kind": "method",
                 "name": "cancelled",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on EventTransaction",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Transaction.cancelled",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -19446,11 +19823,21 @@
                 "kind": "method",
                 "name": "done",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on EventTransaction",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Transaction.done",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -19474,7 +19861,13 @@
                 "kind": "attribute",
                 "name": "event",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "readonly event: T;",
@@ -19488,9 +19881,13 @@
                     }
                   ],
                   "nodeMember": "EventTransaction.event",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "valueType": "NoneType"
               },
@@ -19501,11 +19898,21 @@
                 "kind": "method",
                 "name": "exception",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on EventTransaction",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Transaction.exception",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -19528,11 +19935,21 @@
                 "kind": "method",
                 "name": "get_loop",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on EventTransaction",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Transaction.get_loop",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -19556,11 +19973,21 @@
                 "kind": "property",
                 "name": "has_exception",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on EventTransaction",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Transaction.has_exception",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -19571,11 +19998,21 @@
                 "kind": "property",
                 "name": "message",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on EventTransaction",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Transaction.message",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -19585,11 +20022,21 @@
                 "kind": "method",
                 "name": "remove_done_callback",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on EventTransaction",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Transaction.remove_done_callback",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -19619,11 +20066,21 @@
                 "kind": "method",
                 "name": "result",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on EventTransaction",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Transaction.result",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -19646,11 +20103,21 @@
                 "kind": "method",
                 "name": "set_exception",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on EventTransaction",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Transaction.set_exception",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -19680,11 +20147,21 @@
                 "kind": "method",
                 "name": "set_result",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on EventTransaction",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Transaction.set_result",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -19715,7 +20192,13 @@
                 "kind": "attribute",
                 "name": "value",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "readonly value: T;",
@@ -19729,9 +20212,13 @@
                     }
                   ],
                   "nodeMember": "EventTransaction.value",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "valueType": "NoneType"
               }
@@ -19790,11 +20277,21 @@
                 "kind": "method",
                 "name": "__repr__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Listener",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-LISTENER-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Listener",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -19817,7 +20314,13 @@
                 "kind": "method",
                 "name": "cancel",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-LISTENER-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "cancel(): void;",
@@ -19829,10 +20332,14 @@
                       "typeParameters": []
                     }
                   ],
-                  "nodeMember": "Listener.cancel",
-                  "semanticsVerified": false,
+                  "nodeMember": "Listener",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -19855,7 +20362,13 @@
                 "kind": "method",
                 "name": "listener_loop",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-LISTENER-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "listener_loop(): Promise<void>;",
@@ -19867,10 +20380,14 @@
                       "typeParameters": []
                     }
                   ],
-                  "nodeMember": "Listener.listener_loop",
-                  "semanticsVerified": false,
+                  "nodeMember": "Listener",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -19893,7 +20410,13 @@
                 "kind": "method",
                 "name": "run",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-LISTENER-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "run(): void;",
@@ -19905,10 +20428,14 @@
                       "typeParameters": []
                     }
                   ],
-                  "nodeMember": "Listener.run",
-                  "semanticsVerified": false,
+                  "nodeMember": "Listener",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -19932,7 +20459,13 @@
                 "kind": "property",
                 "name": "running",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-LISTENER-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -19944,10 +20477,14 @@
                       "typeParameters": []
                     }
                   ],
-                  "nodeMember": "Listener.running",
-                  "semanticsVerified": false,
+                  "nodeMember": "Listener",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -19958,7 +20495,13 @@
                 "kind": "property",
                 "name": "time_before_considered_idle",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-LISTENER-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -19970,10 +20513,14 @@
                       "typeParameters": []
                     }
                   ],
-                  "nodeMember": "Listener.time_before_considered_idle",
-                  "semanticsVerified": false,
+                  "nodeMember": "Listener",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               }
             ],
@@ -20032,11 +20579,21 @@
                 "kind": "method",
                 "name": "__repr__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on ProtocolException",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-ERRORS-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "ProtocolException.toString",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -20314,11 +20871,21 @@
                 "kind": "method",
                 "name": "__repr__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on SettingClassVarNotAllowedException",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-ERRORS-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "SettingClassVarNotAllowedException.toString",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -20341,11 +20908,21 @@
                 "kind": "method",
                 "name": "__str__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on SettingClassVarNotAllowedException",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-ERRORS-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "SettingClassVarNotAllowedException.toString",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -20763,11 +21340,21 @@
                 "kind": "method",
                 "name": "__await__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Transaction",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-FUTURE-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Transaction.then",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -20790,11 +21377,21 @@
                 "kind": "method",
                 "name": "__call__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Transaction",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-FUTURE-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Transaction.call",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -20824,11 +21421,21 @@
                 "kind": "method",
                 "name": "__del__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Transaction",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-FUTURE-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Transaction",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -20851,11 +21458,21 @@
                 "kind": "method",
                 "name": "__iter__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Transaction",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-FUTURE-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Transaction.then",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -20878,11 +21495,21 @@
                 "kind": "method",
                 "name": "__repr__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Transaction",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-FUTURE-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Transaction.toString",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -20905,7 +21532,13 @@
                 "kind": "method",
                 "name": "add_done_callback",
                 "nodeMapping": {
-                  "evidence": "name and member kind match, but required arity differs",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-FUTURE-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "add_done_callback(callback: (future: Transaction<T>) => void): void;",
@@ -20927,9 +21560,13 @@
                     }
                   ],
                   "nodeMember": "Transaction.add_done_callback",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "INCOMPATIBLE_REQUIRED_ARITY",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": null
               },
@@ -20940,7 +21577,13 @@
                 "kind": "method",
                 "name": "cancel",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-FUTURE-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "cancel(reason?: unknown): boolean;",
@@ -20962,9 +21605,13 @@
                     }
                   ],
                   "nodeMember": "Transaction.cancel",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -20994,7 +21641,13 @@
                 "kind": "method",
                 "name": "cancelled",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-FUTURE-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "cancelled(): boolean;",
@@ -21007,9 +21660,13 @@
                     }
                   ],
                   "nodeMember": "Transaction.cancelled",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -21032,7 +21689,13 @@
                 "kind": "method",
                 "name": "done",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-FUTURE-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "done(): boolean;",
@@ -21045,9 +21708,13 @@
                     }
                   ],
                   "nodeMember": "Transaction.done",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -21070,7 +21737,13 @@
                 "kind": "method",
                 "name": "exception",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-FUTURE-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "exception(): Error | undefined;",
@@ -21083,9 +21756,13 @@
                     }
                   ],
                   "nodeMember": "Transaction.exception",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -21108,7 +21785,13 @@
                 "kind": "method",
                 "name": "get_loop",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-FUTURE-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "get_loop(): undefined;",
@@ -21121,9 +21804,13 @@
                     }
                   ],
                   "nodeMember": "Transaction.get_loop",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -21147,7 +21834,13 @@
                 "kind": "property",
                 "name": "has_exception",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-FUTURE-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -21160,9 +21853,13 @@
                     }
                   ],
                   "nodeMember": "Transaction.has_exception",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -21173,7 +21870,13 @@
                 "kind": "property",
                 "name": "message",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-FUTURE-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -21186,9 +21889,13 @@
                     }
                   ],
                   "nodeMember": "Transaction.message",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -21198,7 +21905,13 @@
                 "kind": "method",
                 "name": "remove_done_callback",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-FUTURE-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "remove_done_callback(callback: (future: Transaction<T>) => void): number;",
@@ -21220,9 +21933,13 @@
                     }
                   ],
                   "nodeMember": "Transaction.remove_done_callback",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -21252,7 +21969,13 @@
                 "kind": "method",
                 "name": "result",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-FUTURE-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "result(): T;",
@@ -21265,9 +21988,13 @@
                     }
                   ],
                   "nodeMember": "Transaction.result",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -21290,7 +22017,13 @@
                 "kind": "method",
                 "name": "set_exception",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-FUTURE-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "set_exception(error: unknown): void;",
@@ -21312,9 +22045,13 @@
                     }
                   ],
                   "nodeMember": "Transaction.set_exception",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -21344,7 +22081,13 @@
                 "kind": "method",
                 "name": "set_result",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TRANSACTION-FUTURE-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "set_result(value: T): void;",
@@ -21366,9 +22109,13 @@
                     }
                   ],
                   "nodeMember": "Transaction.set_result",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [

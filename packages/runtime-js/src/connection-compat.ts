@@ -135,6 +135,8 @@ export class SettingClassVarNotAllowedException extends Error {
   public with_traceback(_traceback: unknown): this { return this; }
 
   public withTraceback(traceback: unknown): this { return this.with_traceback(traceback); }
+
+  public override toString(): string { return this.message; }
 }
 
 /** Equivalent of asyncio.CancelledError for Future-like transactions. */

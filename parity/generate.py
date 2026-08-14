@@ -43,6 +43,23 @@ REFERENCE = ROOT / ".tmp" / "zendriver-ref"
 NODE_TEST_MAPPINGS = PARITY / "node-test-mappings.json"
 API_SEMANTIC_MAPPINGS = PARITY / "api-semantic-mappings.json"
 TEST_CASE_INSPECTOR = PARITY / "inspect_test_cases.mjs"
+TEST_CASE_TEXT_ONLY_FIXTURE = PARITY / "test-fixtures" / "zdtest-text-only.test.ts"
+TEST_CASE_LOCAL_NOOP_FIXTURE = PARITY / "test-fixtures" / "zdtest-local-noop.test.ts"
+TEST_CASE_MUTABLE_BINDING_FIXTURE = PARITY / "test-fixtures" / "zdtest-mutable-binding.test.ts"
+TEST_CASE_ALIAS_MUTATION_FIXTURE = PARITY / "test-fixtures" / "zdtest-alias-mutation.test.ts"
+TEST_CASE_DESTRUCTURING_ASSIGNMENT_FIXTURE = PARITY / "test-fixtures" / "zdtest-destructuring-assignment.test.ts"
+TEST_CASE_DESTRUCTURED_ALIAS_MUTATION_FIXTURE = PARITY / "test-fixtures" / "zdtest-destructured-alias-mutation.test.ts"
+TEST_CASE_FOR_OF_ALIAS_MUTATION_FIXTURE = PARITY / "test-fixtures" / "zdtest-for-of-alias-mutation.test.ts"
+TEST_CASE_UNKNOWN_CALL_FIXTURE = PARITY / "test-fixtures" / "zdtest-unknown-call.test.ts"
+TEST_CASE_HOOK_CALLBACK_FIXTURE = PARITY / "test-fixtures" / "zdtest-hook-callback.test.ts"
+TEST_CASE_HOOK_FACTORY_FIXTURE = PARITY / "test-fixtures" / "zdtest-hook-factory.test.ts"
+TEST_CASE_HOOK_EXTRA_ARGUMENT_FIXTURE = PARITY / "test-fixtures" / "zdtest-hook-extra-argument.test.ts"
+TEST_CASE_IMPURE_SKIP_REASON_FIXTURE = PARITY / "test-fixtures" / "zdtest-impure-skip-reason.test.ts"
+TEST_CASE_SHADOWED_TEST_FIXTURE = PARITY / "test-fixtures" / "zdtest-shadowed-test.test.ts"
+TEST_CASE_UNRESOLVED_TITLE_FIXTURE = PARITY / "test-fixtures" / "zdtest-unresolved-title.test.ts"
+TEST_CASE_TYPE_ONLY_IMPORT_FIXTURE = PARITY / "test-fixtures" / "zdtest-type-only-import.test.ts"
+TEST_CASE_ALL_SOURCES_FIXTURE = PARITY / "test-fixtures" / "all-test-sources"
+NODE_TEST_ID_PATTERN = re.compile(r"^(ZDTEST-\d{4})(?:\s|$)")
 
 
 def run(command: list[str], cwd: Path = ROOT) -> subprocess.CompletedProcess[str]:
@@ -72,6 +89,11 @@ def canonical_fingerprint(value: Any) -> str:
 def typescript_test_titles(source_path: Path) -> list[str]:
     result = run(["node", str(TEST_CASE_INSPECTOR), str(source_path)])
     return json.loads(require_success(result, f"inspect test cases in {source_path}"))
+
+
+@lru_cache(maxsize=None)
+def typescript_test_source_rejected(source_path: Path) -> bool:
+    return run(["node", str(TEST_CASE_INSPECTOR), str(source_path)]).returncode != 0
 
 
 def inventory_fingerprints(
@@ -204,18 +226,77 @@ def mutation_probes(
     return results
 
 
-def node_mapping_errors(cases: list[dict[str, Any]], mappings: dict[str, Any]) -> list[str]:
+def node_test_id(title: str) -> str | None:
+    match = NODE_TEST_ID_PATTERN.match(title)
+    return match.group(1) if match else None
+
+
+def node_test_titles_by_source(root: Path = ROOT) -> dict[str, list[str]]:
+    excluded_directories = {"dist", "generated", "node_modules"}
+    sources = sorted(
+        path
+        for path in root.glob("packages/*/test/**/*.test.ts")
+        if not excluded_directories.intersection(path.relative_to(root).parts)
+    )
+    return {
+        path.relative_to(root).as_posix(): typescript_test_titles(path)
+        for path in sources
+    }
+
+
+def bound_node_test_ids(
+    mappings: dict[str, Any], titles_by_source: dict[str, list[str]]
+) -> set[str]:
+    registrations: dict[str, list[str]] = {}
+    for source_name, titles in titles_by_source.items():
+        for title in titles:
+            registration_id = node_test_id(title)
+            if registration_id is not None:
+                registrations.setdefault(registration_id, []).append(source_name)
+    bound = set()
+    for case_id, mapping in mappings.items():
+        case_name = mapping.get("case") if isinstance(mapping, dict) else None
+        if not isinstance(case_name, str) or "::" not in case_name:
+            continue
+        source_name = case_name.rsplit("::", 1)[0]
+        if registrations.get(case_id) == [source_name]:
+            bound.add(case_id)
+    return bound
+
+
+def node_mapping_errors(
+    cases: list[dict[str, Any]],
+    mappings: dict[str, Any],
+    titles_by_source: dict[str, list[str]] | None = None,
+) -> list[str]:
     errors = []
     inventory_ids = {case["id"] for case in cases}
     unknown_mapping_ids = sorted(set(mappings) - inventory_ids)
     if unknown_mapping_ids:
         errors.append(f"Node test mappings contain unknown IDs: {unknown_mapping_ids}")
+    missing_mapping_ids = sorted(inventory_ids - set(mappings))
+    if missing_mapping_ids:
+        errors.append(f"Node test mappings are missing IDs: {missing_mapping_ids}")
+    if titles_by_source is None:
+        titles_by_source = node_test_titles_by_source()
+    registrations: dict[str, list[tuple[str, str]]] = {}
+    for source_name, titles in titles_by_source.items():
+        for title in titles:
+            registration_id = node_test_id(title)
+            if registration_id is not None:
+                registrations.setdefault(registration_id, []).append((source_name, title))
+    unknown_registration_ids = sorted(set(registrations) - inventory_ids)
+    if unknown_registration_ids:
+        errors.append(
+            f"Node tests register unknown parity IDs: {unknown_registration_ids}"
+        )
     mapped_cases: dict[str, str] = {}
     for case_id, mapping in mappings.items():
         if set(mapping) != {"status", "case", "result", "note"}:
             errors.append(f"Node test mapping schema is invalid for {case_id}")
             continue
         if mapping["status"] != "MAPPED" or mapping["result"] != "PASS":
+            errors.append(f"Node test mapping is not passing for {case_id}")
             continue
         case_name = mapping["case"]
         if not isinstance(case_name, str) or "::" not in case_name:
@@ -229,26 +310,155 @@ def node_mapping_errors(cases: list[dict[str, Any]], mappings: dict[str, Any]) -
             errors.append(f"Node test mapping case is duplicated by {other_id} and {case_id}")
         mapped_cases[case_name] = case_id
         source_path = ROOT / source_name
-        if not source_path.is_file():
+        source_parts = Path(source_name).parts
+        valid_source = (
+            len(source_parts) >= 4
+            and source_parts[0] == "packages"
+            and source_parts[2] == "test"
+            and source_name.endswith(".test.ts")
+            and ".." not in source_parts
+            and source_path.resolve().is_relative_to(
+                (ROOT / source_parts[0] / source_parts[1] / source_parts[2]).resolve()
+            )
+        )
+        if not valid_source:
+            errors.append(f"Node test mapping source is outside packages/*/test for {case_id}: {source_name}")
+        elif not source_path.is_file():
             errors.append(f"Node test mapping source does not exist for {case_id}: {source_name}")
-        elif case_id not in source_path.read_text(encoding="utf8"):
-            errors.append(f"Node test mapping source does not contain {case_id}: {source_name}")
+        source_registrations = [
+            title
+            for registered_source, title in registrations.get(case_id, [])
+            if registered_source == source_name
+        ]
+        if len(source_registrations) != 1:
+            errors.append(
+                f"Node test mapping source must register {case_id} exactly once: "
+                f"{source_name} registered {len(source_registrations)}"
+            )
+        if len(registrations.get(case_id, [])) != 1:
+            errors.append(
+                f"Node parity ID must be registered exactly once across mapped sources: "
+                f"{case_id} registered {len(registrations.get(case_id, []))}"
+            )
     return errors
 
 
-def node_mapping_mutation_probes(cases: list[dict[str, Any]], mappings: dict[str, Any]) -> dict[str, str]:
+def node_mapping_mutation_probes(
+    cases: list[dict[str, Any]],
+    mappings: dict[str, Any],
+    titles_by_source: dict[str, list[str]],
+) -> dict[str, str]:
     case_ids = list(mappings)
     first_id, second_id = case_ids[:2]
+    first_source = mappings[first_id]["case"].rsplit("::", 1)[0]
+    second_source = next(
+        mapping["case"].rsplit("::", 1)[0]
+        for mapping in mappings.values()
+        if mapping["case"].rsplit("::", 1)[0] != first_source
+    )
+    first_title = next(
+        title for title in titles_by_source[first_source] if node_test_id(title) == first_id
+    )
     duplicate = copy.deepcopy(mappings)
     duplicate[second_id]["case"] = duplicate[first_id]["case"]
     mismatched = copy.deepcopy(mappings)
     mismatched[first_id]["case"] = mismatched[first_id]["case"].rsplit("::", 1)[0] + f"::{second_id}"
     nonexistent = copy.deepcopy(mappings)
     nonexistent[first_id]["case"] = f"packages/api/test/does-not-exist.test.ts::{first_id}"
+    wrong_source = copy.deepcopy(mappings)
+    wrong_source[first_id]["case"] = f"{second_source}::{first_id}"
+    duplicate_registration = copy.deepcopy(titles_by_source)
+    duplicate_registration[first_source] = [
+        *duplicate_registration[first_source],
+        first_title,
+    ]
+    missing_registration = copy.deepcopy(titles_by_source)
+    missing_registration[first_source] = [
+        title
+        for title in missing_registration[first_source]
+        if node_test_id(title) != first_id
+    ]
+    text_only_titles = typescript_test_titles(TEST_CASE_TEXT_ONLY_FIXTURE)
+    hook_callback_titles = typescript_test_titles(TEST_CASE_HOOK_CALLBACK_FIXTURE)
+    duplicate_in_unmapped_source = copy.deepcopy(titles_by_source)
+    duplicate_in_unmapped_source.update(
+        node_test_titles_by_source(TEST_CASE_ALL_SOURCES_FIXTURE)
+    )
+    single_case = [next(case for case in cases if case["id"] == first_id)]
+    single_mapping = {first_id: mappings[first_id]}
     return {
-        "duplicateNodeCase": "PASS" if node_mapping_errors(cases, duplicate) else "FAIL",
-        "mismatchedNodeCaseId": "PASS" if node_mapping_errors(cases, mismatched) else "FAIL",
-        "nonexistentNodeCaseSource": "PASS" if node_mapping_errors(cases, nonexistent) else "FAIL",
+        "commentOrStringOnlyNodeCase": "PASS"
+        if node_mapping_errors(single_case, single_mapping, {first_source: text_only_titles})
+        else "FAIL",
+        "hookCallbackIsNotNodeTestRegistration": "PASS"
+        if node_mapping_errors(
+            single_case, single_mapping, {first_source: hook_callback_titles}
+        )
+        else "FAIL",
+        "hookFactoryIsRejected": "PASS"
+        if typescript_test_source_rejected(TEST_CASE_HOOK_FACTORY_FIXTURE)
+        else "FAIL",
+        "hookExtraArgumentIsRejected": "PASS"
+        if typescript_test_source_rejected(TEST_CASE_HOOK_EXTRA_ARGUMENT_FIXTURE)
+        else "FAIL",
+        "localNoopIsNotNodeTestRegistration": "PASS"
+        if typescript_test_source_rejected(TEST_CASE_LOCAL_NOOP_FIXTURE)
+        else "FAIL",
+        "impureSkipReasonArgumentIsRejected": "PASS"
+        if typescript_test_source_rejected(TEST_CASE_IMPURE_SKIP_REASON_FIXTURE)
+        else "FAIL",
+        "shadowedNodeTestBindingIsRejected": "PASS"
+        if typescript_test_source_rejected(TEST_CASE_SHADOWED_TEST_FIXTURE)
+        else "FAIL",
+        "aliasedMutationIsNotNodeTestRegistration": "PASS"
+        if typescript_test_source_rejected(TEST_CASE_ALIAS_MUTATION_FIXTURE)
+        else "FAIL",
+        "destructuredAliasMutationIsRejected": "PASS"
+        if typescript_test_source_rejected(
+            TEST_CASE_DESTRUCTURED_ALIAS_MUTATION_FIXTURE
+        )
+        else "FAIL",
+        "destructuringAssignmentIsRejected": "PASS"
+        if typescript_test_source_rejected(
+            TEST_CASE_DESTRUCTURING_ASSIGNMENT_FIXTURE
+        )
+        else "FAIL",
+        "forOfAliasMutationIsRejected": "PASS"
+        if typescript_test_source_rejected(TEST_CASE_FOR_OF_ALIAS_MUTATION_FIXTURE)
+        else "FAIL",
+        "duplicateNodeCase": "PASS"
+        if node_mapping_errors(cases, duplicate, titles_by_source)
+        else "FAIL",
+        "duplicateNodeRegistration": "PASS"
+        if node_mapping_errors(cases, mappings, duplicate_registration)
+        else "FAIL",
+        "mismatchedNodeCaseId": "PASS"
+        if node_mapping_errors(cases, mismatched, titles_by_source)
+        else "FAIL",
+        "missingNodeRegistration": "PASS"
+        if node_mapping_errors(cases, mappings, missing_registration)
+        else "FAIL",
+        "mutableBindingIsNotNodeTestRegistration": "PASS"
+        if typescript_test_source_rejected(TEST_CASE_MUTABLE_BINDING_FIXTURE)
+        else "FAIL",
+        "typeOnlyImportIsNotNodeTestRegistration": "PASS"
+        if typescript_test_source_rejected(TEST_CASE_TYPE_ONLY_IMPORT_FIXTURE)
+        else "FAIL",
+        "unknownSideEffectCallIsRejected": "PASS"
+        if typescript_test_source_rejected(TEST_CASE_UNKNOWN_CALL_FIXTURE)
+        else "FAIL",
+        "unresolvedNodeTestTitleIsRejected": "PASS"
+        if typescript_test_source_rejected(TEST_CASE_UNRESOLVED_TITLE_FIXTURE)
+        else "FAIL",
+        "nonexistentNodeCaseSource": "PASS"
+        if node_mapping_errors(cases, nonexistent, titles_by_source)
+        else "FAIL",
+        "wrongNodeCaseSource": "PASS"
+        if node_mapping_errors(cases, wrong_source, titles_by_source)
+        else "FAIL",
+        "duplicateRegistrationInUnmappedSource": "PASS"
+        if node_mapping_errors(cases, mappings, duplicate_in_unmapped_source)
+        else "FAIL",
     }
 
 
@@ -723,11 +933,12 @@ def validate(
             errors.append(f"external dependency schema is invalid for {case_id}")
     mappings = json.loads(NODE_TEST_MAPPINGS.read_text(encoding="utf8"))
     inventory_by_id = {case["id"]: case["nodeParity"] for case in cases}
-    errors.extend(node_mapping_errors(cases, mappings))
+    titles_by_source = node_test_titles_by_source()
+    errors.extend(node_mapping_errors(cases, mappings, titles_by_source))
     for case_id, mapping in mappings.items():
         if inventory_by_id.get(case_id) != mapping:
             errors.append(f"generated Node test mapping differs from overlay for {case_id}")
-    mapping_probes = node_mapping_mutation_probes(cases, mappings)
+    mapping_probes = node_mapping_mutation_probes(cases, mappings, titles_by_source)
     failed_mapping_probes = [name for name, status in mapping_probes.items() if status != "PASS"]
     if failed_mapping_probes:
         errors.append(f"Node test mapping mutation probes failed: {failed_mapping_probes}")
@@ -990,7 +1201,12 @@ def validate_existing() -> None:
     errors, fingerprints, probes = validate(
         baseline, api_inventory, test_inventory, reference_observations
     )
+    mappings = json.loads(NODE_TEST_MAPPINGS.read_text(encoding="utf8"))
+    titles_by_source = node_test_titles_by_source()
+    registered_ids = bound_node_test_ids(mappings, titles_by_source)
     print(f"Validation-only: {'PASS' if not errors else 'FAIL'}")
+    print(f"Node test registrations: {len(registered_ids)}/{EXPECTED_TEST_COUNT}")
+    print(f"Node test sources scanned: {len(titles_by_source)}")
     print(f"Fingerprints: {json.dumps(fingerprints, sort_keys=True)}")
     print(f"Mutation probes: {json.dumps(probes, sort_keys=True)}")
     if errors:

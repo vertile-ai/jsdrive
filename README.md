@@ -107,7 +107,7 @@ The Node production runtime has one external npm dependency, `ws`; the other pro
 | `npm run generate` | Regenerate TypeScript and Rust protocol bindings from the pinned schemas. |
 | `npm run typecheck` | Type-check the strict TypeScript workspace. |
 | `npm test` | Run deterministic tests and single-instance headless browser conformance journeys. |
-| `npm run test:parity --workspace=guanine` | Run headless parity with one persistent Chromium, followed by exclusive lifecycle and live-site cases. |
+| `npm run test:parity:headless --workspace=guanine` | Run headless parity with one persistent Chromium, followed by exclusive lifecycle and live-site cases. `test:parity` is an alias. |
 | `NODRIVER_ALLOW_HEADFUL=1 npm run test:parity:headful --workspace=guanine` | Run the separately authorized headful phase. Only use this after explicit approval for that run. |
 | `npm run conformance:dom` | Run DOM/input/capture conformance. |
 | `npm run conformance:network` | Run cookies/network/interception/download conformance. |

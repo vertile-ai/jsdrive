@@ -488,11 +488,11 @@
       "parameterization": null,
       "quadrants": [],
       "reason": {
-        "code": "managed-process-isolation",
-        "detail": "The assertion covers serial Chrome process, port, and profile isolation; transport routing is not part of its observable result."
+        "code": "serial-managed-process-equivalence",
+        "detail": "The repository single-managed-Chromium policy permits only a serial equivalence: three non-overlapping managed processes with distinct ports, profiles, and navigation outcomes. Upstream concurrent multi-browser behavior is not verified."
       },
-      "source": "packages/api/test/browser-core-parity.test.ts",
-      "title": "ZDTEST-0020 one Config launches three isolated browsers"
+      "source": "packages/api/test/multi-browser-serial-parity.test.ts",
+      "title": "ZDTEST-0020 serially launches three isolated browsers under the single-managed-process policy"
     },
     {
       "applicability": "applicable",

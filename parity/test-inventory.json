@@ -468,8 +468,8 @@
       "file": "tests/core/test_multiple_browsers.py",
       "id": "ZDTEST-0020",
       "nodeParity": {
-        "case": "packages/api/test/browser-core-parity.test.ts::ZDTEST-0020",
-        "note": "Passed three real Chrome launches from one Config with unique ports, temporary profiles, and independent navigation.",
+        "case": "packages/api/test/multi-browser-serial-parity.test.ts::ZDTEST-0020",
+        "note": "Passed three strictly serial real headless Chrome launches from one Config with distinct ports, temporary profiles, and navigation outcomes; observed managed-process concurrency peaked at exactly 1. Upstream concurrent multi-browser behavior is not verified.",
         "result": "PASS",
         "status": "MAPPED"
       },

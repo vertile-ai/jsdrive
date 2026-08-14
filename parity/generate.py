@@ -54,6 +54,7 @@ TRANSPORT_MATRIX_HELPER = ROOT / "packages/api/test/support/transport-matrix.ts"
 TRANSPORT_MATRIX_REPORT = PARITY / "transport-matrix-report.json"
 REACT_INPUT_FIXTURE = ROOT / "packages/api/test/fixtures/react-controlled-input.html"
 REACT_INPUT_RUNNER = ROOT / "packages/api/test/input-react-zendriver.py"
+MULTI_BROWSER_SERIAL_TEST = ROOT / "packages/api/test/multi-browser-serial-parity.test.ts"
 TEST_CASE_TEXT_ONLY_FIXTURE = PARITY / "test-fixtures" / "zdtest-text-only.test.ts"
 TEST_CASE_LOCAL_NOOP_FIXTURE = PARITY / "test-fixtures" / "zdtest-local-noop.test.ts"
 TEST_CASE_MUTABLE_BINDING_FIXTURE = PARITY / "test-fixtures" / "zdtest-mutable-binding.test.ts"
@@ -118,16 +119,28 @@ EXPECTED_TRANSPORT_CALLBACK_COUNT = 99
 EXPECTED_TRANSPORT_CALLBACK_FINGERPRINT = "4893660f0597e0e70a5d71543864f862f8045d802b69ab15e2f64c36214d6158"
 EXPECTED_REACT_INPUT_FIXTURE_SHA256 = "7586e719bdfe972eee4b279f1620c1c8851fb694cacb5a2a5ee2412176039f2c"
 EXPECTED_REACT_INPUT_RUNNER_SHA256 = "940949a3297475a60917bd96664e3a1abd577250ccf5e50af9ae78bd26de7ec0"
+EXPECTED_MULTI_BROWSER_SERIAL_TEST_SHA256 = "a3fc0b8ed9131a3075b2f22a78a5bb3dace131e54b82bb857c4e332ca26d5a47"
 EXPECTED_NOT_RUN_TEST_IDS = {"ZDTEST-0022", "ZDTEST-0024", "ZDTEST-0026"}
+EXPECTED_ZDTEST_0020_TITLE = "ZDTEST-0020 serially launches three isolated browsers under the single-managed-process policy"
+EXPECTED_ZDTEST_0020_MAPPING_NOTE = (
+    "Passed three strictly serial real headless Chrome launches from one Config with "
+    "distinct ports, temporary profiles, and navigation outcomes; observed managed-process "
+    "concurrency peaked at exactly 1. Upstream concurrent multi-browser behavior is not verified."
+)
+EXPECTED_ZDTEST_0020_REASON = {
+    "code": "serial-managed-process-equivalence",
+    "detail": (
+        "The repository single-managed-Chromium policy permits only a serial equivalence: "
+        "three non-overlapping managed processes with distinct ports, profiles, and navigation "
+        "outcomes. Upstream concurrent multi-browser behavior is not verified."
+    ),
+}
 EXPECTED_TRANSPORT_NON_APPLICABLE = {
     "ZDTEST-0003": {
         "code": "controlled-backend-failure",
         "detail": "The assertion injects one intentionally failing backend, so substituting transport quadrants would change the behavior under test.",
     },
-    "ZDTEST-0020": {
-        "code": "managed-process-isolation",
-        "detail": "The assertion covers serial Chrome process, port, and profile isolation; transport routing is not part of its observable result.",
-    },
+    "ZDTEST-0020": EXPECTED_ZDTEST_0020_REASON,
 }
 EVIDENCE_EXECUTION_GATES = (
     (
@@ -224,6 +237,66 @@ print(Path(\"parity/react-input-observations.json\").read_text())
         if runner_errors == [runner_error]
         else "FAIL",
     }
+
+
+def multi_browser_serial_source_errors(source: bytes | None = None) -> list[str]:
+    source = MULTI_BROWSER_SERIAL_TEST.read_bytes() if source is None else source
+    if source_sha256(source) == EXPECTED_MULTI_BROWSER_SERIAL_TEST_SHA256:
+        return []
+    return ["M7 serial multi-browser whole-source fingerprint does not match the fixed trusted contract"]
+
+
+def multi_browser_serial_source_mutation_probes() -> dict[str, str]:
+    source = MULTI_BROWSER_SERIAL_TEST.read_text(encoding="utf8")
+    expected_error = "M7 serial multi-browser whole-source fingerprint does not match the fixed trusted contract"
+    mutations = {
+        "multiBrowserMaxConcurrencyExactOneRejected": (
+            "  assert.equal(maxManagedProcessConcurrency, 1);\n",
+            "",
+        ),
+        "multiBrowserUniqueDebugPortsRejected": (
+            "  assert.equal(ports.size, 3);\n",
+            "",
+        ),
+        "multiBrowserUniqueProfilesRejected": (
+            "  assert.equal(profiles.size, 3);\n",
+            "",
+        ),
+        "multiBrowserUniqueNavigationOutcomesRejected": (
+            "  assert.equal(new Set(outcomes.map((outcome) => outcome.url)).size, 3);\n",
+            "",
+        ),
+        "multiBrowserUnawaitedStopRejected": (
+            "      await browser.stop();\n",
+            "      void browser.stop();\n",
+        ),
+        "multiBrowserPidCleanupRejected": (
+            "      if (pid !== undefined) assert.equal(processExists(pid), false, `run ${run} PID ${pid} survived stop`);\n",
+            "",
+        ),
+        "multiBrowserProfileCleanupRejected": (
+            "      if (profile !== undefined) assert.equal(await pathExists(profile), false, `run ${run} profile survived stop`);\n",
+            "",
+        ),
+        "multiBrowserExplicitHeadlessRejected": (
+            "  const shared = new Config({ executable, headless: true, backend: CdpConnection, connectionMode: \"direct\" });\n",
+            "  const shared = new Config({ executable, headless: false, backend: CdpConnection, connectionMode: \"direct\" });\n",
+        ),
+        "multiBrowserCanonicalLockAssertionRejected": (
+            "  assert.equal(await pathExists(HARNESS_LOCK_PATH), true, \"ZDTEST-0020 must hold the canonical browser lock\");\n",
+            "",
+        ),
+    }
+    results = {}
+    for name, (old, new) in mutations.items():
+        if source.count(old) != 1:
+            results[name] = "FAIL"
+            continue
+        errors = multi_browser_serial_source_errors(
+            source.replace(old, new, 1).encode("utf8")
+        )
+        results[name] = "PASS" if errors == [expected_error] else "FAIL"
+    return results
 
 
 @lru_cache(maxsize=None)
@@ -324,6 +397,7 @@ def inventory_fingerprints(
         "referenceObservations": canonical_fingerprint(reference_observations),
         "reactInputFixtureSource": source_sha256(REACT_INPUT_FIXTURE.read_bytes()),
         "reactInputRunnerSource": source_sha256(REACT_INPUT_RUNNER.read_bytes()),
+        "multiBrowserSerialTestSource": source_sha256(MULTI_BROWSER_SERIAL_TEST.read_bytes()),
     }
 
 
@@ -389,6 +463,7 @@ def mutation_probes(
             else "FAIL"
         )
     results.update(react_input_source_mutation_probes())
+    results.update(multi_browser_serial_source_mutation_probes())
     return results
 
 
@@ -776,6 +851,8 @@ def transport_matrix_errors(
         case = by_id.get(case_id)
         if case is None:
             continue
+        if case_id == "ZDTEST-0020" and case.get("title") != EXPECTED_ZDTEST_0020_TITLE:
+            errors.append("ZDTEST-0020 title does not declare the fixed serial single-managed-process equivalence")
         expected_reason = EXPECTED_TRANSPORT_NON_APPLICABLE.get(case_id)
         if expected_reason is None:
             if case.get("applicability") != "applicable":
@@ -859,6 +936,7 @@ def isolated_transport_refresh_mutation_probes() -> dict[str, str]:
     names = (
         "transportRefreshRejectsHelperTopLevelPop",
         "transportRefreshRejectsCallbackEarlyReturn",
+        "multiBrowserRefreshCannotAutoBlessAssertionRemoval",
     )
     with TemporaryDirectory(prefix="nodriver-transport-refresh-probe-") as directory:
         isolated_root = Path(directory) / "repo"
@@ -929,9 +1007,16 @@ def isolated_transport_refresh_mutation_probes() -> dict[str, str]:
             '  return;\n  await runTransportMatrix("ZDTEST-0037",',
             "transport applicable callback contract fingerprint mismatch",
         )
+        multi_browser_rejected = rejected_without_refresh(
+            "packages/api/test/multi-browser-serial-parity.test.ts",
+            "  assert.equal(maxManagedProcessConcurrency, 1);\n",
+            "",
+            "M7 serial multi-browser whole-source fingerprint does not match the fixed trusted contract",
+        )
         return {
             names[0]: "PASS" if helper_rejected else "FAIL",
             names[1]: "PASS" if callback_rejected else "FAIL",
+            names[2]: "PASS" if multi_browser_rejected else "FAIL",
         }
 
 
@@ -945,6 +1030,7 @@ def transport_matrix_mutation_probes(
         "transportCaseImplicitBackend",
         "transportCaseImplicitConnectionMode",
         "transportCaseMissingExecutableReason",
+        "transportSerialEquivalenceWording",
         "transportCaseMissingApplicability",
         "transportHelperMissingQuadrant",
         "transportHelperDefaultBackend",
@@ -983,6 +1069,12 @@ def transport_matrix_mutation_probes(
     implicit_mode["cases"][applicable_index]["quadrants"][0]["connectionMode"] = None
     missing_reason = copy.deepcopy(report)
     del missing_reason["cases"][not_applicable_index]["reason"]["detail"]
+    misleading_serial_equivalence = copy.deepcopy(report)
+    serial_case = next(
+        case for case in misleading_serial_equivalence["cases"]
+        if case["id"] == "ZDTEST-0020"
+    )
+    serial_case["reason"]["detail"] = "Three browsers passed."
     undeclared = copy.deepcopy(report)
     undeclared["cases"][applicable_index]["applicability"] = "undeclared"
 
@@ -991,6 +1083,7 @@ def transport_matrix_mutation_probes(
         "transportCaseImplicitBackend": implicit_backend,
         "transportCaseImplicitConnectionMode": implicit_mode,
         "transportCaseMissingExecutableReason": missing_reason,
+        "transportSerialEquivalenceWording": misleading_serial_equivalence,
         "transportCaseMissingApplicability": undeclared,
     }
     probes = {
@@ -1128,6 +1221,8 @@ def node_mapping_errors(
         if set(mapping) != {"status", "case", "result", "note"}:
             errors.append(f"Node test mapping schema is invalid for {case_id}")
             continue
+        if case_id == "ZDTEST-0020" and mapping.get("note") != EXPECTED_ZDTEST_0020_MAPPING_NOTE:
+            errors.append("ZDTEST-0020 mapping note does not use the fixed truthful serial-equivalence wording")
         expected_result = "NOT_RUN" if case_id in EXPECTED_NOT_RUN_TEST_IDS else "PASS"
         if mapping["status"] != "MAPPED" or mapping["result"] != expected_result:
             errors.append(
@@ -1230,7 +1325,17 @@ def node_mapping_mutation_probes(
     forged_pending_pass["ZDTEST-0022"]["result"] = "PASS"
     forged_unexpected_not_run = copy.deepcopy(mappings)
     forged_unexpected_not_run[first_id]["result"] = "NOT_RUN"
+    misleading_multi_browser_mapping = copy.deepcopy(mappings)
+    misleading_multi_browser_mapping["ZDTEST-0020"]["note"] = "Passed three browsers."
     return {
+        "misleadingMultiBrowserMappingRejected": "PASS"
+        if any(
+            "fixed truthful serial-equivalence wording" in error
+            for error in node_mapping_errors(
+                cases, misleading_multi_browser_mapping, titles_by_source
+            )
+        )
+        else "FAIL",
         "pendingM5HeadfulPassRejected": "PASS"
         if node_mapping_errors(cases, forged_pending_pass, titles_by_source)
         else "FAIL",
@@ -2364,7 +2469,7 @@ def validate(
     test_inventory: dict[str, Any],
     reference_observations: dict[str, Any],
 ) -> tuple[list[str], dict[str, str], dict[str, str]]:
-    errors = react_input_source_errors()
+    errors = [*react_input_source_errors(), *multi_browser_serial_source_errors()]
     if baseline["upstream"]["commit"] != EXPECTED_COMMIT:
         errors.append("upstream commit does not match the fixed parity baseline")
     if baseline["upstream"]["tag"] != EXPECTED_TAG:

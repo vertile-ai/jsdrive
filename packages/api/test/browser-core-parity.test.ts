@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import { createServer, type Server } from "node:http";
 import test from "node:test";
-import { CdpConnection, type RuntimeBackendFactory } from "@vertile-ai/jsdriver-runtime-js";
-import { Browser, Config, discoverChromeExecutable } from "../src/index.js";
+import type { RuntimeBackendFactory } from "@vertile-ai/jsdriver-runtime-js";
+import { Browser, discoverChromeExecutable } from "../src/index.js";
 import { browserCaseSkipReason } from "./support/persistent-harness.js";
 import { runTransportMatrix, transportNotApplicable } from "./support/transport-matrix.js";
 
@@ -108,38 +108,6 @@ for (const [parameter, headless, ids] of [
     });
   });
 }
-
-test("ZDTEST-0020 one Config launches three isolated browsers", {
-  timeout: 60_000,
-  skip: browserCaseSkipReason(true),
-}, async () => {
-  transportNotApplicable("ZDTEST-0020", {
-    code: "managed-process-isolation",
-    detail: "The assertion covers serial Chrome process, port, and profile isolation; transport routing is not part of its observable result.",
-  });
-  const shared = new Config({ executable, headless: true, backend: CdpConnection, connectionMode: "direct" });
-  const ports = new Set<number>();
-  const profiles = new Set<string>();
-  const titles: string[] = [];
-  for (let index = 0; index < 3; index += 1) {
-    const browser = await Browser.start(shared);
-    try {
-      assert.equal(browser.config.usesCustomDataDir, false);
-      assert.ok(browser.config.port !== undefined);
-      assert.ok(browser.config.userDataDir !== undefined);
-      ports.add(browser.config.port);
-      profiles.add(browser.config.userDataDir);
-      titles.push((await (await browser.get(`${fixtureUrl}/${index + 1}`)).updateTarget()).title);
-    } finally {
-      await browser.stop();
-    }
-  }
-  assert.equal(shared.port, undefined);
-  assert.equal(shared.configuredUserDataDir, undefined);
-  assert.equal(ports.size, 3);
-  assert.equal(profiles.size, 3);
-  assert.deepEqual(titles, ["Example Domain", "Example Domain", "Example Domain"]);
-});
 
 async function waitUntil(predicate: () => boolean, timeoutMs: number): Promise<void> {
   const deadline = Date.now() + timeoutMs;

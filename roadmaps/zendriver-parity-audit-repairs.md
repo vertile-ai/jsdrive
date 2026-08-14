@@ -58,6 +58,9 @@
 - `AUD-007`: `ZDTEST-0020` 必须明确区分上游 multi-browser assertion 与仓库单 managed Chromium policy，证明三个独立 port/profile/navigation 结果且任意时刻最多一个 managed process；报告不得暗示并发已验证。
 - Evidence: lifecycle trace/max-concurrency assertion、serial three-profile real headless run、mapping/report wording validation。
 - Write scope: browser-core parity case、mapping/report/roadmap wording；不得启动并发 Chromium。
+- 实现状态：`ZDTEST-0020` 已改为 exclusive harness 下的三次严格串行等价执行；mapping 与 transport report 明确声明上游 concurrent multi-browser behavior 未验证。
+- 验证证据（2026-08-15）：`npm run test:parity:m7:headless --workspace=guanine` 通过 1/1、0 skip；lifecycle trace 记录三个不同 PID/port/profile/navigation URL，observed max managed-process concurrency 恰为 1；postflight 中三个 PID/profile 均不存在、canonical lock 不存在，运行前后的 temp profile baseline count/hash 完全一致。
+- 证据完整性：generator 内的 trusted whole-source SHA-256 绑定 max concurrency、三类 uniqueness、逐轮 stop/PID/profile cleanup、explicit headless 与 canonical lock assertions；九个精确 mutation probes 和 isolated refresh non-write probe 全部通过，`--refresh-derived` 不能自动接受被削弱的测试源码。
 
 ## Constraints
 

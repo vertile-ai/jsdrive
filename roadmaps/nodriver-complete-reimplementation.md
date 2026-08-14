@@ -118,7 +118,7 @@ V1 不是玩具层，而是一个真实可运行的完整纵向路径：启动�
 - `PAR-001` 的 checked-in inventory 已清零：16/16 root exports、45/45 core symbols、472/472 core members，共 533/533 项均有 executable semantic evidence；`MISSING`、`UNKNOWN`、`CANDIDATE` 均为 0。
 - `PAR-002` inventory 固定收集 101 个 Zendriver 0.15.5 parametrized cases，报告 0 `UNMAPPED`、0 `NOT_RUN`，generator validation 与 mutation probes 全部通过。
 - Connection、Future、exception、keys、Position、Element、expectation/interception、Browser、Tab 与 utility public surface 已补齐；strict TS、JS/native、direct/flattened 和真实 headless Chromium 路径通过。
-- `test_multiple_browsers_diff_userdata` 使用仓库批准的串行等价执行：同一 `Config` 依次启动三个 Chromium，验证三个不同 port/profile 和相同页面结果，任意时刻只存在一个 managed Chromium；`ZDTEST-0020` 已实际通过，不再 skip。
+- `test_multiple_browsers_diff_userdata` 使用仓库批准的串行等价执行：同一 `Config` 依次启动三个 Chromium，验证三个不同 port/profile/navigation outcome，并由 lifecycle trace 证明 observed max managed-process concurrency 恰为 1；这是 single-managed-Chromium policy 下的 serial equivalence，上游 concurrent multi-browser behavior 未验证。
 - Python 语言层继承被显式映射到 JavaScript：`IntEnum`/`str Enum` 使用 number/string primitives，`list` 使用 `Array`，async context 使用 `aenter/aexit` 与 `Symbol.asyncDispose`，call/await/repr dunder 使用命名方法、PromiseLike 或 `toString`。这些映射由 dedicated `ZDAPI-*` cases 覆盖，不引入 Python interpreter compatibility layer。
 - 保留一个 ECMAScript 规范边界：当 `EventTransaction.event` 本身是 thenable 时，同步 `event`/`result()` 保持 object identity，但 JavaScript `await` 必须递归 assimilate thenable 并返回其 fulfillment value；`ZDAPI-EVENT-TRANSACTION-THENABLE-001` 固定记录该差异。
 - `Tab.activate` / `Tab.bring_to_front` 的 CDP command routing 只用 fake backend 验证；真实调用会违反“不得激活窗口或抢占桌面焦点”的仓库 policy，因此未在 Chromium 上执行。

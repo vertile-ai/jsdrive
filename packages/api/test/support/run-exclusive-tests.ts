@@ -15,7 +15,6 @@ if (testFiles.length === 0) throw new Error("Provide at least one compiled test 
 const environment: NodeJS.ProcessEnv = {
   ...process.env,
   [HARNESS_PHASE_ENV]: headful ? "headful" : "headless",
-  NODRIVER_SKIP_MULTI_BROWSER: "1",
   ...(headful ? { [HEADFUL_REQUEST_ENV]: "1" } : {}),
 };
 assertHeadfulAuthorized(!headful, environment);

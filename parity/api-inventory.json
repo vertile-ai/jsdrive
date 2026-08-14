@@ -7,21 +7,19 @@
       "VERIFIED": 62
     },
     "coreSymbols": {
-      "CANDIDATE": 12,
-      "MISSING": 14,
+      "CANDIDATE": 11,
       "UNKNOWN": 3,
-      "VERIFIED": 16
+      "VERIFIED": 31
     },
     "rootExports": {
       "CANDIDATE": 6,
-      "MISSING": 6,
-      "VERIFIED": 4
+      "VERIFIED": 10
     },
     "total": {
-      "CANDIDATE": 164,
-      "MISSING": 117,
+      "CANDIDATE": 163,
+      "MISSING": 97,
       "UNKNOWN": 170,
-      "VERIFIED": 82
+      "VERIFIED": 103
     }
   },
   "nodriver": {
@@ -443,6 +441,30 @@
           {
             "kind": "property",
             "name": "websocket_url"
+          }
+        ]
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "ContraDict",
+        "package": "jsdriver",
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "get"
+          },
+          {
+            "kind": "method",
+            "name": "has"
+          },
+          {
+            "kind": "method",
+            "name": "set"
+          },
+          {
+            "kind": "method",
+            "name": "toJSON"
           }
         ]
       },
@@ -1455,9 +1477,100 @@
         "prototypeMembers": []
       },
       {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "cdict",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": null,
+        "kind": "object",
+        "name": "cdp",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "cdpGetModule",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "cdp_get_module",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "cfFindInteractiveChallenge",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "cfIsInteractiveChallengePresent",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "cfWaitForInteractiveChallenge",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "cf_find_interactive_challenge",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "cf_is_interactive_challenge_present",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "cf_wait_for_interactive_challenge",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "circle",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "compareTargetInfo",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
         "functionLength": 2,
         "kind": "function-or-class",
         "name": "compareTraces",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "compare_target_info",
         "package": "jsdriver",
         "prototypeMembers": []
       },
@@ -1469,9 +1582,30 @@
         "prototypeMembers": []
       },
       {
+        "functionLength": null,
+        "kind": "object",
+        "name": "core",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
         "functionLength": 3,
         "kind": "function-or-class",
         "name": "create",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "createFromUndetectedChromedriver",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "create_from_undetected_chromedriver",
         "package": "jsdriver",
         "prototypeMembers": []
       },
@@ -1525,6 +1659,34 @@
         "prototypeMembers": []
       },
       {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "filterRecurse",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "filterRecurseAll",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "filter_recurse",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "filter_recurse_all",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
         "functionLength": 1,
         "kind": "function-or-class",
         "name": "findBinary",
@@ -1555,6 +1717,20 @@
       {
         "functionLength": 0,
         "kind": "function-or-class",
+        "name": "freePort",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "free_port",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
         "name": "getRegisteredInstances",
         "package": "jsdriver",
         "prototypeMembers": []
@@ -1570,6 +1746,20 @@
         "functionLength": 1,
         "kind": "function-or-class",
         "name": "hasTrace",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "htmlFromTree",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "html_from_tree",
         "package": "jsdriver",
         "prototypeMembers": []
       },
@@ -1595,9 +1785,30 @@
         "prototypeMembers": []
       },
       {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "loop",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
         "functionLength": 1,
         "kind": "function-or-class",
         "name": "normalizeTrace",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "removeFromTree",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "remove_from_tree",
         "package": "jsdriver",
         "prototypeMembers": []
       },
@@ -1644,6 +1855,27 @@
         "prototypeMembers": []
       },
       {
+        "functionLength": null,
+        "kind": "object",
+        "name": "util",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "verifyCf",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "verify_cf",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
         "functionLength": 2,
         "kind": "function-or-class",
         "name": "waitForSessionMaterial",
@@ -1655,6 +1887,8 @@
       "packages/api/dist/browser.d.ts",
       "packages/api/dist/config.d.ts",
       "packages/api/dist/cookies.d.ts",
+      "packages/api/dist/cloudflare.d.ts",
+      "packages/api/dist/compat.d.ts",
       "packages/api/dist/download.d.ts",
       "packages/api/dist/element.d.ts",
       "packages/api/dist/http-api.d.ts",
@@ -1663,6 +1897,7 @@
       "packages/api/dist/provider.d.ts",
       "packages/api/dist/tab.d.ts",
       "packages/api/dist/trace.d.ts",
+      "packages/api/dist/util.d.ts",
       "packages/runtime-js/dist/connection.d.ts",
       "packages/runtime-js/dist/connection-compat.d.ts"
     ],
@@ -4044,6 +4279,100 @@
             "type": null
           }
         ]
+      },
+      "ContraDict": {
+        "file": "packages/api/dist/compat.d.ts",
+        "members": [
+          {
+            "declaration": "constructor(value?: Readonly<Record<string, unknown>> | Iterable<readonly [string, unknown]>);",
+            "kind": "constructor",
+            "name": "constructor",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "value",
+                "optional": true,
+                "rest": false,
+                "type": "Readonly<Record<string, unknown>> | Iterable<readonly [string, unknown]>"
+              }
+            ],
+            "returnType": null,
+            "typeParameters": []
+          },
+          {
+            "declaration": "get(key: string): unknown;",
+            "kind": "method",
+            "name": "get",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "key",
+                "optional": false,
+                "rest": false,
+                "type": "string"
+              }
+            ],
+            "returnType": "unknown",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "set(key: string, value: unknown): this;",
+            "kind": "method",
+            "name": "set",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "key",
+                "optional": false,
+                "rest": false,
+                "type": "string"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "value",
+                "optional": false,
+                "rest": false,
+                "type": "unknown"
+              }
+            ],
+            "returnType": "this",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "has(key: string): boolean;",
+            "kind": "method",
+            "name": "has",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "key",
+                "optional": false,
+                "rest": false,
+                "type": "string"
+              }
+            ],
+            "returnType": "boolean",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "toJSON(): Readonly<Record<string, unknown>>;",
+            "kind": "method",
+            "name": "toJSON",
+            "parameters": [],
+            "returnType": "Readonly<Record<string, unknown>>",
+            "static": false,
+            "typeParameters": []
+          }
+        ],
+        "nonPublicMembers": []
       },
       "CookieJar": {
         "file": "packages/api/dist/cookies.d.ts",
@@ -9980,6 +10309,13 @@
         "file": "packages/runtime-js/dist/connection.d.ts",
         "kind": "class"
       },
+      "CdpModule": {
+        "declarations": [
+          "export interface CdpModule { readonly name: string; command(name: string): string; event(name: string): string; }"
+        ],
+        "file": "packages/api/dist/util.d.ts",
+        "kind": "interface"
+      },
       "CdpProtocolError": {
         "declarations": [
           "export declare class CdpProtocolError extends Error { readonly code: number; readonly data?: unknown | undefined; constructor(code: number, message: string, data?: unknown | undefined); }"
@@ -10000,6 +10336,13 @@
         ],
         "file": "packages/api/dist/trace.d.ts",
         "kind": "class"
+      },
+      "CloudflareChallengeElements": {
+        "declarations": [
+          "export type CloudflareChallengeElements = readonly [ container: Element | null, frame: Element | null, response: Element | null ];"
+        ],
+        "file": "packages/api/dist/cloudflare.d.ts",
+        "kind": "type"
       },
       "CommandDescriptor": {
         "declarations": [
@@ -10063,6 +10406,13 @@
         ],
         "file": "packages/runtime-js/dist/connection-compat.d.ts",
         "kind": "interface"
+      },
+      "ContraDict": {
+        "declarations": [
+          "export declare class ContraDict extends Object { [key: string]: unknown; constructor(value?: Readonly<Record<string, unknown>> | Iterable<readonly [string, unknown]>); get(key: string): unknown; set(key: string, value: unknown): this; has(key: string): boolean; toJSON(): Readonly<Record<string, unknown>>; }"
+        ],
+        "file": "packages/api/dist/compat.d.ts",
+        "kind": "class"
       },
       "Cookie": {
         "declarations": [
@@ -10302,6 +10652,13 @@
         "file": "packages/api/dist/network.d.ts",
         "kind": "interface"
       },
+      "NodeEventLoop": {
+        "declarations": [
+          "export interface NodeEventLoop { queue(callback: () => void): void; delay(milliseconds: number): Promise<void>; }"
+        ],
+        "file": "packages/api/dist/util.d.ts",
+        "kind": "interface"
+      },
       "NormalizedTraceEntry": {
         "declarations": [
           "export interface NormalizedTraceEntry { readonly direction: \"send\" | \"receive\"; readonly kind: \"command\" | \"result\" | \"event\"; readonly method: string; readonly session: \"browser\" | \"target\"; }"
@@ -10508,6 +10865,13 @@
         "file": "packages/runtime-js/dist/connection-compat.d.ts",
         "kind": "class"
       },
+      "UndetectedChromedriverLike": {
+        "declarations": [
+          "export interface UndetectedChromedriverLike { readonly options?: { readonly debugger_address?: string; readonly debuggerAddress?: string; }; }"
+        ],
+        "file": "packages/api/dist/util.d.ts",
+        "kind": "interface"
+      },
       "UrlMatcher": {
         "declarations": [
           "export type UrlMatcher<T> = string | RegExp | ((event: T) => boolean | Promise<boolean>);"
@@ -10601,6 +10965,271 @@
         "file": "packages/api/dist/provider.d.ts",
         "kind": "function"
       },
+      "cdict": {
+        "declarations": [
+          {
+            "declaration": "export declare function cdict<T>(value: T): T extends readonly unknown[] ? readonly unknown[] : T extends object ? ContraDict : T;",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "value",
+                "optional": false,
+                "rest": false,
+                "type": "T"
+              }
+            ],
+            "returnType": "T extends readonly unknown[] ? readonly unknown[] : T extends object ? ContraDict : T",
+            "typeParameters": [
+              "T"
+            ]
+          }
+        ],
+        "file": "packages/api/dist/compat.d.ts",
+        "kind": "function"
+      },
+      "cdp": {
+        "declarations": [
+          {
+            "declaration": "cdp: Readonly<Record<string, import(\"./util.js\").CdpModule>>",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "type": "Readonly<Record<string, import(\"./util.js\").CdpModule>>"
+          }
+        ],
+        "file": "packages/api/dist/compat.d.ts",
+        "kind": "const"
+      },
+      "cdpGetModule": {
+        "declarations": [
+          {
+            "declaration": "export declare function cdpGetModule(domain: string | CdpModule): CdpModule;",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "domain",
+                "optional": false,
+                "rest": false,
+                "type": "string | CdpModule"
+              }
+            ],
+            "returnType": "CdpModule",
+            "typeParameters": []
+          }
+        ],
+        "file": "packages/api/dist/util.d.ts",
+        "kind": "function"
+      },
+      "cdp_get_module": {
+        "declarations": [
+          {
+            "declaration": "cdp_get_module: typeof cdpGetModule",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "type": "typeof cdpGetModule"
+          }
+        ],
+        "file": "packages/api/dist/util.d.ts",
+        "kind": "const"
+      },
+      "cfFindInteractiveChallenge": {
+        "declarations": [
+          {
+            "declaration": "export declare function cfFindInteractiveChallenge(tab: Tab): Promise<CloudflareChallengeElements>;",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "tab",
+                "optional": false,
+                "rest": false,
+                "type": "Tab"
+              }
+            ],
+            "returnType": "Promise<CloudflareChallengeElements>",
+            "typeParameters": []
+          }
+        ],
+        "file": "packages/api/dist/cloudflare.d.ts",
+        "kind": "function"
+      },
+      "cfIsInteractiveChallengePresent": {
+        "declarations": [
+          {
+            "declaration": "export declare function cfIsInteractiveChallengePresent(tab: Tab, timeout?: number): Promise<boolean>;",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "tab",
+                "optional": false,
+                "rest": false,
+                "type": "Tab"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "timeout",
+                "optional": true,
+                "rest": false,
+                "type": "number"
+              }
+            ],
+            "returnType": "Promise<boolean>",
+            "typeParameters": []
+          }
+        ],
+        "file": "packages/api/dist/cloudflare.d.ts",
+        "kind": "function"
+      },
+      "cfWaitForInteractiveChallenge": {
+        "declarations": [
+          {
+            "declaration": "export declare function cfWaitForInteractiveChallenge(tab: Tab, timeout?: number): Promise<CloudflareChallengeElements>;",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "tab",
+                "optional": false,
+                "rest": false,
+                "type": "Tab"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "timeout",
+                "optional": true,
+                "rest": false,
+                "type": "number"
+              }
+            ],
+            "returnType": "Promise<CloudflareChallengeElements>",
+            "typeParameters": []
+          }
+        ],
+        "file": "packages/api/dist/cloudflare.d.ts",
+        "kind": "function"
+      },
+      "cf_find_interactive_challenge": {
+        "declarations": [
+          {
+            "declaration": "cf_find_interactive_challenge: typeof cfFindInteractiveChallenge",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "type": "typeof cfFindInteractiveChallenge"
+          }
+        ],
+        "file": "packages/api/dist/cloudflare.d.ts",
+        "kind": "const"
+      },
+      "cf_is_interactive_challenge_present": {
+        "declarations": [
+          {
+            "declaration": "cf_is_interactive_challenge_present: typeof cfIsInteractiveChallengePresent",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "type": "typeof cfIsInteractiveChallengePresent"
+          }
+        ],
+        "file": "packages/api/dist/cloudflare.d.ts",
+        "kind": "const"
+      },
+      "cf_wait_for_interactive_challenge": {
+        "declarations": [
+          {
+            "declaration": "cf_wait_for_interactive_challenge: typeof cfWaitForInteractiveChallenge",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "type": "typeof cfWaitForInteractiveChallenge"
+          }
+        ],
+        "file": "packages/api/dist/cloudflare.d.ts",
+        "kind": "const"
+      },
+      "circle": {
+        "declarations": [
+          {
+            "declaration": "export declare function circle(x: number, y?: number | null, radius?: number, num?: number, direction?: number): Generator<readonly [number, number], void, void>;",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "x",
+                "optional": false,
+                "rest": false,
+                "type": "number"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "y",
+                "optional": true,
+                "rest": false,
+                "type": "number | null"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "radius",
+                "optional": true,
+                "rest": false,
+                "type": "number"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "num",
+                "optional": true,
+                "rest": false,
+                "type": "number"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "direction",
+                "optional": true,
+                "rest": false,
+                "type": "number"
+              }
+            ],
+            "returnType": "Generator<readonly [number, number], void, void>",
+            "typeParameters": []
+          }
+        ],
+        "file": "packages/api/dist/util.d.ts",
+        "kind": "function"
+      },
+      "compareTargetInfo": {
+        "declarations": [
+          {
+            "declaration": "export declare function compareTargetInfo(previous: Protocol.Target.TargetInfo | undefined | null, current: Protocol.Target.TargetInfo): ReadonlyArray<readonly [string, unknown, unknown]>;",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "previous",
+                "optional": false,
+                "rest": false,
+                "type": "Protocol.Target.TargetInfo | undefined | null"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "current",
+                "optional": false,
+                "rest": false,
+                "type": "Protocol.Target.TargetInfo"
+              }
+            ],
+            "returnType": "ReadonlyArray<readonly [string, unknown, unknown]>",
+            "typeParameters": []
+          }
+        ],
+        "file": "packages/api/dist/util.d.ts",
+        "kind": "function"
+      },
       "compareTraces": {
         "declarations": [
           {
@@ -10638,6 +11267,18 @@
         "file": "packages/api/dist/trace.d.ts",
         "kind": "function"
       },
+      "compare_target_info": {
+        "declarations": [
+          {
+            "declaration": "compare_target_info: typeof compareTargetInfo",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "type": "typeof compareTargetInfo"
+          }
+        ],
+        "file": "packages/api/dist/util.d.ts",
+        "kind": "const"
+      },
       "connect": {
         "declarations": [
           {
@@ -10648,6 +11289,18 @@
           }
         ],
         "file": "packages/api/dist/browser.d.ts",
+        "kind": "const"
+      },
+      "core": {
+        "declarations": [
+          {
+            "declaration": "core: Readonly<{ BaseFetchInterception: typeof BaseFetchInterception; BaseRequestExpectation: typeof BaseRequestExpectation; Browser: typeof Browser; Config: typeof Config; Element: typeof Element; FetchInterception: typeof FetchInterception; Position: typeof Position; RequestExpectation: typeof RequestExpectation; ResponseExpectation: typeof ResponseExpectation; Tab: typeof Tab; cfFindInteractiveChallenge: typeof cfFindInteractiveChallenge; cfIsInteractiveChallengePresent: typeof cfIsInteractiveChallengePresent; cfWaitForInteractiveChallenge: typeof cfWaitForInteractiveChallenge; connect: typeof Browser.connect; start: typeof start; verifyCf: typeof verifyCf; }>",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "type": "Readonly<{ BaseFetchInterception: typeof BaseFetchInterception; BaseRequestExpectation: typeof BaseRequestExpectation; Browser: typeof Browser; Config: typeof Config; Element: typeof Element; FetchInterception: typeof FetchInterception; Position: typeof Position; RequestExpectation: typeof RequestExpectation; ResponseExpectation: typeof ResponseExpectation; Tab: typeof Tab; cfFindInteractiveChallenge: typeof cfFindInteractiveChallenge; cfIsInteractiveChallengePresent: typeof cfIsInteractiveChallengePresent; cfWaitForInteractiveChallenge: typeof cfWaitForInteractiveChallenge; connect: typeof Browser.connect; start: typeof start; verifyCf: typeof verifyCf; }>"
+          }
+        ],
+        "file": "packages/api/dist/compat.d.ts",
         "kind": "const"
       },
       "create": {
@@ -10686,6 +11339,47 @@
         ],
         "file": "packages/api/dist/element.d.ts",
         "kind": "function"
+      },
+      "createFromUndetectedChromedriver": {
+        "declarations": [
+          {
+            "declaration": "export declare function createFromUndetectedChromedriver(driver: UndetectedChromedriverLike, connectionMode?: ConnectionMode): Promise<Browser>;",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "driver",
+                "optional": false,
+                "rest": false,
+                "type": "UndetectedChromedriverLike"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "connectionMode",
+                "optional": true,
+                "rest": false,
+                "type": "ConnectionMode"
+              }
+            ],
+            "returnType": "Promise<Browser>",
+            "typeParameters": []
+          }
+        ],
+        "file": "packages/api/dist/util.d.ts",
+        "kind": "function"
+      },
+      "create_from_undetected_chromedriver": {
+        "declarations": [
+          {
+            "declaration": "create_from_undetected_chromedriver: typeof createFromUndetectedChromedriver",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "type": "typeof createFromUndetectedChromedriver"
+          }
+        ],
+        "file": "packages/api/dist/util.d.ts",
+        "kind": "const"
       },
       "discoverChromeExecutable": {
         "declarations": [
@@ -10995,6 +11689,92 @@
         "file": "packages/api/dist/provider.d.ts",
         "kind": "function"
       },
+      "filterRecurse": {
+        "declarations": [
+          {
+            "declaration": "export declare function filterRecurse<T extends TreeValue>(tree: T, predicate: (node: T) => boolean): T | undefined;",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "tree",
+                "optional": false,
+                "rest": false,
+                "type": "T"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "predicate",
+                "optional": false,
+                "rest": false,
+                "type": "(node: T) => boolean"
+              }
+            ],
+            "returnType": "T | undefined",
+            "typeParameters": [
+              "T extends TreeValue"
+            ]
+          }
+        ],
+        "file": "packages/api/dist/util.d.ts",
+        "kind": "function"
+      },
+      "filterRecurseAll": {
+        "declarations": [
+          {
+            "declaration": "export declare function filterRecurseAll<T extends TreeValue>(tree: T, predicate: (node: T) => boolean): readonly T[];",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "tree",
+                "optional": false,
+                "rest": false,
+                "type": "T"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "predicate",
+                "optional": false,
+                "rest": false,
+                "type": "(node: T) => boolean"
+              }
+            ],
+            "returnType": "readonly T[]",
+            "typeParameters": [
+              "T extends TreeValue"
+            ]
+          }
+        ],
+        "file": "packages/api/dist/util.d.ts",
+        "kind": "function"
+      },
+      "filter_recurse": {
+        "declarations": [
+          {
+            "declaration": "filter_recurse: typeof filterRecurse",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "type": "typeof filterRecurse"
+          }
+        ],
+        "file": "packages/api/dist/util.d.ts",
+        "kind": "const"
+      },
+      "filter_recurse_all": {
+        "declarations": [
+          {
+            "declaration": "filter_recurse_all: typeof filterRecurseAll",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "type": "typeof filterRecurseAll"
+          }
+        ],
+        "file": "packages/api/dist/util.d.ts",
+        "kind": "const"
+      },
       "findBinary": {
         "declarations": [
           {
@@ -11061,6 +11841,30 @@
         "file": "packages/api/dist/config.d.ts",
         "kind": "const"
       },
+      "freePort": {
+        "declarations": [
+          {
+            "declaration": "export declare function freePort(): Promise<number>;",
+            "parameters": [],
+            "returnType": "Promise<number>",
+            "typeParameters": []
+          }
+        ],
+        "file": "packages/api/dist/util.d.ts",
+        "kind": "function"
+      },
+      "free_port": {
+        "declarations": [
+          {
+            "declaration": "free_port: typeof freePort",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "type": "typeof freePort"
+          }
+        ],
+        "file": "packages/api/dist/util.d.ts",
+        "kind": "const"
+      },
       "getRegisteredInstances": {
         "declarations": [
           {
@@ -11105,6 +11909,47 @@
         ],
         "file": "packages/api/dist/trace.d.ts",
         "kind": "function"
+      },
+      "htmlFromTree": {
+        "declarations": [
+          {
+            "declaration": "export declare function htmlFromTree(tree: TreeValue, target: Tab): Promise<string>;",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "tree",
+                "optional": false,
+                "rest": false,
+                "type": "TreeValue"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "target",
+                "optional": false,
+                "rest": false,
+                "type": "Tab"
+              }
+            ],
+            "returnType": "Promise<string>",
+            "typeParameters": []
+          }
+        ],
+        "file": "packages/api/dist/util.d.ts",
+        "kind": "function"
+      },
+      "html_from_tree": {
+        "declarations": [
+          {
+            "declaration": "html_from_tree: typeof htmlFromTree",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "type": "typeof htmlFromTree"
+          }
+        ],
+        "file": "packages/api/dist/util.d.ts",
+        "kind": "const"
       },
       "isRoot": {
         "declarations": [
@@ -11151,6 +11996,18 @@
         "file": "packages/api/dist/input.d.ts",
         "kind": "function"
       },
+      "loop": {
+        "declarations": [
+          {
+            "declaration": "export declare function loop(): NodeEventLoop;",
+            "parameters": [],
+            "returnType": "NodeEventLoop",
+            "typeParameters": []
+          }
+        ],
+        "file": "packages/api/dist/util.d.ts",
+        "kind": "function"
+      },
       "normalizeTrace": {
         "declarations": [
           {
@@ -11171,6 +12028,47 @@
         ],
         "file": "packages/api/dist/trace.d.ts",
         "kind": "function"
+      },
+      "removeFromTree": {
+        "declarations": [
+          {
+            "declaration": "export declare function removeFromTree(tree: Protocol.DOM.Node, node: Protocol.DOM.Node): Protocol.DOM.Node;",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "tree",
+                "optional": false,
+                "rest": false,
+                "type": "Protocol.DOM.Node"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "node",
+                "optional": false,
+                "rest": false,
+                "type": "Protocol.DOM.Node"
+              }
+            ],
+            "returnType": "Protocol.DOM.Node",
+            "typeParameters": []
+          }
+        ],
+        "file": "packages/api/dist/util.d.ts",
+        "kind": "function"
+      },
+      "remove_from_tree": {
+        "declarations": [
+          {
+            "declaration": "remove_from_tree: typeof removeFromTree",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "type": "typeof removeFromTree"
+          }
+        ],
+        "file": "packages/api/dist/util.d.ts",
+        "kind": "const"
       },
       "resolveNode": {
         "declarations": [
@@ -11264,14 +12162,23 @@
       "start": {
         "declarations": [
           {
-            "declaration": "start: typeof Browser.start",
-            "declaredDefault": null,
-            "hasDeclaredDefault": false,
-            "type": "typeof Browser.start"
+            "declaration": "export declare function start(options?: LaunchOptions | Config): Promise<Browser>;",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "options",
+                "optional": true,
+                "rest": false,
+                "type": "LaunchOptions | Config"
+              }
+            ],
+            "returnType": "Promise<Browser>",
+            "typeParameters": []
           }
         ],
         "file": "packages/api/dist/browser.d.ts",
-        "kind": "const"
+        "kind": "function"
       },
       "tempProfileDir": {
         "declarations": [
@@ -11295,6 +12202,83 @@
           }
         ],
         "file": "packages/api/dist/config.d.ts",
+        "kind": "const"
+      },
+      "util": {
+        "declarations": [
+          {
+            "declaration": "util: Readonly<{ cdpGetModule: typeof cdpGetModule; circle: typeof circle; compareTargetInfo: typeof compareTargetInfo; createFromUndetectedChromedriver: typeof createFromUndetectedChromedriver; filterRecurse: typeof filterRecurse; filterRecurseAll: typeof filterRecurseAll; freePort: typeof freePort; htmlFromTree: typeof htmlFromTree; loop: typeof loop; removeFromTree: typeof removeFromTree; }>",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "type": "Readonly<{ cdpGetModule: typeof cdpGetModule; circle: typeof circle; compareTargetInfo: typeof compareTargetInfo; createFromUndetectedChromedriver: typeof createFromUndetectedChromedriver; filterRecurse: typeof filterRecurse; filterRecurseAll: typeof filterRecurseAll; freePort: typeof freePort; htmlFromTree: typeof htmlFromTree; loop: typeof loop; removeFromTree: typeof removeFromTree; }>"
+          }
+        ],
+        "file": "packages/api/dist/compat.d.ts",
+        "kind": "const"
+      },
+      "verifyCf": {
+        "declarations": [
+          {
+            "declaration": "export declare function verifyCf(tab: Tab, clickDelay?: number, timeout?: number, challengeSelector?: string, flashCorners?: boolean): Promise<void>;",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "tab",
+                "optional": false,
+                "rest": false,
+                "type": "Tab"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "clickDelay",
+                "optional": true,
+                "rest": false,
+                "type": "number"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "timeout",
+                "optional": true,
+                "rest": false,
+                "type": "number"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "challengeSelector",
+                "optional": true,
+                "rest": false,
+                "type": "string"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "flashCorners",
+                "optional": true,
+                "rest": false,
+                "type": "boolean"
+              }
+            ],
+            "returnType": "Promise<void>",
+            "typeParameters": []
+          }
+        ],
+        "file": "packages/api/dist/cloudflare.d.ts",
+        "kind": "function"
+      },
+      "verify_cf": {
+        "declarations": [
+          {
+            "declaration": "verify_cf: typeof verifyCf",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "type": "typeof verifyCf"
+          }
+        ],
+        "file": "packages/api/dist/cloudflare.d.ts",
         "kind": "const"
       },
       "waitForSessionMaterial": {
@@ -11754,6 +12738,30 @@
           {
             "kind": "property",
             "name": "websocket_url"
+          }
+        ]
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "ContraDict",
+        "package": "jsdriver",
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "get"
+          },
+          {
+            "kind": "method",
+            "name": "has"
+          },
+          {
+            "kind": "method",
+            "name": "set"
+          },
+          {
+            "kind": "method",
+            "name": "toJSON"
           }
         ]
       },
@@ -12766,9 +13774,100 @@
         "prototypeMembers": []
       },
       {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "cdict",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": null,
+        "kind": "object",
+        "name": "cdp",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "cdpGetModule",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "cdp_get_module",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "cfFindInteractiveChallenge",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "cfIsInteractiveChallengePresent",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "cfWaitForInteractiveChallenge",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "cf_find_interactive_challenge",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "cf_is_interactive_challenge_present",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "cf_wait_for_interactive_challenge",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "circle",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "compareTargetInfo",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
         "functionLength": 2,
         "kind": "function-or-class",
         "name": "compareTraces",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "compare_target_info",
         "package": "jsdriver",
         "prototypeMembers": []
       },
@@ -12780,9 +13879,30 @@
         "prototypeMembers": []
       },
       {
+        "functionLength": null,
+        "kind": "object",
+        "name": "core",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
         "functionLength": 3,
         "kind": "function-or-class",
         "name": "create",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "createFromUndetectedChromedriver",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "create_from_undetected_chromedriver",
         "package": "jsdriver",
         "prototypeMembers": []
       },
@@ -12836,6 +13956,34 @@
         "prototypeMembers": []
       },
       {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "filterRecurse",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "filterRecurseAll",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "filter_recurse",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "filter_recurse_all",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
         "functionLength": 1,
         "kind": "function-or-class",
         "name": "findBinary",
@@ -12866,6 +14014,20 @@
       {
         "functionLength": 0,
         "kind": "function-or-class",
+        "name": "freePort",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "free_port",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 0,
+        "kind": "function-or-class",
         "name": "getRegisteredInstances",
         "package": "jsdriver",
         "prototypeMembers": []
@@ -12881,6 +14043,20 @@
         "functionLength": 1,
         "kind": "function-or-class",
         "name": "hasTrace",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "htmlFromTree",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "html_from_tree",
         "package": "jsdriver",
         "prototypeMembers": []
       },
@@ -12906,9 +14082,30 @@
         "prototypeMembers": []
       },
       {
+        "functionLength": 0,
+        "kind": "function-or-class",
+        "name": "loop",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
         "functionLength": 1,
         "kind": "function-or-class",
         "name": "normalizeTrace",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "removeFromTree",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 2,
+        "kind": "function-or-class",
+        "name": "remove_from_tree",
         "package": "jsdriver",
         "prototypeMembers": []
       },
@@ -12951,6 +14148,27 @@
         "functionLength": 0,
         "kind": "function-or-class",
         "name": "temp_profile_dir",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": null,
+        "kind": "object",
+        "name": "util",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "verifyCf",
+        "package": "jsdriver",
+        "prototypeMembers": []
+      },
+      {
+        "functionLength": 1,
+        "kind": "function-or-class",
+        "name": "verify_cf",
         "package": "jsdriver",
         "prototypeMembers": []
       },
@@ -15605,11 +16823,24 @@
             "module": "zendriver.core.cloudflare",
             "name": "cf_find_interactive_challenge",
             "nodeMapping": {
-              "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-              "nodeSymbol": null,
-              "semanticsVerified": false,
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-CLOUDFLARE-001",
+                  "file": "packages/api/test/util-api-parity.test.ts"
+                }
+              ],
+              "nodeKind": "const",
+              "nodeMember": "cf_find_interactive_challenge",
+              "nodeSymbol": "cf_find_interactive_challenge",
+              "runtimeExport": true,
+              "semanticsCoverage": [
+                "return",
+                "signature"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "MISSING"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -15631,11 +16862,25 @@
             "module": "zendriver.core.cloudflare",
             "name": "cf_is_interactive_challenge_present",
             "nodeMapping": {
-              "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-              "nodeSymbol": null,
-              "semanticsVerified": false,
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-CLOUDFLARE-001",
+                  "file": "packages/api/test/util-api-parity.test.ts"
+                }
+              ],
+              "nodeKind": "const",
+              "nodeMember": "cf_is_interactive_challenge_present",
+              "nodeSymbol": "cf_is_interactive_challenge_present",
+              "runtimeExport": true,
+              "semanticsCoverage": [
+                "defaults",
+                "return",
+                "signature"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "MISSING"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -15664,11 +16909,25 @@
             "module": "zendriver.core.cloudflare",
             "name": "cf_wait_for_interactive_challenge",
             "nodeMapping": {
-              "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-              "nodeSymbol": null,
-              "semanticsVerified": false,
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-CLOUDFLARE-001",
+                  "file": "packages/api/test/util-api-parity.test.ts"
+                }
+              ],
+              "nodeKind": "const",
+              "nodeMember": "cf_wait_for_interactive_challenge",
+              "nodeSymbol": "cf_wait_for_interactive_challenge",
+              "runtimeExport": true,
+              "semanticsCoverage": [
+                "defaults",
+                "return",
+                "signature"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "MISSING"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -15697,11 +16956,27 @@
             "module": "zendriver.core.cloudflare",
             "name": "verify_cf",
             "nodeMapping": {
-              "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-              "nodeSymbol": null,
-              "semanticsVerified": false,
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-CLOUDFLARE-001",
+                  "file": "packages/api/test/util-api-parity.test.ts"
+                }
+              ],
+              "nodeKind": "const",
+              "nodeMember": "verify_cf",
+              "nodeSymbol": "verify_cf",
+              "runtimeExport": true,
+              "semanticsCoverage": [
+                "defaults",
+                "errors",
+                "return",
+                "signature",
+                "state"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "MISSING"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -32745,11 +34020,24 @@
             "module": "zendriver.core.util",
             "name": "cdp_get_module",
             "nodeMapping": {
-              "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-              "nodeSymbol": null,
-              "semanticsVerified": false,
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-UTIL-001",
+                  "file": "packages/api/test/util-api-parity.test.ts"
+                }
+              ],
+              "nodeKind": "const",
+              "nodeMember": "cdp_get_module",
+              "nodeSymbol": "cdp_get_module",
+              "runtimeExport": true,
+              "semanticsCoverage": [
+                "return",
+                "signature"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "MISSING"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -32771,11 +34059,25 @@
             "module": "zendriver.core.util",
             "name": "circle",
             "nodeMapping": {
-              "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-              "nodeSymbol": null,
-              "semanticsVerified": false,
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-UTIL-001",
+                  "file": "packages/api/test/util-api-parity.test.ts"
+                }
+              ],
+              "nodeKind": "function",
+              "nodeMember": "circle",
+              "nodeSymbol": "circle",
+              "runtimeExport": true,
+              "semanticsCoverage": [
+                "defaults",
+                "return",
+                "signature"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "MISSING"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -32825,11 +34127,24 @@
             "module": "zendriver.core.util",
             "name": "compare_target_info",
             "nodeMapping": {
-              "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-              "nodeSymbol": null,
-              "semanticsVerified": false,
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-UTIL-001",
+                  "file": "packages/api/test/util-api-parity.test.ts"
+                }
+              ],
+              "nodeKind": "const",
+              "nodeMember": "compare_target_info",
+              "nodeSymbol": "compare_target_info",
+              "runtimeExport": true,
+              "semanticsCoverage": [
+                "return",
+                "signature"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "MISSING"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -32858,11 +34173,26 @@
             "module": "zendriver.core.util",
             "name": "create_from_undetected_chromedriver",
             "nodeMapping": {
-              "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-              "nodeSymbol": null,
-              "semanticsVerified": false,
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-BROWSER-001",
+                  "file": "packages/api/test/api-surface-parity.test.ts"
+                }
+              ],
+              "nodeKind": "const",
+              "nodeMember": "create_from_undetected_chromedriver",
+              "nodeSymbol": "create_from_undetected_chromedriver",
+              "runtimeExport": true,
+              "semanticsCoverage": [
+                "errors",
+                "return",
+                "signature",
+                "state"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "MISSING"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -32884,11 +34214,24 @@
             "module": "zendriver.core.util",
             "name": "filter_recurse",
             "nodeMapping": {
-              "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-              "nodeSymbol": null,
-              "semanticsVerified": false,
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-UTIL-001",
+                  "file": "packages/api/test/util-api-parity.test.ts"
+                }
+              ],
+              "nodeKind": "const",
+              "nodeMember": "filter_recurse",
+              "nodeSymbol": "filter_recurse",
+              "runtimeExport": true,
+              "semanticsCoverage": [
+                "return",
+                "signature"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "MISSING"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -32917,11 +34260,24 @@
             "module": "zendriver.core.util",
             "name": "filter_recurse_all",
             "nodeMapping": {
-              "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-              "nodeSymbol": null,
-              "semanticsVerified": false,
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-UTIL-001",
+                  "file": "packages/api/test/util-api-parity.test.ts"
+                }
+              ],
+              "nodeKind": "const",
+              "nodeMember": "filter_recurse_all",
+              "nodeSymbol": "filter_recurse_all",
+              "runtimeExport": true,
+              "semanticsCoverage": [
+                "return",
+                "signature"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "MISSING"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -32950,11 +34306,24 @@
             "module": "zendriver.core.util",
             "name": "free_port",
             "nodeMapping": {
-              "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-              "nodeSymbol": null,
-              "semanticsVerified": false,
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-UTIL-001",
+                  "file": "packages/api/test/util-api-parity.test.ts"
+                }
+              ],
+              "nodeKind": "const",
+              "nodeMember": "free_port",
+              "nodeSymbol": "free_port",
+              "runtimeExport": true,
+              "semanticsCoverage": [
+                "return",
+                "signature"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "MISSING"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [],
@@ -32999,11 +34368,24 @@
             "module": "zendriver.core.util",
             "name": "html_from_tree",
             "nodeMapping": {
-              "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-              "nodeSymbol": null,
-              "semanticsVerified": false,
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-UTIL-001",
+                  "file": "packages/api/test/util-api-parity.test.ts"
+                }
+              ],
+              "nodeKind": "const",
+              "nodeMember": "html_from_tree",
+              "nodeSymbol": "html_from_tree",
+              "runtimeExport": true,
+              "semanticsCoverage": [
+                "return",
+                "signature"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "MISSING"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -33032,11 +34414,24 @@
             "module": "zendriver.core.util",
             "name": "loop",
             "nodeMapping": {
-              "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-              "nodeSymbol": null,
-              "semanticsVerified": false,
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-UTIL-001",
+                  "file": "packages/api/test/util-api-parity.test.ts"
+                }
+              ],
+              "nodeKind": "function",
+              "nodeMember": "loop",
+              "nodeSymbol": "loop",
+              "runtimeExport": true,
+              "semanticsCoverage": [
+                "return",
+                "state"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "MISSING"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [],
@@ -33050,11 +34445,25 @@
             "module": "zendriver.core.util",
             "name": "remove_from_tree",
             "nodeMapping": {
-              "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-              "nodeSymbol": null,
-              "semanticsVerified": false,
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-UTIL-001",
+                  "file": "packages/api/test/util-api-parity.test.ts"
+                }
+              ],
+              "nodeKind": "const",
+              "nodeMember": "remove_from_tree",
+              "nodeSymbol": "remove_from_tree",
+              "runtimeExport": true,
+              "semanticsCoverage": [
+                "return",
+                "signature",
+                "state"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "MISSING"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -33083,13 +34492,26 @@
             "module": "zendriver.core.util",
             "name": "start",
             "nodeMapping": {
-              "evidence": "compatible TypeScript AST declaration",
-              "nodeKind": "const",
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-BROWSER-001",
+                  "file": "packages/api/test/api-surface-parity.test.ts"
+                }
+              ],
+              "nodeKind": "function",
+              "nodeMember": "start",
               "nodeSymbol": "start",
               "runtimeExport": true,
-              "semanticsVerified": false,
+              "semanticsCoverage": [
+                "defaults",
+                "return",
+                "signature",
+                "state"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "CANDIDATE"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -33442,11 +34864,25 @@
         "module": "zendriver.core._contradict",
         "name": "ContraDict",
         "nodeMapping": {
-          "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-          "nodeSymbol": null,
-          "semanticsVerified": false,
+          "evidence": "independent passing Node parity cases",
+          "evidenceCases": [
+            {
+              "case": "ZDAPI-CONTRADICT-001",
+              "file": "packages/api/test/util-api-parity.test.ts"
+            }
+          ],
+          "nodeKind": "class",
+          "nodeMember": "ContraDict",
+          "nodeSymbol": "ContraDict",
+          "runtimeExport": true,
+          "semanticsCoverage": [
+            "return",
+            "signature",
+            "state"
+          ],
+          "semanticsVerified": true,
           "signatureComparison": "UNVERIFIED",
-          "status": "MISSING"
+          "status": "VERIFIED"
         },
         "signature": {
           "parameters": [
@@ -33678,11 +35114,25 @@
         "module": "zendriver.core._contradict",
         "name": "cdict",
         "nodeMapping": {
-          "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-          "nodeSymbol": null,
-          "semanticsVerified": false,
+          "evidence": "independent passing Node parity cases",
+          "evidenceCases": [
+            {
+              "case": "ZDAPI-CONTRADICT-001",
+              "file": "packages/api/test/util-api-parity.test.ts"
+            }
+          ],
+          "nodeKind": "function",
+          "nodeMember": "cdict",
+          "nodeSymbol": "cdict",
+          "runtimeExport": true,
+          "semanticsCoverage": [
+            "return",
+            "signature",
+            "state"
+          ],
+          "semanticsVerified": true,
           "signatureComparison": "UNVERIFIED",
-          "status": "MISSING"
+          "status": "VERIFIED"
         },
         "signature": {
           "parameters": [
@@ -33710,11 +35160,24 @@
         "module": "zendriver.cdp",
         "name": "cdp",
         "nodeMapping": {
-          "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-          "nodeSymbol": null,
-          "semanticsVerified": false,
+          "evidence": "independent passing Node parity cases",
+          "evidenceCases": [
+            {
+              "case": "ZDAPI-UTIL-001",
+              "file": "packages/api/test/util-api-parity.test.ts"
+            }
+          ],
+          "nodeKind": "const",
+          "nodeMember": "cdp",
+          "nodeSymbol": "cdp",
+          "runtimeExport": true,
+          "semanticsCoverage": [
+            "return",
+            "state"
+          ],
+          "semanticsVerified": true,
           "signatureComparison": "UNVERIFIED",
-          "status": "MISSING"
+          "status": "VERIFIED"
         }
       },
       {
@@ -33722,11 +35185,24 @@
         "module": "zendriver.core",
         "name": "core",
         "nodeMapping": {
-          "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-          "nodeSymbol": null,
-          "semanticsVerified": false,
+          "evidence": "independent passing Node parity cases",
+          "evidenceCases": [
+            {
+              "case": "ZDAPI-UTIL-001",
+              "file": "packages/api/test/util-api-parity.test.ts"
+            }
+          ],
+          "nodeKind": "const",
+          "nodeMember": "core",
+          "nodeSymbol": "core",
+          "runtimeExport": true,
+          "semanticsCoverage": [
+            "return",
+            "state"
+          ],
+          "semanticsVerified": true,
           "signatureComparison": "UNVERIFIED",
-          "status": "MISSING"
+          "status": "VERIFIED"
         }
       },
       {
@@ -33734,11 +35210,24 @@
         "module": "zendriver.core.util",
         "name": "loop",
         "nodeMapping": {
-          "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-          "nodeSymbol": null,
-          "semanticsVerified": false,
+          "evidence": "independent passing Node parity cases",
+          "evidenceCases": [
+            {
+              "case": "ZDAPI-UTIL-001",
+              "file": "packages/api/test/util-api-parity.test.ts"
+            }
+          ],
+          "nodeKind": "function",
+          "nodeMember": "loop",
+          "nodeSymbol": "loop",
+          "runtimeExport": true,
+          "semanticsCoverage": [
+            "return",
+            "state"
+          ],
+          "semanticsVerified": true,
           "signatureComparison": "UNVERIFIED",
-          "status": "MISSING"
+          "status": "VERIFIED"
         },
         "signature": {
           "parameters": [],
@@ -33758,7 +35247,7 @@
               "file": "packages/api/test/api-surface-parity.test.ts"
             }
           ],
-          "nodeKind": "const",
+          "nodeKind": "function",
           "nodeMember": "start",
           "nodeSymbol": "start",
           "runtimeExport": true,
@@ -33874,11 +35363,24 @@
         "module": "zendriver.core.util",
         "name": "util",
         "nodeMapping": {
-          "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
-          "nodeSymbol": null,
-          "semanticsVerified": false,
+          "evidence": "independent passing Node parity cases",
+          "evidenceCases": [
+            {
+              "case": "ZDAPI-UTIL-001",
+              "file": "packages/api/test/util-api-parity.test.ts"
+            }
+          ],
+          "nodeKind": "const",
+          "nodeMember": "util",
+          "nodeSymbol": "util",
+          "runtimeExport": true,
+          "semanticsCoverage": [
+            "return",
+            "state"
+          ],
+          "semanticsVerified": true,
           "signatureComparison": "UNVERIFIED",
-          "status": "MISSING"
+          "status": "VERIFIED"
         }
       }
     ],

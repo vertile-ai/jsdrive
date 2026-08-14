@@ -533,7 +533,9 @@ export class Browser {
   }
 }
 
-export const start = Browser.start;
+export function start(options: LaunchOptions | Config = {}): Promise<Browser> {
+  return Browser.start(options);
+}
 export const connect = Browser.connect;
 
 export function getRegisteredInstances(): ReadonlySet<Browser> {

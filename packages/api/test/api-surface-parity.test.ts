@@ -9,12 +9,14 @@ import type { RuntimeBackendFactory } from "@vertile-ai/jsdriver-runtime-js";
 import {
   Browser,
   Config,
+  create_from_undetected_chromedriver,
   HTTPApi,
   discoverChromeExecutable,
   findBinary,
   findExecutable,
   getRegisteredInstances,
   isRoot,
+  start,
   tempProfileDir,
   type ConnectionMode,
 } from "../src/index.js";
@@ -66,11 +68,28 @@ test("ZDAPI-HTTP-001", async () => {
 
 test("ZDAPI-BROWSER-001", { timeout: 90_000 }, async () => {
   const executable = await discoverChromeExecutable();
+  const started = await start({ executable, headless: true, connectionTimeoutMs: 30_000 });
+  try {
+    assert.equal(started.process, undefined);
+  } finally {
+    await started.close();
+  }
   await withPersistentBrowser({ executable, headless: true, connectionTimeoutMs: 30_000 }, async (rootBrowser) => {
     assert.ok(rootBrowser.mainTab);
     assert.equal(rootBrowser.aenter(), rootBrowser);
     assert.equal(rootBrowser.websocket_url, rootBrowser.webSocketUrl);
     assert.equal(getRegisteredInstances().has(rootBrowser), true);
+    const attached = await create_from_undetected_chromedriver({
+      options: { debugger_address: `${rootBrowser.endpoint.host}:${rootBrowser.endpoint.port}` },
+    });
+    try {
+      assert.equal(attached.endpoint.host, rootBrowser.endpoint.host);
+      assert.equal(attached.endpoint.port, rootBrowser.endpoint.port);
+      assert.equal(getRegisteredInstances().has(attached), true);
+    } finally {
+      await attached.close();
+    }
+    assert.equal(getRegisteredInstances().has(attached), false);
     await rootBrowser.aexit();
     assert.equal(rootBrowser.stopped, true);
   });

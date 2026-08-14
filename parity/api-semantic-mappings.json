@@ -490,5 +490,131 @@
     "testCases": [{"file": "packages/api/test/browser.test.ts", "case": "ZDAPI-TAB-LIFECYCLE-001"}],
     "upstream": "zendriver.core.tab.Tab.websocket",
     "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "ContraDict",
+    "testCases": [{"file": "packages/api/test/util-api-parity.test.ts", "case": "ZDAPI-CONTRADICT-001"}],
+    "upstream": "zendriver.ContraDict",
+    "verifiedSemantics": ["return", "signature", "state"]
+  },
+  {
+    "nodeMember": "cdict",
+    "testCases": [{"file": "packages/api/test/util-api-parity.test.ts", "case": "ZDAPI-CONTRADICT-001"}],
+    "upstream": "zendriver.cdict",
+    "verifiedSemantics": ["return", "signature", "state"]
+  },
+  {
+    "nodeMember": "cdp",
+    "testCases": [{"file": "packages/api/test/util-api-parity.test.ts", "case": "ZDAPI-UTIL-001"}],
+    "upstream": "zendriver.cdp",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "core",
+    "testCases": [{"file": "packages/api/test/util-api-parity.test.ts", "case": "ZDAPI-UTIL-001"}],
+    "upstream": "zendriver.core",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "loop",
+    "testCases": [{"file": "packages/api/test/util-api-parity.test.ts", "case": "ZDAPI-UTIL-001"}],
+    "upstream": "zendriver.loop",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "util",
+    "testCases": [{"file": "packages/api/test/util-api-parity.test.ts", "case": "ZDAPI-UTIL-001"}],
+    "upstream": "zendriver.util",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "cf_find_interactive_challenge",
+    "testCases": [{"file": "packages/api/test/util-api-parity.test.ts", "case": "ZDAPI-CLOUDFLARE-001"}],
+    "upstream": "zendriver.core.cloudflare.cf_find_interactive_challenge",
+    "verifiedSemantics": ["return", "signature"]
+  },
+  {
+    "nodeMember": "cf_is_interactive_challenge_present",
+    "testCases": [{"file": "packages/api/test/util-api-parity.test.ts", "case": "ZDAPI-CLOUDFLARE-001"}],
+    "upstream": "zendriver.core.cloudflare.cf_is_interactive_challenge_present",
+    "verifiedSemantics": ["defaults", "return", "signature"]
+  },
+  {
+    "nodeMember": "cf_wait_for_interactive_challenge",
+    "testCases": [{"file": "packages/api/test/util-api-parity.test.ts", "case": "ZDAPI-CLOUDFLARE-001"}],
+    "upstream": "zendriver.core.cloudflare.cf_wait_for_interactive_challenge",
+    "verifiedSemantics": ["defaults", "return", "signature"]
+  },
+  {
+    "nodeMember": "verify_cf",
+    "testCases": [{"file": "packages/api/test/util-api-parity.test.ts", "case": "ZDAPI-CLOUDFLARE-001"}],
+    "upstream": "zendriver.core.cloudflare.verify_cf",
+    "verifiedSemantics": ["defaults", "errors", "return", "signature", "state"]
+  },
+  {
+    "nodeMember": "cdp_get_module",
+    "testCases": [{"file": "packages/api/test/util-api-parity.test.ts", "case": "ZDAPI-UTIL-001"}],
+    "upstream": "zendriver.core.util.cdp_get_module",
+    "verifiedSemantics": ["return", "signature"]
+  },
+  {
+    "nodeMember": "circle",
+    "testCases": [{"file": "packages/api/test/util-api-parity.test.ts", "case": "ZDAPI-UTIL-001"}],
+    "upstream": "zendriver.core.util.circle",
+    "verifiedSemantics": ["defaults", "return", "signature"]
+  },
+  {
+    "nodeMember": "compare_target_info",
+    "testCases": [{"file": "packages/api/test/util-api-parity.test.ts", "case": "ZDAPI-UTIL-001"}],
+    "upstream": "zendriver.core.util.compare_target_info",
+    "verifiedSemantics": ["return", "signature"]
+  },
+  {
+    "nodeMember": "create_from_undetected_chromedriver",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-BROWSER-001"}],
+    "upstream": "zendriver.core.util.create_from_undetected_chromedriver",
+    "verifiedSemantics": ["errors", "return", "signature", "state"]
+  },
+  {
+    "nodeMember": "filter_recurse",
+    "testCases": [{"file": "packages/api/test/util-api-parity.test.ts", "case": "ZDAPI-UTIL-001"}],
+    "upstream": "zendriver.core.util.filter_recurse",
+    "verifiedSemantics": ["return", "signature"]
+  },
+  {
+    "nodeMember": "filter_recurse_all",
+    "testCases": [{"file": "packages/api/test/util-api-parity.test.ts", "case": "ZDAPI-UTIL-001"}],
+    "upstream": "zendriver.core.util.filter_recurse_all",
+    "verifiedSemantics": ["return", "signature"]
+  },
+  {
+    "nodeMember": "free_port",
+    "testCases": [{"file": "packages/api/test/util-api-parity.test.ts", "case": "ZDAPI-UTIL-001"}],
+    "upstream": "zendriver.core.util.free_port",
+    "verifiedSemantics": ["return", "signature"]
+  },
+  {
+    "nodeMember": "html_from_tree",
+    "testCases": [{"file": "packages/api/test/util-api-parity.test.ts", "case": "ZDAPI-UTIL-001"}],
+    "upstream": "zendriver.core.util.html_from_tree",
+    "verifiedSemantics": ["return", "signature"]
+  },
+  {
+    "nodeMember": "loop",
+    "testCases": [{"file": "packages/api/test/util-api-parity.test.ts", "case": "ZDAPI-UTIL-001"}],
+    "upstream": "zendriver.core.util.loop",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "remove_from_tree",
+    "testCases": [{"file": "packages/api/test/util-api-parity.test.ts", "case": "ZDAPI-UTIL-001"}],
+    "upstream": "zendriver.core.util.remove_from_tree",
+    "verifiedSemantics": ["return", "signature", "state"]
+  },
+  {
+    "nodeMember": "start",
+    "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-BROWSER-001"}],
+    "upstream": "zendriver.core.util.start",
+    "verifiedSemantics": ["defaults", "return", "signature", "state"]
   }
 ]

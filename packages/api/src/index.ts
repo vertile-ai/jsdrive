@@ -8,6 +8,9 @@ export * from "./input.js";
 export * from "./network.js";
 export * from "./provider.js";
 export * from "./trace.js";
+export * from "./util.js";
+export * from "./cloudflare.js";
+export * from "./compat.js";
 export { Connection } from "@vertile-ai/jsdriver-runtime-js";
 export {
   ZendriverNetworkDomain,

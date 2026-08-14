@@ -178,19 +178,27 @@ export class Tab {
 
   public get targetInfo(): Protocol.Target.TargetInfo | undefined { return this.readTargetInfo(); }
   public get target(): Protocol.Target.TargetInfo | undefined { return this.targetInfo; }
+  public get target_id(): Protocol.Target.TargetID { return this.targetId; }
   public get title(): string { return this.targetInfo?.title ?? ""; }
   public get url(): string { return this.targetInfo?.url ?? ""; }
   public get type(): string { return this.targetInfo?.type ?? ""; }
+  public get type_(): string { return this.type; }
   public get subtype(): string | undefined { return this.targetInfo?.subtype; }
   public get attached(): boolean { return this.targetInfo?.attached ?? false; }
   public get canAccessOpener(): boolean { return this.targetInfo?.canAccessOpener ?? false; }
   public get can_access_opener(): boolean { return this.canAccessOpener; }
   public get browserContextId(): Protocol.Browser.BrowserContextID | undefined { return this.targetInfo?.browserContextId; }
+  public get browser_context_id(): Protocol.Browser.BrowserContextID | undefined { return this.browserContextId; }
   public get openerId(): Protocol.Target.TargetID | undefined { return this.targetInfo?.openerId; }
+  public get opener_id(): Protocol.Target.TargetID | undefined { return this.openerId; }
   public get openerFrameId(): Protocol.Page.FrameId | undefined { return this.targetInfo?.openerFrameId; }
+  public get opener_frame_id(): Protocol.Page.FrameId | undefined { return this.openerFrameId; }
   public get parentId(): Protocol.Target.TargetID | undefined { return this.targetInfo?.parentId; }
   public get parentFrameId(): Protocol.Page.FrameId | undefined { return this.targetInfo?.parentFrameId; }
   public get websocket(): RuntimeBackend { return this.connection; }
+
+  public equals(other: unknown): boolean { return other instanceof Tab && other.targetId === this.targetId; }
+  public toString(): string { return `<Tab [${this.targetId}] [${this.type}] [url: ${this.url}]>`; }
 
   public aenter(): this { return this; }
   public aopen(): Promise<void> {

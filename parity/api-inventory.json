@@ -1,24 +1,16 @@
 {
   "mappingCounts": {
     "coreMembers": {
-      "CANDIDATE": 43,
-      "MISSING": 5,
-      "UNKNOWN": 8,
-      "VERIFIED": 416
+      "VERIFIED": 472
     },
     "coreSymbols": {
-      "CANDIDATE": 1,
-      "VERIFIED": 44
+      "VERIFIED": 45
     },
     "rootExports": {
-      "CANDIDATE": 1,
-      "VERIFIED": 15
+      "VERIFIED": 16
     },
     "total": {
-      "CANDIDATE": 45,
-      "MISSING": 5,
-      "UNKNOWN": 8,
-      "VERIFIED": 475
+      "VERIFIED": 533
     }
   },
   "nodriver": {
@@ -1199,6 +1191,10 @@
           },
           {
             "kind": "property",
+            "name": "browser_context_id"
+          },
+          {
+            "kind": "property",
             "name": "canAccessOpener"
           },
           {
@@ -1232,6 +1228,10 @@
           {
             "kind": "property",
             "name": "enabledDomains"
+          },
+          {
+            "kind": "method",
+            "name": "equals"
           },
           {
             "kind": "method",
@@ -1383,6 +1383,14 @@
           },
           {
             "kind": "property",
+            "name": "opener_frame_id"
+          },
+          {
+            "kind": "property",
+            "name": "opener_id"
+          },
+          {
+            "kind": "property",
             "name": "parentFrameId"
           },
           {
@@ -1487,11 +1495,23 @@
           },
           {
             "kind": "property",
+            "name": "target_id"
+          },
+          {
+            "kind": "property",
             "name": "title"
+          },
+          {
+            "kind": "method",
+            "name": "toString"
           },
           {
             "kind": "property",
             "name": "type"
+          },
+          {
+            "kind": "property",
+            "name": "type_"
           },
           {
             "kind": "method",
@@ -8118,6 +8138,15 @@
           },
           {
             "access": "get",
+            "declaration": "get target_id(): Protocol.Target.TargetID;",
+            "kind": "property",
+            "name": "target_id",
+            "parameters": [],
+            "returnType": "Protocol.Target.TargetID",
+            "typeParameters": []
+          },
+          {
+            "access": "get",
             "declaration": "get title(): string;",
             "kind": "property",
             "name": "title",
@@ -8139,6 +8168,15 @@
             "declaration": "get type(): string;",
             "kind": "property",
             "name": "type",
+            "parameters": [],
+            "returnType": "string",
+            "typeParameters": []
+          },
+          {
+            "access": "get",
+            "declaration": "get type_(): string;",
+            "kind": "property",
+            "name": "type_",
             "parameters": [],
             "returnType": "string",
             "typeParameters": []
@@ -8190,6 +8228,15 @@
           },
           {
             "access": "get",
+            "declaration": "get browser_context_id(): Protocol.Browser.BrowserContextID | undefined;",
+            "kind": "property",
+            "name": "browser_context_id",
+            "parameters": [],
+            "returnType": "Protocol.Browser.BrowserContextID | undefined",
+            "typeParameters": []
+          },
+          {
+            "access": "get",
             "declaration": "get openerId(): Protocol.Target.TargetID | undefined;",
             "kind": "property",
             "name": "openerId",
@@ -8199,9 +8246,27 @@
           },
           {
             "access": "get",
+            "declaration": "get opener_id(): Protocol.Target.TargetID | undefined;",
+            "kind": "property",
+            "name": "opener_id",
+            "parameters": [],
+            "returnType": "Protocol.Target.TargetID | undefined",
+            "typeParameters": []
+          },
+          {
+            "access": "get",
             "declaration": "get openerFrameId(): Protocol.Page.FrameId | undefined;",
             "kind": "property",
             "name": "openerFrameId",
+            "parameters": [],
+            "returnType": "Protocol.Page.FrameId | undefined",
+            "typeParameters": []
+          },
+          {
+            "access": "get",
+            "declaration": "get opener_frame_id(): Protocol.Page.FrameId | undefined;",
+            "kind": "property",
+            "name": "opener_frame_id",
             "parameters": [],
             "returnType": "Protocol.Page.FrameId | undefined",
             "typeParameters": []
@@ -8231,6 +8296,33 @@
             "name": "websocket",
             "parameters": [],
             "returnType": "RuntimeBackend",
+            "typeParameters": []
+          },
+          {
+            "declaration": "equals(other: unknown): boolean;",
+            "kind": "method",
+            "name": "equals",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "other",
+                "optional": false,
+                "rest": false,
+                "type": "unknown"
+              }
+            ],
+            "returnType": "boolean",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "toString(): string;",
+            "kind": "method",
+            "name": "toString",
+            "parameters": [],
+            "returnType": "string",
+            "static": false,
             "typeParameters": []
           },
           {
@@ -11474,7 +11566,7 @@
       },
       "Tab": {
         "declarations": [
-          "export declare class Tab { #private; readonly targetId: string; readonly connection: RuntimeBackend; readonly sessionId?: string | undefined; readonly browserConnection: RuntimeBackend; readonly webSocketUrl?: string | undefined; private readonly closeTarget?; private readonly readTargetInfo; private readonly writeTargetInfo; readonly browser?: Browser | undefined; constructor(targetId: string, connection: RuntimeBackend, sessionId?: string | undefined, browserConnection?: RuntimeBackend, webSocketUrl?: string | undefined, closeTarget?: (() => Promise<void>) | undefined, _childFrames?: () => readonly Tab[], readTargetInfo?: () => Protocol.Target.TargetInfo | undefined, writeTargetInfo?: (targetInfo: Protocol.Target.TargetInfo) => void, browser?: Browser | undefined); get enabledDomains(): ReadonlySet<string>; get manuallyEnabledDomains(): ReadonlySet<string>; get handlers(): ReadonlyMap<string, readonly TabEventHandler[]>; get closed(): boolean; get crashed(): boolean; get targetInfo(): Protocol.Target.TargetInfo | undefined; get target(): Protocol.Target.TargetInfo | undefined; get title(): string; get url(): string; get type(): string; get subtype(): string | undefined; get attached(): boolean; get canAccessOpener(): boolean; get can_access_opener(): boolean; get browserContextId(): Protocol.Browser.BrowserContextID | undefined; get openerId(): Protocol.Target.TargetID | undefined; get openerFrameId(): Protocol.Page.FrameId | undefined; get parentId(): Protocol.Target.TargetID | undefined; get parentFrameId(): Protocol.Page.FrameId | undefined; get websocket(): RuntimeBackend; aenter(): this; aopen(): Promise<void>; aexit(): Promise<void>; aclose(): Promise<void>; [Symbol.asyncDispose](): Promise<void>; sleep(seconds?: number): Promise<void>; wait(seconds?: number | null): Promise<void>; feedCdp(command: string | { readonly method: string; readonly params?: unknown; }, params?: unknown): void; feed_cdp(command: string | { readonly method: string; readonly params?: unknown; }, params?: unknown): void; updateTarget(): Promise<Protocol.Target.TargetInfo>; send<M extends ProtocolCommand>(method: M, ...args: CommandParams<M> extends undefined ? [params?: undefined, options?: SendOptions] : [params: CommandParams<M>, options?: SendOptions]): Promise<CommandResult<M>>; sendRaw(method: string, params?: unknown, options?: SendOptions): Promise<Readonly<Record<string, unknown>>>; on<E extends ProtocolEvent>(method: E, handler: (params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>): () => void; on(method: string, handler: (params: unknown, metadata: EventMetadata) => void | Promise<void>): () => void; addHandler<E extends ProtocolEvent>(eventType: E, handler: (params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>): void; addHandler(domain: EventDomain, handler: TabEventHandler): void; removeHandlers(): void; removeHandlers(eventType: undefined, handler: TabEventHandler): void; removeHandlers(eventType: ProtocolEvent | EventDomain, handler?: TabEventHandler): void; acquireDomain(domain: string, options?: SendOptions): Promise<() => Promise<void>>; expectRequest(matcher: UrlMatcher<Protocol.Network.Events.RequestWillBeSentEvent>, options?: WaitOptions): RequestExpectation; expectResponse(matcher: UrlMatcher<Protocol.Network.Events.ResponseReceivedEvent>, options?: WaitOptions): ResponseExpectation; intercept(options?: InterceptionOptions): FetchInterception; intercept(url: string, stage: Protocol.Fetch.RequestStage, resourceType: Protocol.Network.ResourceType): FetchInterception; setDownloadPath(path: string): Promise<string>; expectDownload(): DownloadWillBeginExpectation; expectDownload(matcher: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent>, options?: DownloadOptions): DownloadResultExpectation; downloadFile(url: string, destination: string, options?: WaitOptions): Promise<DownloadResult>; get(url: string, options?: WaitOptions): Promise<Protocol.Page.Commands.NavigateResult>; navigate(url: string, timeoutMs?: number, signal?: AbortSignal): Promise<Protocol.Page.Commands.NavigateResult>; reload(ignoreCache?: boolean, options?: WaitOptions): Promise<void>; back(options?: WaitOptions): Promise<boolean>; forward(options?: WaitOptions): Promise<boolean>; activate(): Promise<void>; bringToFront(): Promise<Protocol.Page.Commands.BringToFrontResult>; evaluate<T = unknown>(expression: string, awaitPromise?: boolean, returnByValue?: boolean, options?: WaitOptions): Promise<T>; getContent(): Promise<string>; querySelector(selector: string, options?: QueryOptions): Promise<Element | null>; querySelectorAll(selector: string, options?: QueryOptions): Promise<readonly Element[]>; select(selector: string, options?: WaitOptions): Promise<Element>; selectAll(selector: string, options?: WaitOptions & QueryOptions): Promise<readonly Element[]>; find(text: string, bestMatch?: boolean, returnEnclosingElement?: boolean, options?: WaitOptions): Promise<Element>; findAll(text: string, options?: WaitOptions): Promise<readonly Element[]>; findElementByText(text: string, bestMatch?: boolean, returnEnclosingElement?: boolean): Promise<Element | null>; findElementsByText(text: string, tagHint?: string): Promise<readonly Element[]>; getAllLinkedSources(): Promise<readonly Element[]>; getAllUrls(absolute?: boolean): Promise<readonly string[]>; jsDumps<T = unknown>(expression: string): Promise<T>; disableDomAgent(): Promise<void>; get inspectorUrl(): string | undefined; inspectorOpen(): string | undefined; openExternalInspector(): string | undefined; flashPoint(x: number, y: number, durationMs?: number, size?: number): Promise<void>; verifyCf(challengeSelector: string, options?: WaitOptions & { readonly clickDelayMs?: number; }): Promise<void>; recordScreencast(directory: string): Promise<ScreencastSession>; xpath(expression: string, options?: WaitOptions): Promise<readonly Element[]>; waitFor(selector: string, options?: WaitOptions): Promise<Element>; waitFor(options: WaitForOptions): Promise<Element>; waitForReadyState(state?: ReadyState, options?: WaitOptions): Promise<boolean>; waitForIdle(options?: WaitOptions & { readonly idleMs?: number; }): Promise<void>; getLocalStorage(): Promise<Record<string, string>>; setLocalStorage(values: Readonly<Record<string, string | null>>): Promise<void>; setUserAgent(userAgent?: string, acceptLanguage?: string, platform?: string): Promise<void>; screenshotB64(options?: ScreenshotOptions): Promise<string>; saveScreenshot(path: string, options?: ScreenshotOptions): Promise<string>; printToPdf(path?: string, options?: Protocol.Page.Commands.PrintToPDFParams): Promise<string>; saveSnapshot(path?: string): Promise<string>; scrollDown(amount?: number): Promise<void>; scrollUp(amount?: number): Promise<void>; getWindow(): Promise<Protocol.Browser.Commands.GetWindowForTargetResult>; setWindowState(windowState: WindowState): Promise<void>; setWindowSize(width: number, height: number): Promise<void>; maximize(): Promise<void>; minimize(): Promise<void>; medimize(): Promise<void>; fullscreen(): Promise<void>; mouseMove(x: number, y: number, modifiers?: number): Promise<void>; mouseClick(x: number, y: number, button?: Protocol.Input.MouseButton, modifiers?: number): Promise<void>; elementFromNodeId(nodeId: Protocol.DOM.NodeId): Promise<Element>; close(): Promise<void>; markClosed(): void; markCrashed(status: string, errorCode: number): void; }"
+          "export declare class Tab { #private; readonly targetId: string; readonly connection: RuntimeBackend; readonly sessionId?: string | undefined; readonly browserConnection: RuntimeBackend; readonly webSocketUrl?: string | undefined; private readonly closeTarget?; private readonly readTargetInfo; private readonly writeTargetInfo; readonly browser?: Browser | undefined; constructor(targetId: string, connection: RuntimeBackend, sessionId?: string | undefined, browserConnection?: RuntimeBackend, webSocketUrl?: string | undefined, closeTarget?: (() => Promise<void>) | undefined, _childFrames?: () => readonly Tab[], readTargetInfo?: () => Protocol.Target.TargetInfo | undefined, writeTargetInfo?: (targetInfo: Protocol.Target.TargetInfo) => void, browser?: Browser | undefined); get enabledDomains(): ReadonlySet<string>; get manuallyEnabledDomains(): ReadonlySet<string>; get handlers(): ReadonlyMap<string, readonly TabEventHandler[]>; get closed(): boolean; get crashed(): boolean; get targetInfo(): Protocol.Target.TargetInfo | undefined; get target(): Protocol.Target.TargetInfo | undefined; get target_id(): Protocol.Target.TargetID; get title(): string; get url(): string; get type(): string; get type_(): string; get subtype(): string | undefined; get attached(): boolean; get canAccessOpener(): boolean; get can_access_opener(): boolean; get browserContextId(): Protocol.Browser.BrowserContextID | undefined; get browser_context_id(): Protocol.Browser.BrowserContextID | undefined; get openerId(): Protocol.Target.TargetID | undefined; get opener_id(): Protocol.Target.TargetID | undefined; get openerFrameId(): Protocol.Page.FrameId | undefined; get opener_frame_id(): Protocol.Page.FrameId | undefined; get parentId(): Protocol.Target.TargetID | undefined; get parentFrameId(): Protocol.Page.FrameId | undefined; get websocket(): RuntimeBackend; equals(other: unknown): boolean; toString(): string; aenter(): this; aopen(): Promise<void>; aexit(): Promise<void>; aclose(): Promise<void>; [Symbol.asyncDispose](): Promise<void>; sleep(seconds?: number): Promise<void>; wait(seconds?: number | null): Promise<void>; feedCdp(command: string | { readonly method: string; readonly params?: unknown; }, params?: unknown): void; feed_cdp(command: string | { readonly method: string; readonly params?: unknown; }, params?: unknown): void; updateTarget(): Promise<Protocol.Target.TargetInfo>; send<M extends ProtocolCommand>(method: M, ...args: CommandParams<M> extends undefined ? [params?: undefined, options?: SendOptions] : [params: CommandParams<M>, options?: SendOptions]): Promise<CommandResult<M>>; sendRaw(method: string, params?: unknown, options?: SendOptions): Promise<Readonly<Record<string, unknown>>>; on<E extends ProtocolEvent>(method: E, handler: (params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>): () => void; on(method: string, handler: (params: unknown, metadata: EventMetadata) => void | Promise<void>): () => void; addHandler<E extends ProtocolEvent>(eventType: E, handler: (params: EventPayload<E>, metadata: EventMetadata) => void | Promise<void>): void; addHandler(domain: EventDomain, handler: TabEventHandler): void; removeHandlers(): void; removeHandlers(eventType: undefined, handler: TabEventHandler): void; removeHandlers(eventType: ProtocolEvent | EventDomain, handler?: TabEventHandler): void; acquireDomain(domain: string, options?: SendOptions): Promise<() => Promise<void>>; expectRequest(matcher: UrlMatcher<Protocol.Network.Events.RequestWillBeSentEvent>, options?: WaitOptions): RequestExpectation; expectResponse(matcher: UrlMatcher<Protocol.Network.Events.ResponseReceivedEvent>, options?: WaitOptions): ResponseExpectation; intercept(options?: InterceptionOptions): FetchInterception; intercept(url: string, stage: Protocol.Fetch.RequestStage, resourceType: Protocol.Network.ResourceType): FetchInterception; setDownloadPath(path: string): Promise<string>; expectDownload(): DownloadWillBeginExpectation; expectDownload(matcher: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent>, options?: DownloadOptions): DownloadResultExpectation; downloadFile(url: string, destination: string, options?: WaitOptions): Promise<DownloadResult>; get(url: string, options?: WaitOptions): Promise<Protocol.Page.Commands.NavigateResult>; navigate(url: string, timeoutMs?: number, signal?: AbortSignal): Promise<Protocol.Page.Commands.NavigateResult>; reload(ignoreCache?: boolean, options?: WaitOptions): Promise<void>; back(options?: WaitOptions): Promise<boolean>; forward(options?: WaitOptions): Promise<boolean>; activate(): Promise<void>; bringToFront(): Promise<Protocol.Page.Commands.BringToFrontResult>; evaluate<T = unknown>(expression: string, awaitPromise?: boolean, returnByValue?: boolean, options?: WaitOptions): Promise<T>; getContent(): Promise<string>; querySelector(selector: string, options?: QueryOptions): Promise<Element | null>; querySelectorAll(selector: string, options?: QueryOptions): Promise<readonly Element[]>; select(selector: string, options?: WaitOptions): Promise<Element>; selectAll(selector: string, options?: WaitOptions & QueryOptions): Promise<readonly Element[]>; find(text: string, bestMatch?: boolean, returnEnclosingElement?: boolean, options?: WaitOptions): Promise<Element>; findAll(text: string, options?: WaitOptions): Promise<readonly Element[]>; findElementByText(text: string, bestMatch?: boolean, returnEnclosingElement?: boolean): Promise<Element | null>; findElementsByText(text: string, tagHint?: string): Promise<readonly Element[]>; getAllLinkedSources(): Promise<readonly Element[]>; getAllUrls(absolute?: boolean): Promise<readonly string[]>; jsDumps<T = unknown>(expression: string): Promise<T>; disableDomAgent(): Promise<void>; get inspectorUrl(): string | undefined; inspectorOpen(): string | undefined; openExternalInspector(): string | undefined; flashPoint(x: number, y: number, durationMs?: number, size?: number): Promise<void>; verifyCf(challengeSelector: string, options?: WaitOptions & { readonly clickDelayMs?: number; }): Promise<void>; recordScreencast(directory: string): Promise<ScreencastSession>; xpath(expression: string, options?: WaitOptions): Promise<readonly Element[]>; waitFor(selector: string, options?: WaitOptions): Promise<Element>; waitFor(options: WaitForOptions): Promise<Element>; waitForReadyState(state?: ReadyState, options?: WaitOptions): Promise<boolean>; waitForIdle(options?: WaitOptions & { readonly idleMs?: number; }): Promise<void>; getLocalStorage(): Promise<Record<string, string>>; setLocalStorage(values: Readonly<Record<string, string | null>>): Promise<void>; setUserAgent(userAgent?: string, acceptLanguage?: string, platform?: string): Promise<void>; screenshotB64(options?: ScreenshotOptions): Promise<string>; saveScreenshot(path: string, options?: ScreenshotOptions): Promise<string>; printToPdf(path?: string, options?: Protocol.Page.Commands.PrintToPDFParams): Promise<string>; saveSnapshot(path?: string): Promise<string>; scrollDown(amount?: number): Promise<void>; scrollUp(amount?: number): Promise<void>; getWindow(): Promise<Protocol.Browser.Commands.GetWindowForTargetResult>; setWindowState(windowState: WindowState): Promise<void>; setWindowSize(width: number, height: number): Promise<void>; maximize(): Promise<void>; minimize(): Promise<void>; medimize(): Promise<void>; fullscreen(): Promise<void>; mouseMove(x: number, y: number, modifiers?: number): Promise<void>; mouseClick(x: number, y: number, button?: Protocol.Input.MouseButton, modifiers?: number): Promise<void>; elementFromNodeId(nodeId: Protocol.DOM.NodeId): Promise<Element>; close(): Promise<void>; markClosed(): void; markCrashed(status: string, errorCode: number): void; }"
         ],
         "file": "packages/api/dist/tab.d.ts",
         "kind": "class"
@@ -14160,6 +14252,10 @@
           },
           {
             "kind": "property",
+            "name": "browser_context_id"
+          },
+          {
+            "kind": "property",
             "name": "canAccessOpener"
           },
           {
@@ -14193,6 +14289,10 @@
           {
             "kind": "property",
             "name": "enabledDomains"
+          },
+          {
+            "kind": "method",
+            "name": "equals"
           },
           {
             "kind": "method",
@@ -14344,6 +14444,14 @@
           },
           {
             "kind": "property",
+            "name": "opener_frame_id"
+          },
+          {
+            "kind": "property",
+            "name": "opener_id"
+          },
+          {
+            "kind": "property",
             "name": "parentFrameId"
           },
           {
@@ -14448,11 +14556,23 @@
           },
           {
             "kind": "property",
+            "name": "target_id"
+          },
+          {
+            "kind": "property",
             "name": "title"
+          },
+          {
+            "kind": "method",
+            "name": "toString"
           },
           {
             "kind": "property",
             "name": "type"
+          },
+          {
+            "kind": "property",
+            "name": "type_"
           },
           {
             "kind": "method",
@@ -34580,11 +34700,21 @@
                 "kind": "method",
                 "name": "__await__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Tab",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Tab.updateTarget",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -34607,11 +34737,21 @@
                 "kind": "method",
                 "name": "__call__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Tab",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Tab.waitFor",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -34655,11 +34795,21 @@
                 "kind": "method",
                 "name": "__eq__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Tab",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Tab.equals",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -34690,11 +34840,21 @@
                 "kind": "attribute",
                 "name": "__hash__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Tab",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Tab",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "valueType": "NoneType"
               },
@@ -34705,11 +34865,21 @@
                 "kind": "method",
                 "name": "__repr__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Tab",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
+                  "nodeMember": "Tab.toString",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -34780,7 +34950,13 @@
                 "kind": "method",
                 "name": "activate",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "activate(): Promise<void>;",
@@ -34793,9 +34969,13 @@
                     }
                   ],
                   "nodeMember": "Tab.activate",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -34980,7 +35160,13 @@
                 "kind": "property",
                 "name": "attached",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -34993,9 +35179,13 @@
                     }
                   ],
                   "nodeMember": "Tab.attached",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -35005,7 +35195,13 @@
                 "kind": "method",
                 "name": "back",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "back(options?: WaitOptions): Promise<boolean>;",
@@ -35027,9 +35223,13 @@
                     }
                   ],
                   "nodeMember": "Tab.back",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -35052,7 +35252,13 @@
                 "kind": "method",
                 "name": "bring_to_front",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "bringToFront(): Promise<Protocol.Page.Commands.BringToFrontResult>;",
@@ -35065,9 +35271,13 @@
                     }
                   ],
                   "nodeMember": "Tab.bringToFront",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -35127,22 +35337,32 @@
                 "kind": "property",
                 "name": "browser_context_id",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
-                      "declaration": "get browserContextId(): Protocol.Browser.BrowserContextID | undefined;",
+                      "declaration": "get browser_context_id(): Protocol.Browser.BrowserContextID | undefined;",
                       "kind": "property",
-                      "name": "browserContextId",
+                      "name": "browser_context_id",
                       "parameters": [],
                       "returnType": "Protocol.Browser.BrowserContextID | undefined",
                       "typeParameters": []
                     }
                   ],
                   "nodeMember": "Tab.browserContextId",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -35188,7 +35408,13 @@
                 "kind": "method",
                 "name": "close",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "close(): Promise<void>;",
@@ -35201,9 +35427,13 @@
                     }
                   ],
                   "nodeMember": "Tab.close",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -35227,7 +35457,13 @@
                 "kind": "property",
                 "name": "closed",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -35240,9 +35476,13 @@
                     }
                   ],
                   "nodeMember": "Tab.closed",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -35252,7 +35492,13 @@
                 "kind": "method",
                 "name": "disable_dom_agent",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "disableDomAgent(): Promise<void>;",
@@ -35265,9 +35511,13 @@
                     }
                   ],
                   "nodeMember": "Tab.disableDomAgent",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -35290,7 +35540,13 @@
                 "kind": "method",
                 "name": "download_file",
                 "nodeMapping": {
-                  "evidence": "name and member kind match, but required arity differs",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-NETWORK-CONFORMANCE-001",
+                      "file": "packages/api/test/network-conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "downloadFile(url: string, destination: string, options?: WaitOptions): Promise<DownloadResult>;",
@@ -35328,9 +35584,13 @@
                     }
                   ],
                   "nodeMember": "Tab.downloadFile",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "INCOMPATIBLE_REQUIRED_ARITY",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -35850,7 +36110,13 @@
                 "kind": "method",
                 "name": "find_all",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "findAll(text: string, options?: WaitOptions): Promise<readonly Element[]>;",
@@ -35880,9 +36146,13 @@
                     }
                   ],
                   "nodeMember": "Tab.findAll",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -35919,7 +36189,13 @@
                 "kind": "method",
                 "name": "find_element_by_text",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "findElementByText(text: string, bestMatch?: boolean, returnEnclosingElement?: boolean): Promise<Element | null>;",
@@ -35957,9 +36233,13 @@
                     }
                   ],
                   "nodeMember": "Tab.findElementByText",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -36003,7 +36283,13 @@
                 "kind": "method",
                 "name": "find_elements_by_text",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "findElementsByText(text: string, tagHint?: string): Promise<readonly Element[]>;",
@@ -36033,9 +36319,13 @@
                     }
                   ],
                   "nodeMember": "Tab.findElementsByText",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -36072,7 +36362,13 @@
                 "kind": "method",
                 "name": "flash_point",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "flashPoint(x: number, y: number, durationMs?: number, size?: number): Promise<void>;",
@@ -36118,9 +36414,13 @@
                     }
                   ],
                   "nodeMember": "Tab.flashPoint",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -36171,7 +36471,13 @@
                 "kind": "method",
                 "name": "forward",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "forward(options?: WaitOptions): Promise<boolean>;",
@@ -36193,9 +36499,13 @@
                     }
                   ],
                   "nodeMember": "Tab.forward",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -36218,7 +36528,13 @@
                 "kind": "method",
                 "name": "fullscreen",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "fullscreen(): Promise<void>;",
@@ -36231,9 +36547,13 @@
                     }
                   ],
                   "nodeMember": "Tab.fullscreen",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -36256,7 +36576,13 @@
                 "kind": "method",
                 "name": "get",
                 "nodeMapping": {
-                  "evidence": "name and member kind match, but required arity differs",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "get(url: string, options?: WaitOptions): Promise<Protocol.Page.Commands.NavigateResult>;",
@@ -36286,9 +36612,13 @@
                     }
                   ],
                   "nodeMember": "Tab.get",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "INCOMPATIBLE_REQUIRED_ARITY",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -36332,7 +36662,13 @@
                 "kind": "method",
                 "name": "get_all_linked_sources",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "getAllLinkedSources(): Promise<readonly Element[]>;",
@@ -36345,9 +36681,13 @@
                     }
                   ],
                   "nodeMember": "Tab.getAllLinkedSources",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -36370,7 +36710,13 @@
                 "kind": "method",
                 "name": "get_all_urls",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "getAllUrls(absolute?: boolean): Promise<readonly string[]>;",
@@ -36392,9 +36738,13 @@
                     }
                   ],
                   "nodeMember": "Tab.getAllUrls",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -36466,7 +36816,13 @@
                 "kind": "method",
                 "name": "get_local_storage",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "getLocalStorage(): Promise<Record<string, string>>;",
@@ -36479,9 +36835,13 @@
                     }
                   ],
                   "nodeMember": "Tab.getLocalStorage",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -36504,7 +36864,13 @@
                 "kind": "method",
                 "name": "get_window",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "getWindow(): Promise<Protocol.Browser.Commands.GetWindowForTargetResult>;",
@@ -36517,9 +36883,13 @@
                     }
                   ],
                   "nodeMember": "Tab.getWindow",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -36542,7 +36912,13 @@
                 "kind": "method",
                 "name": "inspector_open",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "inspectorOpen(): string | undefined;",
@@ -36555,9 +36931,13 @@
                     }
                   ],
                   "nodeMember": "Tab.inspectorOpen",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -36581,7 +36961,13 @@
                 "kind": "property",
                 "name": "inspector_url",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -36594,9 +36980,13 @@
                     }
                   ],
                   "nodeMember": "Tab.inspectorUrl",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -36700,7 +37090,13 @@
                 "kind": "method",
                 "name": "js_dumps",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "jsDumps<T = unknown>(expression: string): Promise<T>;",
@@ -36724,9 +37120,13 @@
                     }
                   ],
                   "nodeMember": "Tab.jsDumps",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -36763,7 +37163,13 @@
                 "kind": "method",
                 "name": "maximize",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "maximize(): Promise<void>;",
@@ -36776,9 +37182,13 @@
                     }
                   ],
                   "nodeMember": "Tab.maximize",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -36849,7 +37259,13 @@
                 "kind": "method",
                 "name": "minimize",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "minimize(): Promise<void>;",
@@ -36862,9 +37278,13 @@
                     }
                   ],
                   "nodeMember": "Tab.minimize",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -36887,7 +37307,13 @@
                 "kind": "method",
                 "name": "mouse_click",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "mouseClick(x: number, y: number, button?: Protocol.Input.MouseButton, modifiers?: number): Promise<void>;",
@@ -36933,9 +37359,13 @@
                     }
                   ],
                   "nodeMember": "Tab.mouseClick",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -37007,7 +37437,13 @@
                 "kind": "method",
                 "name": "mouse_move",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "mouseMove(x: number, y: number, modifiers?: number): Promise<void>;",
@@ -37045,9 +37481,13 @@
                     }
                   ],
                   "nodeMember": "Tab.mouseMove",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -37098,7 +37538,13 @@
                 "kind": "method",
                 "name": "open_external_inspector",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "openExternalInspector(): string | undefined;",
@@ -37111,9 +37557,13 @@
                     }
                   ],
                   "nodeMember": "Tab.openExternalInspector",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -37137,22 +37587,32 @@
                 "kind": "property",
                 "name": "opener_frame_id",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
-                      "declaration": "get openerFrameId(): Protocol.Page.FrameId | undefined;",
+                      "declaration": "get opener_frame_id(): Protocol.Page.FrameId | undefined;",
                       "kind": "property",
-                      "name": "openerFrameId",
+                      "name": "opener_frame_id",
                       "parameters": [],
                       "returnType": "Protocol.Page.FrameId | undefined",
                       "typeParameters": []
                     }
                   ],
                   "nodeMember": "Tab.openerFrameId",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -37163,22 +37623,32 @@
                 "kind": "property",
                 "name": "opener_id",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
-                      "declaration": "get openerId(): Protocol.Target.TargetID | undefined;",
+                      "declaration": "get opener_id(): Protocol.Target.TargetID | undefined;",
                       "kind": "property",
-                      "name": "openerId",
+                      "name": "opener_id",
                       "parameters": [],
                       "returnType": "Protocol.Target.TargetID | undefined",
                       "typeParameters": []
                     }
                   ],
                   "nodeMember": "Tab.openerId",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -37188,7 +37658,13 @@
                 "kind": "method",
                 "name": "print_to_pdf",
                 "nodeMapping": {
-                  "evidence": "name and member kind match, but required arity differs",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "printToPdf(path?: string, options?: Protocol.Page.Commands.PrintToPDFParams): Promise<string>;",
@@ -37218,9 +37694,13 @@
                     }
                   ],
                   "nodeMember": "Tab.printToPdf",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "INCOMPATIBLE_REQUIRED_ARITY",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -37257,7 +37737,13 @@
                 "kind": "method",
                 "name": "query_selector",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "querySelector(selector: string, options?: QueryOptions): Promise<Element | null>;",
@@ -37287,9 +37773,13 @@
                     }
                   ],
                   "nodeMember": "Tab.querySelector",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -37408,7 +37898,13 @@
                 "kind": "method",
                 "name": "reload",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "reload(ignoreCache?: boolean, options?: WaitOptions): Promise<void>;",
@@ -37438,9 +37934,13 @@
                     }
                   ],
                   "nodeMember": "Tab.reload",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -37544,7 +38044,13 @@
                 "kind": "method",
                 "name": "save_screenshot",
                 "nodeMapping": {
-                  "evidence": "name and member kind match, but required arity differs",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "saveScreenshot(path: string, options?: ScreenshotOptions): Promise<string>;",
@@ -37574,9 +38080,13 @@
                     }
                   ],
                   "nodeMember": "Tab.saveScreenshot",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "INCOMPATIBLE_REQUIRED_ARITY",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -37620,7 +38130,13 @@
                 "kind": "method",
                 "name": "save_snapshot",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "saveSnapshot(path?: string): Promise<string>;",
@@ -37642,9 +38158,13 @@
                     }
                   ],
                   "nodeMember": "Tab.saveSnapshot",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -37674,7 +38194,13 @@
                 "kind": "method",
                 "name": "screenshot_b64",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "screenshotB64(options?: ScreenshotOptions): Promise<string>;",
@@ -37696,9 +38222,13 @@
                     }
                   ],
                   "nodeMember": "Tab.screenshotB64",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -37735,7 +38265,13 @@
                 "kind": "method",
                 "name": "scroll_down",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "scrollDown(amount?: number): Promise<void>;",
@@ -37757,9 +38293,13 @@
                     }
                   ],
                   "nodeMember": "Tab.scrollDown",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -37796,7 +38336,13 @@
                 "kind": "method",
                 "name": "scroll_up",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "scrollUp(amount?: number): Promise<void>;",
@@ -37818,9 +38364,13 @@
                     }
                   ],
                   "nodeMember": "Tab.scrollUp",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -37933,7 +38483,13 @@
                 "kind": "method",
                 "name": "select_all",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "selectAll(selector: string, options?: WaitOptions & QueryOptions): Promise<readonly Element[]>;",
@@ -37963,9 +38519,13 @@
                     }
                   ],
                   "nodeMember": "Tab.selectAll",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -38009,7 +38569,13 @@
                 "kind": "method",
                 "name": "send",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "send<M extends ProtocolCommand>(method: M, ...args: CommandParams<M> extends undefined ? [params?: undefined, options?: SendOptions] : [params: CommandParams<M>, options?: SendOptions]): Promise<CommandResult<M>>;",
@@ -38041,9 +38607,13 @@
                     }
                   ],
                   "nodeMember": "Tab.send",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -38080,7 +38650,13 @@
                 "kind": "method",
                 "name": "set_download_path",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-NETWORK-CONFORMANCE-001",
+                      "file": "packages/api/test/network-conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "setDownloadPath(path: string): Promise<string>;",
@@ -38102,9 +38678,13 @@
                     }
                   ],
                   "nodeMember": "Tab.setDownloadPath",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -38134,7 +38714,13 @@
                 "kind": "method",
                 "name": "set_local_storage",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "setLocalStorage(values: Readonly<Record<string, string | null>>): Promise<void>;",
@@ -38156,9 +38742,13 @@
                     }
                   ],
                   "nodeMember": "Tab.setLocalStorage",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -38284,7 +38874,13 @@
                 "kind": "method",
                 "name": "set_window_size",
                 "nodeMapping": {
-                  "evidence": "name and member kind match, but required arity differs",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "setWindowSize(width: number, height: number): Promise<void>;",
@@ -38314,9 +38910,13 @@
                     }
                   ],
                   "nodeMember": "Tab.setWindowSize",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "INCOMPATIBLE_REQUIRED_ARITY",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -38367,7 +38967,13 @@
                 "kind": "method",
                 "name": "set_window_state",
                 "nodeMapping": {
-                  "evidence": "name and member kind match, but required arity differs",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "setWindowState(windowState: WindowState): Promise<void>;",
@@ -38389,9 +38995,13 @@
                     }
                   ],
                   "nodeMember": "Tab.setWindowState",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "INCOMPATIBLE_REQUIRED_ARITY",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -38514,7 +39124,13 @@
                 "kind": "property",
                 "name": "subtype",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -38527,9 +39143,13 @@
                     }
                   ],
                   "nodeMember": "Tab.subtype",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -38576,23 +39196,32 @@
                 "kind": "property",
                 "name": "target_id",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
-                      "declaration": "readonly targetId: string;",
-                      "declaredDefault": null,
-                      "hasDeclaredDefault": false,
+                      "access": "get",
+                      "declaration": "get target_id(): Protocol.Target.TargetID;",
                       "kind": "property",
-                      "name": "targetId",
-                      "optional": false,
-                      "readonly": true,
-                      "type": "string"
+                      "name": "target_id",
+                      "parameters": [],
+                      "returnType": "Protocol.Target.TargetID",
+                      "typeParameters": []
                     }
                   ],
                   "nodeMember": "Tab.targetId",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -38603,7 +39232,13 @@
                 "kind": "property",
                 "name": "title",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -38616,9 +39251,13 @@
                     }
                   ],
                   "nodeMember": "Tab.title",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -38629,22 +39268,32 @@
                 "kind": "property",
                 "name": "type_",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
-                      "declaration": "get type(): string;",
+                      "declaration": "get type_(): string;",
                       "kind": "property",
-                      "name": "type",
+                      "name": "type_",
                       "parameters": [],
                       "returnType": "string",
                       "typeParameters": []
                     }
                   ],
-                  "nodeMember": "Tab.type",
-                  "semanticsVerified": false,
+                  "nodeMember": "Tab.type_",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -38698,7 +39347,13 @@
                 "kind": "property",
                 "name": "url",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-TAB-LIFECYCLE-001",
+                      "file": "packages/api/test/browser.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -38711,9 +39366,13 @@
                     }
                   ],
                   "nodeMember": "Tab.url",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -38723,7 +39382,13 @@
                 "kind": "method",
                 "name": "verify_cf",
                 "nodeMapping": {
-                  "evidence": "name and member kind match, but required arity differs",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "verifyCf(challengeSelector: string, options?: WaitOptions & { readonly clickDelayMs?: number; }): Promise<void>;",
@@ -38753,9 +39418,13 @@
                     }
                   ],
                   "nodeMember": "Tab.verifyCf",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "INCOMPATIBLE_REQUIRED_ARITY",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -38870,7 +39539,13 @@
                 "kind": "method",
                 "name": "wait_for",
                 "nodeMapping": {
-                  "evidence": "name and member kind match, but required arity differs",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONFORMANCE-001",
+                      "file": "packages/api/test/conformance.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "waitFor(selector: string, options?: WaitOptions): Promise<Element>;",
@@ -38918,9 +39593,13 @@
                     }
                   ],
                   "nodeMember": "Tab.waitFor",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "INCOMPATIBLE_REQUIRED_ARITY",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -39158,13 +39837,24 @@
             ],
             "name": "Tab",
             "nodeMapping": {
-              "evidence": "compatible TypeScript AST declaration",
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-TAB-LIFECYCLE-001",
+                  "file": "packages/api/test/browser.test.ts"
+                }
+              ],
               "nodeKind": "class",
+              "nodeMember": "Tab",
               "nodeSymbol": "Tab",
               "runtimeExport": true,
-              "semanticsVerified": false,
+              "semanticsCoverage": [
+                "return",
+                "state"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "CANDIDATE"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -40313,13 +41003,24 @@
         "module": "zendriver.core.tab",
         "name": "Tab",
         "nodeMapping": {
-          "evidence": "compatible TypeScript AST declaration",
+          "evidence": "independent passing Node parity cases",
+          "evidenceCases": [
+            {
+              "case": "ZDAPI-TAB-LIFECYCLE-001",
+              "file": "packages/api/test/browser.test.ts"
+            }
+          ],
           "nodeKind": "class",
+          "nodeMember": "Tab",
           "nodeSymbol": "Tab",
           "runtimeExport": true,
-          "semanticsVerified": false,
+          "semanticsCoverage": [
+            "return",
+            "state"
+          ],
+          "semanticsVerified": true,
           "signatureComparison": "UNVERIFIED",
-          "status": "CANDIDATE"
+          "status": "VERIFIED"
         },
         "signature": {
           "parameters": [

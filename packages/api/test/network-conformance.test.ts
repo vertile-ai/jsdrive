@@ -6,7 +6,7 @@ import { join } from "node:path";
 import test from "node:test";
 import { Browser, discoverChromeExecutable, type ConnectionMode } from "../src/index.js";
 
-test("cookies, network expectations, interception, and downloads work in direct and flattened modes", { timeout: 60_000 }, async () => {
+test("ZDAPI-NETWORK-CONFORMANCE-001", { timeout: 60_000 }, async () => {
   const server = createServer((request, response) => {
     if (request.url === "/api") {
       response.setHeader("content-type", "application/json");

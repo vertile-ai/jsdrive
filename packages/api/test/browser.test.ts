@@ -105,7 +105,9 @@ test("ZDAPI-TAB-LIFECYCLE-001", async () => {
   const connection = {
     send: async (method: string, params: unknown) => {
       calls.push({ method, params });
-      return method === "Browser.getWindowForTarget" ? { windowId: 7, bounds: {} } : {};
+      if (method === "Browser.getWindowForTarget") return { windowId: 7, bounds: {} };
+      if (method === "Target.getTargetInfo") return { targetInfo: target };
+      return {};
     },
     sendRaw: async (method: string, params: unknown) => {
       calls.push({ method, params });
@@ -119,6 +121,10 @@ test("ZDAPI-TAB-LIFECYCLE-001", async () => {
     url: "about:blank",
     attached: true,
     canAccessOpener: true,
+    openerId: "opener",
+    openerFrameId: "opener-frame",
+    browserContextId: "browser-context",
+    subtype: "prerender",
   } satisfies Protocol.Target.TargetInfo;
   let closed = 0;
   const tab = new Tab(
@@ -135,21 +141,43 @@ test("ZDAPI-TAB-LIFECYCLE-001", async () => {
   assert.equal(tab.aenter(), tab);
   await tab.aopen();
   assert.equal(tab.target, target);
+  assert.equal(tab.target_id, "target");
+  assert.equal(tab.type_, "page");
+  assert.equal(tab.title, "Fixture");
+  assert.equal(tab.url, "about:blank");
+  assert.equal(tab.attached, true);
+  assert.equal(tab.subtype, "prerender");
   assert.equal(tab.can_access_opener, true);
+  assert.equal(tab.opener_id, "opener");
+  assert.equal(tab.opener_frame_id, "opener-frame");
+  assert.equal(tab.browser_context_id, "browser-context");
   assert.equal(tab.websocket, connection);
+  assert.match(tab.inspectorUrl ?? "", /^devtools:\/\//);
+  assert.equal(tab.inspectorOpen(), tab.inspectorUrl);
+  assert.equal(tab.openExternalInspector(), tab.inspectorUrl);
+  assert.equal(tab.toString(), "<Tab [target] [page] [url: about:blank]>");
+  assert.equal(tab.equals(new Tab("target", connection, "session", connection, undefined, undefined, undefined, () => target)), true);
   assert.equal(tab.feed_cdp("Runtime.enable"), undefined);
   await new Promise<void>((resolve) => setImmediate(resolve));
+  assert.equal(await tab.updateTarget(), target);
   await tab.medimize();
+  await tab.activate();
+  await tab.bringToFront();
+  await tab.disableDomAgent();
   await tab.sleep(0);
   await tab.wait(0);
   await tab.aexit();
   assert.equal(closed, 1);
   assert.deepEqual(calls.map(({ method }) => method), [
     "Runtime.enable",
+    "Target.getTargetInfo",
     "Browser.getWindowForTarget",
     "Browser.setWindowBounds",
+    "Target.activateTarget",
+    "Page.bringToFront",
+    "DOM.disable",
   ]);
-  assert.deepEqual(calls[2]?.params, { windowId: 7, bounds: { windowState: "minimized" } });
+  assert.deepEqual(calls[3]?.params, { windowId: 7, bounds: { windowState: "minimized" } });
 });
 
 test("network expectations ignore other sessions and clean up listeners and domain leases", async () => {

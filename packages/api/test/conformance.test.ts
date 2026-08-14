@@ -10,6 +10,7 @@ const fixture = `<!doctype html>
 <html><head><title>nodriver conformance</title></head>
 <body style="min-height:1800px">
   <h1 id="heading" data-kind="primary">Nodriver fixture</h1>
+  <a id="linked" href="/second">Linked page</a>
   <div id="stable"><span class="child">before</span></div>
   <button id="rerender">Rerender stable region</button>
   <button id="clicker">Click target</button>
@@ -65,6 +66,9 @@ test("ZDAPI-CONFORMANCE-001", { timeout: 60_000 }, async () => {
         assert.match(await heading.getHtml(), /^<h1/);
         assert.equal((await heading.getJsAttributes())?.id, "heading");
         await heading.saveToDom();
+        assert.ok((await tab.getAllLinkedSources()).some((element) => element.get("id") === "linked"));
+        assert.ok((await tab.getAllUrls()).includes(`${baseUrl}/second`));
+        assert.deepEqual(await tab.jsDumps("({ answer: 42 })"), { answer: 42 });
         assert.equal((await tab.querySelectorAll("button")).length, 2);
         assert.equal((await tab.selectAll("button")).length, 2);
         const delayed = await tab.select("#delayed");
@@ -74,6 +78,8 @@ test("ZDAPI-CONFORMANCE-001", { timeout: 60_000 }, async () => {
         assert.ok(textMatches.some((element) => element.attributes.id === "hidden-text"));
         assert.equal((await tab.find("Script conformance text")).tag, "script");
         assert.equal((await tab.find("Delayed exact text")).attributes.id, "hidden-text");
+        assert.equal((await tab.findElementByText("Nodriver fixture"))?.tag, "h1");
+        assert.ok((await tab.findElementsByText("Nodriver fixture", "h1")).length >= 1);
         assert.equal((await tab.waitFor({ text: "Delayed visible text", bestMatch: true })).attributes.id, "delayed");
         assert.equal((await tab.xpath("//h1"))[0]?.backendNodeId, heading.backendNodeId);
         const aborted = new AbortController();
@@ -96,6 +102,8 @@ test("ZDAPI-CONFORMANCE-001", { timeout: 60_000 }, async () => {
         assert.equal(clickState.clicks, 2);
         assert.equal(clickState.pointers, 1);
         assert.ok(clickState.hover >= 1);
+        await tab.verifyCf("#clicker", { clickDelayMs: 0 });
+        assert.equal(await tab.evaluate<number>("fixtureState.clicks"), 3);
 
         const input = await tab.select("#controlled");
         await input.focus();

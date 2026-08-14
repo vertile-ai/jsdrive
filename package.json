@@ -22,7 +22,7 @@
     "conformance:network": "npm run build --workspace=@vertile-ai/jsdriver-runtime-js && tsc -p packages/api/tsconfig.test.json && node packages/api/dist-test/test/support/run-persistent-tests.js packages/api/dist-test/test/network-conformance.test.js",
     "smoke:m2": "npm run build && npm run smoke --workspace=guanine",
     "smoke:native": "npm run build && npm run smoke --workspace=@vertile-ai/jsdriver-runtime-native",
-    "differential": "npm run build && tsc -p packages/api/tsconfig.test.json && node packages/api/dist-test/differential/run.js",
+    "differential": "npm run build && npm run test:differential-harness --workspace=guanine && node packages/api/dist-test/differential/run.js",
     "parity:inventory": "python3 parity/generate.py",
     "test:parity:headless": "python3 parity/generate.py --validate-only && npm run test:parity:headless --workspace=guanine",
     "typecheck": "npm run build --workspace=@vertile-ai/jsdriver-protocol && npm run build --workspace=@vertile-ai/jsdriver-runtime-js && npm run build --workspace=guanine && npm run build --workspace=@vertile-ai/jsdriver-runtime-native && tsc -p tsconfig.json"

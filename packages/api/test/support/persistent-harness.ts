@@ -9,6 +9,7 @@ export const HARNESS_METADATA_ENV = "NODRIVER_PERSISTENT_METADATA";
 export const HEADFUL_REQUEST_ENV = "NODRIVER_HARNESS_HEADFUL";
 export const HEADFUL_AUTHORIZATION_ENV = "NODRIVER_ALLOW_HEADFUL";
 export const HARNESS_PHASE_ENV = "NODRIVER_HARNESS_PHASE";
+export const HARNESS_LOCK_PATH = join(tmpdir(), "nodriver-persistent-harness.lock");
 export type HarnessPhase = "headless" | "headful";
 
 export interface HarnessMetadata extends BrowserEndpoint {
@@ -129,7 +130,7 @@ export async function withPersistentBrowser<T>(
   }
 }
 
-export async function acquireHarnessLock(lockPath = join(tmpdir(), "nodriver-persistent-harness.lock")): Promise<() => Promise<void>> {
+export async function acquireHarnessLock(lockPath = HARNESS_LOCK_PATH): Promise<() => Promise<void>> {
   const token = randomUUID();
   const tokenPath = join(lockPath, "owner");
   try {

@@ -113,12 +113,12 @@ The Node production runtime has one external npm dependency, `ws`; the other pro
 | `npm run conformance:network` | Run cookies/network/interception/download conformance. |
 | `npm run smoke:m2` | Launch Chrome with the JavaScript backend. |
 | `npm run smoke:native` | Build the addon and launch Chrome with the native backend. |
-| `npm run differential` | Run one provider-shaped fixture through JS/native, compare normalized outcome and outbound trace, and run Zendriver 0.15.5 outcome-only when available. |
+| `npm run differential` | Under the repository browser lock, run one headless provider-shaped fixture serially through Zendriver 0.15.5, JS, and native; compare all outcomes and the JS/native outbound traces. |
 
-For the optional Zendriver run, install exactly version `0.15.5` in `.tmp/zendriver-ref` (or `.tmp/zendriver-0.15.5`), or set `ZENDRIVER_PYTHON` to its Python executable. Zendriver does not expose this runtime's backend-neutral trace, so the report labels its trace `unavailable` and compares its observable outcome only.
+The differential command requires exactly Zendriver `0.15.5` in `.tmp/zendriver-ref` (or `.tmp/zendriver-0.15.5`), or `ZENDRIVER_PYTHON` set to its Python executable. Zendriver does not expose this runtime's backend-neutral trace, so the report labels its trace `unavailable` and compares its observable outcome only.
 
 The package test scripts own the browser lifecycle. Persistent phases start one parent-owned Chromium and give serial child tests endpoint leases; lifecycle and Zendriver comparison cases run only after that owner exits under the same exclusive lock. Run browser suites through these scripts rather than invoking compiled browser test files directly.
 
 ## Clean-room and licenses
 
-All original code in this repository is MIT licensed. The pinned official Chrome DevTools Protocol schemas in `packages/protocol-schema` retain their BSD-3-Clause license and provenance. Zendriver code, tests, and comments are not included, copied, translated, or inspected; Zendriver is used only as an optional black-box reference through its public API and documentation.
+All original code in this repository is MIT licensed. The pinned official Chrome DevTools Protocol schemas in `packages/protocol-schema` retain their BSD-3-Clause license and provenance. Zendriver code, tests, and comments are not included, copied, translated, or inspected; Zendriver is used only as a pinned black-box reference through its public API and documentation.

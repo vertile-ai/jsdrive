@@ -38,6 +38,9 @@ test("ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public va
   assert.equal(String(KeyModifiers.Alt), "1");
   assert.equal(KeyModifiers.Alt == 1, true);
   assert.equal(KeyModifiers.Ctrl | KeyModifiers.Shift, 10);
+  assert.equal(typeof KeyModifiers.Shift, "number");
+  assert.equal(Number.isInteger(KeyModifiers.Shift), true);
+  assert.equal(KeyModifiers.Shift.toString(2), "1000");
   assert.deepEqual(
     [KeyPressEvent.KEY_DOWN, KeyPressEvent.KEY_UP, KeyPressEvent.RAW_KEY_DOWN, KeyPressEvent.CHAR, KeyPressEvent.DOWN_AND_UP],
     ["keyDown", "keyUp", "rawKeyDown", "char", "downAndUp"],
@@ -46,6 +49,12 @@ test("ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public va
   // members are already primitive strings and therefore preserve that contract.
   assert.equal(String(KeyPressEvent.CHAR), "char");
   assert.equal(KeyPressEvent.CHAR === "char", true);
+  assert.equal(typeof KeyPressEvent.RAW_KEY_DOWN, "string");
+  assert.equal(KeyPressEvent.RAW_KEY_DOWN.length, 10);
+  assert.equal(KeyPressEvent.RAW_KEY_DOWN[0], "r");
+  assert.equal(KeyPressEvent.RAW_KEY_DOWN.includes("Key"), true);
+  assert.equal(KeyPressEvent.RAW_KEY_DOWN.toUpperCase(), "RAWKEYDOWN");
+  assert.deepEqual([...KeyPressEvent.CHAR], ["c", "h", "a", "r"]);
 
   for (const [name, value] of descriptorNames) {
     const descriptor = SpecialKeys[name];

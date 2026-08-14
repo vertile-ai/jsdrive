@@ -1,24 +1,24 @@
 {
   "mappingCounts": {
     "coreMembers": {
-      "CANDIDATE": 135,
-      "MISSING": 45,
-      "UNKNOWN": 125,
-      "VERIFIED": 167
+      "CANDIDATE": 124,
+      "MISSING": 44,
+      "UNKNOWN": 10,
+      "VERIFIED": 294
     },
     "coreSymbols": {
-      "CANDIDATE": 13,
-      "VERIFIED": 32
+      "CANDIDATE": 9,
+      "VERIFIED": 36
     },
     "rootExports": {
-      "CANDIDATE": 6,
-      "VERIFIED": 10
+      "CANDIDATE": 2,
+      "VERIFIED": 14
     },
     "total": {
-      "CANDIDATE": 154,
-      "MISSING": 45,
-      "UNKNOWN": 125,
-      "VERIFIED": 209
+      "CANDIDATE": 135,
+      "MISSING": 44,
+      "UNKNOWN": 10,
+      "VERIFIED": 344
     }
   },
   "nodriver": {
@@ -28101,7 +28101,13 @@
                 "kind": "attribute",
                 "name": "MODIFIER_KEYS",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-002 KeyEvents exposes constants, constructor state, and helper semantics",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "static readonly MODIFIER_KEYS: readonly SpecialKeyDescriptor[];",
@@ -28115,9 +28121,13 @@
                     }
                   ],
                   "nodeMember": "KeyEvents.MODIFIER_KEYS",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "valueType": "list"
               },
@@ -28129,7 +28139,13 @@
                 "kind": "attribute",
                 "name": "NUM_SHIFT",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-002 KeyEvents exposes constants, constructor state, and helper semantics",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "static readonly NUM_SHIFT = \")!@#$%^&*(\";",
@@ -28143,9 +28159,13 @@
                     }
                   ],
                   "nodeMember": "KeyEvents.NUM_SHIFT",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "valueType": "str"
               },
@@ -28157,11 +28177,21 @@
                 "kind": "attribute",
                 "name": "Payload",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on KeyEvents",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-003 KeyEvents emits pinned payloads and rejects unsupported standalone events",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyEvents",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "valueType": "_TypedDictMeta"
               },
@@ -28173,7 +28203,13 @@
                 "kind": "attribute",
                 "name": "SPECIAL_CHAR_MAP",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-002 KeyEvents exposes constants, constructor state, and helper semantics",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "static readonly SPECIAL_CHAR_MAP: Readonly<Record<string, readonly [code: string, keyCode: number]>>;",
@@ -28187,9 +28223,13 @@
                     }
                   ],
                   "nodeMember": "KeyEvents.SPECIAL_CHAR_MAP",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "valueType": "dict"
               },
@@ -28201,7 +28241,13 @@
                 "kind": "attribute",
                 "name": "SPECIAL_CHAR_REVERSE_MAP",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-002 KeyEvents exposes constants, constructor state, and helper semantics",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "static readonly SPECIAL_CHAR_REVERSE_MAP: Readonly<Record<string, string>>;",
@@ -28215,9 +28261,13 @@
                     }
                   ],
                   "nodeMember": "KeyEvents.SPECIAL_CHAR_REVERSE_MAP",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "valueType": "dict"
               },
@@ -28229,7 +28279,13 @@
                 "kind": "attribute",
                 "name": "SPECIAL_CHAR_SHIFT_MAP",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-002 KeyEvents exposes constants, constructor state, and helper semantics",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "static readonly SPECIAL_CHAR_SHIFT_MAP: Readonly<Record<string, string>>;",
@@ -28243,9 +28299,13 @@
                     }
                   ],
                   "nodeMember": "KeyEvents.SPECIAL_CHAR_SHIFT_MAP",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "valueType": "dict"
               },
@@ -28257,7 +28317,13 @@
                 "kind": "attribute",
                 "name": "SPECIAL_KEY_CHAR_MAP",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-002 KeyEvents exposes constants, constructor state, and helper semantics",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "static readonly SPECIAL_KEY_CHAR_MAP: Map<SpecialKeyDescriptor, string>;",
@@ -28271,9 +28337,13 @@
                     }
                   ],
                   "nodeMember": "KeyEvents.SPECIAL_KEY_CHAR_MAP",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "valueType": "dict"
               },
@@ -28284,7 +28354,13 @@
                 "kind": "method",
                 "name": "conv_to_str",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-002 KeyEvents exposes constants, constructor state, and helper semantics",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "conv_to_str(specialKeyKey: SpecialKeyDescriptor): string;",
@@ -28306,9 +28382,13 @@
                     }
                   ],
                   "nodeMember": "KeyEvents.conv_to_str",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -28414,7 +28494,13 @@
                 "kind": "classmethod",
                 "name": "from_text",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-004 KeyEvents.from_text/from_mixed_input retain grapheme, special-key, and error semantics",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "static from_text(text: string, asciiKeypress: KeyPressEvent): readonly KeyEventPayload[];",
@@ -28444,9 +28530,13 @@
                     }
                   ],
                   "nodeMember": "KeyEvents.from_text",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -28483,7 +28573,13 @@
                 "kind": "staticmethod",
                 "name": "is_english_alphabet",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-002 KeyEvents exposes constants, constructor state, and helper semantics",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "static is_english_alphabet(char: string): boolean;",
@@ -28505,9 +28601,13 @@
                     }
                   ],
                   "nodeMember": "KeyEvents.is_english_alphabet",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -28530,7 +28630,13 @@
                 "kind": "method",
                 "name": "to_cdp_events",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-003 KeyEvents emits pinned payloads and rejects unsupported standalone events",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "to_cdp_events(keyPressEvent: KeyPressEvent, overrideModifiers?: KeyModifiers | number): readonly KeyEventPayload[];",
@@ -28560,9 +28666,13 @@
                     }
                   ],
                   "nodeMember": "KeyEvents.to_cdp_events",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -28599,7 +28709,13 @@
                 "kind": "method",
                 "name": "to_down_up_sequence",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-003 KeyEvents emits pinned payloads and rejects unsupported standalone events",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "to_down_up_sequence(modifiers: KeyModifiers | number): readonly KeyEventPayload[];",
@@ -28621,9 +28737,13 @@
                     }
                   ],
                   "nodeMember": "KeyEvents.to_down_up_sequence",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -28654,13 +28774,24 @@
             ],
             "name": "KeyEvents",
             "nodeMapping": {
-              "evidence": "compatible TypeScript AST declaration",
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                  "file": "packages/api/test/keys-api-parity.test.ts"
+                }
+              ],
               "nodeKind": "class",
+              "nodeMember": "KeyEvents",
               "nodeSymbol": "KeyEvents",
               "runtimeExport": true,
-              "semanticsVerified": false,
+              "semanticsCoverage": [
+                "return",
+                "state"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "CANDIDATE"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -28697,11 +28828,21 @@
                 "kind": "enum-member",
                 "name": "Alt",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "value": "1"
               },
@@ -28711,11 +28852,21 @@
                 "kind": "enum-member",
                 "name": "Ctrl",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "value": "2"
               },
@@ -28725,11 +28876,21 @@
                 "kind": "enum-member",
                 "name": "Default",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "value": "0"
               },
@@ -28739,11 +28900,21 @@
                 "kind": "enum-member",
                 "name": "Meta",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "value": "4"
               },
@@ -28753,11 +28924,21 @@
                 "kind": "enum-member",
                 "name": "Shift",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "value": "8"
               },
@@ -28768,11 +28949,21 @@
                 "kind": "method",
                 "name": "__bool__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -28795,11 +28986,21 @@
                 "kind": "method",
                 "name": "__eq__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -28829,11 +29030,21 @@
                 "kind": "method",
                 "name": "__format__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -28863,11 +29074,21 @@
                 "kind": "method",
                 "name": "__ge__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -28897,11 +29118,21 @@
                 "kind": "method",
                 "name": "__gt__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -28931,11 +29162,21 @@
                 "kind": "method",
                 "name": "__hash__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -28958,11 +29199,21 @@
                 "kind": "method",
                 "name": "__le__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -28992,11 +29243,21 @@
                 "kind": "method",
                 "name": "__lt__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -29026,11 +29287,21 @@
                 "kind": "method",
                 "name": "__repr__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -29053,11 +29324,21 @@
                 "kind": "method",
                 "name": "__str__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -29080,11 +29361,21 @@
                 "kind": "method",
                 "name": "as_integer_ratio",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -29107,11 +29398,21 @@
                 "kind": "method",
                 "name": "bit_count",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -29134,11 +29435,21 @@
                 "kind": "method",
                 "name": "bit_length",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -29161,11 +29472,21 @@
                 "kind": "method",
                 "name": "conjugate",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -29189,11 +29510,21 @@
                 "kind": "attribute",
                 "name": "denominator",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "valueType": "getset_descriptor"
               },
@@ -29204,11 +29535,21 @@
                 "kind": "method",
                 "name": "from_bytes",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -29253,11 +29594,21 @@
                 "kind": "attribute",
                 "name": "imag",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "valueType": "getset_descriptor"
               },
@@ -29268,11 +29619,21 @@
                 "kind": "method",
                 "name": "is_integer",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -29296,11 +29657,21 @@
                 "kind": "attribute",
                 "name": "name",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "valueType": "property"
               },
@@ -29312,11 +29683,21 @@
                 "kind": "attribute",
                 "name": "numerator",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "valueType": "getset_descriptor"
               },
@@ -29328,11 +29709,21 @@
                 "kind": "attribute",
                 "name": "real",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "valueType": "getset_descriptor"
               },
@@ -29343,11 +29734,21 @@
                 "kind": "method",
                 "name": "to_bytes",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -29392,11 +29793,21 @@
                 "kind": "attribute",
                 "name": "value",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyModifiers",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "valueType": "property"
               }
@@ -29412,13 +29823,24 @@
             ],
             "name": "KeyModifiers",
             "nodeMapping": {
-              "evidence": "compatible TypeScript AST declaration",
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                  "file": "packages/api/test/keys-api-parity.test.ts"
+                }
+              ],
               "nodeKind": "enum",
+              "nodeMember": "KeyModifiers",
               "nodeSymbol": "KeyModifiers",
               "runtimeExport": true,
-              "semanticsVerified": false,
+              "semanticsCoverage": [
+                "return",
+                "state"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "CANDIDATE"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -29449,11 +29871,21 @@
                 "kind": "enum-member",
                 "name": "CHAR",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "value": "'char'"
               },
@@ -29463,11 +29895,21 @@
                 "kind": "enum-member",
                 "name": "DOWN_AND_UP",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "value": "'downAndUp'"
               },
@@ -29477,11 +29919,21 @@
                 "kind": "enum-member",
                 "name": "KEY_DOWN",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "value": "'keyDown'"
               },
@@ -29491,11 +29943,21 @@
                 "kind": "enum-member",
                 "name": "KEY_UP",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "value": "'keyUp'"
               },
@@ -29505,11 +29967,21 @@
                 "kind": "enum-member",
                 "name": "RAW_KEY_DOWN",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "value": "'rawKeyDown'"
               },
@@ -29520,11 +29992,21 @@
                 "kind": "method",
                 "name": "__contains__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -29554,11 +30036,21 @@
                 "kind": "method",
                 "name": "__eq__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -29588,11 +30080,21 @@
                 "kind": "method",
                 "name": "__format__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -29622,11 +30124,21 @@
                 "kind": "method",
                 "name": "__ge__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -29656,11 +30168,21 @@
                 "kind": "method",
                 "name": "__getitem__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -29690,11 +30212,21 @@
                 "kind": "method",
                 "name": "__gt__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -29724,11 +30256,21 @@
                 "kind": "method",
                 "name": "__hash__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -29751,11 +30293,21 @@
                 "kind": "method",
                 "name": "__iter__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -29778,11 +30330,21 @@
                 "kind": "method",
                 "name": "__le__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -29812,11 +30374,21 @@
                 "kind": "method",
                 "name": "__len__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -29839,11 +30411,21 @@
                 "kind": "method",
                 "name": "__lt__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -29873,11 +30455,21 @@
                 "kind": "method",
                 "name": "__repr__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -29900,11 +30492,21 @@
                 "kind": "method",
                 "name": "__str__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -29927,11 +30529,21 @@
                 "kind": "method",
                 "name": "capitalize",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -29954,11 +30566,21 @@
                 "kind": "method",
                 "name": "casefold",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -29981,11 +30603,21 @@
                 "kind": "method",
                 "name": "center",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -30022,11 +30654,21 @@
                 "kind": "method",
                 "name": "count",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": null
               },
@@ -30037,11 +30679,21 @@
                 "kind": "method",
                 "name": "encode",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -30078,11 +30730,21 @@
                 "kind": "method",
                 "name": "endswith",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": null
               },
@@ -30093,11 +30755,21 @@
                 "kind": "method",
                 "name": "expandtabs",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -30127,11 +30799,21 @@
                 "kind": "method",
                 "name": "find",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": null
               },
@@ -30142,11 +30824,21 @@
                 "kind": "method",
                 "name": "format",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -30183,11 +30875,21 @@
                 "kind": "method",
                 "name": "format_map",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -30217,11 +30919,21 @@
                 "kind": "method",
                 "name": "index",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": null
               },
@@ -30232,11 +30944,21 @@
                 "kind": "method",
                 "name": "isalnum",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -30259,11 +30981,21 @@
                 "kind": "method",
                 "name": "isalpha",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -30286,11 +31018,21 @@
                 "kind": "method",
                 "name": "isascii",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -30313,11 +31055,21 @@
                 "kind": "method",
                 "name": "isdecimal",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -30340,11 +31092,21 @@
                 "kind": "method",
                 "name": "isdigit",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -30367,11 +31129,21 @@
                 "kind": "method",
                 "name": "isidentifier",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -30394,11 +31166,21 @@
                 "kind": "method",
                 "name": "islower",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -30421,11 +31203,21 @@
                 "kind": "method",
                 "name": "isnumeric",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -30448,11 +31240,21 @@
                 "kind": "method",
                 "name": "isprintable",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -30475,11 +31277,21 @@
                 "kind": "method",
                 "name": "isspace",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -30502,11 +31314,21 @@
                 "kind": "method",
                 "name": "istitle",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -30529,11 +31351,21 @@
                 "kind": "method",
                 "name": "isupper",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -30556,11 +31388,21 @@
                 "kind": "method",
                 "name": "join",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -30590,11 +31432,21 @@
                 "kind": "method",
                 "name": "ljust",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -30631,11 +31483,21 @@
                 "kind": "method",
                 "name": "lower",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -30658,11 +31520,21 @@
                 "kind": "method",
                 "name": "lstrip",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -30692,11 +31564,21 @@
                 "kind": "staticmethod",
                 "name": "maketrans",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": null
               },
@@ -30708,11 +31590,21 @@
                 "kind": "attribute",
                 "name": "name",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "valueType": "property"
               },
@@ -30723,11 +31615,21 @@
                 "kind": "method",
                 "name": "partition",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -30757,11 +31659,21 @@
                 "kind": "method",
                 "name": "removeprefix",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -30791,11 +31703,21 @@
                 "kind": "method",
                 "name": "removesuffix",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -30825,11 +31747,21 @@
                 "kind": "method",
                 "name": "replace",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -30873,11 +31805,21 @@
                 "kind": "method",
                 "name": "rfind",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": null
               },
@@ -30888,11 +31830,21 @@
                 "kind": "method",
                 "name": "rindex",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": null
               },
@@ -30903,11 +31855,21 @@
                 "kind": "method",
                 "name": "rjust",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -30944,11 +31906,21 @@
                 "kind": "method",
                 "name": "rpartition",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -30978,11 +31950,21 @@
                 "kind": "method",
                 "name": "rsplit",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -31019,11 +32001,21 @@
                 "kind": "method",
                 "name": "rstrip",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -31053,11 +32045,21 @@
                 "kind": "method",
                 "name": "split",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -31094,11 +32096,21 @@
                 "kind": "method",
                 "name": "splitlines",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -31128,11 +32140,21 @@
                 "kind": "method",
                 "name": "startswith",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": null
               },
@@ -31143,11 +32165,21 @@
                 "kind": "method",
                 "name": "strip",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -31177,11 +32209,21 @@
                 "kind": "method",
                 "name": "swapcase",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -31204,11 +32246,21 @@
                 "kind": "method",
                 "name": "title",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -31231,11 +32283,21 @@
                 "kind": "method",
                 "name": "translate",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -31265,11 +32327,21 @@
                 "kind": "method",
                 "name": "upper",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -31293,11 +32365,21 @@
                 "kind": "attribute",
                 "name": "value",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "valueType": "property"
               },
@@ -31308,11 +32390,21 @@
                 "kind": "method",
                 "name": "zfill",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "KeyPressEvent",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -31345,13 +32437,24 @@
             ],
             "name": "KeyPressEvent",
             "nodeMapping": {
-              "evidence": "compatible TypeScript AST declaration",
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                  "file": "packages/api/test/keys-api-parity.test.ts"
+                }
+              ],
               "nodeKind": "enum",
+              "nodeMember": "KeyPressEvent",
               "nodeSymbol": "KeyPressEvent",
               "runtimeExport": true,
-              "semanticsVerified": false,
+              "semanticsCoverage": [
+                "return",
+                "state"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "CANDIDATE"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -31381,11 +32484,21 @@
                 "kind": "enum-member",
                 "name": "ALT",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "SpecialKeys",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "value": "('Alt', 18)"
               },
@@ -31395,11 +32508,21 @@
                 "kind": "enum-member",
                 "name": "ARROW_DOWN",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "SpecialKeys",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "value": "('ArrowDown', 40)"
               },
@@ -31409,11 +32532,21 @@
                 "kind": "enum-member",
                 "name": "ARROW_LEFT",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "SpecialKeys",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "value": "('ArrowLeft', 37)"
               },
@@ -31423,11 +32556,21 @@
                 "kind": "enum-member",
                 "name": "ARROW_RIGHT",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "SpecialKeys",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "value": "('ArrowRight', 39)"
               },
@@ -31437,11 +32580,21 @@
                 "kind": "enum-member",
                 "name": "ARROW_UP",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "SpecialKeys",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "value": "('ArrowUp', 38)"
               },
@@ -31451,11 +32604,21 @@
                 "kind": "enum-member",
                 "name": "BACKSPACE",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "SpecialKeys",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "value": "('Backspace', 8)"
               },
@@ -31465,11 +32628,21 @@
                 "kind": "enum-member",
                 "name": "CTRL",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "SpecialKeys",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "value": "('Control', 17)"
               },
@@ -31479,11 +32652,21 @@
                 "kind": "enum-member",
                 "name": "DELETE",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "SpecialKeys",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "value": "('Delete', 46)"
               },
@@ -31493,11 +32676,21 @@
                 "kind": "enum-member",
                 "name": "ENTER",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "SpecialKeys",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "value": "('Enter', 13)"
               },
@@ -31507,11 +32700,21 @@
                 "kind": "enum-member",
                 "name": "ESCAPE",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "SpecialKeys",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "value": "('Escape', 27)"
               },
@@ -31521,11 +32724,21 @@
                 "kind": "enum-member",
                 "name": "META",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "SpecialKeys",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "value": "('Meta', 91)"
               },
@@ -31535,11 +32748,21 @@
                 "kind": "enum-member",
                 "name": "SHIFT",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "SpecialKeys",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "value": "('Shift', 16)"
               },
@@ -31549,11 +32772,21 @@
                 "kind": "enum-member",
                 "name": "SPACE",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "SpecialKeys",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "value": "(' ', 32)"
               },
@@ -31563,11 +32796,21 @@
                 "kind": "enum-member",
                 "name": "TAB",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "SpecialKeys",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "value": "('Tab', 9)"
               },
@@ -31578,11 +32821,21 @@
                 "kind": "method",
                 "name": "__format__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "SpecialKeys",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -31612,11 +32865,21 @@
                 "kind": "method",
                 "name": "__hash__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "SpecialKeys",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -31639,11 +32902,21 @@
                 "kind": "method",
                 "name": "__repr__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "SpecialKeys",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -31666,11 +32939,21 @@
                 "kind": "method",
                 "name": "__str__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "SpecialKeys",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -31694,11 +32977,21 @@
                 "kind": "attribute",
                 "name": "name",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "SpecialKeys",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "valueType": "property"
               },
@@ -31710,11 +33003,21 @@
                 "kind": "attribute",
                 "name": "value",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                      "file": "packages/api/test/keys-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "SpecialKeys",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "valueType": "property"
               }
@@ -31727,13 +33030,24 @@
             ],
             "name": "SpecialKeys",
             "nodeMapping": {
-              "evidence": "compatible TypeScript AST declaration",
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+                  "file": "packages/api/test/keys-api-parity.test.ts"
+                }
+              ],
               "nodeKind": "const",
+              "nodeMember": "SpecialKeys",
               "nodeSymbol": "SpecialKeys",
               "runtimeExport": true,
-              "semanticsVerified": false,
+              "semanticsCoverage": [
+                "return",
+                "state"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "CANDIDATE"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -37427,13 +38741,24 @@
         "module": "zendriver.core.keys",
         "name": "KeyEvents",
         "nodeMapping": {
-          "evidence": "compatible TypeScript AST declaration",
+          "evidence": "independent passing Node parity cases",
+          "evidenceCases": [
+            {
+              "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+              "file": "packages/api/test/keys-api-parity.test.ts"
+            }
+          ],
           "nodeKind": "class",
+          "nodeMember": "KeyEvents",
           "nodeSymbol": "KeyEvents",
           "runtimeExport": true,
-          "semanticsVerified": false,
+          "semanticsCoverage": [
+            "return",
+            "state"
+          ],
+          "semanticsVerified": true,
           "signatureComparison": "UNVERIFIED",
-          "status": "CANDIDATE"
+          "status": "VERIFIED"
         },
         "signature": {
           "parameters": [
@@ -37461,13 +38786,24 @@
         "module": "zendriver.core.keys",
         "name": "KeyModifiers",
         "nodeMapping": {
-          "evidence": "compatible TypeScript AST declaration",
+          "evidence": "independent passing Node parity cases",
+          "evidenceCases": [
+            {
+              "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+              "file": "packages/api/test/keys-api-parity.test.ts"
+            }
+          ],
           "nodeKind": "enum",
+          "nodeMember": "KeyModifiers",
           "nodeSymbol": "KeyModifiers",
           "runtimeExport": true,
-          "semanticsVerified": false,
+          "semanticsCoverage": [
+            "return",
+            "state"
+          ],
+          "semanticsVerified": true,
           "signatureComparison": "UNVERIFIED",
-          "status": "CANDIDATE"
+          "status": "VERIFIED"
         },
         "signature": {
           "parameters": [
@@ -37488,13 +38824,24 @@
         "module": "zendriver.core.keys",
         "name": "KeyPressEvent",
         "nodeMapping": {
-          "evidence": "compatible TypeScript AST declaration",
+          "evidence": "independent passing Node parity cases",
+          "evidenceCases": [
+            {
+              "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+              "file": "packages/api/test/keys-api-parity.test.ts"
+            }
+          ],
           "nodeKind": "enum",
+          "nodeMember": "KeyPressEvent",
           "nodeSymbol": "KeyPressEvent",
           "runtimeExport": true,
-          "semanticsVerified": false,
+          "semanticsCoverage": [
+            "return",
+            "state"
+          ],
+          "semanticsVerified": true,
           "signatureComparison": "UNVERIFIED",
-          "status": "CANDIDATE"
+          "status": "VERIFIED"
         },
         "signature": {
           "parameters": [
@@ -37515,13 +38862,24 @@
         "module": "zendriver.core.keys",
         "name": "SpecialKeys",
         "nodeMapping": {
-          "evidence": "compatible TypeScript AST declaration",
+          "evidence": "independent passing Node parity cases",
+          "evidenceCases": [
+            {
+              "case": "ZDAPI-KEYS-001 enums and special descriptors preserve the pinned public values",
+              "file": "packages/api/test/keys-api-parity.test.ts"
+            }
+          ],
           "nodeKind": "const",
+          "nodeMember": "SpecialKeys",
           "nodeSymbol": "SpecialKeys",
           "runtimeExport": true,
-          "semanticsVerified": false,
+          "semanticsCoverage": [
+            "return",
+            "state"
+          ],
+          "semanticsVerified": true,
           "signatureComparison": "UNVERIFIED",
-          "status": "CANDIDATE"
+          "status": "VERIFIED"
         },
         "signature": {
           "parameters": [

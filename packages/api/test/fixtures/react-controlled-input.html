@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>React controlled input parity</title>
+  <script src="/react.development.js"></script>
+  <script src="/react-dom.development.js"></script>
+</head>
+<body>
+  <main id="root" data-react-root="createRoot"></main>
+  <script>
+    const fixture = {
+      reactVersion: React.version,
+      rootMode: "createRoot",
+      ready: false,
+      modelValue: "10",
+      updateCount: 0,
+      renderCount: 0,
+      events: [],
+    };
+    window.__reactControlledInputFixture = fixture;
+
+    for (const type of ["beforeinput", "input", "change", "keydown", "keyup"]) {
+      document.addEventListener(type, (event) => {
+        if (event.target?.id !== "amount") return;
+        fixture.events.push({
+          source: "native",
+          type: event.type,
+          value: event.target.value,
+          key: event.key ?? null,
+          inputType: event.inputType ?? null,
+          data: event.data ?? null,
+          isTrusted: event.isTrusted,
+        });
+      });
+    }
+
+    function ControlledInput() {
+      const [value, setValue] = React.useState("10");
+      fixture.renderCount += 1;
+      fixture.modelValue = value;
+      React.useEffect(() => {
+        fixture.modelValue = value;
+        fixture.ready = true;
+      }, [value]);
+      return React.createElement(
+        React.Fragment,
+        null,
+        React.createElement("label", null, "Amount ", React.createElement("input", {
+          id: "amount",
+          type: "text",
+          value,
+          onChange(event) {
+            fixture.updateCount += 1;
+            fixture.events.push({
+              source: "react",
+              type: "change",
+              value: event.currentTarget.value,
+              key: null,
+              inputType: event.nativeEvent.inputType ?? null,
+              data: event.nativeEvent.data ?? null,
+              isTrusted: event.nativeEvent.isTrusted,
+            });
+            setValue(event.currentTarget.value);
+          },
+        })),
+        React.createElement("output", { id: "model" }, value),
+        React.createElement("output", { id: "updates" }, String(fixture.updateCount)),
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.querySelector("#root"));
+    root.render(React.createElement(ControlledInput));
+
+    window.observeControlledInput = () => ({
+      fixture: {
+        reactVersion: fixture.reactVersion,
+        rootMode: fixture.rootMode,
+        rootMarker: document.querySelector("#root")?.dataset.reactRoot ?? null,
+        reactOwnedRoot: Object.keys(document.querySelector("#root") ?? {})
+          .some((key) => key.startsWith("__reactContainer$")),
+        ready: fixture.ready,
+      },
+      domValue: document.querySelector("#amount")?.value ?? null,
+      modelValue: document.querySelector("#model")?.textContent ?? null,
+      updateCount: fixture.updateCount,
+      renderCount: fixture.renderCount,
+      events: fixture.events,
+    });
+  </script>
+</body>
+</html>

@@ -23088,8 +23088,7 @@
                 "nodeMapping": {
                   "evidence": "execution-gated Node behavior evidence for the listed semantic dimensions",
                   "evidenceTestIds": [
-                    "ZDTEST-0021",
-                    "ZDTEST-0022"
+                    "ZDTEST-0021"
                   ],
                   "nodeDeclarations": [
                     {
@@ -23133,10 +23132,7 @@
                 "nodeMapping": {
                   "evidence": "execution-gated Node behavior evidence for the listed semantic dimensions",
                   "evidenceTestIds": [
-                    "ZDTEST-0023",
-                    "ZDTEST-0024",
-                    "ZDTEST-0025",
-                    "ZDTEST-0026"
+                    "ZDTEST-0023"
                   ],
                   "nodeDeclarations": [
                     {
@@ -25323,8 +25319,7 @@
                     "ZDTEST-0017",
                     "ZDTEST-0018",
                     "ZDTEST-0019",
-                    "ZDTEST-0025",
-                    "ZDTEST-0026"
+                    "ZDTEST-0025"
                   ],
                   "nodeDeclarations": [
                     {

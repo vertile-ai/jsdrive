@@ -13,13 +13,13 @@ This is an inventory baseline, not a parity completion claim.
 
 - Upstream parametrized cases: 101
 - Unmapped Node parity cases: 0
-- Not-run Node parity cases: 0
+- Not-run Node parity cases: 3
 - Cases requiring a live network host: 41
 - API mapping statuses: {"coreMembers": {"VERIFIED": 472}, "coreSymbols": {"VERIFIED": 45}, "rootExports": {"VERIFIED": 16}, "total": {"VERIFIED": 533}}
 - API mappings with execution-gated evidence for explicitly listed dimensions: 533/533
 - Listed semantic dimension counts: {"defaults": 21, "errors": 22, "return": 524, "signature": 35, "state": 493}
 - API evidence source files present in root/parity execution gates: 15/15
-- Phase-bound ZDTEST evidence IDs: {"<none>": 2, "headless0": 39, "headless1": 39}
+- Phase-bound ZDTEST evidence IDs: {"<none>": 2, "headless0": 39, "headless1": 36}
 - Transport-applicable cases with explicit JS/native × direct/flattened declarations: 99
 - Transport non-applicable cases with executable per-case reasons: 2
 

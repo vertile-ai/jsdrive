@@ -52,6 +52,8 @@ API_SEMANTIC_MAPPINGS = PARITY / "api-semantic-mappings.json"
 TEST_CASE_INSPECTOR = PARITY / "inspect_test_cases.mjs"
 TRANSPORT_MATRIX_HELPER = ROOT / "packages/api/test/support/transport-matrix.ts"
 TRANSPORT_MATRIX_REPORT = PARITY / "transport-matrix-report.json"
+REACT_INPUT_FIXTURE = ROOT / "packages/api/test/fixtures/react-controlled-input.html"
+REACT_INPUT_RUNNER = ROOT / "packages/api/test/input-react-zendriver.py"
 TEST_CASE_TEXT_ONLY_FIXTURE = PARITY / "test-fixtures" / "zdtest-text-only.test.ts"
 TEST_CASE_LOCAL_NOOP_FIXTURE = PARITY / "test-fixtures" / "zdtest-local-noop.test.ts"
 TEST_CASE_MUTABLE_BINDING_FIXTURE = PARITY / "test-fixtures" / "zdtest-mutable-binding.test.ts"
@@ -113,7 +115,10 @@ EXPECTED_TRANSPORT_BACKEND_FACTORIES = {
 EXPECTED_TRANSPORT_HELPER_MODULE_FINGERPRINT = "0ec2e94444bf734632554d2e0e7ffab9ef47f70d6817d7813daca73adafaeee1"
 EXPECTED_TRANSPORT_HELPER_BODY_FINGERPRINT = "de0719bd2c7cc93d30c7e92e7322144579b7c8314cd3ebfc678e5c5d90b7b737"
 EXPECTED_TRANSPORT_CALLBACK_COUNT = 99
-EXPECTED_TRANSPORT_CALLBACK_FINGERPRINT = "5255a27ba9b23e10c0da0a0d3fd99325adf5c2a367e792d3209249b1486a8456"
+EXPECTED_TRANSPORT_CALLBACK_FINGERPRINT = "4893660f0597e0e70a5d71543864f862f8045d802b69ab15e2f64c36214d6158"
+EXPECTED_REACT_INPUT_FIXTURE_SHA256 = "7586e719bdfe972eee4b279f1620c1c8851fb694cacb5a2a5ee2412176039f2c"
+EXPECTED_REACT_INPUT_RUNNER_SHA256 = "940949a3297475a60917bd96664e3a1abd577250ccf5e50af9ae78bd26de7ec0"
+EXPECTED_NOT_RUN_TEST_IDS = {"ZDTEST-0022", "ZDTEST-0024", "ZDTEST-0026"}
 EXPECTED_TRANSPORT_NON_APPLICABLE = {
     "ZDTEST-0003": {
         "code": "controlled-backend-failure",
@@ -173,6 +178,52 @@ def canonical_json_text(value: Any) -> str:
 def canonical_fingerprint(value: Any) -> str:
     payload = json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
     return hashlib.sha256(payload.encode("utf8")).hexdigest()
+
+
+def source_sha256(source: bytes) -> str:
+    return hashlib.sha256(source).hexdigest()
+
+
+def react_input_source_errors(
+    fixture_source: bytes | None = None,
+    runner_source: bytes | None = None,
+) -> list[str]:
+    fixture_source = REACT_INPUT_FIXTURE.read_bytes() if fixture_source is None else fixture_source
+    runner_source = REACT_INPUT_RUNNER.read_bytes() if runner_source is None else runner_source
+    errors = []
+    if source_sha256(fixture_source) != EXPECTED_REACT_INPUT_FIXTURE_SHA256:
+        errors.append("React input fixture whole-source fingerprint does not match the fixed trusted contract")
+    if source_sha256(runner_source) != EXPECTED_REACT_INPUT_RUNNER_SHA256:
+        errors.append("Zendriver React input runner whole-source fingerprint does not match the fixed trusted contract")
+    return errors
+
+
+def react_input_source_mutation_probes() -> dict[str, str]:
+    fixture_error = "React input fixture whole-source fingerprint does not match the fixed trusted contract"
+    runner_error = "Zendriver React input runner whole-source fingerprint does not match the fixed trusted contract"
+    former_hand_tracker_fixture = b"""<!doctype html>
+<input id=\"amount\" value=\"10\"><output id=\"model\">10</output>
+<script>let trackedValue = \"10\"; document.querySelector(\"#amount\").addEventListener(\"input\", () => trackedValue = event.target.value);</script>
+"""
+    checked_json_printer_runner = b"""from pathlib import Path
+print(Path(\"parity/react-input-observations.json\").read_text())
+"""
+    fixture_errors = react_input_source_errors(
+        former_hand_tracker_fixture,
+        REACT_INPUT_RUNNER.read_bytes(),
+    )
+    runner_errors = react_input_source_errors(
+        REACT_INPUT_FIXTURE.read_bytes(),
+        checked_json_printer_runner,
+    )
+    return {
+        "formerHandTrackerReactFixtureRejected": "PASS"
+        if fixture_errors == [fixture_error]
+        else "FAIL",
+        "checkedJsonPrinterReactRunnerRejected": "PASS"
+        if runner_errors == [runner_error]
+        else "FAIL",
+    }
 
 
 @lru_cache(maxsize=None)
@@ -271,6 +322,8 @@ def inventory_fingerprints(
             [(case.get("id"), case.get("externalDependencies")) for case in cases]
         ),
         "referenceObservations": canonical_fingerprint(reference_observations),
+        "reactInputFixtureSource": source_sha256(REACT_INPUT_FIXTURE.read_bytes()),
+        "reactInputRunnerSource": source_sha256(REACT_INPUT_RUNNER.read_bytes()),
     }
 
 
@@ -335,6 +388,7 @@ def mutation_probes(
             if candidate[fingerprint_name] != baseline[fingerprint_name]
             else "FAIL"
         )
+    results.update(react_input_source_mutation_probes())
     return results
 
 
@@ -1074,8 +1128,11 @@ def node_mapping_errors(
         if set(mapping) != {"status", "case", "result", "note"}:
             errors.append(f"Node test mapping schema is invalid for {case_id}")
             continue
-        if mapping["status"] != "MAPPED" or mapping["result"] != "PASS":
-            errors.append(f"Node test mapping is not passing for {case_id}")
+        expected_result = "NOT_RUN" if case_id in EXPECTED_NOT_RUN_TEST_IDS else "PASS"
+        if mapping["status"] != "MAPPED" or mapping["result"] != expected_result:
+            errors.append(
+                f"Node test mapping result does not match the fixed execution record for {case_id}: expected {expected_result}"
+            )
             continue
         case_name = mapping["case"]
         if not isinstance(case_name, str) or "::" not in case_name:
@@ -1169,7 +1226,17 @@ def node_mapping_mutation_probes(
     )
     single_case = [next(case for case in cases if case["id"] == first_id)]
     single_mapping = {first_id: mappings[first_id]}
+    forged_pending_pass = copy.deepcopy(mappings)
+    forged_pending_pass["ZDTEST-0022"]["result"] = "PASS"
+    forged_unexpected_not_run = copy.deepcopy(mappings)
+    forged_unexpected_not_run[first_id]["result"] = "NOT_RUN"
     return {
+        "pendingM5HeadfulPassRejected": "PASS"
+        if node_mapping_errors(cases, forged_pending_pass, titles_by_source)
+        else "FAIL",
+        "unexpectedNodeNotRunRejected": "PASS"
+        if node_mapping_errors(cases, forged_unexpected_not_run, titles_by_source)
+        else "FAIL",
         "commentOrStringOnlyNodeCase": "PASS"
         if text_only_rejected
         or node_mapping_errors(single_case, single_mapping, {first_source: text_only_titles})
@@ -2297,7 +2364,7 @@ def validate(
     test_inventory: dict[str, Any],
     reference_observations: dict[str, Any],
 ) -> tuple[list[str], dict[str, str], dict[str, str]]:
-    errors = []
+    errors = react_input_source_errors()
     if baseline["upstream"]["commit"] != EXPECTED_COMMIT:
         errors.append("upstream commit does not match the fixed parity baseline")
     if baseline["upstream"]["tag"] != EXPECTED_TAG:

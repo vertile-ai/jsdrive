@@ -493,7 +493,7 @@
       "id": "ZDTEST-0021",
       "nodeParity": {
         "case": "packages/api/test/input-react-parity.test.ts::ZDTEST-0021",
-        "note": "Passed React-controlled clear via the native prototype value setter and input notification in real Chromium 145 across JS/native and direct/flattened headless runs.",
+        "note": "The fixed inventory function name says does_not_notify_react, but the checked same-fixture Zendriver 0.15.5 result leaves DOM/model empty with one React update and the exact untrusted change/input log; Node matches it across all transport quadrants.",
         "result": "PASS",
         "status": "MAPPED"
       },
@@ -517,8 +517,8 @@
       "id": "ZDTEST-0022",
       "nodeParity": {
         "case": "packages/api/test/input-react-parity.test.ts::ZDTEST-0022",
-        "note": "Passed React-controlled clear via the native prototype value setter and input notification in real Chromium 145 across JS/native and direct/flattened headful runs.",
-        "result": "PASS",
+        "note": "Mapped to the same checked React 18.3.1 clear_input observation as ZDTEST-0021, but not run after the M5 fixture and behavior change; pending a newly authorized headful JS/native and direct/flattened run.",
+        "result": "NOT_RUN",
         "status": "MAPPED"
       },
       "parameterization": "headless1",
@@ -541,7 +541,7 @@
       "id": "ZDTEST-0023",
       "nodeParity": {
         "case": "packages/api/test/input-react-parity.test.ts::ZDTEST-0023",
-        "note": "Passed React-controlled Backspace deletion with visible keyboard events in real Chromium 145 across JS/native and direct/flattened headless runs.",
+        "note": "The fixed inventory function name says does_not_notify_react, but the checked same-fixture Zendriver 0.15.5 result leaves DOM/model empty after two React updates and the exact six-event untrusted Backspace/change/input log; Node matches it across all transport quadrants.",
         "result": "PASS",
         "status": "MAPPED"
       },
@@ -565,8 +565,8 @@
       "id": "ZDTEST-0024",
       "nodeParity": {
         "case": "packages/api/test/input-react-parity.test.ts::ZDTEST-0024",
-        "note": "Passed React-controlled Backspace deletion with visible keyboard events in real Chromium 145 across JS/native and direct/flattened headful runs.",
-        "result": "PASS",
+        "note": "Mapped to the same checked React 18.3.1 clear_input_by_deleting observation as ZDTEST-0023, but not run after the M5 fixture and behavior change; pending a newly authorized headful JS/native and direct/flattened run.",
+        "result": "NOT_RUN",
         "status": "MAPPED"
       },
       "parameterization": "headless1",
@@ -589,7 +589,7 @@
       "id": "ZDTEST-0025",
       "nodeParity": {
         "case": "packages/api/test/input-react-parity.test.ts::ZDTEST-0025",
-        "note": "Passed clear, controlled render commit, and replacement fill without a mixed value in real Chromium 145 across JS/native and direct/flattened headless runs.",
+        "note": "Matches the checked Zendriver 0.15.5 React 18.3.1 reference: send_keys(\"25\") appends to the controlled initial value and produces mixed DOM/model value \"1025\" with two React updates and the exact trusted beforeinput/change/input log across all transport quadrants.",
         "result": "PASS",
         "status": "MAPPED"
       },
@@ -613,8 +613,8 @@
       "id": "ZDTEST-0026",
       "nodeParity": {
         "case": "packages/api/test/input-react-parity.test.ts::ZDTEST-0026",
-        "note": "Passed clear, controlled render commit, and replacement fill without a mixed value in real Chromium 145 across JS/native and direct/flattened headful runs.",
-        "result": "PASS",
+        "note": "Mapped to the same checked React 18.3.1 mixed-value observation as ZDTEST-0025, but not run after the M5 fixture and behavior change; pending a newly authorized headful JS/native and direct/flattened run.",
+        "result": "NOT_RUN",
         "status": "MAPPED"
       },
       "parameterization": "headless1",

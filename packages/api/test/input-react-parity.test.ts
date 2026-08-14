@@ -10,52 +10,14 @@ import {
   type Tab,
 } from "../src/index.js";
 import { browserCaseSkipReason } from "./support/persistent-harness.js";
+import {
+  readReactInputReference,
+  startReactInputFixtureServer,
+  type ReactInputFixtureServer,
+  type ReactInputObservation,
+  type ReactInputReference,
+} from "./support/react-input-fixture.js";
 import { runTransportMatrix } from "./support/transport-matrix.js";
-
-const controlledInputPage = `<!doctype html>
-<title>Controlled field parity</title>
-<label>Amount <input id="amount" type="text"></label>
-<output id="model"></output>
-<output id="updates"></output>
-<script>
-  const field = document.querySelector('#amount');
-  const modelOutput = document.querySelector('#model');
-  const updatesOutput = document.querySelector('#updates');
-  const descriptor = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value');
-  const readNativeValue = descriptor.get;
-  const writeNativeValue = descriptor.set;
-  let model = '10';
-  let trackedValue = '';
-  let updates = 0;
-
-  Object.defineProperty(field, 'value', {
-    configurable: true,
-    get() { return readNativeValue.call(this); },
-    set(value) {
-      trackedValue = String(value);
-      writeNativeValue.call(this, value);
-    },
-  });
-
-  field.value = model;
-  modelOutput.textContent = model;
-  updatesOutput.textContent = String(updates);
-
-  field.addEventListener('input', () => {
-    const current = readNativeValue.call(field);
-    if (current === trackedValue) return;
-    model = current;
-    trackedValue = current;
-    updates += 1;
-    modelOutput.textContent = model;
-    updatesOutput.textContent = String(updates);
-  });
-
-  window.commitControlledModel = () => {
-    writeNativeValue.call(field, model);
-    trackedValue = model;
-  };
-</script>`;
 
 const escapePage = `<!doctype html>
 <title>Escape parity</title>
@@ -97,12 +59,16 @@ const editorPage = `<!doctype html>
 let executable = "";
 let server: Server;
 let baseUrl = "";
+let reactFixture: ReactInputFixtureServer;
+let reactReference: ReactInputReference;
 
 test.before(async () => {
   executable = await discoverChromeExecutable();
+  reactFixture = await startReactInputFixtureServer();
+  reactReference = await readReactInputReference();
   server = createServer((request, response) => {
     response.setHeader("content-type", "text/html; charset=utf-8");
-    response.end(request.url === "/escape" ? escapePage : request.url === "/editor" ? editorPage : controlledInputPage);
+    response.end(request.url === "/escape" ? escapePage : editorPage);
   });
   await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
   const address = server.address();
@@ -111,6 +77,7 @@ test.before(async () => {
 });
 
 test.after(async () => {
+  await reactFixture.close();
   await new Promise<void>((resolve, reject) => server.close((error) => error === undefined ? resolve() : reject(error)));
 });
 
@@ -175,54 +142,48 @@ for (const [parameter, headless, ids] of [
     });
   });
 
-  test(`${ids.clear} clears a controlled field through the native value setter [${parameter}]`, { timeout: 60_000, skip }, async () => {
+  test(`${ids.clear} matches Zendriver clear_input on a React-controlled field [${parameter}]`, { timeout: 60_000, skip }, async () => {
     await runTransportMatrix(ids.clear, { executable, headless }, async (browser, quadrant) => {
       const tab = browser.mainTab;
       assert.ok(tab, `${quadrant.backend}/${quadrant.connectionMode} has a main tab`);
       const label = `${quadrant.backend}/${quadrant.connectionMode}`;
-      await open(tab, "/controlled");
+      await openControlled(tab, "clearInput");
       const field = await tab.select("#amount");
-      assert.equal(await tab.evaluate<string>("document.querySelector('#model').textContent"), "10", label);
-      assert.equal(await tab.evaluate<string>("document.querySelector('#updates').textContent"), "0", label);
 
       await field.clearInput();
 
-      assert.equal(await field.getValue(), "", label);
-      assert.equal(await tab.evaluate<string>("document.querySelector('#model').textContent"), "", label);
-      assert.equal(await tab.evaluate<string>("document.querySelector('#updates').textContent"), "1", label);
+      await wait(100);
+      assert.deepEqual(await observeControlledInput(tab), reactReference.observations.clearInput, label);
     });
   });
 
-  test(`${ids.deleting} removes a controlled value with visible Backspace input [${parameter}]`, { timeout: 60_000, skip }, async () => {
+  test(`${ids.deleting} matches Zendriver clear_input_by_deleting on a React-controlled field [${parameter}]`, { timeout: 60_000, skip }, async () => {
     await runTransportMatrix(ids.deleting, { executable, headless }, async (browser, quadrant) => {
       const tab = browser.mainTab;
       assert.ok(tab, `${quadrant.backend}/${quadrant.connectionMode} has a main tab`);
       const label = `${quadrant.backend}/${quadrant.connectionMode}`;
-      await open(tab, "/controlled");
+      await openControlled(tab, "clearInputByDeleting");
       const field = await tab.select("#amount");
 
       await field.clearInputByDeleting();
 
-      assert.equal(await field.getValue(), "", label);
-      assert.equal(await tab.evaluate<string>("document.querySelector('#model').textContent"), "", label);
-      assert.ok(Number(await tab.evaluate<string>("document.querySelector('#updates').textContent")) >= 1, label);
+      await wait(100);
+      assert.deepEqual(await observeControlledInput(tab), reactReference.observations.clearInputByDeleting, label);
     });
   });
 
-  test(`${ids.fill} fills a controlled field after a render commit [${parameter}]`, { timeout: 60_000, skip }, async () => {
+  test(`${ids.fill} matches Zendriver controlled fill mixed-value behavior [${parameter}]`, { timeout: 60_000, skip }, async () => {
     await runTransportMatrix(ids.fill, { executable, headless }, async (browser, quadrant) => {
       const tab = browser.mainTab;
       assert.ok(tab, `${quadrant.backend}/${quadrant.connectionMode} has a main tab`);
       const label = `${quadrant.backend}/${quadrant.connectionMode}`;
-      await open(tab, "/controlled");
+      await openControlled(tab, "controlledFill");
       const field = await tab.select("#amount");
 
-      await field.clearInputByDeleting();
-      await tab.evaluate("window.commitControlledModel()");
       await field.sendKeys("25");
 
-      assert.equal(await field.getValue(), "25", label);
-      assert.equal(await tab.evaluate<string>("document.querySelector('#model').textContent"), "25", label);
+      await wait(100);
+      assert.deepEqual(await observeControlledInput(tab), reactReference.observations.controlledFill, label);
     });
   });
 
@@ -251,4 +212,17 @@ async function wait(milliseconds: number): Promise<void> {
 async function open(tab: Tab, path: string): Promise<void> {
   await tab.get(`${baseUrl}${path}`);
   await wait(250);
+}
+
+async function openControlled(tab: Tab, operation: keyof ReactInputReference["observations"]): Promise<void> {
+  await tab.get(`${reactFixture.url}?operation=${operation}`);
+  for (let attempt = 0; attempt < 100; attempt += 1) {
+    if (await tab.evaluate<boolean>("window.__reactControlledInputFixture?.ready === true")) return;
+    await wait(50);
+  }
+  assert.fail("React controlled-input fixture did not become ready");
+}
+
+function observeControlledInput(tab: Tab): Promise<ReactInputObservation> {
+  return tab.evaluate<ReactInputObservation>("window.observeControlledInput()");
 }

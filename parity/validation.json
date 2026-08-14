@@ -83,13 +83,15 @@
   "apiSemanticEvidenceTestIdPhases": {
     "<none>": 2,
     "headless0": 39,
-    "headless1": 39
+    "headless1": 36
   },
   "errors": [],
   "executionGatedApiEvidenceSources": 15,
   "fingerprints": {
     "coreMembers": "0c24b69ae84b1f3d982660b4646b9baf51c1e0cbd436f8b76f0de39de79caea9",
     "coreSymbols": "8c200eb1e8f7cd1432a466770b258c0dbc0a2838f4ee50ff72b01502a393cf2b",
+    "reactInputFixtureSource": "7586e719bdfe972eee4b279f1620c1c8851fb694cacb5a2a5ee2412176039f2c",
+    "reactInputRunnerSource": "940949a3297475a60917bd96664e3a1abd577250ccf5e50af9ae78bd26de7ec0",
     "referenceObservations": "05e6b97725477bb0c863627a1b4488eba6ec49b4c5e12848895600d9305a4557",
     "rootExports": "f1542412b091090c4b847006530bef971818316c7c406d67154818daa857cd5e",
     "testCases": "29b7154ec1e524a5222f85e3eeee4bb206091265ecd08015dbf54f204a7c665e",
@@ -101,6 +103,7 @@
     "aliasMutatedZdapiOptionsAreRejected": "PASS",
     "aliasedMutationIsNotNodeTestRegistration": "PASS",
     "apiSemanticEvidenceOutsideExecutionGate": "PASS",
+    "checkedJsonPrinterReactRunnerRejected": "PASS",
     "commentOrStringOnlyNodeCase": "PASS",
     "commentedWorkspaceDelegationIsRejected": "PASS",
     "commentedWorkspaceTestFileIsRejected": "PASS",
@@ -121,6 +124,7 @@
     "fakeStringBuiltinImportIsRejected": "PASS",
     "fakeWorkspaceDelegationIsRejected": "PASS",
     "forOfAliasMutationIsRejected": "PASS",
+    "formerHandTrackerReactFixtureRejected": "PASS",
     "genericUnknownOptionsAreNotEvidence": "PASS",
     "genericUnsupportedEvidenceStatementIsRejected": "PASS",
     "headfulGateRejectsDuplicateHeadfulFlag": "PASS",
@@ -144,6 +148,7 @@
     "nestedLoopOptionsMutationIsRejected": "PASS",
     "nestedLoopPhaseMutationIsRejected": "PASS",
     "nonexistentNodeCaseSource": "PASS",
+    "pendingM5HeadfulPassRejected": "PASS",
     "permanentlySkippedZdapiIsNotEvidence": "PASS",
     "permanentlySkippedZdtestIsNotRegistration": "PASS",
     "phaseSkippedTodoIsNotEvidence": "PASS",
@@ -188,6 +193,7 @@
     "transportUnawaitedMatrixCallRejected": "PASS",
     "transportWrongCaseIdRejected": "PASS",
     "typeOnlyImportIsNotNodeTestRegistration": "PASS",
+    "unexpectedNodeNotRunRejected": "PASS",
     "unknownApiSemanticCase": "PASS",
     "unknownApiSemanticCoverage": "PASS",
     "unknownApiSemanticMember": "PASS",
@@ -200,7 +206,7 @@
     "voidWrappedMutationCallIsRejected": "PASS",
     "wrongNodeCaseSource": "PASS"
   },
-  "notRunTestCases": 0,
+  "notRunTestCases": 3,
   "referenceObservationCount": 1,
   "status": "PASS",
   "testCases": 101,

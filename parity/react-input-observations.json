@@ -1,0 +1,201 @@
+{
+  "schemaVersion": 1,
+  "provenance": {
+    "fixture": {
+      "path": "packages/api/test/fixtures/react-controlled-input.html",
+      "sha256": "7586e719bdfe972eee4b279f1620c1c8851fb694cacb5a2a5ee2412176039f2c"
+    },
+    "runner": {
+      "path": "packages/api/test/input-react-zendriver.py",
+      "sha256": "940949a3297475a60917bd96664e3a1abd577250ccf5e50af9ae78bd26de7ec0"
+    }
+  },
+  "fixture": {
+    "reactVersion": "18.3.1",
+    "rootMode": "createRoot",
+    "initialValue": "10",
+    "fillText": "25"
+  },
+  "reference": {
+    "runtime": "zendriver",
+    "version": "0.15.5",
+    "headless": true,
+    "cleanup": {
+      "stopped": true,
+      "profileRemoved": true
+    },
+    "observations": {
+      "clearInput": {
+        "fixture": {
+          "reactVersion": "18.3.1",
+          "rootMode": "createRoot",
+          "rootMarker": "createRoot",
+          "reactOwnedRoot": true,
+          "ready": true
+        },
+        "domValue": "",
+        "modelValue": "",
+        "updateCount": 1,
+        "renderCount": 2,
+        "events": [
+          {
+            "source": "react",
+            "type": "change",
+            "value": "",
+            "key": null,
+            "inputType": "",
+            "data": null,
+            "isTrusted": false
+          },
+          {
+            "source": "native",
+            "type": "input",
+            "value": "",
+            "key": null,
+            "inputType": "",
+            "data": null,
+            "isTrusted": false
+          }
+        ]
+      },
+      "clearInputByDeleting": {
+        "fixture": {
+          "reactVersion": "18.3.1",
+          "rootMode": "createRoot",
+          "rootMarker": "createRoot",
+          "reactOwnedRoot": true,
+          "ready": true
+        },
+        "domValue": "",
+        "modelValue": "",
+        "updateCount": 2,
+        "renderCount": 3,
+        "events": [
+          {
+            "source": "native",
+            "type": "keydown",
+            "value": "10",
+            "key": "Backspace",
+            "inputType": null,
+            "data": null,
+            "isTrusted": false
+          },
+          {
+            "source": "react",
+            "type": "change",
+            "value": "1",
+            "key": null,
+            "inputType": "",
+            "data": null,
+            "isTrusted": false
+          },
+          {
+            "source": "native",
+            "type": "input",
+            "value": "1",
+            "key": null,
+            "inputType": "",
+            "data": null,
+            "isTrusted": false
+          },
+          {
+            "source": "native",
+            "type": "keydown",
+            "value": "1",
+            "key": "Backspace",
+            "inputType": null,
+            "data": null,
+            "isTrusted": false
+          },
+          {
+            "source": "react",
+            "type": "change",
+            "value": "",
+            "key": null,
+            "inputType": "",
+            "data": null,
+            "isTrusted": false
+          },
+          {
+            "source": "native",
+            "type": "input",
+            "value": "",
+            "key": null,
+            "inputType": "",
+            "data": null,
+            "isTrusted": false
+          }
+        ]
+      },
+      "controlledFill": {
+        "fixture": {
+          "reactVersion": "18.3.1",
+          "rootMode": "createRoot",
+          "rootMarker": "createRoot",
+          "reactOwnedRoot": true,
+          "ready": true
+        },
+        "domValue": "1025",
+        "modelValue": "1025",
+        "updateCount": 2,
+        "renderCount": 3,
+        "events": [
+          {
+            "source": "native",
+            "type": "beforeinput",
+            "value": "10",
+            "key": null,
+            "inputType": "insertText",
+            "data": "2",
+            "isTrusted": true
+          },
+          {
+            "source": "react",
+            "type": "change",
+            "value": "102",
+            "key": null,
+            "inputType": "insertText",
+            "data": "2",
+            "isTrusted": true
+          },
+          {
+            "source": "native",
+            "type": "input",
+            "value": "102",
+            "key": null,
+            "inputType": "insertText",
+            "data": "2",
+            "isTrusted": true
+          },
+          {
+            "source": "native",
+            "type": "beforeinput",
+            "value": "102",
+            "key": null,
+            "inputType": "insertText",
+            "data": "5",
+            "isTrusted": true
+          },
+          {
+            "source": "react",
+            "type": "change",
+            "value": "1025",
+            "key": null,
+            "inputType": "insertText",
+            "data": "5",
+            "isTrusted": true
+          },
+          {
+            "source": "native",
+            "type": "input",
+            "value": "1025",
+            "key": null,
+            "inputType": "insertText",
+            "data": "5",
+            "isTrusted": true
+          }
+        ]
+      }
+    }
+  }
+}

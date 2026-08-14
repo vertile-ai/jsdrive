@@ -518,7 +518,7 @@
         }
       ],
       "source": "packages/api/test/input-react-parity.test.ts",
-      "title": "ZDTEST-0021 clears a controlled field through the native value setter [headless0]"
+      "title": "ZDTEST-0021 matches Zendriver clear_input on a React-controlled field [headless0]"
     },
     {
       "applicability": "applicable",
@@ -544,7 +544,7 @@
         }
       ],
       "source": "packages/api/test/input-react-parity.test.ts",
-      "title": "ZDTEST-0022 clears a controlled field through the native value setter [headless1]"
+      "title": "ZDTEST-0022 matches Zendriver clear_input on a React-controlled field [headless1]"
     },
     {
       "applicability": "applicable",
@@ -570,7 +570,7 @@
         }
       ],
       "source": "packages/api/test/input-react-parity.test.ts",
-      "title": "ZDTEST-0023 removes a controlled value with visible Backspace input [headless0]"
+      "title": "ZDTEST-0023 matches Zendriver clear_input_by_deleting on a React-controlled field [headless0]"
     },
     {
       "applicability": "applicable",
@@ -596,7 +596,7 @@
         }
       ],
       "source": "packages/api/test/input-react-parity.test.ts",
-      "title": "ZDTEST-0024 removes a controlled value with visible Backspace input [headless1]"
+      "title": "ZDTEST-0024 matches Zendriver clear_input_by_deleting on a React-controlled field [headless1]"
     },
     {
       "applicability": "applicable",
@@ -622,7 +622,7 @@
         }
       ],
       "source": "packages/api/test/input-react-parity.test.ts",
-      "title": "ZDTEST-0025 fills a controlled field after a render commit [headless0]"
+      "title": "ZDTEST-0025 matches Zendriver controlled fill mixed-value behavior [headless0]"
     },
     {
       "applicability": "applicable",
@@ -648,7 +648,7 @@
         }
       ],
       "source": "packages/api/test/input-react-parity.test.ts",
-      "title": "ZDTEST-0026 fills a controlled field after a render commit [headless1]"
+      "title": "ZDTEST-0026 matches Zendriver controlled fill mixed-value behavior [headless1]"
     },
     {
       "applicability": "applicable",

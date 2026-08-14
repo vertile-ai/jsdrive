@@ -163,19 +163,19 @@
   },
   {
     "nodeMember": "Element.sendKeys",
-    "testIds": ["ZDTEST-0016", "ZDTEST-0017", "ZDTEST-0018", "ZDTEST-0019", "ZDTEST-0025", "ZDTEST-0026"],
+    "testIds": ["ZDTEST-0016", "ZDTEST-0017", "ZDTEST-0018", "ZDTEST-0019", "ZDTEST-0025"],
     "upstream": "zendriver.core.element.Element.send_keys",
     "verifiedSemantics": ["return", "state"]
   },
   {
     "nodeMember": "Element.clearInput",
-    "testIds": ["ZDTEST-0021", "ZDTEST-0022"],
+    "testIds": ["ZDTEST-0021"],
     "upstream": "zendriver.core.element.Element.clear_input",
     "verifiedSemantics": ["return", "state"]
   },
   {
     "nodeMember": "Element.clearInputByDeleting",
-    "testIds": ["ZDTEST-0023", "ZDTEST-0024", "ZDTEST-0025", "ZDTEST-0026"],
+    "testIds": ["ZDTEST-0023"],
     "upstream": "zendriver.core.element.Element.clear_input_by_deleting",
     "verifiedSemantics": ["return", "state"]
   },

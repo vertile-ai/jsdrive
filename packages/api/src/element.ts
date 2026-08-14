@@ -6,7 +6,6 @@ import {
   KeyEvents,
   KeyModifiers,
   KeyPressEvent,
-  SpecialKeys,
   type KeyEventPayload,
   type KeyInput,
 } from "./input.js";
@@ -299,22 +298,26 @@ export class Element {
   }
 
   public clearInput(): Promise<void> {
-    return this.#setTextControlValue("", "deleteContentBackward", null);
+    return this.#setTextControlValue("", null, null, false);
   }
 
   public async clearInputByDeleting(): Promise<void> {
     await this.focus();
-    const value = await this.getValue();
-    await this.#call("function () { this.setSelectionRange?.(this.value.length, this.value.length); }");
-    for (const _segment of graphemes(value)) {
-      for (const event of KeyEvents.fromMixedInput([SpecialKeys.Backspace]).toCdpEvents()) {
-        await dispatchKey(this.tab, event);
-      }
+    const segments = graphemes(await this.getValue());
+    for (let length = segments.length - 1; length >= 0; length -= 1) {
+      await this.#call(
+        "function (value) { this.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, key: 'Backspace', code: 'Backspace' })); const proto = this instanceof HTMLTextAreaElement ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype; const setter = Object.getOwnPropertyDescriptor(proto, 'value')?.set; setter ? setter.call(this, value) : (this.value = value); this.dispatchEvent(new InputEvent('input', { bubbles: true })); }",
+        [segments.slice(0, length).join("")],
+      );
     }
   }
 
   public async sendKeys(input: KeyInput | KeyEvents | readonly KeyInput[]): Promise<void> {
     await this.focus();
+    if (typeof input === "string") {
+      for (const segment of graphemes(input)) await this.tab.send("Input.insertText", { text: segment });
+      return;
+    }
     const events = input instanceof KeyEvents
       ? input.toCdpEvents()
       : KeyEvents.fromMixedInput(keyInputList(input)).toCdpEvents();
@@ -441,12 +444,13 @@ export class Element {
 
   async #setTextControlValue(
     value: string,
-    inputType: "deleteContentBackward" | "insertText",
+    inputType: "insertText" | null,
     data: string | null,
+    dispatchChange = true,
   ): Promise<void> {
     await this.#call(
-      "function (value, inputType, data) { const proto = this instanceof HTMLTextAreaElement ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype; const setter = Object.getOwnPropertyDescriptor(proto, 'value')?.set; setter ? setter.call(this, value) : (this.value = value); this.dispatchEvent(new InputEvent('input', { bubbles: true, inputType, data })); this.dispatchEvent(new Event('change', { bubbles: true })); }",
-      [value, inputType, data],
+      "function (value, inputType, data, dispatchChange) { const proto = this instanceof HTMLTextAreaElement ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype; const setter = Object.getOwnPropertyDescriptor(proto, 'value')?.set; setter ? setter.call(this, value) : (this.value = value); this.dispatchEvent(inputType === null ? new InputEvent('input', { bubbles: true }) : new InputEvent('input', { bubbles: true, inputType, data })); if (dispatchChange) this.dispatchEvent(new Event('change', { bubbles: true })); }",
+      [value, inputType, data, dispatchChange],
     );
   }
 }

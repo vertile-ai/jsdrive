@@ -68,37 +68,44 @@
   {
     "nodeMember": "Browser.config",
     "testIds": ["ZDTEST-0020"],
-    "upstream": "zendriver.core.browser.Browser.config"
+    "upstream": "zendriver.core.browser.Browser.config",
+    "verifiedSemantics": ["return", "state"]
   },
   {
     "nodeMember": "Browser.get",
     "testIds": ["ZDTEST-0004", "ZDTEST-0005", "ZDTEST-0006", "ZDTEST-0007", "ZDTEST-0020"],
-    "upstream": "zendriver.core.browser.Browser.get"
+    "upstream": "zendriver.core.browser.Browser.get",
+    "verifiedSemantics": ["return", "state"]
   },
   {
     "nodeMember": "Browser.stop",
     "testIds": ["ZDTEST-0008", "ZDTEST-0009", "ZDTEST-0010", "ZDTEST-0011", "ZDTEST-0012", "ZDTEST-0013", "ZDTEST-0014", "ZDTEST-0015"],
-    "upstream": "zendriver.core.browser.Browser.stop"
+    "upstream": "zendriver.core.browser.Browser.stop",
+    "verifiedSemantics": ["state"]
   },
   {
     "nodeMember": "Browser.stopped",
     "testIds": ["ZDTEST-0012", "ZDTEST-0013", "ZDTEST-0014", "ZDTEST-0015"],
-    "upstream": "zendriver.core.browser.Browser.stopped"
+    "upstream": "zendriver.core.browser.Browser.stopped",
+    "verifiedSemantics": ["return", "state"]
   },
   {
     "nodeMember": "RuntimeBackend.closed",
     "testIds": ["ZDTEST-0008", "ZDTEST-0009", "ZDTEST-0014", "ZDTEST-0015"],
-    "upstream": "zendriver.core.connection.Connection.closed"
+    "upstream": "zendriver.core.connection.Connection.closed",
+    "verifiedSemantics": ["return", "state"]
   },
   {
     "nodeMember": "Tab.getContent",
     "testIds": ["ZDTEST-0004", "ZDTEST-0005"],
-    "upstream": "zendriver.core.tab.Tab.get_content"
+    "upstream": "zendriver.core.tab.Tab.get_content",
+    "verifiedSemantics": ["return"]
   },
   {
     "nodeMember": "Tab.updateTarget",
     "testIds": ["ZDTEST-0006", "ZDTEST-0007", "ZDTEST-0020"],
-    "upstream": "zendriver.core.tab.Tab.update_target"
+    "upstream": "zendriver.core.tab.Tab.update_target",
+    "verifiedSemantics": ["state"]
   },
   {
     "nodeMember": "Tab.setUserAgent",

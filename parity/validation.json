@@ -1,4 +1,63 @@
 {
+  "apiEvidenceExecutionGates": {
+    "packages/api/test/api-surface-parity.test.ts": [
+      "root:test:api",
+      "root:test:parity:headless"
+    ],
+    "packages/api/test/browser-core-parity.test.ts": [
+      "api:test:parity:headful",
+      "root:test:parity:headless"
+    ],
+    "packages/api/test/browser.test.ts": [
+      "root:test:api"
+    ],
+    "packages/api/test/conformance.test.ts": [
+      "root:test:api"
+    ],
+    "packages/api/test/connection-api-parity.test.ts": [
+      "root:test:api",
+      "root:test:parity:headless"
+    ],
+    "packages/api/test/element-api-parity.test.ts": [
+      "root:test:api",
+      "root:test:parity:headless"
+    ],
+    "packages/api/test/expectation-interception-api-parity.test.ts": [
+      "root:test:api",
+      "root:test:parity:headless"
+    ],
+    "packages/api/test/handlers-domain-parity.test.ts": [
+      "api:test:parity:headful",
+      "root:test:parity:headless"
+    ],
+    "packages/api/test/input-react-parity.test.ts": [
+      "api:test:parity:headful",
+      "root:test:parity:headless"
+    ],
+    "packages/api/test/keys-api-parity.test.ts": [
+      "root:test:api",
+      "root:test:parity:headless"
+    ],
+    "packages/api/test/network-conformance.test.ts": [
+      "root:test:api"
+    ],
+    "packages/api/test/network-expectation-parity.test.ts": [
+      "api:test:parity:headful",
+      "root:test:parity:headless"
+    ],
+    "packages/api/test/tab-selector-evaluate-parity.test.ts": [
+      "api:test:parity:headful",
+      "root:test:parity:headless"
+    ],
+    "packages/api/test/util-api-parity.test.ts": [
+      "root:test:api",
+      "root:test:parity:headless"
+    ],
+    "packages/runtime-js/test/connection-compat.test.ts": [
+      "root:test:runtime-js"
+    ]
+  },
+  "apiEvidenceSources": 15,
   "apiMappingCounts": {
     "coreMembers": {
       "VERIFIED": 472
@@ -13,7 +72,21 @@
       "VERIFIED": 533
     }
   },
+  "apiMappingsWithDeclaredSemanticDimensions": 533,
+  "apiSemanticDimensionCounts": {
+    "defaults": 21,
+    "errors": 22,
+    "return": 524,
+    "signature": 35,
+    "state": 493
+  },
+  "apiSemanticEvidenceTestIdPhases": {
+    "<none>": 2,
+    "headless0": 39,
+    "headless1": 39
+  },
   "errors": [],
+  "executionGatedApiEvidenceSources": 15,
   "fingerprints": {
     "coreMembers": "0c24b69ae84b1f3d982660b4646b9baf51c1e0cbd436f8b76f0de39de79caea9",
     "coreSymbols": "8c200eb1e8f7cd1432a466770b258c0dbc0a2838f4ee50ff72b01502a393cf2b",
@@ -25,19 +98,90 @@
     "testParameterization": "894a854a2c56e6917b385a84a4dbee3dd7c0ac2eea8b6ffc4fedfbb172cb2b54"
   },
   "mutationProbes": {
+    "aliasMutatedZdapiOptionsAreRejected": "PASS",
+    "aliasedMutationIsNotNodeTestRegistration": "PASS",
+    "apiSemanticEvidenceOutsideExecutionGate": "PASS",
+    "commentOrStringOnlyNodeCase": "PASS",
+    "commentedWorkspaceDelegationIsRejected": "PASS",
+    "commentedWorkspaceTestFileIsRejected": "PASS",
+    "computedSkipPropertyIsNotEvidence": "PASS",
+    "conditionalWorkspaceDelegationIsRejected": "PASS",
     "corruptedCategory": "PASS",
     "corruptedExternalDependency": "PASS",
     "corruptedParameterization": "PASS",
+    "destructuredAliasMutationIsRejected": "PASS",
+    "destructuringAssignmentIsRejected": "PASS",
+    "duplicateApiSemanticCaseRegistration": "PASS",
     "duplicateNodeCase": "PASS",
+    "duplicateNodeRegistration": "PASS",
+    "duplicateRegistrationInUnmappedSource": "PASS",
+    "emptyApiSemanticCoverage": "PASS",
+    "evidenceGateRejectsExpectFailureFlag": "PASS",
+    "fakeJsonBuiltinImportIsRejected": "PASS",
+    "fakeStringBuiltinImportIsRejected": "PASS",
+    "fakeWorkspaceDelegationIsRejected": "PASS",
+    "forOfAliasMutationIsRejected": "PASS",
+    "genericUnknownOptionsAreNotEvidence": "PASS",
+    "genericUnsupportedEvidenceStatementIsRejected": "PASS",
+    "headfulGateRejectsDuplicateHeadfulFlag": "PASS",
+    "headfulGateRejectsMisplacedHeadfulFlag": "PASS",
+    "headfulGateRequiresHeadfulFlag": "PASS",
+    "headlessGateRejectsHeadfulFlag": "PASS",
+    "hookCallbackIsNotNodeTestRegistration": "PASS",
+    "hookExtraArgumentIsRejected": "PASS",
+    "hookFactoryIsRejected": "PASS",
+    "ifWrappedOptionsMutationIsRejected": "PASS",
+    "impureSkipReasonArgumentIsRejected": "PASS",
+    "localNoopIsNotNodeTestRegistration": "PASS",
+    "misassignedApiEvidencePhase": "PASS",
     "mismatchedNodeCaseId": "PASS",
+    "missingApiSemanticCoverage": "PASS",
+    "missingNodeRegistration": "PASS",
+    "mutableBindingIsNotNodeTestRegistration": "PASS",
+    "mutatedPhaseSkipIsRejected": "PASS",
+    "mutatedZdapiOptionsAreRejected": "PASS",
+    "mutatingCallIterableIsRejected": "PASS",
+    "nestedLoopOptionsMutationIsRejected": "PASS",
+    "nestedLoopPhaseMutationIsRejected": "PASS",
     "nonexistentNodeCaseSource": "PASS",
+    "permanentlySkippedZdapiIsNotEvidence": "PASS",
+    "permanentlySkippedZdtestIsNotRegistration": "PASS",
+    "phaseSkippedTodoIsNotEvidence": "PASS",
+    "postEvidenceHiddenDuplicateIsRejected": "PASS",
+    "postEvidenceLoopHiddenDuplicateIsRejected": "PASS",
+    "postEvidenceLoopRuntimeCallIsRejected": "PASS",
+    "postEvidenceNonEvidenceLoopRemainsAccepted": "PASS",
+    "postEvidenceUnknownCallIsRejected": "PASS",
+    "removedApiEvidenceRootDelegation": "PASS",
+    "removedApiEvidenceWorkspaceFile": "PASS",
+    "removedApiSemanticMapping": "PASS",
     "removedCoreMember": "PASS",
     "removedCoreSymbol": "PASS",
-    "removedRootExport": "PASS"
+    "removedHeadfulApiEvidenceSource": "PASS",
+    "removedRootExport": "PASS",
+    "runtimeCallIterableIsRejected": "PASS",
+    "shadowedNodeTestBindingIsRejected": "PASS",
+    "splitTemplateOptionsMutationIsRejected": "PASS",
+    "splitTemplatePhaseMutationIsRejected": "PASS",
+    "spreadOptionsAreNotEvidence": "PASS",
+    "todoFalseRemainsEvidenceEligible": "PASS",
+    "todoStringIsNotEvidence": "PASS",
+    "todoTrueIsNotEvidence": "PASS",
+    "typeOnlyImportIsNotNodeTestRegistration": "PASS",
+    "unknownApiSemanticCase": "PASS",
+    "unknownApiSemanticCoverage": "PASS",
+    "unknownApiSemanticMember": "PASS",
+    "unknownApiSemanticTestId": "PASS",
+    "unknownConstInitializerIsRejected": "PASS",
+    "unknownShorthandSkipIsNotEvidence": "PASS",
+    "unknownSideEffectCallIsRejected": "PASS",
+    "unknownTodoIsNotEvidence": "PASS",
+    "unresolvedNodeTestTitleIsRejected": "PASS",
+    "voidWrappedMutationCallIsRejected": "PASS",
+    "wrongNodeCaseSource": "PASS"
   },
   "notRunTestCases": 0,
   "referenceObservationCount": 1,
-  "semanticallyVerifiedApiMappings": 533,
   "status": "PASS",
   "testCases": 101,
   "unmappedTestCases": 0

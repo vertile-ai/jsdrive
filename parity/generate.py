@@ -8,6 +8,7 @@ import copy
 import hashlib
 import json
 import re
+import shlex
 import subprocess
 import sys
 from collections import Counter
@@ -24,6 +25,10 @@ EXPECTED_TEST_COUNT = 101
 EXPECTED_ROOT_EXPORT_COUNT = 16
 EXPECTED_CORE_SYMBOL_COUNT = 45
 EXPECTED_CORE_MEMBER_COUNT = 472
+EXPECTED_API_MAPPING_COUNT = 533
+API_SEMANTIC_DIMENSIONS = {"defaults", "errors", "return", "signature", "state"}
+API_MAPPING_EVIDENCE = "execution-gated Node behavior evidence for the listed semantic dimensions"
+API_SEMANTIC_STATUS = "VERIFIED claims only the explicitly listed semanticsCoverage dimensions backed by registered phase-aware execution-gated behavior evidence; structural candidates and unlisted dimensions are not verified parity"
 EXPECTED_CATEGORY_COUNTS = {"bot_detection": 2, "core": 81, "docs": 18}
 EXPECTED_PARAMETERIZATION_COUNTS = {"<none>": 3, "headless0": 49, "headless1": 49}
 EXPECTED_INVENTORY_FINGERPRINTS = {
@@ -59,7 +64,58 @@ TEST_CASE_SHADOWED_TEST_FIXTURE = PARITY / "test-fixtures" / "zdtest-shadowed-te
 TEST_CASE_UNRESOLVED_TITLE_FIXTURE = PARITY / "test-fixtures" / "zdtest-unresolved-title.test.ts"
 TEST_CASE_TYPE_ONLY_IMPORT_FIXTURE = PARITY / "test-fixtures" / "zdtest-type-only-import.test.ts"
 TEST_CASE_ALL_SOURCES_FIXTURE = PARITY / "test-fixtures" / "all-test-sources"
+API_PERMANENT_SKIP_FIXTURE = PARITY / "test-fixtures" / "zdapi-permanent-skip.test.ts"
+TEST_ID_PERMANENT_SKIP_FIXTURE = PARITY / "test-fixtures" / "zdtest-permanent-skip.test.ts"
+API_UNKNOWN_SHORTHAND_SKIP_FIXTURE = PARITY / "test-fixtures" / "zdapi-unknown-shorthand-skip.test.ts"
+API_COMPUTED_SKIP_FIXTURE = PARITY / "test-fixtures" / "zdapi-computed-skip.test.ts"
+API_SPREAD_OPTIONS_FIXTURE = PARITY / "test-fixtures" / "zdapi-spread-options.test.ts"
+API_GENERIC_UNKNOWN_OPTIONS_FIXTURE = PARITY / "test-fixtures" / "zdapi-generic-unknown-options.test.ts"
+API_MUTATED_OPTIONS_FIXTURE = PARITY / "test-fixtures" / "zdapi-mutated-options.test.ts"
+API_ALIAS_MUTATED_OPTIONS_FIXTURE = PARITY / "test-fixtures" / "zdapi-alias-mutated-options.test.ts"
+API_MUTATED_PHASE_FIXTURE = PARITY / "test-fixtures" / "zdapi-mutated-phase.test.ts"
+API_TODO_OPTIONS_FIXTURE = PARITY / "test-fixtures" / "zdapi-todo-options.test.ts"
+API_IF_MUTATION_FIXTURE = PARITY / "test-fixtures" / "zdapi-if-mutation.test.ts"
+API_WRAPPED_CALL_FIXTURE = PARITY / "test-fixtures" / "zdapi-wrapped-call.test.ts"
+API_UNSUPPORTED_STATEMENT_FIXTURE = PARITY / "test-fixtures" / "zdapi-unsupported-statement.test.ts"
+API_NESTED_LOOP_MUTATION_FIXTURE = PARITY / "test-fixtures" / "zdapi-nested-loop-mutation.test.ts"
+API_NESTED_PHASE_MUTATION_FIXTURE = PARITY / "test-fixtures" / "zdapi-nested-phase-mutation.test.ts"
+API_UNKNOWN_CONST_INITIALIZER_FIXTURE = PARITY / "test-fixtures" / "zdapi-unknown-const-initializer.test.ts"
+API_POST_EVIDENCE_LOOP_SOURCE = ROOT / "packages/api/test/element-api-parity.test.ts"
+API_POST_EVIDENCE_CALL_FIXTURE = PARITY / "test-fixtures" / "zdapi-post-evidence-call.test.ts"
+API_POST_EVIDENCE_DUPLICATE_FIXTURE = PARITY / "test-fixtures" / "zdapi-post-evidence-duplicate.test.ts"
+API_SPLIT_TEMPLATE_MUTATION_FIXTURE = PARITY / "test-fixtures" / "zdapi-split-template-mutation.test.ts"
+API_SPLIT_TEMPLATE_PHASE_FIXTURE = PARITY / "test-fixtures" / "zdapi-split-template-phase.test.ts"
+API_FAKE_JSON_IMPORT_FIXTURE = PARITY / "test-fixtures" / "zdapi-fake-json-import.test.ts"
+API_FAKE_STRING_IMPORT_FIXTURE = PARITY / "test-fixtures" / "zdapi-fake-string-import.test.ts"
+API_ITERABLE_EXIT_FIXTURE = PARITY / "test-fixtures" / "zdapi-iterable-exit.test.ts"
+API_ITERABLE_MUTATION_FIXTURE = PARITY / "test-fixtures" / "zdapi-iterable-mutation.test.ts"
+API_POST_EVIDENCE_LOOP_EXIT_FIXTURE = PARITY / "test-fixtures" / "zdapi-post-loop-exit.test.ts"
+API_POST_EVIDENCE_LOOP_DUPLICATE_FIXTURE = PARITY / "test-fixtures" / "zdapi-post-loop-duplicate.test.ts"
 NODE_TEST_ID_PATTERN = re.compile(r"^(ZDTEST-\d{4})(?:\s|$)")
+EVIDENCE_EXECUTION_GATES = (
+    (
+        "root:test:runtime-js",
+        "root",
+        "test",
+        "packages/runtime-js/package.json",
+        "test",
+    ),
+    ("root:test:api", "root", "test", "packages/api/package.json", "test"),
+    (
+        "root:test:parity:headless",
+        "headless",
+        "test:parity:headless",
+        "packages/api/package.json",
+        "test:parity:headless",
+    ),
+    (
+        "api:test:parity:headful",
+        "headful",
+        None,
+        "packages/api/package.json",
+        "test:parity:headful",
+    ),
+)
 
 
 def run(command: list[str], cwd: Path = ROOT) -> subprocess.CompletedProcess[str]:
@@ -75,9 +131,11 @@ def require_success(result: subprocess.CompletedProcess[str], label: str) -> str
 
 
 def write_json(name: str, value: Any) -> None:
-    (PARITY / name).write_text(
-        json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf8"
-    )
+    (PARITY / name).write_text(canonical_json_text(value), encoding="utf8")
+
+
+def canonical_json_text(value: Any) -> str:
+    return json.dumps(value, indent=2, sort_keys=True) + "\n"
 
 
 def canonical_fingerprint(value: Any) -> str:
@@ -86,9 +144,14 @@ def canonical_fingerprint(value: Any) -> str:
 
 
 @lru_cache(maxsize=None)
-def typescript_test_titles(source_path: Path) -> list[str]:
-    result = run(["node", str(TEST_CASE_INSPECTOR), str(source_path)])
+def typescript_test_registrations(source_path: Path) -> list[dict[str, Any]]:
+    result = run(["node", str(TEST_CASE_INSPECTOR), str(source_path), "--details"])
     return json.loads(require_success(result, f"inspect test cases in {source_path}"))
+
+
+@lru_cache(maxsize=None)
+def typescript_test_titles(source_path: Path) -> list[str]:
+    return [registration["title"] for registration in typescript_test_registrations(source_path)]
 
 
 @lru_cache(maxsize=None)
@@ -244,6 +307,190 @@ def node_test_titles_by_source(root: Path = ROOT) -> dict[str, list[str]]:
     }
 
 
+def node_test_registration_phases_by_source(
+    root: Path = ROOT,
+) -> dict[str, dict[str, list[str | None]]]:
+    excluded_directories = {"dist", "generated", "node_modules"}
+    sources = sorted(
+        path
+        for path in root.glob("packages/*/test/**/*.test.ts")
+        if not excluded_directories.intersection(path.relative_to(root).parts)
+    )
+    return {
+        path.relative_to(root).as_posix(): {
+            title: [
+                registration["phase"]
+                for registration in typescript_test_registrations(path)
+                if registration["title"] == title
+            ]
+            for title in typescript_test_titles(path)
+        }
+        for path in sources
+    }
+
+
+def bounded_script_commands(script: Any, label: str) -> tuple[list[list[str]], list[str]]:
+    if not isinstance(script, str) or not script.strip():
+        return [], [f"API evidence execution script is missing: {label}"]
+    forbidden_fragments = ("#", ";", "||", "\n", "\r", "`", "$(", "${", "\\", "<", ">")
+    if any(fragment in script for fragment in forbidden_fragments):
+        return [], [f"API evidence execution script uses unsupported shell syntax: {label}"]
+    without_chains = script.replace("&&", "")
+    if "&" in without_chains or "|" in without_chains:
+        return [], [f"API evidence execution script uses unsupported shell syntax: {label}"]
+
+    commands = []
+    for command in script.split("&&"):
+        if not command.strip():
+            return [], [f"API evidence execution script has an empty command: {label}"]
+        try:
+            arguments = shlex.split(command, posix=True)
+        except ValueError:
+            return [], [f"API evidence execution script cannot be parsed: {label}"]
+        if any(
+            argument in {"if", "then", "else", "elif", "fi", "for", "while", "until", "case", "esac", "do", "done", "!"}
+            for argument in arguments
+        ):
+            return [], [f"API evidence execution script uses control flow: {label}"]
+        commands.append(arguments)
+    return commands, []
+
+
+def root_execution_commands(script: Any, label: str) -> tuple[list[list[str]], list[str]]:
+    commands, errors = bounded_script_commands(script, label)
+    if errors:
+        return [], errors
+    for arguments in commands:
+        is_workspace_run = (
+            len(arguments) == 4
+            and arguments[:2] == ["npm", "run"]
+            and arguments[2]
+            and arguments[3].startswith("--workspace=")
+            and len(arguments[3]) > len("--workspace=")
+        )
+        is_inventory_validation = arguments == [
+            "python3",
+            "parity/generate.py",
+            "--validate-only",
+        ]
+        if not is_workspace_run and not is_inventory_validation:
+            return [], [f"API evidence root script has an unsupported command: {label}"]
+    return commands, []
+
+
+def workspace_execution_sources(
+    script: Any, label: str, package_directory: Path, phase: str
+) -> tuple[set[str], list[str]]:
+    commands, errors = bounded_script_commands(script, label)
+    if errors:
+        return set(), errors
+    compiled_sources = []
+    for arguments in commands:
+        if arguments == ["tsc", "-p", "tsconfig.test.json"]:
+            continue
+        if not arguments or arguments[0] != "node":
+            return set(), [f"API evidence workspace script has an unsupported command: {label}"]
+        if len(arguments) >= 2 and arguments[1] == "--test":
+            test_arguments = arguments[2:]
+            if "--headful" in test_arguments or "--expect-failure" in test_arguments:
+                return set(), [f"API evidence workspace script has invalid runner flags: {label}"]
+            if test_arguments[:1] == ["--test-concurrency=1"]:
+                test_arguments = test_arguments[1:]
+        elif len(arguments) >= 2 and arguments[1] in {
+            "dist-test/test/support/run-persistent-tests.js",
+            "dist-test/test/support/run-exclusive-tests.js",
+        }:
+            test_arguments = arguments[2:]
+            if "--expect-failure" in test_arguments:
+                return set(), [f"API evidence workspace script has invalid runner flags: {label}"]
+            if phase == "headful":
+                if test_arguments.count("--headful") != 1 or test_arguments[:1] != ["--headful"]:
+                    return set(), [f"API evidence headful gate requires one leading --headful: {label}"]
+                test_arguments = test_arguments[1:]
+            elif "--headful" in test_arguments:
+                return set(), [f"API evidence non-headful gate contains --headful: {label}"]
+        else:
+            return set(), [f"API evidence workspace script has an unsupported node command: {label}"]
+        if not test_arguments or any(
+            not argument.startswith("dist-test/test/")
+            or not argument.endswith(".test.js")
+            for argument in test_arguments
+        ):
+            return set(), [f"API evidence workspace script has invalid test argv: {label}"]
+        compiled_sources.extend(test_arguments)
+    return {
+        (package_directory / Path(source).relative_to("dist-test"))
+        .with_suffix(".ts")
+        .as_posix()
+        for source in compiled_sources
+    }, []
+
+
+def evidence_execution_gates(
+    root_package: dict[str, Any] | None = None,
+    workspace_packages: dict[str, dict[str, Any]] | None = None,
+) -> tuple[dict[str, set[str]], list[str]]:
+    if root_package is None:
+        root_package = json.loads((ROOT / "package.json").read_text(encoding="utf8"))
+    if workspace_packages is None:
+        workspace_packages = {
+            manifest: json.loads((ROOT / manifest).read_text(encoding="utf8"))
+            for _, _, _, manifest, _ in EVIDENCE_EXECUTION_GATES
+        }
+
+    sources_by_gate: dict[str, set[str]] = {}
+    errors = []
+    for gate_name, phase, root_script, manifest, workspace_script in EVIDENCE_EXECUTION_GATES:
+        workspace_package = workspace_packages[manifest]
+        workspace_name = workspace_package["name"]
+        if root_script is not None:
+            root_commands, root_errors = root_execution_commands(
+                root_package.get("scripts", {}).get(root_script),
+                f"package.json#{root_script}",
+            )
+            errors.extend(root_errors)
+            delegation = [
+                "npm",
+                "run",
+                workspace_script,
+                f"--workspace={workspace_name}",
+            ]
+            if delegation not in root_commands:
+                errors.append(f"API evidence execution gate is missing root delegation: {gate_name}")
+                sources_by_gate[gate_name] = set()
+                continue
+        workspace_sources, workspace_errors = workspace_execution_sources(
+            workspace_package.get("scripts", {}).get(workspace_script),
+            f"{manifest}#{workspace_script}",
+            Path(manifest).parent,
+            phase,
+        )
+        errors.extend(workspace_errors)
+        sources_by_gate[gate_name] = workspace_sources
+        if not workspace_sources:
+            errors.append(f"API evidence execution gate has no explicit test files: {gate_name}")
+    return sources_by_gate, errors
+
+
+def execution_gates_by_source(sources_by_gate: dict[str, set[str]]) -> dict[str, list[str]]:
+    gates_by_source: dict[str, list[str]] = {}
+    for gate_name, sources in sources_by_gate.items():
+        for source in sources:
+            gates_by_source.setdefault(source, []).append(gate_name)
+    return {
+        source: sorted(gates)
+        for source, gates in sorted(gates_by_source.items())
+    }
+
+
+def execution_gate_for_parameterization(parameterization: Any) -> str:
+    return (
+        "api:test:parity:headful"
+        if parameterization == "headless1"
+        else "root:test:parity:headless"
+    )
+
+
 def bound_node_test_ids(
     mappings: dict[str, Any], titles_by_source: dict[str, list[str]]
 ) -> set[str]:
@@ -378,7 +625,11 @@ def node_mapping_mutation_probes(
         for title in missing_registration[first_source]
         if node_test_id(title) != first_id
     ]
-    text_only_titles = typescript_test_titles(TEST_CASE_TEXT_ONLY_FIXTURE)
+    text_only_rejected = typescript_test_source_rejected(TEST_CASE_TEXT_ONLY_FIXTURE)
+    text_only_titles = (
+        [] if text_only_rejected else typescript_test_titles(TEST_CASE_TEXT_ONLY_FIXTURE)
+    )
+    permanent_skip_titles = typescript_test_titles(TEST_ID_PERMANENT_SKIP_FIXTURE)
     hook_callback_titles = typescript_test_titles(TEST_CASE_HOOK_CALLBACK_FIXTURE)
     duplicate_in_unmapped_source = copy.deepcopy(titles_by_source)
     duplicate_in_unmapped_source.update(
@@ -388,7 +639,14 @@ def node_mapping_mutation_probes(
     single_mapping = {first_id: mappings[first_id]}
     return {
         "commentOrStringOnlyNodeCase": "PASS"
-        if node_mapping_errors(single_case, single_mapping, {first_source: text_only_titles})
+        if text_only_rejected
+        or node_mapping_errors(single_case, single_mapping, {first_source: text_only_titles})
+        else "FAIL",
+        "permanentlySkippedZdtestIsNotRegistration": "PASS"
+        if not permanent_skip_titles
+        and node_mapping_errors(
+            single_case, single_mapping, {first_source: permanent_skip_titles}
+        )
         else "FAIL",
         "hookCallbackIsNotNodeTestRegistration": "PASS"
         if node_mapping_errors(
@@ -653,7 +911,7 @@ def map_symbol(
                 "runtimeExport": candidate in runtime,
                 "evidence": "compatible TypeScript AST declaration",
                 "signatureComparison": "UNVERIFIED",
-                "semanticsVerified": False,
+                "semanticsCoverage": [],
             }
         if declaration or candidate in runtime:
             return {
@@ -663,14 +921,14 @@ def map_symbol(
                 "runtimeExport": candidate in runtime,
                 "evidence": "name exists but declaration kind is not a compatible structural match",
                 "signatureComparison": "UNVERIFIED",
-                "semanticsVerified": False,
+                "semanticsCoverage": [],
             }
     return {
         "status": "MISSING",
         "nodeSymbol": None,
         "evidence": "no root runtime export or public TypeScript declaration with an equivalent name",
         "signatureComparison": "UNVERIFIED",
-        "semanticsVerified": False,
+        "semanticsCoverage": [],
     }
 
 
@@ -739,7 +997,7 @@ def add_api_mappings(upstream: dict[str, Any], nodriver: dict[str, Any]) -> dict
                             if expected_kind == "property"
                             else "COMPATIBLE_REQUIRED_ARITY"
                         ),
-                        "semanticsVerified": False,
+                        "semanticsCoverage": [],
                     }
                 elif named_declarations:
                     member_mapping = {
@@ -748,7 +1006,7 @@ def add_api_mappings(upstream: dict[str, Any], nodriver: dict[str, Any]) -> dict
                         "nodeDeclarations": named_declarations,
                         "evidence": "name and member kind match, but required arity differs",
                         "signatureComparison": "INCOMPATIBLE_REQUIRED_ARITY",
-                        "semanticsVerified": False,
+                        "semanticsCoverage": [],
                     }
                 elif node_class is None:
                     member_mapping = {
@@ -756,7 +1014,7 @@ def add_api_mappings(upstream: dict[str, Any], nodriver: dict[str, Any]) -> dict
                         "nodeMember": None,
                         "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
                         "signatureComparison": "UNVERIFIED",
-                        "semanticsVerified": False,
+                        "semanticsCoverage": [],
                     }
                 else:
                     member_mapping = {
@@ -764,7 +1022,7 @@ def add_api_mappings(upstream: dict[str, Any], nodriver: dict[str, Any]) -> dict
                         "nodeMember": None,
                         "evidence": f"no equivalent member name declared on {node_class}",
                         "signatureComparison": "UNVERIFIED",
-                        "semanticsVerified": False,
+                        "semanticsCoverage": [],
                     }
                 member["nodeMapping"] = member_mapping
                 member_counts[member_mapping["status"]] += 1
@@ -805,6 +1063,16 @@ def add_api_semantic_mappings(upstream: dict[str, Any]) -> None:
         target = targets.get(semantic["upstream"])
         if target is None:
             raise RuntimeError(f"Unknown upstream semantic mapping: {semantic['upstream']}")
+        verified_semantics = semantic.get("verifiedSemantics")
+        if (
+            not isinstance(verified_semantics, list)
+            or not verified_semantics
+            or verified_semantics != sorted(set(verified_semantics))
+            or any(item not in API_SEMANTIC_DIMENSIONS for item in verified_semantics)
+        ):
+            raise RuntimeError(
+                f"Invalid API semantic coverage: {semantic['upstream']}"
+            )
         evidence = (
             {"evidenceTestIds": semantic["testIds"]}
             if "testIds" in semantic
@@ -814,15 +1082,10 @@ def add_api_semantic_mappings(upstream: dict[str, Any]) -> None:
             **target["nodeMapping"],
             "status": "VERIFIED",
             "nodeMember": semantic["nodeMember"],
-            "evidence": "independent passing Node parity cases",
+            "evidence": API_MAPPING_EVIDENCE,
             **evidence,
-            **(
-                {"semanticsCoverage": semantic["verifiedSemantics"]}
-                if "verifiedSemantics" in semantic
-                else {}
-            ),
+            "semanticsCoverage": verified_semantics,
             "signatureComparison": target["nodeMapping"].get("signatureComparison", "UNVERIFIED"),
-            "semanticsVerified": True,
         }
 
 
@@ -855,6 +1118,645 @@ def build_test_inventory(node_ids: list[str]) -> dict[str, Any]:
             case["nodeParity"] = mappings[case["id"]]
         cases.append(case)
     return {"schemaVersion": 1, "caseCount": len(cases), "cases": cases}
+
+
+def api_semantic_mapping_errors(
+    semantic_mappings: Any,
+    upstream_targets: dict[str, dict[str, Any]],
+    known_api_members: set[str],
+    inventory_by_id: dict[str, dict[str, Any]],
+    node_mappings: dict[str, Any],
+    titles_by_source: dict[str, list[str]],
+    gates_by_source: dict[str, list[str]],
+) -> list[str]:
+    if not isinstance(semantic_mappings, list):
+        return ["API semantic mappings must be a list"]
+
+    errors = []
+    registration_phases_by_source = node_test_registration_phases_by_source()
+    if len(semantic_mappings) != EXPECTED_API_MAPPING_COUNT:
+        errors.append(
+            f"expected {EXPECTED_API_MAPPING_COUNT} API semantic mappings, got {len(semantic_mappings)}"
+        )
+
+    upstream_names = [
+        entry.get("upstream")
+        for entry in semantic_mappings
+        if isinstance(entry, dict)
+    ]
+    duplicate_upstreams = sorted(
+        name
+        for name, count in Counter(upstream_names).items()
+        if isinstance(name, str) and count > 1
+    )
+    if duplicate_upstreams:
+        errors.append(f"API semantic mappings contain duplicate upstream targets: {duplicate_upstreams}")
+    missing_upstreams = sorted(set(upstream_targets) - set(upstream_names))
+    if missing_upstreams:
+        errors.append(f"API semantic mappings are missing upstream targets: {missing_upstreams}")
+
+    case_registrations: dict[str, list[str]] = {}
+    id_registrations: dict[str, list[tuple[str, str]]] = {}
+    for source_name, titles in titles_by_source.items():
+        for title in titles:
+            case_registrations.setdefault(title, []).append(source_name)
+            registration_id = node_test_id(title)
+            if registration_id is not None:
+                id_registrations.setdefault(registration_id, []).append((source_name, title))
+
+    for entry in semantic_mappings:
+        if not isinstance(entry, dict):
+            errors.append(f"API semantic mapping is not an object: {entry!r}")
+            continue
+        upstream = entry.get("upstream", "<missing-upstream>")
+        evidence_keys = {key for key in ("testIds", "testCases") if key in entry}
+        required_keys = {"upstream", "nodeMember", "verifiedSemantics"} | evidence_keys
+        if set(entry) != required_keys or len(evidence_keys) != 1:
+            errors.append(f"API semantic mapping schema is invalid: {upstream}")
+
+        verified_semantics = entry.get("verifiedSemantics")
+        if "verifiedSemantics" not in entry:
+            errors.append(f"API semantic coverage is missing: {upstream}")
+        elif not isinstance(verified_semantics, list) or not verified_semantics:
+            errors.append(f"API semantic coverage is empty or invalid: {upstream}")
+        elif verified_semantics != sorted(set(verified_semantics)):
+            errors.append(f"API semantic coverage must be sorted and unique: {upstream}")
+        elif any(semantic not in API_SEMANTIC_DIMENSIONS for semantic in verified_semantics):
+            errors.append(f"API semantic coverage contains an unknown dimension: {upstream}")
+
+        if upstream not in upstream_targets:
+            errors.append(f"API semantic mapping has unknown upstream target: {upstream}")
+        node_member = entry.get("nodeMember")
+        if not isinstance(node_member, str) or node_member not in known_api_members:
+            errors.append(f"API semantic mapping has unknown Node API member: {upstream} -> {node_member}")
+
+        if len(evidence_keys) != 1:
+            continue
+        evidence_key = next(iter(evidence_keys))
+        evidence_items = entry[evidence_key]
+        if not isinstance(evidence_items, list) or not evidence_items:
+            errors.append(f"API semantic mapping has no evidence tests: {upstream}")
+            continue
+
+        if evidence_key == "testIds":
+            if (
+                any(not isinstance(test_id, str) for test_id in evidence_items)
+                or evidence_items != sorted(set(evidence_items))
+            ):
+                errors.append(f"API semantic evidence IDs must be sorted and unique: {upstream}")
+                continue
+            for test_id in evidence_items:
+                inventory_case = inventory_by_id.get(test_id)
+                parity = inventory_case.get("nodeParity") if inventory_case is not None else None
+                if parity is None or parity.get("status") != "MAPPED" or parity.get("result") != "PASS":
+                    errors.append(f"API semantic evidence is not a passing mapped test: {upstream} -> {test_id}")
+                    continue
+                node_mapping = node_mappings.get(test_id)
+                case_name = node_mapping.get("case") if isinstance(node_mapping, dict) else None
+                if not isinstance(case_name, str) or "::" not in case_name:
+                    errors.append(f"API semantic evidence has no registered Node test: {upstream} -> {test_id}")
+                    continue
+                source_name = case_name.rsplit("::", 1)[0]
+                registrations = id_registrations.get(test_id, [])
+                if len(registrations) != 1 or registrations[0][0] != source_name:
+                    errors.append(f"API semantic evidence ID must be uniquely registered: {upstream} -> {test_id}")
+                else:
+                    parameterization = inventory_case.get("parameterization")
+                    registered_title = registrations[0][1]
+                    registered_phases = re.findall(
+                        r"\[(headless[01])\]", registered_title
+                    )
+                    expected_phases = (
+                        [parameterization]
+                        if parameterization in {"headless0", "headless1"}
+                        else []
+                    )
+                    if registered_phases != expected_phases:
+                        errors.append(f"API semantic evidence phase does not match its registered case: {upstream} -> {test_id}")
+                    expected_execution_phase = (
+                        parameterization
+                        if parameterization in {"headless0", "headless1"}
+                        else "headless0"
+                    )
+                    options_phases = registration_phases_by_source.get(
+                        source_name, {}
+                    ).get(registered_title, [])
+                    if options_phases != [expected_execution_phase]:
+                        errors.append(f"API semantic evidence options phase does not match its registered case: {upstream} -> {test_id}")
+                required_gate = execution_gate_for_parameterization(
+                    inventory_case.get("parameterization")
+                )
+                if required_gate not in gates_by_source.get(source_name, []):
+                    errors.append(f"API semantic evidence is not in its required execution phase: {upstream} -> {test_id} -> {required_gate}")
+            continue
+
+        normalized_cases = []
+        valid_case_schema = True
+        for evidence_case in evidence_items:
+            if not isinstance(evidence_case, dict) or set(evidence_case) != {"file", "case"}:
+                errors.append(f"API semantic test case schema is invalid: {upstream}")
+                valid_case_schema = False
+                continue
+            source_name = evidence_case["file"]
+            case_name = evidence_case["case"]
+            if not isinstance(source_name, str) or not isinstance(case_name, str):
+                errors.append(f"API semantic test case schema is invalid: {upstream}")
+                valid_case_schema = False
+                continue
+            normalized_cases.append((source_name, case_name))
+        if not valid_case_schema:
+            continue
+        if normalized_cases != sorted(set(normalized_cases)):
+            errors.append(f"API semantic test cases must be sorted and unique: {upstream}")
+        for source_name, case_name in normalized_cases:
+            relative_parts = Path(source_name).parts
+            source_path = (ROOT / source_name).resolve()
+            valid_location = (
+                len(relative_parts) >= 4
+                and relative_parts[0] == "packages"
+                and relative_parts[2] == "test"
+                and source_name.endswith(".test.ts")
+                and ".." not in relative_parts
+                and source_path.is_relative_to(
+                    (ROOT / relative_parts[0] / relative_parts[1] / relative_parts[2]).resolve()
+                )
+            )
+            if not valid_location or not case_name.startswith("ZDAPI-"):
+                errors.append(f"API semantic test case is invalid: {upstream} -> {source_name}::{case_name}")
+                continue
+            if not source_path.is_file():
+                errors.append(f"API semantic test source does not exist: {upstream} -> {source_name}")
+                continue
+            if case_registrations.get(case_name) != [source_name]:
+                errors.append(f"API semantic test case must be uniquely registered: {upstream} -> {case_name}")
+            if source_name not in gates_by_source:
+                errors.append(f"API semantic evidence is not in an execution gate: {upstream} -> {case_name}")
+    return errors
+
+
+def api_semantic_dimension_counts(
+    semantic_mappings: list[dict[str, Any]],
+) -> dict[str, int]:
+    return dict(
+        sorted(
+            Counter(
+                dimension
+                for entry in semantic_mappings
+                for dimension in entry.get("verifiedSemantics", [])
+            ).items()
+        )
+    )
+
+
+def api_semantic_evidence_sources(
+    semantic_mappings: list[dict[str, Any]], node_mappings: dict[str, Any]
+) -> set[str]:
+    sources = {
+        evidence_case["file"]
+        for entry in semantic_mappings
+        for evidence_case in entry.get("testCases", [])
+        if isinstance(evidence_case, dict) and isinstance(evidence_case.get("file"), str)
+    }
+    for entry in semantic_mappings:
+        for test_id in entry.get("testIds", []):
+            node_mapping = node_mappings.get(test_id)
+            case_name = node_mapping.get("case") if isinstance(node_mapping, dict) else None
+            if isinstance(case_name, str) and "::" in case_name:
+                sources.add(case_name.rsplit("::", 1)[0])
+    return sources
+
+
+def api_semantic_test_id_phase_counts(
+    semantic_mappings: list[dict[str, Any]], test_inventory: dict[str, Any]
+) -> dict[str, int]:
+    cases_by_id = {case["id"]: case for case in test_inventory["cases"]}
+    evidence_ids = {
+        test_id
+        for entry in semantic_mappings
+        for test_id in entry.get("testIds", [])
+    }
+    return dict(
+        sorted(
+            Counter(
+                cases_by_id[test_id].get("parameterization") or "<none>"
+                for test_id in evidence_ids
+            ).items()
+        )
+    )
+
+
+def api_semantic_mutation_probes(
+    semantic_mappings: list[dict[str, Any]],
+    upstream_targets: dict[str, dict[str, Any]],
+    known_api_members: set[str],
+    inventory_by_id: dict[str, dict[str, Any]],
+    node_mappings: dict[str, Any],
+    titles_by_source: dict[str, list[str]],
+    gates_by_source: dict[str, list[str]],
+) -> dict[str, str]:
+    def rejected(
+        candidate: list[dict[str, Any]],
+        expected: str,
+        *,
+        candidate_titles: dict[str, list[str]] | None = None,
+        candidate_gates: dict[str, list[str]] | None = None,
+    ) -> str:
+        candidate_errors = api_semantic_mapping_errors(
+            candidate,
+            upstream_targets,
+            known_api_members,
+            inventory_by_id,
+            node_mappings,
+            titles_by_source if candidate_titles is None else candidate_titles,
+            gates_by_source if candidate_gates is None else candidate_gates,
+        )
+        return "PASS" if any(expected in error for error in candidate_errors) else "FAIL"
+
+    first_case_index = next(
+        index for index, entry in enumerate(semantic_mappings) if "testCases" in entry
+    )
+    first_id_index = next(
+        index for index, entry in enumerate(semantic_mappings) if "testIds" in entry
+    )
+    first_case = semantic_mappings[first_case_index]["testCases"][0]
+
+    missing_mapping = copy.deepcopy(semantic_mappings)
+    missing_mapping.pop()
+    missing_coverage = copy.deepcopy(semantic_mappings)
+    missing_coverage[0].pop("verifiedSemantics")
+    empty_coverage = copy.deepcopy(semantic_mappings)
+    empty_coverage[0]["verifiedSemantics"] = []
+    unknown_coverage = copy.deepcopy(semantic_mappings)
+    unknown_coverage[0]["verifiedSemantics"] = ["unknown"]
+    unknown_member = copy.deepcopy(semantic_mappings)
+    unknown_member[0]["nodeMember"] = "Missing.member"
+    unknown_case = copy.deepcopy(semantic_mappings)
+    unknown_case[first_case_index]["testCases"][0]["case"] = "ZDAPI-DOES-NOT-EXIST"
+    unknown_id = copy.deepcopy(semantic_mappings)
+    unknown_id[first_id_index]["testIds"] = ["ZDTEST-9999"]
+    ungated = copy.deepcopy(gates_by_source)
+    ungated.pop(first_case["file"], None)
+    duplicate_titles = copy.deepcopy(titles_by_source)
+    duplicate_titles.setdefault("packages/api/test/duplicate-probe.test.ts", []).append(
+        first_case["case"]
+    )
+    permanent_skip_api_titles = typescript_test_titles(API_PERMANENT_SKIP_FIXTURE)
+    unknown_shorthand_skip_titles = typescript_test_titles(
+        API_UNKNOWN_SHORTHAND_SKIP_FIXTURE
+    )
+    computed_skip_titles = typescript_test_titles(API_COMPUTED_SKIP_FIXTURE)
+    spread_options_titles = typescript_test_titles(API_SPREAD_OPTIONS_FIXTURE)
+    generic_unknown_options_rejected = typescript_test_source_rejected(
+        API_GENERIC_UNKNOWN_OPTIONS_FIXTURE
+    )
+    generic_unknown_options_titles = (
+        []
+        if generic_unknown_options_rejected
+        else typescript_test_titles(API_GENERIC_UNKNOWN_OPTIONS_FIXTURE)
+    )
+    todo_options_titles = typescript_test_titles(API_TODO_OPTIONS_FIXTURE)
+    permanently_skipped_api_case = copy.deepcopy(titles_by_source)
+    permanently_skipped_api_case[first_case["file"]] = [
+        title
+        for title in permanently_skipped_api_case[first_case["file"]]
+        if title != first_case["case"]
+    ]
+
+    def ineligible_options_are_rejected(fixture_titles: list[str]) -> bool:
+        candidate_titles = copy.deepcopy(titles_by_source)
+        candidate_titles[first_case["file"]] = [
+            title
+            for title in candidate_titles[first_case["file"]]
+            if title != first_case["case"]
+        ]
+        return (
+            not fixture_titles
+            and rejected(
+                semantic_mappings,
+                "API semantic test case must be uniquely registered",
+                candidate_titles=candidate_titles,
+            )
+            == "PASS"
+        )
+    root_package = json.loads((ROOT / "package.json").read_text(encoding="utf8"))
+    workspace_packages = {
+        manifest: json.loads((ROOT / manifest).read_text(encoding="utf8"))
+        for _, _, _, manifest, _ in EVIDENCE_EXECUTION_GATES
+    }
+    removed_root_delegation = copy.deepcopy(root_package)
+    removed_root_delegation["scripts"]["test"] = removed_root_delegation["scripts"]["test"].replace(
+        "npm run test --workspace=@vertile-ai/jsdriver-runtime-js", ""
+    )
+    removed_root_sources, removed_root_errors = evidence_execution_gates(
+        removed_root_delegation, workspace_packages
+    )
+    removed_root_semantic_errors = api_semantic_mapping_errors(
+        semantic_mappings,
+        upstream_targets,
+        known_api_members,
+        inventory_by_id,
+        node_mappings,
+        titles_by_source,
+        execution_gates_by_source(removed_root_sources),
+    )
+    removed_workspace_file = copy.deepcopy(workspace_packages)
+    removed_workspace_file["packages/runtime-js/package.json"]["scripts"]["test"] = (
+        removed_workspace_file["packages/runtime-js/package.json"]["scripts"]["test"].replace(
+            "dist-test/test/connection-compat.test.js", ""
+        )
+    )
+    removed_workspace_sources, removed_workspace_errors = evidence_execution_gates(
+        root_package, removed_workspace_file
+    )
+    removed_workspace_semantic_errors = api_semantic_mapping_errors(
+        semantic_mappings,
+        upstream_targets,
+        known_api_members,
+        inventory_by_id,
+        node_mappings,
+        titles_by_source,
+        execution_gates_by_source(removed_workspace_sources),
+    )
+    fake_workspace = copy.deepcopy(root_package)
+    fake_workspace["scripts"]["test"] = fake_workspace["scripts"]["test"].replace(
+        "--workspace=@vertile-ai/jsdriver-runtime-js",
+        "--workspace=@vertile-ai/jsdriver-runtime-js-fake",
+    )
+    _, fake_workspace_errors = evidence_execution_gates(fake_workspace, workspace_packages)
+    commented_delegation = copy.deepcopy(root_package)
+    commented_delegation["scripts"]["test"] = "# " + commented_delegation["scripts"]["test"]
+    _, commented_delegation_errors = evidence_execution_gates(
+        commented_delegation, workspace_packages
+    )
+    conditional_delegation = copy.deepcopy(root_package)
+    conditional_delegation["scripts"]["test"] = (
+        "if false; then " + conditional_delegation["scripts"]["test"]
+    )
+    _, conditional_delegation_errors = evidence_execution_gates(
+        conditional_delegation, workspace_packages
+    )
+    headless_with_headful = copy.deepcopy(workspace_packages)
+    headless_with_headful["packages/api/package.json"]["scripts"]["test:parity:headless"] = (
+        headless_with_headful["packages/api/package.json"]["scripts"]["test:parity:headless"].replace(
+            "node dist-test/test/support/run-persistent-tests.js ",
+            "node dist-test/test/support/run-persistent-tests.js --headful ",
+            1,
+        )
+    )
+    _, headless_with_headful_errors = evidence_execution_gates(
+        root_package, headless_with_headful
+    )
+    headful_without_headful = copy.deepcopy(workspace_packages)
+    headful_without_headful["packages/api/package.json"]["scripts"]["test:parity:headful"] = (
+        headful_without_headful["packages/api/package.json"]["scripts"]["test:parity:headful"].replace(
+            " --headful ", " ", 1
+        )
+    )
+    _, headful_without_headful_errors = evidence_execution_gates(
+        root_package, headful_without_headful
+    )
+    headful_with_misplaced_flag = copy.deepcopy(workspace_packages)
+    headful_with_misplaced_flag["packages/api/package.json"]["scripts"]["test:parity:headful"] = (
+        headful_with_misplaced_flag["packages/api/package.json"]["scripts"]["test:parity:headful"].replace(
+            "run-persistent-tests.js --headful dist-test/test/handlers-domain-parity.test.js",
+            "run-persistent-tests.js dist-test/test/handlers-domain-parity.test.js --headful",
+            1,
+        )
+    )
+    _, headful_with_misplaced_flag_errors = evidence_execution_gates(
+        root_package, headful_with_misplaced_flag
+    )
+    headful_with_duplicate_flag = copy.deepcopy(workspace_packages)
+    headful_with_duplicate_flag["packages/api/package.json"]["scripts"]["test:parity:headful"] = (
+        headful_with_duplicate_flag["packages/api/package.json"]["scripts"]["test:parity:headful"].replace(
+            "run-persistent-tests.js --headful",
+            "run-persistent-tests.js --headful --headful",
+            1,
+        )
+    )
+    _, headful_with_duplicate_flag_errors = evidence_execution_gates(
+        root_package, headful_with_duplicate_flag
+    )
+    gate_with_expect_failure = copy.deepcopy(workspace_packages)
+    gate_with_expect_failure["packages/api/package.json"]["scripts"]["test:parity:headless"] = (
+        gate_with_expect_failure["packages/api/package.json"]["scripts"]["test:parity:headless"].replace(
+            "node dist-test/test/support/run-persistent-tests.js ",
+            "node dist-test/test/support/run-persistent-tests.js --expect-failure ",
+            1,
+        )
+    )
+    _, gate_with_expect_failure_errors = evidence_execution_gates(
+        root_package, gate_with_expect_failure
+    )
+    commented_test_file = copy.deepcopy(workspace_packages)
+    commented_test_file["packages/runtime-js/package.json"]["scripts"]["test"] = (
+        commented_test_file["packages/runtime-js/package.json"]["scripts"]["test"].replace(
+            "dist-test/test/connection-compat.test.js",
+            "# dist-test/test/connection-compat.test.js",
+        )
+    )
+    _, commented_test_file_errors = evidence_execution_gates(
+        root_package, commented_test_file
+    )
+    removed_headful_file = copy.deepcopy(workspace_packages)
+    removed_headful_file["packages/api/package.json"]["scripts"]["test:parity:headful"] = (
+        removed_headful_file["packages/api/package.json"]["scripts"]["test:parity:headful"].replace(
+            "dist-test/test/browser-core-parity.test.js", ""
+        )
+    )
+    removed_headful_sources, removed_headful_errors = evidence_execution_gates(
+        root_package, removed_headful_file
+    )
+    removed_headful_semantic_errors = api_semantic_mapping_errors(
+        semantic_mappings,
+        upstream_targets,
+        known_api_members,
+        inventory_by_id,
+        node_mappings,
+        titles_by_source,
+        execution_gates_by_source(removed_headful_sources),
+    )
+    misassigned_phase_inventory = copy.deepcopy(inventory_by_id)
+    phase_test_id = next(
+        test_id
+        for entry in semantic_mappings
+        for test_id in entry.get("testIds", [])
+        if inventory_by_id[test_id].get("parameterization") == "headless0"
+    )
+    misassigned_phase_inventory[phase_test_id]["parameterization"] = "headless1"
+    misassigned_phase_errors = api_semantic_mapping_errors(
+        semantic_mappings,
+        upstream_targets,
+        known_api_members,
+        misassigned_phase_inventory,
+        node_mappings,
+        titles_by_source,
+        gates_by_source,
+    )
+
+    return {
+        "removedApiSemanticMapping": rejected(
+            missing_mapping, f"expected {EXPECTED_API_MAPPING_COUNT} API semantic mappings"
+        ),
+        "missingApiSemanticCoverage": rejected(missing_coverage, "API semantic coverage is missing"),
+        "emptyApiSemanticCoverage": rejected(empty_coverage, "API semantic coverage is empty or invalid"),
+        "unknownApiSemanticCoverage": rejected(unknown_coverage, "API semantic coverage contains an unknown dimension"),
+        "unknownApiSemanticMember": rejected(unknown_member, "API semantic mapping has unknown Node API member"),
+        "unknownApiSemanticCase": rejected(unknown_case, "API semantic test case must be uniquely registered"),
+        "unknownApiSemanticTestId": rejected(unknown_id, "API semantic evidence is not a passing mapped test"),
+        "duplicateApiSemanticCaseRegistration": rejected(
+            semantic_mappings,
+            "API semantic test case must be uniquely registered",
+            candidate_titles=duplicate_titles,
+        ),
+        "permanentlySkippedZdapiIsNotEvidence": "PASS"
+        if not permanent_skip_api_titles
+        and rejected(
+            semantic_mappings,
+            "API semantic test case must be uniquely registered",
+            candidate_titles=permanently_skipped_api_case,
+        )
+        == "PASS"
+        else "FAIL",
+        "unknownShorthandSkipIsNotEvidence": "PASS"
+        if ineligible_options_are_rejected(unknown_shorthand_skip_titles)
+        else "FAIL",
+        "computedSkipPropertyIsNotEvidence": "PASS"
+        if ineligible_options_are_rejected(computed_skip_titles)
+        else "FAIL",
+        "spreadOptionsAreNotEvidence": "PASS"
+        if ineligible_options_are_rejected(spread_options_titles)
+        else "FAIL",
+        "genericUnknownOptionsAreNotEvidence": "PASS"
+        if ineligible_options_are_rejected(generic_unknown_options_titles)
+        else "FAIL",
+        "mutatedZdapiOptionsAreRejected": "PASS"
+        if typescript_test_source_rejected(API_MUTATED_OPTIONS_FIXTURE)
+        else "FAIL",
+        "aliasMutatedZdapiOptionsAreRejected": "PASS"
+        if typescript_test_source_rejected(API_ALIAS_MUTATED_OPTIONS_FIXTURE)
+        else "FAIL",
+        "mutatedPhaseSkipIsRejected": "PASS"
+        if typescript_test_source_rejected(API_MUTATED_PHASE_FIXTURE)
+        else "FAIL",
+        "ifWrappedOptionsMutationIsRejected": "PASS"
+        if typescript_test_source_rejected(API_IF_MUTATION_FIXTURE)
+        else "FAIL",
+        "voidWrappedMutationCallIsRejected": "PASS"
+        if typescript_test_source_rejected(API_WRAPPED_CALL_FIXTURE)
+        else "FAIL",
+        "genericUnsupportedEvidenceStatementIsRejected": "PASS"
+        if typescript_test_source_rejected(API_UNSUPPORTED_STATEMENT_FIXTURE)
+        else "FAIL",
+        "nestedLoopOptionsMutationIsRejected": "PASS"
+        if typescript_test_source_rejected(API_NESTED_LOOP_MUTATION_FIXTURE)
+        else "FAIL",
+        "nestedLoopPhaseMutationIsRejected": "PASS"
+        if typescript_test_source_rejected(API_NESTED_PHASE_MUTATION_FIXTURE)
+        else "FAIL",
+        "unknownConstInitializerIsRejected": "PASS"
+        if typescript_test_source_rejected(API_UNKNOWN_CONST_INITIALIZER_FIXTURE)
+        else "FAIL",
+        "postEvidenceNonEvidenceLoopRemainsAccepted": "PASS"
+        if "ZDAPI-ELEMENT-ACTIONS-001" in typescript_test_titles(
+            API_POST_EVIDENCE_LOOP_SOURCE
+        )
+        else "FAIL",
+        "postEvidenceUnknownCallIsRejected": "PASS"
+        if typescript_test_source_rejected(API_POST_EVIDENCE_CALL_FIXTURE)
+        else "FAIL",
+        "postEvidenceHiddenDuplicateIsRejected": "PASS"
+        if typescript_test_source_rejected(API_POST_EVIDENCE_DUPLICATE_FIXTURE)
+        else "FAIL",
+        "splitTemplateOptionsMutationIsRejected": "PASS"
+        if typescript_test_source_rejected(API_SPLIT_TEMPLATE_MUTATION_FIXTURE)
+        else "FAIL",
+        "splitTemplatePhaseMutationIsRejected": "PASS"
+        if typescript_test_source_rejected(API_SPLIT_TEMPLATE_PHASE_FIXTURE)
+        else "FAIL",
+        "fakeJsonBuiltinImportIsRejected": "PASS"
+        if typescript_test_source_rejected(API_FAKE_JSON_IMPORT_FIXTURE)
+        else "FAIL",
+        "fakeStringBuiltinImportIsRejected": "PASS"
+        if typescript_test_source_rejected(API_FAKE_STRING_IMPORT_FIXTURE)
+        else "FAIL",
+        "runtimeCallIterableIsRejected": "PASS"
+        if typescript_test_source_rejected(API_ITERABLE_EXIT_FIXTURE)
+        else "FAIL",
+        "mutatingCallIterableIsRejected": "PASS"
+        if typescript_test_source_rejected(API_ITERABLE_MUTATION_FIXTURE)
+        else "FAIL",
+        "postEvidenceLoopRuntimeCallIsRejected": "PASS"
+        if typescript_test_source_rejected(API_POST_EVIDENCE_LOOP_EXIT_FIXTURE)
+        else "FAIL",
+        "postEvidenceLoopHiddenDuplicateIsRejected": "PASS"
+        if typescript_test_source_rejected(
+            API_POST_EVIDENCE_LOOP_DUPLICATE_FIXTURE
+        )
+        else "FAIL",
+        "todoTrueIsNotEvidence": "PASS"
+        if "ZDAPI-TODO-TRUE" not in todo_options_titles
+        else "FAIL",
+        "todoStringIsNotEvidence": "PASS"
+        if "ZDAPI-TODO-STRING" not in todo_options_titles
+        else "FAIL",
+        "phaseSkippedTodoIsNotEvidence": "PASS"
+        if "ZDAPI-PHASE-TODO-TRUE" not in todo_options_titles
+        else "FAIL",
+        "unknownTodoIsNotEvidence": "PASS"
+        if "ZDAPI-TODO-UNKNOWN" not in todo_options_titles
+        else "FAIL",
+        "todoFalseRemainsEvidenceEligible": "PASS"
+        if todo_options_titles == ["ZDAPI-TODO-FALSE"]
+        else "FAIL",
+        "apiSemanticEvidenceOutsideExecutionGate": rejected(
+            semantic_mappings,
+            "API semantic evidence is not in an execution gate",
+            candidate_gates=ungated,
+        ),
+        "removedApiEvidenceRootDelegation": "PASS"
+        if any("missing root delegation" in error for error in removed_root_errors)
+        and any("not in an execution gate" in error for error in removed_root_semantic_errors)
+        else "FAIL",
+        "removedApiEvidenceWorkspaceFile": "PASS"
+        if not removed_workspace_errors
+        and any("not in an execution gate" in error for error in removed_workspace_semantic_errors)
+        else "FAIL",
+        "fakeWorkspaceDelegationIsRejected": "PASS"
+        if any("missing root delegation" in error for error in fake_workspace_errors)
+        else "FAIL",
+        "commentedWorkspaceDelegationIsRejected": "PASS"
+        if any("unsupported shell syntax" in error for error in commented_delegation_errors)
+        else "FAIL",
+        "conditionalWorkspaceDelegationIsRejected": "PASS"
+        if any("unsupported shell syntax" in error for error in conditional_delegation_errors)
+        else "FAIL",
+        "headlessGateRejectsHeadfulFlag": "PASS"
+        if any("non-headful gate contains --headful" in error for error in headless_with_headful_errors)
+        else "FAIL",
+        "headfulGateRequiresHeadfulFlag": "PASS"
+        if any("requires one leading --headful" in error for error in headful_without_headful_errors)
+        else "FAIL",
+        "headfulGateRejectsMisplacedHeadfulFlag": "PASS"
+        if any("requires one leading --headful" in error for error in headful_with_misplaced_flag_errors)
+        else "FAIL",
+        "headfulGateRejectsDuplicateHeadfulFlag": "PASS"
+        if any("requires one leading --headful" in error for error in headful_with_duplicate_flag_errors)
+        else "FAIL",
+        "evidenceGateRejectsExpectFailureFlag": "PASS"
+        if any("invalid runner flags" in error for error in gate_with_expect_failure_errors)
+        else "FAIL",
+        "commentedWorkspaceTestFileIsRejected": "PASS"
+        if any("unsupported shell syntax" in error for error in commented_test_file_errors)
+        else "FAIL",
+        "removedHeadfulApiEvidenceSource": "PASS"
+        if not removed_headful_errors
+        and any("required execution phase" in error for error in removed_headful_semantic_errors)
+        else "FAIL",
+        "misassignedApiEvidencePhase": "PASS"
+        if any("phase does not match" in error for error in misassigned_phase_errors)
+        else "FAIL",
+    }
 
 
 def validate(
@@ -933,6 +1835,7 @@ def validate(
             errors.append(f"external dependency schema is invalid for {case_id}")
     mappings = json.loads(NODE_TEST_MAPPINGS.read_text(encoding="utf8"))
     inventory_by_id = {case["id"]: case["nodeParity"] for case in cases}
+    inventory_cases_by_id = {case["id"]: case for case in cases}
     titles_by_source = node_test_titles_by_source()
     errors.extend(node_mapping_errors(cases, mappings, titles_by_source))
     for case_id, mapping in mappings.items():
@@ -946,6 +1849,8 @@ def validate(
         errors.append("Zendriver root API inventory is empty")
     if not api_inventory["upstream"]["coreModules"]:
         errors.append("Zendriver core API inventory is empty")
+    if api_inventory.get("scope", {}).get("semanticStatus") != API_SEMANTIC_STATUS:
+        errors.append("API inventory semantic status wording is not dimension-scoped")
     root_names = [item.get("name") for item in api_inventory["upstream"]["rootExports"]]
     if len(root_names) != EXPECTED_ROOT_EXPORT_COUNT:
         errors.append(
@@ -976,81 +1881,51 @@ def validate(
             upstream_targets[symbol_path] = symbol
             for member in symbol.get("members", []):
                 upstream_targets[f"{symbol_path}.{member['name']}"] = member
-    if len({entry["upstream"] for entry in semantic_mappings}) != len(semantic_mappings):
-        errors.append("API semantic mappings contain duplicate upstream targets")
+    sources_by_gate, execution_gate_errors = evidence_execution_gates()
+    errors.extend(execution_gate_errors)
+    gates_by_source = execution_gates_by_source(sources_by_gate)
+    errors.extend(
+        api_semantic_mapping_errors(
+            semantic_mappings,
+            upstream_targets,
+            known_api_members,
+            inventory_cases_by_id,
+            mappings,
+            titles_by_source,
+            gates_by_source,
+        )
+    )
+    semantic_probes = api_semantic_mutation_probes(
+        semantic_mappings,
+        upstream_targets,
+        known_api_members,
+        inventory_cases_by_id,
+        mappings,
+        titles_by_source,
+        gates_by_source,
+    )
+    failed_semantic_probes = [
+        name for name, status in semantic_probes.items() if status != "PASS"
+    ]
+    if failed_semantic_probes:
+        errors.append(f"API semantic mapping mutation probes failed: {failed_semantic_probes}")
+
     for entry in semantic_mappings:
+        if not isinstance(entry, dict):
+            continue
+        upstream = entry.get("upstream")
+        target = upstream_targets.get(upstream)
         evidence_keys = {key for key in ("testIds", "testCases") if key in entry}
-        required_keys = {"upstream", "nodeMember"} | evidence_keys
-        if "verifiedSemantics" in entry:
-            required_keys.add("verifiedSemantics")
-        if set(entry) != required_keys or len(evidence_keys) != 1:
-            errors.append(f"API semantic mapping schema is invalid: {entry}")
+        if target is None or len(evidence_keys) != 1:
             continue
-        verified_semantics = entry.get("verifiedSemantics")
-        if verified_semantics is not None and (
-            not isinstance(verified_semantics, list)
-            or not verified_semantics
-            or verified_semantics != sorted(set(verified_semantics))
-            or any(
-                semantic not in {"defaults", "errors", "return", "signature", "state"}
-                for semantic in verified_semantics
-            )
-        ):
-            errors.append(f"API semantic coverage is invalid: {entry['upstream']}")
-        target = upstream_targets.get(entry["upstream"])
-        if target is None:
-            errors.append(f"API semantic mapping has unknown upstream target: {entry['upstream']}")
-            continue
-        if entry["nodeMember"] not in known_api_members:
-            errors.append(f"API semantic mapping has unknown Node API member: {entry['nodeMember']}")
-        evidence_items = entry.get("testIds", entry.get("testCases", []))
-        if not evidence_items:
-            errors.append(f"API semantic mapping has no evidence tests: {entry['upstream']}")
-        if "testIds" in entry:
-            for test_id in entry["testIds"]:
-                parity = inventory_by_id.get(test_id)
-                if parity is None or parity["status"] != "MAPPED" or parity["result"] != "PASS":
-                    errors.append(f"API semantic evidence is not a passing mapped test: {entry['upstream']} -> {test_id}")
-        else:
-            for evidence_case in entry["testCases"]:
-                if not isinstance(evidence_case, dict) or set(evidence_case) != {"file", "case"}:
-                    errors.append(f"API semantic test case schema is invalid: {entry['upstream']}")
-                    continue
-                source_name = evidence_case["file"]
-                case_name = evidence_case["case"]
-                if (
-                    not isinstance(source_name, str)
-                    or not source_name.startswith("packages/")
-                    or "/test/" not in source_name
-                    or not source_name.endswith(".test.ts")
-                    or not isinstance(case_name, str)
-                    or not case_name.startswith("ZDAPI-")
-                ):
-                    errors.append(f"API semantic test case is invalid: {entry['upstream']} -> {evidence_case}")
-                    continue
-                source_path = ROOT / source_name
-                resolved_source = source_path.resolve()
-                relative_parts = Path(source_name).parts
-                valid_location = (
-                    len(relative_parts) >= 4
-                    and relative_parts[0] == "packages"
-                    and relative_parts[2] == "test"
-                    and ".." not in relative_parts
-                    and resolved_source.is_relative_to(
-                        (ROOT / relative_parts[0] / relative_parts[1] / relative_parts[2]).resolve()
-                    )
-                )
-                if not valid_location:
-                    errors.append(f"API semantic test source is outside packages/*/test: {entry['upstream']} -> {source_name}")
-                elif not resolved_source.is_file():
-                    errors.append(f"API semantic test source does not exist: {entry['upstream']} -> {source_name}")
-                else:
-                    titles = typescript_test_titles(resolved_source)
-                    if titles.count(case_name) != 1:
-                        errors.append(f"API semantic test source must declare its exact case once: {entry['upstream']} -> {case_name}")
         mapping = target["nodeMapping"]
-        if not mapping.get("semanticsVerified") or mapping.get("status") != "VERIFIED":
-            errors.append(f"API semantic target is not marked verified: {entry['upstream']}")
+        if mapping.get("status") != "VERIFIED":
+            errors.append(f"API semantic target is not marked dimension-verified: {upstream}")
+        if (
+            mapping.get("evidence") != API_MAPPING_EVIDENCE
+            or "semanticsVerified" in mapping
+        ):
+            errors.append(f"generated API semantic status wording is not dimension-scoped: {upstream}")
         expected_evidence = (
             {"evidenceTestIds": entry["testIds"]}
             if "testIds" in entry
@@ -1059,12 +1934,14 @@ def validate(
         actual_evidence_keys = {
             key for key in ("evidenceTestIds", "evidenceCases") if key in mapping
         }
-        if mapping.get("nodeMember") != entry["nodeMember"] or actual_evidence_keys != set(expected_evidence) or any(
-            mapping.get(key) != value for key, value in expected_evidence.items()
+        if (
+            mapping.get("nodeMember") != entry.get("nodeMember")
+            or actual_evidence_keys != set(expected_evidence)
+            or any(mapping.get(key) != value for key, value in expected_evidence.items())
         ):
-            errors.append(f"generated API semantic mapping differs from overlay: {entry['upstream']}")
-        if mapping.get("semanticsCoverage") != verified_semantics:
-            errors.append(f"generated API semantic coverage differs from overlay: {entry['upstream']}")
+            errors.append(f"generated API semantic mapping differs from overlay: {upstream}")
+        if mapping.get("semanticsCoverage") != entry.get("verifiedSemantics"):
+            errors.append(f"generated API semantic coverage differs from overlay: {upstream}")
     core_symbol_count = sum(len(module["symbols"]) for module in modules)
     core_member_count = sum(
         len(symbol.get("members", []))
@@ -1185,10 +2062,55 @@ def validate(
             )
     probes = mutation_probes(api_inventory, test_inventory, reference_observations)
     probes.update(mapping_probes)
+    probes.update(semantic_probes)
     failed_probes = [name for name, status in probes.items() if status != "PASS"]
     if failed_probes:
         errors.append(f"mutation probes failed: {failed_probes}")
     return errors, fingerprints, probes
+
+
+def validation_artifact(
+    api_counts: dict[str, dict[str, int]],
+    test_inventory: dict[str, Any],
+    reference_observations: dict[str, Any],
+    fingerprints: dict[str, str],
+    probes: dict[str, str],
+) -> dict[str, Any]:
+    semantic_mappings = json.loads(API_SEMANTIC_MAPPINGS.read_text(encoding="utf8"))
+    node_mappings = json.loads(NODE_TEST_MAPPINGS.read_text(encoding="utf8"))
+    sources_by_gate, _ = evidence_execution_gates()
+    gates_by_source = execution_gates_by_source(sources_by_gate)
+    evidence_sources = api_semantic_evidence_sources(semantic_mappings, node_mappings)
+    return {
+        "status": "PASS",
+        "errors": [],
+        "testCases": test_inventory["caseCount"],
+        "unmappedTestCases": sum(
+            case["nodeParity"]["status"] == "UNMAPPED"
+            for case in test_inventory["cases"]
+        ),
+        "notRunTestCases": sum(
+            case["nodeParity"]["result"] == "NOT_RUN"
+            for case in test_inventory["cases"]
+        ),
+        "apiMappingCounts": api_counts,
+        "apiMappingsWithDeclaredSemanticDimensions": len(semantic_mappings),
+        "apiSemanticDimensionCounts": api_semantic_dimension_counts(semantic_mappings),
+        "apiSemanticEvidenceTestIdPhases": api_semantic_test_id_phase_counts(
+            semantic_mappings, test_inventory
+        ),
+        "apiEvidenceSources": len(evidence_sources),
+        "executionGatedApiEvidenceSources": len(
+            evidence_sources.intersection(gates_by_source)
+        ),
+        "apiEvidenceExecutionGates": {
+            source: gates_by_source.get(source, [])
+            for source in sorted(evidence_sources)
+        },
+        "referenceObservationCount": len(reference_observations["observations"]),
+        "fingerprints": fingerprints,
+        "mutationProbes": probes,
+    }
 
 
 def validate_existing() -> None:
@@ -1201,18 +2123,120 @@ def validate_existing() -> None:
     errors, fingerprints, probes = validate(
         baseline, api_inventory, test_inventory, reference_observations
     )
+    expected_validation = validation_artifact(
+        api_inventory["mappingCounts"],
+        test_inventory,
+        reference_observations,
+        fingerprints,
+        probes,
+    )
+    stored_validation = (PARITY / "validation.json").read_text(encoding="utf8")
+    expected_report = report_markdown(
+        baseline,
+        api_inventory["mappingCounts"],
+        test_inventory,
+        reference_observations,
+    )
+    stored_report = (PARITY / "gap-report.md").read_text(encoding="utf8")
+    errors.extend(
+        generated_artifact_errors(
+            stored_validation,
+            stored_report,
+            canonical_json_text(expected_validation),
+            expected_report,
+        )
+    )
+    forged_validation = copy.deepcopy(expected_validation)
+    forged_validation["status"] = "FORGED"
+    forged_validation_text = canonical_json_text(forged_validation)
+    whitespace_forged_validation = canonical_json_text(expected_validation).replace(
+        "{\n", "{ \n", 1
+    )
+    forged_report = expected_report.replace(
+        "it is not a claim of complete semantic equivalence",
+        "it claims complete semantic equivalence",
+    )
+    artifact_probes = {
+        "forgedValidationStatusArtifact": "PASS"
+        if generated_artifact_errors(
+            forged_validation_text,
+            expected_report,
+            canonical_json_text(expected_validation),
+            expected_report,
+        )
+        else "FAIL",
+        "forgedGenericReportClaim": "PASS"
+        if generated_artifact_errors(
+            canonical_json_text(expected_validation),
+            forged_report,
+            canonical_json_text(expected_validation),
+            expected_report,
+        )
+        else "FAIL",
+        "whitespaceOnlyValidationArtifactMutation": "PASS"
+        if generated_artifact_errors(
+            whitespace_forged_validation,
+            expected_report,
+            canonical_json_text(expected_validation),
+            expected_report,
+        )
+        else "FAIL",
+    }
+    failed_artifact_probes = [
+        name for name, status in artifact_probes.items() if status != "PASS"
+    ]
+    if failed_artifact_probes:
+        errors.append(f"generated artifact mutation probes failed: {failed_artifact_probes}")
     mappings = json.loads(NODE_TEST_MAPPINGS.read_text(encoding="utf8"))
+    semantic_mappings = json.loads(API_SEMANTIC_MAPPINGS.read_text(encoding="utf8"))
     titles_by_source = node_test_titles_by_source()
     registered_ids = bound_node_test_ids(mappings, titles_by_source)
+    sources_by_gate, _ = evidence_execution_gates()
+    gates_by_source = execution_gates_by_source(sources_by_gate)
+    evidence_sources = api_semantic_evidence_sources(semantic_mappings, mappings)
+    gated_evidence_sources = evidence_sources.intersection(gates_by_source)
+    declared_coverage = sum(
+        isinstance(entry.get("verifiedSemantics"), list)
+        and bool(entry["verifiedSemantics"])
+        for entry in semantic_mappings
+    )
     print(f"Validation-only: {'PASS' if not errors else 'FAIL'}")
     print(f"Node test registrations: {len(registered_ids)}/{EXPECTED_TEST_COUNT}")
     print(f"Node test sources scanned: {len(titles_by_source)}")
+    print(
+        "API semantic coverage declarations: "
+        f"{declared_coverage}/{EXPECTED_API_MAPPING_COUNT}; "
+        f"dimensions {json.dumps(api_semantic_dimension_counts(semantic_mappings), sort_keys=True)}"
+    )
+    print(
+        "API evidence sources in execution gates: "
+        f"{len(gated_evidence_sources)}/{len(evidence_sources)}"
+    )
+    print(
+        "API semantic ZDTEST evidence phases: "
+        f"{json.dumps(api_semantic_test_id_phase_counts(semantic_mappings, test_inventory), sort_keys=True)}"
+    )
     print(f"Fingerprints: {json.dumps(fingerprints, sort_keys=True)}")
     print(f"Mutation probes: {json.dumps(probes, sort_keys=True)}")
+    print(f"Artifact mutation probes: {json.dumps(artifact_probes, sort_keys=True)}")
     if errors:
         for error in errors:
             print(f"ERROR: {error}", file=sys.stderr)
         raise SystemExit(1)
+
+
+def generated_artifact_errors(
+    stored_validation: str,
+    stored_report: str,
+    expected_validation: str,
+    expected_report: str,
+) -> list[str]:
+    errors = []
+    if stored_validation != expected_validation:
+        errors.append("checked-in validation.json does not match recomputed validation")
+    if stored_report != expected_report:
+        errors.append("checked-in gap-report.md does not match recomputed report")
+    return errors
 
 
 def report_markdown(
@@ -1233,6 +2257,14 @@ def report_markdown(
         case["nodeParity"]["result"] == "NOT_RUN" for case in test_inventory["cases"]
     )
     semantic_mappings = json.loads(API_SEMANTIC_MAPPINGS.read_text(encoding="utf8"))
+    dimension_counts = api_semantic_dimension_counts(semantic_mappings)
+    node_mappings = json.loads(NODE_TEST_MAPPINGS.read_text(encoding="utf8"))
+    sources_by_gate, _ = evidence_execution_gates()
+    gates_by_source = execution_gates_by_source(sources_by_gate)
+    evidence_sources = api_semantic_evidence_sources(semantic_mappings, node_mappings)
+    test_id_phase_counts = api_semantic_test_id_phase_counts(
+        semantic_mappings, test_inventory
+    )
     lines = [
         "# Zendriver v0.15.5 Parity Gap Report",
         "",
@@ -1251,8 +2283,11 @@ def report_markdown(
         f"- Unmapped Node parity cases: {unmapped_cases}",
         f"- Not-run Node parity cases: {not_run_cases}",
         f"- Cases requiring a live network host: {external_cases}",
-        f"- API mappings by structural status: {json.dumps(api_counts, sort_keys=True)}",
-        f"- Semantically verified API mappings: {len(semantic_mappings)}",
+        f"- API mapping statuses: {json.dumps(api_counts, sort_keys=True)}",
+        f"- API mappings with execution-gated evidence for explicitly listed dimensions: {len(semantic_mappings)}/{EXPECTED_API_MAPPING_COUNT}",
+        f"- Listed semantic dimension counts: {json.dumps(dimension_counts, sort_keys=True)}",
+        f"- API evidence source files present in root/parity execution gates: {len(evidence_sources.intersection(gates_by_source))}/{len(evidence_sources)}",
+        f"- Phase-bound ZDTEST evidence IDs: {json.dumps(test_id_phase_counts, sort_keys=True)}",
         "",
         "## Reference environment observations",
         "",
@@ -1268,7 +2303,7 @@ def report_markdown(
         "",
         "## Interpretation",
         "",
-        "`CANDIDATE` means only that a runtime export or public TypeScript declaration has an equivalent name. It does not claim compatible defaults, state changes, return values, or exceptions. `UNKNOWN`, `MISSING`, `UNMAPPED`, and `NOT_RUN` remain blocking gaps for PAR-001/PAR-002.",
+        "`VERIFIED` on an API mapping claims only the exact dimensions in that mapping's `semanticsCoverage`; it is not a claim of complete semantic equivalence. `CANDIDATE` means only that a runtime export or public TypeScript declaration has an equivalent name. `UNKNOWN`, `MISSING`, `UNMAPPED`, and `NOT_RUN` remain blocking gaps for PAR-001/PAR-002.",
         "",
     ]
     return "\n".join(lines)
@@ -1323,7 +2358,7 @@ def main() -> None:
             "root": "all non-underscore zendriver runtime names",
             "core": "classes and functions declared by the ten core modules in the public MkDocs reference",
             "memberRule": "all non-underscore members across the full runtime MRO plus an explicit allowlist of behavior-bearing dunders; compiler/runtime metadata dunders are excluded",
-            "semanticStatus": "structural candidates are not treated as verified parity",
+            "semanticStatus": API_SEMANTIC_STATUS,
             "behaviorSpecSources": [
                 "installed Zendriver 0.15.5 public runtime metadata",
                 "public docstrings exposed by runtime objects",
@@ -1339,24 +2374,19 @@ def main() -> None:
     errors, fingerprints, probes = validate(
         baseline, api_inventory, test_inventory, reference_observations
     )
-    validation = {
-        "status": "PASS" if not errors else "FAIL",
-        "errors": errors,
-        "testCases": test_inventory["caseCount"],
-        "unmappedTestCases": sum(
-            case["nodeParity"]["status"] == "UNMAPPED" for case in test_inventory["cases"]
-        ),
-        "notRunTestCases": sum(
-            case["nodeParity"]["result"] == "NOT_RUN" for case in test_inventory["cases"]
-        ),
-        "apiMappingCounts": api_counts,
-        "semanticallyVerifiedApiMappings": len(
-            json.loads(API_SEMANTIC_MAPPINGS.read_text(encoding="utf8"))
-        ),
-        "referenceObservationCount": len(reference_observations["observations"]),
-        "fingerprints": fingerprints,
-        "mutationProbes": probes,
-    }
+    if errors:
+        print("Validation: FAIL")
+        for error in errors:
+            print(f"ERROR: {error}", file=sys.stderr)
+        raise SystemExit(1)
+    semantic_mappings = json.loads(API_SEMANTIC_MAPPINGS.read_text(encoding="utf8"))
+    validation = validation_artifact(
+        api_counts,
+        test_inventory,
+        reference_observations,
+        fingerprints,
+        probes,
+    )
 
     write_json("baseline.json", baseline)
     write_json("test-inventory.json", test_inventory)
@@ -1374,13 +2404,12 @@ def main() -> None:
         f"{validation['unmappedTestCases']} UNMAPPED, "
         f"{validation['notRunTestCases']} NOT_RUN"
     )
-    semantic_count = len(json.loads(API_SEMANTIC_MAPPINGS.read_text(encoding="utf8")))
-    print(f"API mapping: {json.dumps(api_counts, sort_keys=True)}; {semantic_count} semantically verified")
+    semantic_count = len(semantic_mappings)
+    print(
+        f"API mapping: {json.dumps(api_counts, sort_keys=True)}; "
+        f"{semantic_count}/{EXPECTED_API_MAPPING_COUNT} mappings have dimension-scoped evidence"
+    )
     print(f"Validation: {validation['status']}")
-    if errors:
-        for error in errors:
-            print(f"ERROR: {error}", file=sys.stderr)
-        raise SystemExit(1)
 
 
 if __name__ == "__main__":

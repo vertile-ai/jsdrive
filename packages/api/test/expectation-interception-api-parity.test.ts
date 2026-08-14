@@ -72,9 +72,11 @@ test("ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseE
     assert.equal(await responseExpectation.aenter(), responseExpectation);
     const firstFetch = fetchText(tab, `${baseUrl}/api`);
     assert.equal((await requestExpectation.request).url, `${baseUrl}/api`);
+    assert.equal((await requestExpectation.value).request.url, `${baseUrl}/api`);
     assert.equal((await requestExpectation.response).status, 200);
     assert.deepEqual(await requestExpectation.responseBody, [json, false]);
     assert.equal((await responseExpectation.request).url, `${baseUrl}/api`);
+    assert.equal((await responseExpectation.value).response.status, 200);
     assert.equal((await responseExpectation.response).status, 200);
     assert.deepEqual(await responseExpectation.responseBody, [json, false]);
     assert.equal(await firstFetch, json);

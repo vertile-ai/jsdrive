@@ -1,24 +1,24 @@
 {
   "mappingCounts": {
     "coreMembers": {
-      "CANDIDATE": 124,
-      "MISSING": 44,
+      "CANDIDATE": 110,
+      "MISSING": 32,
       "UNKNOWN": 10,
-      "VERIFIED": 294
+      "VERIFIED": 320
     },
     "coreSymbols": {
-      "CANDIDATE": 9,
-      "VERIFIED": 36
+      "CANDIDATE": 4,
+      "VERIFIED": 41
     },
     "rootExports": {
       "CANDIDATE": 2,
       "VERIFIED": 14
     },
     "total": {
-      "CANDIDATE": 135,
-      "MISSING": 44,
+      "CANDIDATE": 116,
+      "MISSING": 32,
       "UNKNOWN": 10,
-      "VERIFIED": 344
+      "VERIFIED": 375
     }
   },
   "nodriver": {
@@ -26708,7 +26708,13 @@
                 "kind": "property",
                 "name": "request",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseExpectation expose matched data and reset",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -26721,9 +26727,13 @@
                     }
                   ],
                   "nodeMember": "BaseRequestExpectation.request",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -26733,7 +26743,13 @@
                 "kind": "method",
                 "name": "reset",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseExpectation expose matched data and reset",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "reset(): Promise<void>;",
@@ -26746,9 +26762,13 @@
                     }
                   ],
                   "nodeMember": "BaseRequestExpectation.reset",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -26772,7 +26792,13 @@
                 "kind": "property",
                 "name": "response",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseExpectation expose matched data and reset",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -26785,9 +26811,13 @@
                     }
                   ],
                   "nodeMember": "BaseRequestExpectation.response",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -26798,7 +26828,13 @@
                 "kind": "property",
                 "name": "response_body",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseExpectation expose matched data and reset",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -26811,9 +26847,13 @@
                     }
                   ],
                   "nodeMember": "BaseRequestExpectation.responseBody",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               }
             ],
@@ -26824,13 +26864,24 @@
             ],
             "name": "BaseRequestExpectation",
             "nodeMapping": {
-              "evidence": "compatible TypeScript AST declaration",
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseExpectation expose matched data and reset",
+                  "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                }
+              ],
               "nodeKind": "class",
+              "nodeMember": "BaseRequestExpectation",
               "nodeSymbol": "BaseRequestExpectation",
               "runtimeExport": true,
-              "semanticsVerified": false,
+              "semanticsCoverage": [
+                "return",
+                "state"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "CANDIDATE"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -26948,7 +26999,13 @@
                 "kind": "property",
                 "name": "value",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-EXPECT-002 DownloadExpectation captures a download and restores browser behavior",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -26961,9 +27018,13 @@
                     }
                   ],
                   "nodeMember": "DownloadExpectation.value",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               }
             ],
@@ -26974,13 +27035,24 @@
             ],
             "name": "DownloadExpectation",
             "nodeMapping": {
-              "evidence": "compatible TypeScript AST declaration",
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-EXPECT-002 DownloadExpectation captures a download and restores browser behavior",
+                  "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                }
+              ],
               "nodeKind": "class",
+              "nodeMember": "DownloadExpectation",
               "nodeSymbol": "DownloadExpectation",
               "runtimeExport": true,
-              "semanticsVerified": false,
+              "semanticsCoverage": [
+                "return",
+                "state"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "CANDIDATE"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -27011,11 +27083,21 @@
                 "kind": "method",
                 "name": "__aenter__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on RequestExpectation",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseExpectation expose matched data and reset",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "BaseRequestExpectation.aenter",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -27038,11 +27120,21 @@
                 "kind": "method",
                 "name": "__aexit__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on RequestExpectation",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseExpectation expose matched data and reset",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "BaseRequestExpectation.aexit",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -27073,11 +27165,21 @@
                 "kind": "property",
                 "name": "request",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on RequestExpectation",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseExpectation expose matched data and reset",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "BaseRequestExpectation.request",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -27087,11 +27189,21 @@
                 "kind": "method",
                 "name": "reset",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on RequestExpectation",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseExpectation expose matched data and reset",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "BaseRequestExpectation.reset",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -27115,11 +27227,21 @@
                 "kind": "property",
                 "name": "response",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on RequestExpectation",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseExpectation expose matched data and reset",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "BaseRequestExpectation.response",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -27130,11 +27252,21 @@
                 "kind": "property",
                 "name": "response_body",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on RequestExpectation",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseExpectation expose matched data and reset",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "BaseRequestExpectation.responseBody",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -27145,7 +27277,13 @@
                 "kind": "property",
                 "name": "value",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseExpectation expose matched data and reset",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -27158,9 +27296,13 @@
                     }
                   ],
                   "nodeMember": "RequestExpectation.value",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               }
             ],
@@ -27172,13 +27314,24 @@
             ],
             "name": "RequestExpectation",
             "nodeMapping": {
-              "evidence": "compatible TypeScript AST declaration",
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseExpectation expose matched data and reset",
+                  "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                }
+              ],
               "nodeKind": "class",
+              "nodeMember": "RequestExpectation",
               "nodeSymbol": "RequestExpectation",
               "runtimeExport": true,
-              "semanticsVerified": false,
+              "semanticsCoverage": [
+                "return",
+                "state"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "CANDIDATE"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -27216,11 +27369,21 @@
                 "kind": "method",
                 "name": "__aenter__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on ResponseExpectation",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseExpectation expose matched data and reset",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "BaseRequestExpectation.aenter",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -27243,11 +27406,21 @@
                 "kind": "method",
                 "name": "__aexit__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on ResponseExpectation",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseExpectation expose matched data and reset",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "BaseRequestExpectation.aexit",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -27278,11 +27451,21 @@
                 "kind": "property",
                 "name": "request",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on ResponseExpectation",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseExpectation expose matched data and reset",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "BaseRequestExpectation.request",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -27292,11 +27475,21 @@
                 "kind": "method",
                 "name": "reset",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on ResponseExpectation",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseExpectation expose matched data and reset",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "BaseRequestExpectation.reset",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -27320,11 +27513,21 @@
                 "kind": "property",
                 "name": "response",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on ResponseExpectation",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseExpectation expose matched data and reset",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "BaseRequestExpectation.response",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -27335,11 +27538,21 @@
                 "kind": "property",
                 "name": "response_body",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on ResponseExpectation",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseExpectation expose matched data and reset",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "BaseRequestExpectation.responseBody",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -27350,7 +27563,13 @@
                 "kind": "property",
                 "name": "value",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseExpectation expose matched data and reset",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -27363,9 +27582,13 @@
                     }
                   ],
                   "nodeMember": "ResponseExpectation.value",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               }
             ],
@@ -27377,13 +27600,24 @@
             ],
             "name": "ResponseExpectation",
             "nodeMapping": {
-              "evidence": "compatible TypeScript AST declaration",
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseExpectation expose matched data and reset",
+                  "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                }
+              ],
               "nodeKind": "class",
+              "nodeMember": "ResponseExpectation",
               "nodeSymbol": "ResponseExpectation",
               "runtimeExport": true,
-              "semanticsVerified": false,
+              "semanticsCoverage": [
+                "return",
+                "state"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "CANDIDATE"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -27505,7 +27739,13 @@
                 "kind": "method",
                 "name": "continue_request",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-INTERCEPT-002 BaseFetchInterception exposes response body and resets",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "continueRequest(params?: Omit<Protocol.Fetch.Commands.ContinueRequestParams, \"requestId\">): Promise<void>;",
@@ -27577,9 +27817,13 @@
                     }
                   ],
                   "nodeMember": "BaseFetchInterception.continueRequest",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -27637,7 +27881,13 @@
                 "kind": "method",
                 "name": "continue_response",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-INTERCEPT-002 BaseFetchInterception exposes response body and resets",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "continueResponse(params?: Omit<Protocol.Fetch.Commands.ContinueResponseParams, \"requestId\">): Promise<void>;",
@@ -27701,9 +27951,13 @@
                     }
                   ],
                   "nodeMember": "BaseFetchInterception.continueResponse",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -27754,7 +28008,13 @@
                 "kind": "method",
                 "name": "fail_request",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-INTERCEPT-003 InterceptedRequest modifies, fails, and cleans up requests",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "failRequest(errorReason: Protocol.Network.ErrorReason): Promise<void>;",
@@ -27776,9 +28036,13 @@
                     }
                   ],
                   "nodeMember": "BaseFetchInterception.failRequest",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -27808,7 +28072,13 @@
                 "kind": "method",
                 "name": "fulfill_request",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-INTERCEPT-003 InterceptedRequest modifies, fails, and cleans up requests",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "fulfillRequest(responseCode: number, options?: Omit<Protocol.Fetch.Commands.FulfillRequestParams, \"requestId\" | \"responseCode\">): Promise<void>;",
@@ -27888,9 +28158,13 @@
                     }
                   ],
                   "nodeMember": "BaseFetchInterception.fulfillRequest",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -27949,7 +28223,13 @@
                 "kind": "property",
                 "name": "request",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-INTERCEPT-002 BaseFetchInterception exposes response body and resets",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -27962,9 +28242,13 @@
                     }
                   ],
                   "nodeMember": "BaseFetchInterception.request",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               },
               {
@@ -27974,7 +28258,13 @@
                 "kind": "method",
                 "name": "reset",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-INTERCEPT-002 BaseFetchInterception exposes response body and resets",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "reset(): Promise<void>;",
@@ -27987,9 +28277,13 @@
                     }
                   ],
                   "nodeMember": "BaseFetchInterception.reset",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -28013,7 +28307,13 @@
                 "kind": "property",
                 "name": "response_body",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-INTERCEPT-002 BaseFetchInterception exposes response body and resets",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "access": "get",
@@ -28026,9 +28326,13 @@
                     }
                   ],
                   "nodeMember": "BaseFetchInterception.responseBody",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "PROPERTY_KIND_ONLY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 }
               }
             ],
@@ -28039,13 +28343,24 @@
             ],
             "name": "BaseFetchInterception",
             "nodeMapping": {
-              "evidence": "compatible TypeScript AST declaration",
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-INTERCEPT-002 BaseFetchInterception exposes response body and resets",
+                  "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                }
+              ],
               "nodeKind": "class",
+              "nodeMember": "BaseFetchInterception",
               "nodeSymbol": "BaseFetchInterception",
               "runtimeExport": true,
-              "semanticsVerified": false,
+              "semanticsCoverage": [
+                "return",
+                "state"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "CANDIDATE"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [

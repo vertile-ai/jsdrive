@@ -15,8 +15,8 @@ This is an inventory baseline, not a parity completion claim.
 - Unmapped Node parity cases: 0
 - Not-run Node parity cases: 0
 - Cases requiring a live network host: 41
-- API mappings by structural status: {"coreMembers": {"CANDIDATE": 124, "MISSING": 44, "UNKNOWN": 10, "VERIFIED": 294}, "coreSymbols": {"CANDIDATE": 9, "VERIFIED": 36}, "rootExports": {"CANDIDATE": 2, "VERIFIED": 14}, "total": {"CANDIDATE": 135, "MISSING": 44, "UNKNOWN": 10, "VERIFIED": 344}}
-- Semantically verified API mappings: 344
+- API mappings by structural status: {"coreMembers": {"CANDIDATE": 110, "MISSING": 32, "UNKNOWN": 10, "VERIFIED": 320}, "coreSymbols": {"CANDIDATE": 4, "VERIFIED": 41}, "rootExports": {"CANDIDATE": 2, "VERIFIED": 14}, "total": {"CANDIDATE": 116, "MISSING": 32, "UNKNOWN": 10, "VERIFIED": 375}}
+- Semantically verified API mappings: 375
 
 ## Reference environment observations
 

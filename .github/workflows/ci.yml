@@ -35,6 +35,16 @@ jobs:
       - name: Test
         run: npm test
 
+      - name: Install Zendriver reference
+        run: |
+          python3 -m venv .tmp/zendriver-ci
+          .tmp/zendriver-ci/bin/python -m pip install zendriver==0.15.5
+
+      - name: Validate parity inventory and run headless parity
+        env:
+          ZENDRIVER_PYTHON: ${{ github.workspace }}/.tmp/zendriver-ci/bin/python
+        run: npm run test:parity:headless
+
       - name: Validate package contents
         run: |
           npm pack --workspace=guanine --dry-run

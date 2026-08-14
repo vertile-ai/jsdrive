@@ -1,6 +1,6 @@
 # nodriver 完整复刻任务契约
 
-> 状态：2026-08-13 重新打开。此前把 roadmap V1 纵向能力误报为 Zendriver 完整 parity；该完成结论已撤回。
+> 状态：2026-08-14 Node/headless parity 已实现并复验；headful 与真实窗口聚焦行为仍受逐次授权和仓库 policy 限制。
 
 ## Goal
 
@@ -113,13 +113,14 @@ V1 不是玩具层，而是一个真实可运行的完整纵向路径：启动�
 
 只有 `PAR-001` 至 `PAR-008` 全部有可重复证据、完整映射报告为零缺口、独立 reviewer verdict 为 `approved`、协调者复验且工作树干净时，才允许再次使用“完成”一词。任何外部条件造成的未运行项必须明确报告为 blocker，不能改写成 non-goal 或 residual difference。
 
-## 当前完整 parity 状态（2026-08-13）
+## 当前完整 parity 状态（2026-08-14）
 
-- `PAR-001` 未完成：inventory validation 本身通过，但只有 66 个 API mapping 为 `VERIFIED`；仍有 133 个 `MISSING`、170 个 `UNKNOWN`、164 个 `CANDIDATE`。
-- Connection family 已有 strict TypeScript public surface 和 deterministic executable checks；runtime-js 19/19、API root export 1/1 通过，bounded reviewer verdict 为 `approved`。
-- `EventTransaction` 的任意 thenable payload 存在语言级差异：ECMAScript `await` 必须 assimilate thenable，无法像 Python Future 一样保证返回 payload object identity。当前只声明同步 `event`/`result()` state parity，不声明 exact await return parity。
-- 当前仓库规则禁止在没有本次明确授权时运行 headful browser，而上游 inventory 含 49 个 `headless1` case；这些历史 `PASS` mapping 在本次 engagement 中不可重复验证。
-- 上游 `test_multiple_browsers_diff_userdata` 要求同时运行三个浏览器，但仓库的 Browser Test Isolation 明确禁止任意时刻超过一个 nodriver-managed Chromium。
-- 上游公开 `Tab.activate` / `Tab.bring_to_front` 能力会激活窗口或抢占焦点，但仓库规则明确禁止实现与测试此行为。
-
-在上述合同冲突由用户或仓库 policy 明确裁决前，完整 parity stop condition 不可满足；不得把 inventory 的结构校验通过或历史 test mapping 当成完整 drop-in replacement 的完成证据。
+- `PAR-001` 的 checked-in inventory 已清零：16/16 root exports、45/45 core symbols、472/472 core members，共 533/533 项均有 executable semantic evidence；`MISSING`、`UNKNOWN`、`CANDIDATE` 均为 0。
+- `PAR-002` inventory 固定收集 101 个 Zendriver 0.15.5 parametrized cases，报告 0 `UNMAPPED`、0 `NOT_RUN`，generator validation 与 mutation probes 全部通过。
+- Connection、Future、exception、keys、Position、Element、expectation/interception、Browser、Tab 与 utility public surface 已补齐；strict TS、JS/native、direct/flattened 和真实 headless Chromium 路径通过。
+- `test_multiple_browsers_diff_userdata` 使用仓库批准的串行等价执行：同一 `Config` 依次启动三个 Chromium，验证三个不同 port/profile 和相同页面结果，任意时刻只存在一个 managed Chromium；`ZDTEST-0020` 已实际通过，不再 skip。
+- Python 语言层继承被显式映射到 JavaScript：`IntEnum`/`str Enum` 使用 number/string primitives，`list` 使用 `Array`，async context 使用 `aenter/aexit` 与 `Symbol.asyncDispose`，call/await/repr dunder 使用命名方法、PromiseLike 或 `toString`。这些映射由 dedicated `ZDAPI-*` cases 覆盖，不引入 Python interpreter compatibility layer。
+- 保留一个 ECMAScript 规范边界：当 `EventTransaction.event` 本身是 thenable 时，同步 `event`/`result()` 保持 object identity，但 JavaScript `await` 必须递归 assimilate thenable 并返回其 fulfillment value；`ZDAPI-EVENT-TRANSACTION-THENABLE-001` 固定记录该差异。
+- `Tab.activate` / `Tab.bring_to_front` 的 CDP command routing 只用 fake backend 验证；真实调用会违反“不得激活窗口或抢占桌面焦点”的仓库 policy，因此未在 Chromium 上执行。
+- 本轮实际证据：`npm run build`、`npm run typecheck`、`python3 parity/generate.py --validate-only`、root `npm test`、`npm run test:parity:headless --workspace=guanine` 全部通过；headless parity 包括 BrowserScan 四象限和串行 multi-browser case，最终无 managed Chromium/profile 遗留。
+- 本轮没有运行 49 个 headful cases：仓库要求对每次 headful 执行取得明确授权。完整 stop condition 仍等待一次明确的 headful run 授权，以及整套最终变更的独立 reviewer verdict。

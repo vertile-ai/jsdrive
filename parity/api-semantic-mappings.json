@@ -616,5 +616,203 @@
     "testCases": [{"file": "packages/api/test/api-surface-parity.test.ts", "case": "ZDAPI-BROWSER-001"}],
     "upstream": "zendriver.core.util.start",
     "verifiedSemantics": ["defaults", "return", "signature", "state"]
+  },
+  {
+    "nodeMember": "Position",
+    "testCases": [{"file": "packages/api/test/element-api-parity.test.ts", "case": "ZDAPI-POSITION-001"}],
+    "upstream": "zendriver.core.element.Position",
+    "verifiedSemantics": ["errors", "return", "signature", "state"]
+  },
+  {
+    "nodeMember": "Position.append",
+    "testCases": [{"file": "packages/api/test/element-api-parity.test.ts", "case": "ZDAPI-POSITION-001"}],
+    "upstream": "zendriver.core.element.Position.append",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Position.clear",
+    "testCases": [{"file": "packages/api/test/element-api-parity.test.ts", "case": "ZDAPI-POSITION-001"}],
+    "upstream": "zendriver.core.element.Position.clear",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Position.copy",
+    "testCases": [{"file": "packages/api/test/element-api-parity.test.ts", "case": "ZDAPI-POSITION-001"}],
+    "upstream": "zendriver.core.element.Position.copy",
+    "verifiedSemantics": ["return"]
+  },
+  {
+    "nodeMember": "Position.count",
+    "testCases": [{"file": "packages/api/test/element-api-parity.test.ts", "case": "ZDAPI-POSITION-001"}],
+    "upstream": "zendriver.core.element.Position.count",
+    "verifiedSemantics": ["return"]
+  },
+  {
+    "nodeMember": "Position.extend",
+    "testCases": [{"file": "packages/api/test/element-api-parity.test.ts", "case": "ZDAPI-POSITION-001"}],
+    "upstream": "zendriver.core.element.Position.extend",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Position.fromJson",
+    "testCases": [{"file": "packages/api/test/element-api-parity.test.ts", "case": "ZDAPI-POSITION-001"}],
+    "upstream": "zendriver.core.element.Position.from_json",
+    "verifiedSemantics": ["errors", "return", "signature"]
+  },
+  {
+    "nodeMember": "Position.index",
+    "testCases": [{"file": "packages/api/test/element-api-parity.test.ts", "case": "ZDAPI-POSITION-001"}],
+    "upstream": "zendriver.core.element.Position.index",
+    "verifiedSemantics": ["errors", "return", "signature"]
+  },
+  {
+    "nodeMember": "Position.insert",
+    "testCases": [{"file": "packages/api/test/element-api-parity.test.ts", "case": "ZDAPI-POSITION-001"}],
+    "upstream": "zendriver.core.element.Position.insert",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Position.pop",
+    "testCases": [{"file": "packages/api/test/element-api-parity.test.ts", "case": "ZDAPI-POSITION-001"}],
+    "upstream": "zendriver.core.element.Position.pop",
+    "verifiedSemantics": ["defaults", "errors", "return", "state"]
+  },
+  {
+    "nodeMember": "Position.remove",
+    "testCases": [{"file": "packages/api/test/element-api-parity.test.ts", "case": "ZDAPI-POSITION-001"}],
+    "upstream": "zendriver.core.element.Position.remove",
+    "verifiedSemantics": ["errors", "return", "state"]
+  },
+  {
+    "nodeMember": "Position.reverse",
+    "testCases": [{"file": "packages/api/test/element-api-parity.test.ts", "case": "ZDAPI-POSITION-001"}],
+    "upstream": "zendriver.core.element.Position.reverse",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Position.sort",
+    "testCases": [{"file": "packages/api/test/element-api-parity.test.ts", "case": "ZDAPI-POSITION-001"}],
+    "upstream": "zendriver.core.element.Position.sort",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "Position.toJson",
+    "testCases": [{"file": "packages/api/test/element-api-parity.test.ts", "case": "ZDAPI-POSITION-001"}],
+    "upstream": "zendriver.core.element.Position.to_json",
+    "verifiedSemantics": ["return"]
+  },
+  {
+    "nodeMember": "Position.toViewport",
+    "testCases": [{"file": "packages/api/test/element-api-parity.test.ts", "case": "ZDAPI-POSITION-001"}],
+    "upstream": "zendriver.core.element.Position.to_viewport",
+    "verifiedSemantics": ["return", "signature"]
+  },
+  {
+    "nodeMember": "ProtocolException.add_note",
+    "testCases": [{"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-CONNECTION-ERRORS-001"}],
+    "upstream": "zendriver.core.connection.ProtocolException.add_note",
+    "verifiedSemantics": ["errors", "return", "state"]
+  },
+  {
+    "nodeMember": "ProtocolException.args",
+    "testCases": [{"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-CONNECTION-ERRORS-001"}],
+    "upstream": "zendriver.core.connection.ProtocolException.args",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "ProtocolException.with_traceback",
+    "testCases": [{"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-CONNECTION-ERRORS-001"}],
+    "upstream": "zendriver.core.connection.ProtocolException.with_traceback",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "ProtocolException.toString",
+    "testCases": [{"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-CONNECTION-ERRORS-001"}],
+    "upstream": "zendriver.core.connection.ProtocolException.__str__",
+    "verifiedSemantics": ["return"]
+  },
+  {
+    "nodeMember": "SettingClassVarNotAllowedException.add_note",
+    "testCases": [{"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-CONNECTION-ERRORS-001"}],
+    "upstream": "zendriver.core.connection.SettingClassVarNotAllowedException.add_note",
+    "verifiedSemantics": ["errors", "return", "state"]
+  },
+  {
+    "nodeMember": "SettingClassVarNotAllowedException.args",
+    "testCases": [{"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-CONNECTION-ERRORS-001"}],
+    "upstream": "zendriver.core.connection.SettingClassVarNotAllowedException.args",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "SettingClassVarNotAllowedException.characters_written",
+    "testCases": [{"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-CONNECTION-ERRORS-001"}],
+    "upstream": "zendriver.core.connection.SettingClassVarNotAllowedException.characters_written",
+    "verifiedSemantics": ["errors"]
+  },
+  {
+    "nodeMember": "SettingClassVarNotAllowedException.errno",
+    "testCases": [{"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-CONNECTION-ERRORS-001"}],
+    "upstream": "zendriver.core.connection.SettingClassVarNotAllowedException.errno",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "SettingClassVarNotAllowedException.filename",
+    "testCases": [{"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-CONNECTION-ERRORS-001"}],
+    "upstream": "zendriver.core.connection.SettingClassVarNotAllowedException.filename",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "SettingClassVarNotAllowedException.filename2",
+    "testCases": [{"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-CONNECTION-ERRORS-001"}],
+    "upstream": "zendriver.core.connection.SettingClassVarNotAllowedException.filename2",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "SettingClassVarNotAllowedException.strerror",
+    "testCases": [{"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-CONNECTION-ERRORS-001"}],
+    "upstream": "zendriver.core.connection.SettingClassVarNotAllowedException.strerror",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "SettingClassVarNotAllowedException.with_traceback",
+    "testCases": [{"file": "packages/runtime-js/test/connection-compat.test.ts", "case": "ZDAPI-CONNECTION-ERRORS-001"}],
+    "upstream": "zendriver.core.connection.SettingClassVarNotAllowedException.with_traceback",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "BaseRequestExpectation.aenter",
+    "testCases": [{"file": "packages/api/test/expectation-interception-api-parity.test.ts", "case": "ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseExpectation expose matched data and reset"}],
+    "upstream": "zendriver.core.expect.BaseRequestExpectation.__aenter__",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "BaseRequestExpectation.aexit",
+    "testCases": [{"file": "packages/api/test/expectation-interception-api-parity.test.ts", "case": "ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseExpectation expose matched data and reset"}],
+    "upstream": "zendriver.core.expect.BaseRequestExpectation.__aexit__",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "DownloadExpectation.aenter",
+    "testCases": [{"file": "packages/api/test/expectation-interception-api-parity.test.ts", "case": "ZDAPI-EXPECT-002 DownloadExpectation captures a download and restores browser behavior"}],
+    "upstream": "zendriver.core.expect.DownloadExpectation.__aenter__",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "DownloadExpectation.aexit",
+    "testCases": [{"file": "packages/api/test/expectation-interception-api-parity.test.ts", "case": "ZDAPI-EXPECT-002 DownloadExpectation captures a download and restores browser behavior"}],
+    "upstream": "zendriver.core.expect.DownloadExpectation.__aexit__",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "BaseFetchInterception.aenter",
+    "testCases": [{"file": "packages/api/test/expectation-interception-api-parity.test.ts", "case": "ZDAPI-INTERCEPT-002 BaseFetchInterception exposes response body and resets"}],
+    "upstream": "zendriver.core.intercept.BaseFetchInterception.__aenter__",
+    "verifiedSemantics": ["return", "state"]
+  },
+  {
+    "nodeMember": "BaseFetchInterception.aexit",
+    "testCases": [{"file": "packages/api/test/expectation-interception-api-parity.test.ts", "case": "ZDAPI-INTERCEPT-002 BaseFetchInterception exposes response body and resets"}],
+    "upstream": "zendriver.core.intercept.BaseFetchInterception.__aexit__",
+    "verifiedSemantics": ["return", "state"]
   }
 ]

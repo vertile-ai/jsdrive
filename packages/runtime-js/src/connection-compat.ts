@@ -47,8 +47,10 @@ export interface ProtocolErrorPayload {
 
 /** Equivalent of zendriver.core.connection.ProtocolException. */
 export class ProtocolException extends Error {
+  public readonly args: readonly unknown[];
   public readonly code: number | null;
   public readonly data: unknown;
+  public readonly __notes__: string[] = [];
 
   public constructor(...args: readonly unknown[]) {
     if (args.length === 0) throw new RangeError("tuple index out of range");
@@ -59,18 +61,30 @@ export class ProtocolException extends Error {
     if (isProtocolErrorPayload(first)) {
       code = first.code ?? null;
       data = first.data;
-      const detail = first.message ?? "Unknown CDP protocol error";
-      message = code === null ? detail : `${detail} [code: ${code}]`;
+      const detail = first.message;
+      message = code === null ? pythonString(detail) : `${pythonString(detail)} [code: ${code}]`;
     } else if (args.length === 1) {
-      message = String(first);
+      message = pythonString(first);
     } else {
-      message = args.map((value) => String(value)).join("| ");
+      message = args.map(pythonString).join("| ");
     }
     super(message);
     this.name = "ProtocolException";
+    this.args = Object.freeze([...args]);
     this.code = code;
     this.data = data;
   }
+
+  public add_note(note: string): void {
+    if (typeof note !== "string") throw new TypeError("note must be a string");
+    this.__notes__.push(note);
+  }
+
+  public addNote(note: string): void { this.add_note(note); }
+
+  public with_traceback(_traceback: unknown): this { return this; }
+
+  public withTraceback(traceback: unknown): this { return this.with_traceback(traceback); }
 
   public override toString(): string {
     return this.message;
@@ -79,10 +93,48 @@ export class ProtocolException extends Error {
 
 /** Permission error raised by the Python metaclass when a class variable is changed. */
 export class SettingClassVarNotAllowedException extends Error {
-  public constructor(message = "") {
+  public readonly args: readonly unknown[];
+  public readonly errno: unknown;
+  public readonly strerror: unknown;
+  public readonly filename: unknown;
+  public readonly filename2: unknown;
+  public readonly __notes__: string[] = [];
+
+  public constructor(...args: readonly unknown[]) {
+    const errno = args.length >= 2 ? args[0] : undefined;
+    const strerror = args.length >= 2 ? args[1] : undefined;
+    const filename = args.length >= 3 ? args[2] : undefined;
+    const filename2 = args.length >= 5 ? args[4] : undefined;
+    const message = args.length === 0
+      ? ""
+      : args.length === 1
+      ? pythonString(args[0])
+      : `[Errno ${pythonString(errno)}] ${pythonString(strerror)}${
+          filename === undefined ? "" : `: ${pythonString(filename)}`
+        }${filename2 === undefined ? "" : ` -> ${pythonString(filename2)}`}`;
     super(message);
     this.name = "SettingClassVarNotAllowedException";
+    this.args = Object.freeze(args.length >= 2 ? [...args.slice(0, 2)] : [...args]);
+    this.errno = errno;
+    this.strerror = strerror;
+    this.filename = filename;
+    this.filename2 = filename2;
   }
+
+  public get characters_written(): never {
+    throw new Error("characters_written");
+  }
+
+  public add_note(note: string): void {
+    if (typeof note !== "string") throw new TypeError("note must be a string");
+    this.__notes__.push(note);
+  }
+
+  public addNote(note: string): void { this.add_note(note); }
+
+  public with_traceback(_traceback: unknown): this { return this; }
+
+  public withTraceback(traceback: unknown): this { return this.with_traceback(traceback); }
 }
 
 /** Equivalent of asyncio.CancelledError for Future-like transactions. */
@@ -582,6 +634,13 @@ function isProtocolErrorPayload(value: unknown): value is ProtocolErrorPayload {
   return typeof value === "object" && value !== null && (
     "code" in value || "message" in value || "data" in value
   );
+}
+
+function pythonString(value: unknown): string {
+  if (value === null || value === undefined) return "None";
+  if (value === true) return "True";
+  if (value === false) return "False";
+  return String(value);
 }
 
 function targetValue<T extends string | boolean>(

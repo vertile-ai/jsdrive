@@ -47,7 +47,7 @@ test.after(async () => {
   await new Promise<void>((resolve, reject) => server.close((error) => error === undefined ? resolve() : reject(error)));
 });
 
-test("Position is a list-like Quad with Zendriver geometry semantics", () => {
+test("ZDAPI-POSITION-001", () => {
   const position = new Position([1, 2, 5, 2, 5, 8, 1, 8]);
   assert.ok(position instanceof Array);
   assert.deepEqual([...position], [1, 2, 5, 2, 5, 8, 1, 8]);
@@ -56,6 +56,20 @@ test("Position is a list-like Quad with Zendriver geometry semantics", () => {
   assert.deepEqual(Position.fromJson([1, 2, 5, 2, 5, 8, 1, 8]), position);
   assert.deepEqual(position.center, [3, 5]);
   assert.deepEqual(position.toViewport(2), { x: 1, y: 2, width: 4, height: 6, scale: 2 });
+  const list = new Position([1, 2, 3, 4, 5, 6, 7, 8]);
+  list.append(9);
+  list.extend([10, 11]);
+  assert.equal(list.count(1), 1);
+  assert.equal(list.index(9), 8);
+  list.insert(-1, 12);
+  assert.equal(list.pop(-2), 12);
+  list.remove(11);
+  assert.deepEqual(list.copy(), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  list.reverse().sort((left, right) => left - right);
+  assert.deepEqual(list.copy(), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  list.clear();
+  assert.deepEqual(list.copy(), []);
+  assert.throws(() => list.pop(), /empty/);
   assert.throws(() => new Position([1, 2, 3]), RangeError);
 });
 

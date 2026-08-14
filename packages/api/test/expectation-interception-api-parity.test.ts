@@ -68,7 +68,8 @@ test("ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseE
     assert.ok(requestExpectation instanceof BaseRequestExpectation);
     assert.ok(responseExpectation instanceof ResponseExpectation);
     assert.ok(responseExpectation instanceof BaseRequestExpectation);
-    await Promise.all([requestExpectation.ready, responseExpectation.ready]);
+    assert.equal(await requestExpectation.aenter(), requestExpectation);
+    assert.equal(await responseExpectation.aenter(), responseExpectation);
     const firstFetch = fetchText(tab, `${baseUrl}/api`);
     assert.equal((await requestExpectation.request).url, `${baseUrl}/api`);
     assert.equal((await requestExpectation.response).status, 200);
@@ -82,17 +83,18 @@ test("ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseE
     const secondFetch = fetchText(tab, `${baseUrl}/api`);
     assert.equal((await requestExpectation.value).request.url, `${baseUrl}/api`);
     assert.equal(await secondFetch, json);
-    await requestExpectation[Symbol.asyncDispose]();
+    await requestExpectation.aexit();
+    await responseExpectation.aexit();
 
     const baseExpectation = new BaseRequestExpectation(tab, `${baseUrl}/api`);
     assert.equal("value" in baseExpectation, false);
-    await baseExpectation.ready;
+    assert.equal(await baseExpectation.aenter(), baseExpectation);
     const baseFetch = fetchText(tab, `${baseUrl}/api`);
     assert.equal((await baseExpectation.request).url, `${baseUrl}/api`);
     assert.equal((await baseExpectation.response).status, 200);
     assert.deepEqual(await baseExpectation.responseBody, [json, false]);
     assert.equal(await baseFetch, json);
-    await baseExpectation[Symbol.asyncDispose]();
+    await baseExpectation.aexit();
   });
 });
 
@@ -100,11 +102,11 @@ test("ZDAPI-EXPECT-002 DownloadExpectation captures a download and restores brow
   await usingMatrix(async (tab) => {
     const download = tab.expectDownload();
     assert.ok(download instanceof DownloadExpectation);
-    await download.ready;
+    assert.equal(await download.aenter(), download);
     const link = await tab.select("#download");
     await link.click();
     assert.equal((await download.value).suggestedFilename, "closure.txt");
-    await download.close();
+    await download.aexit();
   });
 });
 
@@ -148,7 +150,7 @@ test("ZDAPI-INTERCEPT-001 Fetch interception iterates, fulfills, and disables on
 test("ZDAPI-INTERCEPT-002 BaseFetchInterception exposes response body and resets", { timeout: 45_000 }, async () => {
   await usingMatrix(async (tab) => {
     const responseInterception = new BaseFetchInterception(tab, "*/api", "Response", "XHR");
-    await responseInterception.ready;
+    assert.equal(await responseInterception.aenter(), responseInterception);
     const responseAction = fetchText(tab, `${baseUrl}/api`);
     const interceptedResponse = await responseInterception.next();
     assert.equal(interceptedResponse.response?.statusCode, 200);
@@ -161,7 +163,7 @@ test("ZDAPI-INTERCEPT-002 BaseFetchInterception exposes response body and resets
     assert.equal(decodeBody(await responseInterception.responseBody), json);
     await responseInterception.continueResponse();
     assert.equal(await resetAction, json);
-    await responseInterception.close();
+    await responseInterception.aexit();
   });
 });
 

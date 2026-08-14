@@ -368,12 +368,7 @@ def nodriver_indexes(
     return runtime, declared, classes
 
 
-CLASS_ALIASES = {
-    "BaseFetchInterception": "FetchInterception",
-    "DownloadExpectation": "expectDownload",
-    "RequestExpectation": "expectRequest",
-    "ResponseExpectation": "expectResponse",
-}
+CLASS_ALIASES: dict[str, str] = {}
 
 DUNDER_MEMBER_ALIASES = {
     "__iter__": "[Symbol.iterator]",

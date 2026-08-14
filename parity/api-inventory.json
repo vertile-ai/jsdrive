@@ -1,25 +1,24 @@
 {
   "mappingCounts": {
     "coreMembers": {
-      "CANDIDATE": 146,
-      "MISSING": 97,
-      "UNKNOWN": 167,
-      "VERIFIED": 62
+      "CANDIDATE": 153,
+      "MISSING": 75,
+      "UNKNOWN": 150,
+      "VERIFIED": 94
     },
     "coreSymbols": {
-      "CANDIDATE": 11,
-      "UNKNOWN": 3,
-      "VERIFIED": 31
+      "CANDIDATE": 13,
+      "VERIFIED": 32
     },
     "rootExports": {
       "CANDIDATE": 6,
       "VERIFIED": 10
     },
     "total": {
-      "CANDIDATE": 163,
-      "MISSING": 97,
-      "UNKNOWN": 170,
-      "VERIFIED": 103
+      "CANDIDATE": 172,
+      "MISSING": 75,
+      "UNKNOWN": 150,
+      "VERIFIED": 136
     }
   },
   "nodriver": {
@@ -30,6 +29,14 @@
         "name": "BaseFetchInterception",
         "package": "jsdriver",
         "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "aenter"
+          },
+          {
+            "kind": "method",
+            "name": "aexit"
+          },
           {
             "kind": "method",
             "name": "close"
@@ -78,6 +85,14 @@
         "name": "BaseRequestExpectation",
         "package": "jsdriver",
         "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "aenter"
+          },
+          {
+            "kind": "method",
+            "name": "aexit"
+          },
           {
             "kind": "method",
             "name": "cancel"
@@ -502,6 +517,14 @@
         "name": "DownloadExpectation",
         "package": "jsdriver",
         "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "aenter"
+          },
+          {
+            "kind": "method",
+            "name": "aexit"
+          },
           {
             "kind": "method",
             "name": "cancel"
@@ -1000,12 +1023,56 @@
         "package": "jsdriver",
         "prototypeMembers": [
           {
+            "kind": "method",
+            "name": "append"
+          },
+          {
             "kind": "property",
             "name": "center"
           },
           {
+            "kind": "method",
+            "name": "clear"
+          },
+          {
+            "kind": "method",
+            "name": "copy"
+          },
+          {
+            "kind": "method",
+            "name": "count"
+          },
+          {
+            "kind": "method",
+            "name": "extend"
+          },
+          {
             "kind": "property",
             "name": "height"
+          },
+          {
+            "kind": "method",
+            "name": "index"
+          },
+          {
+            "kind": "method",
+            "name": "insert"
+          },
+          {
+            "kind": "method",
+            "name": "pop"
+          },
+          {
+            "kind": "method",
+            "name": "remove"
+          },
+          {
+            "kind": "method",
+            "name": "reverse"
+          },
+          {
+            "kind": "method",
+            "name": "sort"
           },
           {
             "kind": "method",
@@ -2258,6 +2325,33 @@
             "typeParameters": []
           },
           {
+            "declaration": "aenter(): Promise<this>;",
+            "kind": "method",
+            "name": "aenter",
+            "parameters": [],
+            "returnType": "Promise<this>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "aexit(..._args: readonly unknown[]): Promise<void>;",
+            "kind": "method",
+            "name": "aexit",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "_args",
+                "optional": false,
+                "rest": true,
+                "type": "readonly unknown[]"
+              }
+            ],
+            "returnType": "Promise<void>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
             "declaration": "reset(): Promise<void>;",
             "kind": "method",
             "name": "reset",
@@ -2427,6 +2521,33 @@
             "kind": "method",
             "name": "reset",
             "parameters": [],
+            "returnType": "Promise<void>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "aenter(): Promise<this>;",
+            "kind": "method",
+            "name": "aenter",
+            "parameters": [],
+            "returnType": "Promise<this>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "aexit(..._args: readonly unknown[]): Promise<void>;",
+            "kind": "method",
+            "name": "aexit",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "_args",
+                "optional": false,
+                "rest": true,
+                "type": "readonly unknown[]"
+              }
+            ],
             "returnType": "Promise<void>",
             "static": false,
             "typeParameters": []
@@ -4590,6 +4711,33 @@
             "kind": "method",
             "name": "close",
             "parameters": [],
+            "returnType": "Promise<void>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "aenter(): Promise<this>;",
+            "kind": "method",
+            "name": "aenter",
+            "parameters": [],
+            "returnType": "Promise<this>",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "aexit(..._args: readonly unknown[]): Promise<void>;",
+            "kind": "method",
+            "name": "aexit",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "_args",
+                "optional": false,
+                "rest": true,
+                "type": "readonly unknown[]"
+              }
+            ],
             "returnType": "Promise<void>",
             "static": false,
             "typeParameters": []
@@ -7077,6 +7225,201 @@
             "typeParameters": []
           },
           {
+            "declaration": "append(value: number): void;",
+            "kind": "method",
+            "name": "append",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "value",
+                "optional": false,
+                "rest": false,
+                "type": "number"
+              }
+            ],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "clear(): void;",
+            "kind": "method",
+            "name": "clear",
+            "parameters": [],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "copy(): number[];",
+            "kind": "method",
+            "name": "copy",
+            "parameters": [],
+            "returnType": "number[]",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "count(value: number): number;",
+            "kind": "method",
+            "name": "count",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "value",
+                "optional": false,
+                "rest": false,
+                "type": "number"
+              }
+            ],
+            "returnType": "number",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "extend(values: Iterable<number>): void;",
+            "kind": "method",
+            "name": "extend",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "values",
+                "optional": false,
+                "rest": false,
+                "type": "Iterable<number>"
+              }
+            ],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "index(value: number, start?: number, stop?: number): number;",
+            "kind": "method",
+            "name": "index",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "value",
+                "optional": false,
+                "rest": false,
+                "type": "number"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "start",
+                "optional": true,
+                "rest": false,
+                "type": "number"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "stop",
+                "optional": true,
+                "rest": false,
+                "type": "number"
+              }
+            ],
+            "returnType": "number",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "insert(index: number, value: number): void;",
+            "kind": "method",
+            "name": "insert",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "index",
+                "optional": false,
+                "rest": false,
+                "type": "number"
+              },
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "value",
+                "optional": false,
+                "rest": false,
+                "type": "number"
+              }
+            ],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "pop(index?: number): number;",
+            "kind": "method",
+            "name": "pop",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "index",
+                "optional": true,
+                "rest": false,
+                "type": "number"
+              }
+            ],
+            "returnType": "number",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "remove(value: number): void;",
+            "kind": "method",
+            "name": "remove",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "value",
+                "optional": false,
+                "rest": false,
+                "type": "number"
+              }
+            ],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "reverse(): this;",
+            "kind": "method",
+            "name": "reverse",
+            "parameters": [],
+            "returnType": "this",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "sort(compareFn?: (a: number, b: number) => number): this;",
+            "kind": "method",
+            "name": "sort",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "compareFn",
+                "optional": true,
+                "rest": false,
+                "type": "(a: number, b: number) => number"
+              }
+            ],
+            "returnType": "this",
+            "static": false,
+            "typeParameters": []
+          },
+          {
             "declaration": "toJSON(): number[];",
             "kind": "method",
             "name": "toJSON",
@@ -7137,6 +7480,16 @@
         "file": "packages/runtime-js/dist/connection-compat.d.ts",
         "members": [
           {
+            "declaration": "readonly args: readonly unknown[];",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "args",
+            "optional": false,
+            "readonly": true,
+            "type": "readonly unknown[]"
+          },
+          {
             "declaration": "readonly code: number | null;",
             "declaredDefault": null,
             "hasDeclaredDefault": false,
@@ -7157,6 +7510,16 @@
             "type": "unknown"
           },
           {
+            "declaration": "readonly __notes__: string[];",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "__notes__",
+            "optional": false,
+            "readonly": true,
+            "type": "string[]"
+          },
+          {
             "declaration": "constructor(...args: readonly unknown[]);",
             "kind": "constructor",
             "name": "constructor",
@@ -7171,6 +7534,78 @@
               }
             ],
             "returnType": null,
+            "typeParameters": []
+          },
+          {
+            "declaration": "add_note(note: string): void;",
+            "kind": "method",
+            "name": "add_note",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "note",
+                "optional": false,
+                "rest": false,
+                "type": "string"
+              }
+            ],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "addNote(note: string): void;",
+            "kind": "method",
+            "name": "addNote",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "note",
+                "optional": false,
+                "rest": false,
+                "type": "string"
+              }
+            ],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "with_traceback(_traceback: unknown): this;",
+            "kind": "method",
+            "name": "with_traceback",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "_traceback",
+                "optional": false,
+                "rest": false,
+                "type": "unknown"
+              }
+            ],
+            "returnType": "this",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "withTraceback(traceback: unknown): this;",
+            "kind": "method",
+            "name": "withTraceback",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "traceback",
+                "optional": false,
+                "rest": false,
+                "type": "unknown"
+              }
+            ],
+            "returnType": "this",
+            "static": false,
             "typeParameters": []
           },
           {
@@ -7219,20 +7654,161 @@
         "file": "packages/runtime-js/dist/connection-compat.d.ts",
         "members": [
           {
-            "declaration": "constructor(message?: string);",
+            "declaration": "readonly args: readonly unknown[];",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "args",
+            "optional": false,
+            "readonly": true,
+            "type": "readonly unknown[]"
+          },
+          {
+            "declaration": "readonly errno: unknown;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "errno",
+            "optional": false,
+            "readonly": true,
+            "type": "unknown"
+          },
+          {
+            "declaration": "readonly strerror: unknown;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "strerror",
+            "optional": false,
+            "readonly": true,
+            "type": "unknown"
+          },
+          {
+            "declaration": "readonly filename: unknown;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "filename",
+            "optional": false,
+            "readonly": true,
+            "type": "unknown"
+          },
+          {
+            "declaration": "readonly filename2: unknown;",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "filename2",
+            "optional": false,
+            "readonly": true,
+            "type": "unknown"
+          },
+          {
+            "declaration": "readonly __notes__: string[];",
+            "declaredDefault": null,
+            "hasDeclaredDefault": false,
+            "kind": "property",
+            "name": "__notes__",
+            "optional": false,
+            "readonly": true,
+            "type": "string[]"
+          },
+          {
+            "declaration": "constructor(...args: readonly unknown[]);",
             "kind": "constructor",
             "name": "constructor",
             "parameters": [
               {
                 "declaredDefault": null,
                 "hasDeclaredDefault": false,
-                "name": "message",
-                "optional": true,
+                "name": "args",
+                "optional": false,
+                "rest": true,
+                "type": "readonly unknown[]"
+              }
+            ],
+            "returnType": null,
+            "typeParameters": []
+          },
+          {
+            "access": "get",
+            "declaration": "get characters_written(): never;",
+            "kind": "property",
+            "name": "characters_written",
+            "parameters": [],
+            "returnType": "never",
+            "typeParameters": []
+          },
+          {
+            "declaration": "add_note(note: string): void;",
+            "kind": "method",
+            "name": "add_note",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "note",
+                "optional": false,
                 "rest": false,
                 "type": "string"
               }
             ],
-            "returnType": null,
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "addNote(note: string): void;",
+            "kind": "method",
+            "name": "addNote",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "note",
+                "optional": false,
+                "rest": false,
+                "type": "string"
+              }
+            ],
+            "returnType": "void",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "with_traceback(_traceback: unknown): this;",
+            "kind": "method",
+            "name": "with_traceback",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "_traceback",
+                "optional": false,
+                "rest": false,
+                "type": "unknown"
+              }
+            ],
+            "returnType": "this",
+            "static": false,
+            "typeParameters": []
+          },
+          {
+            "declaration": "withTraceback(traceback: unknown): this;",
+            "kind": "method",
+            "name": "withTraceback",
+            "parameters": [
+              {
+                "declaredDefault": null,
+                "hasDeclaredDefault": false,
+                "name": "traceback",
+                "optional": false,
+                "rest": false,
+                "type": "unknown"
+              }
+            ],
+            "returnType": "this",
+            "static": false,
             "typeParameters": []
           }
         ],
@@ -10213,14 +10789,14 @@
       },
       "BaseFetchInterception": {
         "declarations": [
-          "export declare class BaseFetchInterception { #private; get ready(): Promise<void>; constructor(tab: Tab, options?: InterceptionOptions); constructor(tab: Tab, urlPattern: string, requestStage: Protocol.Fetch.RequestStage, resourceType: Protocol.Network.ResourceType); next(options?: NextInterceptionOptions): Promise<InterceptedRequest>; /** The current paused request, matching Zendriver's awaitable interception facade. */ get request(): Promise<Protocol.Network.Request>; get responseBody(): Promise<readonly [string, boolean]>; continueRequest(params?: Omit<Protocol.Fetch.Commands.ContinueRequestParams, \"requestId\">): Promise<void>; continueRequest(url?: string, method?: string, postData?: string, headers?: Protocol.Fetch.HeaderEntry[], interceptResponse?: boolean): Promise<void>; continueResponse(params?: Omit<Protocol.Fetch.Commands.ContinueResponseParams, \"requestId\">): Promise<void>; continueResponse(responseCode?: number, responsePhrase?: string, responseHeaders?: Protocol.Fetch.HeaderEntry[], binaryResponseHeaders?: string): Promise<void>; failRequest(errorReason: Protocol.Network.ErrorReason): Promise<void>; fulfillRequest(responseCode: number, options?: Omit<Protocol.Fetch.Commands.FulfillRequestParams, \"requestId\" | \"responseCode\">): Promise<void>; fulfillRequest(responseCode: number, responseHeaders?: Protocol.Fetch.HeaderEntry[], binaryResponseHeaders?: string, body?: string, responsePhrase?: string): Promise<void>; close(): Promise<void>; [Symbol.asyncDispose](): Promise<void>; reset(): Promise<void>; [Symbol.asyncIterator](): AsyncIterator<InterceptedRequest>; }"
+          "export declare class BaseFetchInterception { #private; get ready(): Promise<void>; constructor(tab: Tab, options?: InterceptionOptions); constructor(tab: Tab, urlPattern: string, requestStage: Protocol.Fetch.RequestStage, resourceType: Protocol.Network.ResourceType); next(options?: NextInterceptionOptions): Promise<InterceptedRequest>; /** The current paused request, matching Zendriver's awaitable interception facade. */ get request(): Promise<Protocol.Network.Request>; get responseBody(): Promise<readonly [string, boolean]>; continueRequest(params?: Omit<Protocol.Fetch.Commands.ContinueRequestParams, \"requestId\">): Promise<void>; continueRequest(url?: string, method?: string, postData?: string, headers?: Protocol.Fetch.HeaderEntry[], interceptResponse?: boolean): Promise<void>; continueResponse(params?: Omit<Protocol.Fetch.Commands.ContinueResponseParams, \"requestId\">): Promise<void>; continueResponse(responseCode?: number, responsePhrase?: string, responseHeaders?: Protocol.Fetch.HeaderEntry[], binaryResponseHeaders?: string): Promise<void>; failRequest(errorReason: Protocol.Network.ErrorReason): Promise<void>; fulfillRequest(responseCode: number, options?: Omit<Protocol.Fetch.Commands.FulfillRequestParams, \"requestId\" | \"responseCode\">): Promise<void>; fulfillRequest(responseCode: number, responseHeaders?: Protocol.Fetch.HeaderEntry[], binaryResponseHeaders?: string, body?: string, responsePhrase?: string): Promise<void>; close(): Promise<void>; [Symbol.asyncDispose](): Promise<void>; aenter(): Promise<this>; aexit(..._args: readonly unknown[]): Promise<void>; reset(): Promise<void>; [Symbol.asyncIterator](): AsyncIterator<InterceptedRequest>; }"
         ],
         "file": "packages/api/dist/network.d.ts",
         "kind": "class"
       },
       "BaseRequestExpectation": {
         "declarations": [
-          "export declare class BaseRequestExpectation<T extends ExpectedRequest | ExpectedResponse = ExpectedRequest> { protected readonly state: BaseRequestExpectationState<T>; constructor(tab: Tab, matcher: UrlMatcher<Protocol.Network.Events.RequestWillBeSentEvent>, options?: WaitOptions); constructor(tab: Tab, matcher: UrlMatcher<Protocol.Network.Events.ResponseReceivedEvent>, options?: WaitOptions); get ready(): Promise<void>; get request(): Promise<Protocol.Network.Request>; get response(): Promise<Protocol.Network.Response>; get responseBody(): Promise<readonly [string, boolean]>; cancel(reason?: unknown): Promise<void>; reset(): Promise<void>; [Symbol.asyncDispose](): Promise<void>; }"
+          "export declare class BaseRequestExpectation<T extends ExpectedRequest | ExpectedResponse = ExpectedRequest> { protected readonly state: BaseRequestExpectationState<T>; constructor(tab: Tab, matcher: UrlMatcher<Protocol.Network.Events.RequestWillBeSentEvent>, options?: WaitOptions); constructor(tab: Tab, matcher: UrlMatcher<Protocol.Network.Events.ResponseReceivedEvent>, options?: WaitOptions); get ready(): Promise<void>; get request(): Promise<Protocol.Network.Request>; get response(): Promise<Protocol.Network.Response>; get responseBody(): Promise<readonly [string, boolean]>; cancel(reason?: unknown): Promise<void>; reset(): Promise<void>; aenter(): Promise<this>; aexit(..._args: readonly unknown[]): Promise<void>; [Symbol.asyncDispose](): Promise<void>; }"
         ],
         "file": "packages/api/dist/network.d.ts",
         "kind": "class"
@@ -10451,7 +11027,7 @@
       },
       "DownloadExpectation": {
         "declarations": [
-          "export declare class DownloadExpectation implements DownloadWillBeginExpectation { #private; constructor(tab: Tab, matcher?: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent>, options?: DownloadOptions, previousDownloadPath?: string); get ready(): Promise<void>; get value(): Promise<Protocol.Browser.Events.DownloadWillBeginEvent>; cancel(reason?: unknown): Promise<void>; close(): Promise<void>; [Symbol.asyncDispose](): Promise<void>; }"
+          "export declare class DownloadExpectation implements DownloadWillBeginExpectation { #private; constructor(tab: Tab, matcher?: UrlMatcher<Protocol.Browser.Events.DownloadWillBeginEvent>, options?: DownloadOptions, previousDownloadPath?: string); get ready(): Promise<void>; get value(): Promise<Protocol.Browser.Events.DownloadWillBeginEvent>; cancel(reason?: unknown): Promise<void>; close(): Promise<void>; aenter(): Promise<this>; aexit(..._args: readonly unknown[]): Promise<void>; [Symbol.asyncDispose](): Promise<void>; }"
         ],
         "file": "packages/api/dist/download.d.ts",
         "kind": "class"
@@ -10675,7 +11251,7 @@
       },
       "Position": {
         "declarations": [
-          "export declare class Position extends Array<number> { static get [Symbol.species](): ArrayConstructor; constructor(points: readonly number[]); get x(): number; get y(): number; get width(): number; get height(): number; get center(): readonly [number, number]; toJSON(): number[]; toJson(): number[]; static fromJson(points: readonly number[]): Position; toViewport(scale?: number): Protocol.Page.Viewport; }"
+          "export declare class Position extends Array<number> { static get [Symbol.species](): ArrayConstructor; constructor(points: readonly number[]); get x(): number; get y(): number; get width(): number; get height(): number; get center(): readonly [number, number]; append(value: number): void; clear(): void; copy(): number[]; count(value: number): number; extend(values: Iterable<number>): void; index(value: number, start?: number, stop?: number): number; insert(index: number, value: number): void; pop(index?: number): number; remove(value: number): void; reverse(): this; sort(compareFn?: (a: number, b: number) => number): this; toJSON(): number[]; toJson(): number[]; static fromJson(points: readonly number[]): Position; toViewport(scale?: number): Protocol.Page.Viewport; }"
         ],
         "file": "packages/api/dist/element.d.ts",
         "kind": "class"
@@ -10689,7 +11265,7 @@
       },
       "ProtocolException": {
         "declarations": [
-          "export declare class ProtocolException extends Error { readonly code: number | null; readonly data: unknown; constructor(...args: readonly unknown[]); toString(): string; }"
+          "export declare class ProtocolException extends Error { readonly args: readonly unknown[]; readonly code: number | null; readonly data: unknown; readonly __notes__: string[]; constructor(...args: readonly unknown[]); add_note(note: string): void; addNote(note: string): void; with_traceback(_traceback: unknown): this; withTraceback(traceback: unknown): this; toString(): string; }"
         ],
         "file": "packages/runtime-js/dist/connection-compat.d.ts",
         "kind": "class"
@@ -10785,7 +11361,7 @@
       },
       "SettingClassVarNotAllowedException": {
         "declarations": [
-          "export declare class SettingClassVarNotAllowedException extends Error { constructor(message?: string); }"
+          "export declare class SettingClassVarNotAllowedException extends Error { readonly args: readonly unknown[]; readonly errno: unknown; readonly strerror: unknown; readonly filename: unknown; readonly filename2: unknown; readonly __notes__: string[]; constructor(...args: readonly unknown[]); get characters_written(): never; add_note(note: string): void; addNote(note: string): void; with_traceback(_traceback: unknown): this; withTraceback(traceback: unknown): this; }"
         ],
         "file": "packages/runtime-js/dist/connection-compat.d.ts",
         "kind": "class"
@@ -12329,6 +12905,14 @@
         "prototypeMembers": [
           {
             "kind": "method",
+            "name": "aenter"
+          },
+          {
+            "kind": "method",
+            "name": "aexit"
+          },
+          {
+            "kind": "method",
             "name": "close"
           },
           {
@@ -12375,6 +12959,14 @@
         "name": "BaseRequestExpectation",
         "package": "jsdriver",
         "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "aenter"
+          },
+          {
+            "kind": "method",
+            "name": "aexit"
+          },
           {
             "kind": "method",
             "name": "cancel"
@@ -12799,6 +13391,14 @@
         "name": "DownloadExpectation",
         "package": "jsdriver",
         "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "aenter"
+          },
+          {
+            "kind": "method",
+            "name": "aexit"
+          },
           {
             "kind": "method",
             "name": "cancel"
@@ -13297,12 +13897,56 @@
         "package": "jsdriver",
         "prototypeMembers": [
           {
+            "kind": "method",
+            "name": "append"
+          },
+          {
             "kind": "property",
             "name": "center"
           },
           {
+            "kind": "method",
+            "name": "clear"
+          },
+          {
+            "kind": "method",
+            "name": "copy"
+          },
+          {
+            "kind": "method",
+            "name": "count"
+          },
+          {
+            "kind": "method",
+            "name": "extend"
+          },
+          {
             "kind": "property",
             "name": "height"
+          },
+          {
+            "kind": "method",
+            "name": "index"
+          },
+          {
+            "kind": "method",
+            "name": "insert"
+          },
+          {
+            "kind": "method",
+            "name": "pop"
+          },
+          {
+            "kind": "method",
+            "name": "remove"
+          },
+          {
+            "kind": "method",
+            "name": "reverse"
+          },
+          {
+            "kind": "method",
+            "name": "sort"
           },
           {
             "kind": "method",
@@ -14384,7 +15028,23 @@
         "prototypeMembers": [
           {
             "kind": "method",
+            "name": "addNote"
+          },
+          {
+            "kind": "method",
+            "name": "add_note"
+          },
+          {
+            "kind": "method",
             "name": "toString"
+          },
+          {
+            "kind": "method",
+            "name": "withTraceback"
+          },
+          {
+            "kind": "method",
+            "name": "with_traceback"
           }
         ]
       },
@@ -14400,7 +15060,28 @@
         "kind": "function-or-class",
         "name": "SettingClassVarNotAllowedException",
         "package": "@vertile-ai/jsdriver-runtime-js",
-        "prototypeMembers": []
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "addNote"
+          },
+          {
+            "kind": "method",
+            "name": "add_note"
+          },
+          {
+            "kind": "property",
+            "name": "characters_written"
+          },
+          {
+            "kind": "method",
+            "name": "withTraceback"
+          },
+          {
+            "kind": "method",
+            "name": "with_traceback"
+          }
+        ]
       },
       {
         "functionLength": 2,
@@ -14881,7 +15562,23 @@
         "prototypeMembers": [
           {
             "kind": "method",
+            "name": "addNote"
+          },
+          {
+            "kind": "method",
+            "name": "add_note"
+          },
+          {
+            "kind": "method",
             "name": "toString"
+          },
+          {
+            "kind": "method",
+            "name": "withTraceback"
+          },
+          {
+            "kind": "method",
+            "name": "with_traceback"
           }
         ]
       },
@@ -14897,7 +15594,28 @@
         "kind": "function-or-class",
         "name": "SettingClassVarNotAllowedException",
         "package": "@vertile-ai/jsdriver-runtime-js",
-        "prototypeMembers": []
+        "prototypeMembers": [
+          {
+            "kind": "method",
+            "name": "addNote"
+          },
+          {
+            "kind": "method",
+            "name": "add_note"
+          },
+          {
+            "kind": "property",
+            "name": "characters_written"
+          },
+          {
+            "kind": "method",
+            "name": "withTraceback"
+          },
+          {
+            "kind": "method",
+            "name": "with_traceback"
+          }
+        ]
       },
       {
         "functionLength": 2,
@@ -19341,11 +20059,20 @@
                 "kind": "method",
                 "name": "__str__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on ProtocolException",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-ERRORS-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeMember": "ProtocolException.toString",
+                  "semanticsCoverage": [
+                    "return"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -19368,11 +20095,42 @@
                 "kind": "method",
                 "name": "add_note",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on ProtocolException",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-ERRORS-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "add_note(note: string): void;",
+                      "kind": "method",
+                      "name": "add_note",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "note",
+                          "optional": false,
+                          "rest": false,
+                          "type": "string"
+                        }
+                      ],
+                      "returnType": "void",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "ProtocolException.add_note",
+                  "semanticsCoverage": [
+                    "errors",
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -19403,11 +20161,33 @@
                 "kind": "attribute",
                 "name": "args",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on ProtocolException",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-ERRORS-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "readonly args: readonly unknown[];",
+                      "declaredDefault": null,
+                      "hasDeclaredDefault": false,
+                      "kind": "property",
+                      "name": "args",
+                      "optional": false,
+                      "readonly": true,
+                      "type": "readonly unknown[]"
+                    }
+                  ],
+                  "nodeMember": "ProtocolException.args",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "PROPERTY_KIND_ONLY",
+                  "status": "VERIFIED"
                 },
                 "valueType": "getset_descriptor"
               },
@@ -19418,11 +20198,41 @@
                 "kind": "method",
                 "name": "with_traceback",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on ProtocolException",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-ERRORS-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "with_traceback(_traceback: unknown): this;",
+                      "kind": "method",
+                      "name": "with_traceback",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "_traceback",
+                          "optional": false,
+                          "rest": false,
+                          "type": "unknown"
+                        }
+                      ],
+                      "returnType": "this",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "ProtocolException.with_traceback",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -19558,11 +20368,42 @@
                 "kind": "method",
                 "name": "add_note",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on SettingClassVarNotAllowedException",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-ERRORS-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "add_note(note: string): void;",
+                      "kind": "method",
+                      "name": "add_note",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "note",
+                          "optional": false,
+                          "rest": false,
+                          "type": "string"
+                        }
+                      ],
+                      "returnType": "void",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "SettingClassVarNotAllowedException.add_note",
+                  "semanticsCoverage": [
+                    "errors",
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -19593,11 +20434,33 @@
                 "kind": "attribute",
                 "name": "args",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on SettingClassVarNotAllowedException",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-ERRORS-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "readonly args: readonly unknown[];",
+                      "declaredDefault": null,
+                      "hasDeclaredDefault": false,
+                      "kind": "property",
+                      "name": "args",
+                      "optional": false,
+                      "readonly": true,
+                      "type": "readonly unknown[]"
+                    }
+                  ],
+                  "nodeMember": "SettingClassVarNotAllowedException.args",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "PROPERTY_KIND_ONLY",
+                  "status": "VERIFIED"
                 },
                 "valueType": "getset_descriptor"
               },
@@ -19609,11 +20472,31 @@
                 "kind": "attribute",
                 "name": "characters_written",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on SettingClassVarNotAllowedException",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-ERRORS-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "access": "get",
+                      "declaration": "get characters_written(): never;",
+                      "kind": "property",
+                      "name": "characters_written",
+                      "parameters": [],
+                      "returnType": "never",
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "SettingClassVarNotAllowedException.characters_written",
+                  "semanticsCoverage": [
+                    "errors"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "PROPERTY_KIND_ONLY",
+                  "status": "VERIFIED"
                 },
                 "valueType": "getset_descriptor"
               },
@@ -19625,11 +20508,33 @@
                 "kind": "attribute",
                 "name": "errno",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on SettingClassVarNotAllowedException",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-ERRORS-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "readonly errno: unknown;",
+                      "declaredDefault": null,
+                      "hasDeclaredDefault": false,
+                      "kind": "property",
+                      "name": "errno",
+                      "optional": false,
+                      "readonly": true,
+                      "type": "unknown"
+                    }
+                  ],
+                  "nodeMember": "SettingClassVarNotAllowedException.errno",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "PROPERTY_KIND_ONLY",
+                  "status": "VERIFIED"
                 },
                 "valueType": "member_descriptor"
               },
@@ -19641,11 +20546,33 @@
                 "kind": "attribute",
                 "name": "filename",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on SettingClassVarNotAllowedException",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-ERRORS-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "readonly filename: unknown;",
+                      "declaredDefault": null,
+                      "hasDeclaredDefault": false,
+                      "kind": "property",
+                      "name": "filename",
+                      "optional": false,
+                      "readonly": true,
+                      "type": "unknown"
+                    }
+                  ],
+                  "nodeMember": "SettingClassVarNotAllowedException.filename",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "PROPERTY_KIND_ONLY",
+                  "status": "VERIFIED"
                 },
                 "valueType": "member_descriptor"
               },
@@ -19657,11 +20584,33 @@
                 "kind": "attribute",
                 "name": "filename2",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on SettingClassVarNotAllowedException",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-ERRORS-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "readonly filename2: unknown;",
+                      "declaredDefault": null,
+                      "hasDeclaredDefault": false,
+                      "kind": "property",
+                      "name": "filename2",
+                      "optional": false,
+                      "readonly": true,
+                      "type": "unknown"
+                    }
+                  ],
+                  "nodeMember": "SettingClassVarNotAllowedException.filename2",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "PROPERTY_KIND_ONLY",
+                  "status": "VERIFIED"
                 },
                 "valueType": "member_descriptor"
               },
@@ -19673,11 +20622,33 @@
                 "kind": "attribute",
                 "name": "strerror",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on SettingClassVarNotAllowedException",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-ERRORS-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "readonly strerror: unknown;",
+                      "declaredDefault": null,
+                      "hasDeclaredDefault": false,
+                      "kind": "property",
+                      "name": "strerror",
+                      "optional": false,
+                      "readonly": true,
+                      "type": "unknown"
+                    }
+                  ],
+                  "nodeMember": "SettingClassVarNotAllowedException.strerror",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "PROPERTY_KIND_ONLY",
+                  "status": "VERIFIED"
                 },
                 "valueType": "member_descriptor"
               },
@@ -19688,11 +20659,41 @@
                 "kind": "method",
                 "name": "with_traceback",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on SettingClassVarNotAllowedException",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-CONNECTION-ERRORS-001",
+                      "file": "packages/runtime-js/test/connection-compat.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "with_traceback(_traceback: unknown): this;",
+                      "kind": "method",
+                      "name": "with_traceback",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "_traceback",
+                          "optional": false,
+                          "rest": false,
+                          "type": "unknown"
+                        }
+                      ],
+                      "returnType": "this",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "SettingClassVarNotAllowedException.with_traceback",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -23859,11 +24860,41 @@
                 "kind": "method",
                 "name": "append",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Position",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-POSITION-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "append(value: number): void;",
+                      "kind": "method",
+                      "name": "append",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "value",
+                          "optional": false,
+                          "rest": false,
+                          "type": "number"
+                        }
+                      ],
+                      "returnType": "void",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Position.append",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -23893,11 +24924,32 @@
                 "kind": "method",
                 "name": "clear",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Position",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-POSITION-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "clear(): void;",
+                      "kind": "method",
+                      "name": "clear",
+                      "parameters": [],
+                      "returnType": "void",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Position.clear",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -23920,11 +24972,31 @@
                 "kind": "method",
                 "name": "copy",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Position",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-POSITION-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "copy(): number[];",
+                      "kind": "method",
+                      "name": "copy",
+                      "parameters": [],
+                      "returnType": "number[]",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Position.copy",
+                  "semanticsCoverage": [
+                    "return"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -23947,11 +25019,40 @@
                 "kind": "method",
                 "name": "count",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Position",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-POSITION-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "count(value: number): number;",
+                      "kind": "method",
+                      "name": "count",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "value",
+                          "optional": false,
+                          "rest": false,
+                          "type": "number"
+                        }
+                      ],
+                      "returnType": "number",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Position.count",
+                  "semanticsCoverage": [
+                    "return"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -23981,11 +25082,41 @@
                 "kind": "method",
                 "name": "extend",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Position",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-POSITION-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "extend(values: Iterable<number>): void;",
+                      "kind": "method",
+                      "name": "extend",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "values",
+                          "optional": false,
+                          "rest": false,
+                          "type": "Iterable<number>"
+                        }
+                      ],
+                      "returnType": "void",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Position.extend",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -24015,7 +25146,13 @@
                 "kind": "classmethod",
                 "name": "from_json",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-POSITION-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "static fromJson(points: readonly number[]): Position;",
@@ -24037,9 +25174,14 @@
                     }
                   ],
                   "nodeMember": "Position.fromJson",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "errors",
+                    "return",
+                    "signature"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -24069,11 +25211,58 @@
                 "kind": "method",
                 "name": "index",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Position",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-POSITION-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "index(value: number, start?: number, stop?: number): number;",
+                      "kind": "method",
+                      "name": "index",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "value",
+                          "optional": false,
+                          "rest": false,
+                          "type": "number"
+                        },
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "start",
+                          "optional": true,
+                          "rest": false,
+                          "type": "number"
+                        },
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "stop",
+                          "optional": true,
+                          "rest": false,
+                          "type": "number"
+                        }
+                      ],
+                      "returnType": "number",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Position.index",
+                  "semanticsCoverage": [
+                    "errors",
+                    "return",
+                    "signature"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -24117,11 +25306,49 @@
                 "kind": "method",
                 "name": "insert",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Position",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-POSITION-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "insert(index: number, value: number): void;",
+                      "kind": "method",
+                      "name": "insert",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "index",
+                          "optional": false,
+                          "rest": false,
+                          "type": "number"
+                        },
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "value",
+                          "optional": false,
+                          "rest": false,
+                          "type": "number"
+                        }
+                      ],
+                      "returnType": "void",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Position.insert",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -24158,11 +25385,43 @@
                 "kind": "method",
                 "name": "pop",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Position",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-POSITION-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "pop(index?: number): number;",
+                      "kind": "method",
+                      "name": "pop",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "index",
+                          "optional": true,
+                          "rest": false,
+                          "type": "number"
+                        }
+                      ],
+                      "returnType": "number",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Position.pop",
+                  "semanticsCoverage": [
+                    "defaults",
+                    "errors",
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -24192,11 +25451,42 @@
                 "kind": "method",
                 "name": "remove",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Position",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-POSITION-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "remove(value: number): void;",
+                      "kind": "method",
+                      "name": "remove",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "value",
+                          "optional": false,
+                          "rest": false,
+                          "type": "number"
+                        }
+                      ],
+                      "returnType": "void",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Position.remove",
+                  "semanticsCoverage": [
+                    "errors",
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -24226,11 +25516,32 @@
                 "kind": "method",
                 "name": "reverse",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Position",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-POSITION-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "reverse(): this;",
+                      "kind": "method",
+                      "name": "reverse",
+                      "parameters": [],
+                      "returnType": "this",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Position.reverse",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -24253,11 +25564,41 @@
                 "kind": "method",
                 "name": "sort",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on Position",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-POSITION-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "sort(compareFn?: (a: number, b: number) => number): this;",
+                      "kind": "method",
+                      "name": "sort",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "compareFn",
+                          "optional": true,
+                          "rest": false,
+                          "type": "(a: number, b: number) => number"
+                        }
+                      ],
+                      "returnType": "this",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "Position.sort",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -24294,7 +25635,13 @@
                 "kind": "method",
                 "name": "to_json",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-POSITION-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "toJson(): number[];",
@@ -24307,9 +25654,12 @@
                     }
                   ],
                   "nodeMember": "Position.toJson",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -24332,7 +25682,13 @@
                 "kind": "method",
                 "name": "to_viewport",
                 "nodeMapping": {
-                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-POSITION-001",
+                      "file": "packages/api/test/element-api-parity.test.ts"
+                    }
+                  ],
                   "nodeDeclarations": [
                     {
                       "declaration": "toViewport(scale?: number): Protocol.Page.Viewport;",
@@ -24354,9 +25710,13 @@
                     }
                   ],
                   "nodeMember": "Position.toViewport",
-                  "semanticsVerified": false,
+                  "semanticsCoverage": [
+                    "return",
+                    "signature"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
-                  "status": "CANDIDATE"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -24389,13 +25749,26 @@
             ],
             "name": "Position",
             "nodeMapping": {
-              "evidence": "compatible TypeScript AST declaration",
+              "evidence": "independent passing Node parity cases",
+              "evidenceCases": [
+                {
+                  "case": "ZDAPI-POSITION-001",
+                  "file": "packages/api/test/element-api-parity.test.ts"
+                }
+              ],
               "nodeKind": "class",
+              "nodeMember": "Position",
               "nodeSymbol": "Position",
               "runtimeExport": true,
-              "semanticsVerified": false,
+              "semanticsCoverage": [
+                "errors",
+                "return",
+                "signature",
+                "state"
+              ],
+              "semanticsVerified": true,
               "signatureComparison": "UNVERIFIED",
-              "status": "CANDIDATE"
+              "status": "VERIFIED"
             },
             "signature": {
               "parameters": [
@@ -24506,11 +25879,21 @@
                 "kind": "method",
                 "name": "__aenter__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on BaseRequestExpectation",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseExpectation expose matched data and reset",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "BaseRequestExpectation.aenter",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -24533,11 +25916,21 @@
                 "kind": "method",
                 "name": "__aexit__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on BaseRequestExpectation",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-EXPECT-001 BaseRequestExpectation, RequestExpectation, and ResponseExpectation expose matched data and reset",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "BaseRequestExpectation.aexit",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -24726,11 +26119,21 @@
                 "kind": "method",
                 "name": "__aenter__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-EXPECT-002 DownloadExpectation captures a download and restores browser behavior",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "DownloadExpectation.aenter",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -24753,11 +26156,21 @@
                 "kind": "method",
                 "name": "__aexit__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-EXPECT-002 DownloadExpectation captures a download and restores browser behavior",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "DownloadExpectation.aexit",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -24788,11 +26201,22 @@
                 "kind": "property",
                 "name": "value",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "access": "get",
+                      "declaration": "get value(): Promise<Protocol.Browser.Events.DownloadWillBeginEvent>;",
+                      "kind": "property",
+                      "name": "value",
+                      "parameters": [],
+                      "returnType": "Promise<Protocol.Browser.Events.DownloadWillBeginEvent>",
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "DownloadExpectation.value",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "signatureComparison": "PROPERTY_KIND_ONLY",
+                  "status": "CANDIDATE"
                 }
               }
             ],
@@ -24803,13 +26227,13 @@
             ],
             "name": "DownloadExpectation",
             "nodeMapping": {
-              "evidence": "name exists but declaration kind is not a compatible structural match",
-              "nodeKind": "function",
-              "nodeSymbol": "expectDownload",
+              "evidence": "compatible TypeScript AST declaration",
+              "nodeKind": "class",
+              "nodeSymbol": "DownloadExpectation",
               "runtimeExport": true,
               "semanticsVerified": false,
               "signatureComparison": "UNVERIFIED",
-              "status": "UNKNOWN"
+              "status": "CANDIDATE"
             },
             "signature": {
               "parameters": [
@@ -24840,11 +26264,11 @@
                 "kind": "method",
                 "name": "__aenter__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on RequestExpectation",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -24867,11 +26291,11 @@
                 "kind": "method",
                 "name": "__aexit__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on RequestExpectation",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -24902,11 +26326,11 @@
                 "kind": "property",
                 "name": "request",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on RequestExpectation",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 }
               },
               {
@@ -24916,11 +26340,11 @@
                 "kind": "method",
                 "name": "reset",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on RequestExpectation",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -24944,11 +26368,11 @@
                 "kind": "property",
                 "name": "response",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on RequestExpectation",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 }
               },
               {
@@ -24959,11 +26383,11 @@
                 "kind": "property",
                 "name": "response_body",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on RequestExpectation",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 }
               },
               {
@@ -24974,11 +26398,22 @@
                 "kind": "property",
                 "name": "value",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "access": "get",
+                      "declaration": "get value(): Promise<ExpectedRequest>;",
+                      "kind": "property",
+                      "name": "value",
+                      "parameters": [],
+                      "returnType": "Promise<ExpectedRequest>",
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "RequestExpectation.value",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "signatureComparison": "PROPERTY_KIND_ONLY",
+                  "status": "CANDIDATE"
                 }
               }
             ],
@@ -24990,13 +26425,13 @@
             ],
             "name": "RequestExpectation",
             "nodeMapping": {
-              "evidence": "name exists but declaration kind is not a compatible structural match",
-              "nodeKind": "function",
-              "nodeSymbol": "expectRequest",
+              "evidence": "compatible TypeScript AST declaration",
+              "nodeKind": "class",
+              "nodeSymbol": "RequestExpectation",
               "runtimeExport": true,
               "semanticsVerified": false,
               "signatureComparison": "UNVERIFIED",
-              "status": "UNKNOWN"
+              "status": "CANDIDATE"
             },
             "signature": {
               "parameters": [
@@ -25034,11 +26469,11 @@
                 "kind": "method",
                 "name": "__aenter__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on ResponseExpectation",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -25061,11 +26496,11 @@
                 "kind": "method",
                 "name": "__aexit__",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on ResponseExpectation",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -25096,11 +26531,11 @@
                 "kind": "property",
                 "name": "request",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on ResponseExpectation",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 }
               },
               {
@@ -25110,11 +26545,11 @@
                 "kind": "method",
                 "name": "reset",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on ResponseExpectation",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 },
                 "signature": {
                   "parameters": [
@@ -25138,11 +26573,11 @@
                 "kind": "property",
                 "name": "response",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on ResponseExpectation",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 }
               },
               {
@@ -25153,11 +26588,11 @@
                 "kind": "property",
                 "name": "response_body",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
+                  "evidence": "no equivalent member name declared on ResponseExpectation",
                   "nodeMember": null,
                   "semanticsVerified": false,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "status": "MISSING"
                 }
               },
               {
@@ -25168,11 +26603,22 @@
                 "kind": "property",
                 "name": "value",
                 "nodeMapping": {
-                  "evidence": "no mechanically matched Node class; an equivalent may exist elsewhere",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "access": "get",
+                      "declaration": "get value(): Promise<ExpectedResponse>;",
+                      "kind": "property",
+                      "name": "value",
+                      "parameters": [],
+                      "returnType": "Promise<ExpectedResponse>",
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "ResponseExpectation.value",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "UNKNOWN"
+                  "signatureComparison": "PROPERTY_KIND_ONLY",
+                  "status": "CANDIDATE"
                 }
               }
             ],
@@ -25184,13 +26630,13 @@
             ],
             "name": "ResponseExpectation",
             "nodeMapping": {
-              "evidence": "name exists but declaration kind is not a compatible structural match",
-              "nodeKind": "function",
-              "nodeSymbol": "expectResponse",
+              "evidence": "compatible TypeScript AST declaration",
+              "nodeKind": "class",
+              "nodeSymbol": "ResponseExpectation",
               "runtimeExport": true,
               "semanticsVerified": false,
               "signatureComparison": "UNVERIFIED",
-              "status": "UNKNOWN"
+              "status": "CANDIDATE"
             },
             "signature": {
               "parameters": [
@@ -25231,11 +26677,21 @@
                 "kind": "method",
                 "name": "__aenter__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on FetchInterception",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-INTERCEPT-002 BaseFetchInterception exposes response body and resets",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "BaseFetchInterception.aenter",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -25258,11 +26714,21 @@
                 "kind": "method",
                 "name": "__aexit__",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on FetchInterception",
-                  "nodeMember": null,
-                  "semanticsVerified": false,
+                  "evidence": "independent passing Node parity cases",
+                  "evidenceCases": [
+                    {
+                      "case": "ZDAPI-INTERCEPT-002 BaseFetchInterception exposes response body and resets",
+                      "file": "packages/api/test/expectation-interception-api-parity.test.ts"
+                    }
+                  ],
+                  "nodeMember": "BaseFetchInterception.aexit",
+                  "semanticsCoverage": [
+                    "return",
+                    "state"
+                  ],
+                  "semanticsVerified": true,
                   "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "status": "VERIFIED"
                 },
                 "signature": {
                   "parameters": [
@@ -25292,11 +26758,81 @@
                 "kind": "method",
                 "name": "continue_request",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on FetchInterception",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "continueRequest(params?: Omit<Protocol.Fetch.Commands.ContinueRequestParams, \"requestId\">): Promise<void>;",
+                      "kind": "method",
+                      "name": "continueRequest",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "params",
+                          "optional": true,
+                          "rest": false,
+                          "type": "Omit<Protocol.Fetch.Commands.ContinueRequestParams, \"requestId\">"
+                        }
+                      ],
+                      "returnType": "Promise<void>",
+                      "static": false,
+                      "typeParameters": []
+                    },
+                    {
+                      "declaration": "continueRequest(url?: string, method?: string, postData?: string, headers?: Protocol.Fetch.HeaderEntry[], interceptResponse?: boolean): Promise<void>;",
+                      "kind": "method",
+                      "name": "continueRequest",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "url",
+                          "optional": true,
+                          "rest": false,
+                          "type": "string"
+                        },
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "method",
+                          "optional": true,
+                          "rest": false,
+                          "type": "string"
+                        },
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "postData",
+                          "optional": true,
+                          "rest": false,
+                          "type": "string"
+                        },
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "headers",
+                          "optional": true,
+                          "rest": false,
+                          "type": "Protocol.Fetch.HeaderEntry[]"
+                        },
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "interceptResponse",
+                          "optional": true,
+                          "rest": false,
+                          "type": "boolean"
+                        }
+                      ],
+                      "returnType": "Promise<void>",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "BaseFetchInterception.continueRequest",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "CANDIDATE"
                 },
                 "signature": {
                   "parameters": [
@@ -25354,11 +26890,73 @@
                 "kind": "method",
                 "name": "continue_response",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on FetchInterception",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "continueResponse(params?: Omit<Protocol.Fetch.Commands.ContinueResponseParams, \"requestId\">): Promise<void>;",
+                      "kind": "method",
+                      "name": "continueResponse",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "params",
+                          "optional": true,
+                          "rest": false,
+                          "type": "Omit<Protocol.Fetch.Commands.ContinueResponseParams, \"requestId\">"
+                        }
+                      ],
+                      "returnType": "Promise<void>",
+                      "static": false,
+                      "typeParameters": []
+                    },
+                    {
+                      "declaration": "continueResponse(responseCode?: number, responsePhrase?: string, responseHeaders?: Protocol.Fetch.HeaderEntry[], binaryResponseHeaders?: string): Promise<void>;",
+                      "kind": "method",
+                      "name": "continueResponse",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "responseCode",
+                          "optional": true,
+                          "rest": false,
+                          "type": "number"
+                        },
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "responsePhrase",
+                          "optional": true,
+                          "rest": false,
+                          "type": "string"
+                        },
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "responseHeaders",
+                          "optional": true,
+                          "rest": false,
+                          "type": "Protocol.Fetch.HeaderEntry[]"
+                        },
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "binaryResponseHeaders",
+                          "optional": true,
+                          "rest": false,
+                          "type": "string"
+                        }
+                      ],
+                      "returnType": "Promise<void>",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "BaseFetchInterception.continueResponse",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "CANDIDATE"
                 },
                 "signature": {
                   "parameters": [
@@ -25409,11 +27007,31 @@
                 "kind": "method",
                 "name": "fail_request",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on FetchInterception",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "failRequest(errorReason: Protocol.Network.ErrorReason): Promise<void>;",
+                      "kind": "method",
+                      "name": "failRequest",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "errorReason",
+                          "optional": false,
+                          "rest": false,
+                          "type": "Protocol.Network.ErrorReason"
+                        }
+                      ],
+                      "returnType": "Promise<void>",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "BaseFetchInterception.failRequest",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "CANDIDATE"
                 },
                 "signature": {
                   "parameters": [
@@ -25443,11 +27061,89 @@
                 "kind": "method",
                 "name": "fulfill_request",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on FetchInterception",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "fulfillRequest(responseCode: number, options?: Omit<Protocol.Fetch.Commands.FulfillRequestParams, \"requestId\" | \"responseCode\">): Promise<void>;",
+                      "kind": "method",
+                      "name": "fulfillRequest",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "responseCode",
+                          "optional": false,
+                          "rest": false,
+                          "type": "number"
+                        },
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "options",
+                          "optional": true,
+                          "rest": false,
+                          "type": "Omit<Protocol.Fetch.Commands.FulfillRequestParams, \"requestId\" | \"responseCode\">"
+                        }
+                      ],
+                      "returnType": "Promise<void>",
+                      "static": false,
+                      "typeParameters": []
+                    },
+                    {
+                      "declaration": "fulfillRequest(responseCode: number, responseHeaders?: Protocol.Fetch.HeaderEntry[], binaryResponseHeaders?: string, body?: string, responsePhrase?: string): Promise<void>;",
+                      "kind": "method",
+                      "name": "fulfillRequest",
+                      "parameters": [
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "responseCode",
+                          "optional": false,
+                          "rest": false,
+                          "type": "number"
+                        },
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "responseHeaders",
+                          "optional": true,
+                          "rest": false,
+                          "type": "Protocol.Fetch.HeaderEntry[]"
+                        },
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "binaryResponseHeaders",
+                          "optional": true,
+                          "rest": false,
+                          "type": "string"
+                        },
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "body",
+                          "optional": true,
+                          "rest": false,
+                          "type": "string"
+                        },
+                        {
+                          "declaredDefault": null,
+                          "hasDeclaredDefault": false,
+                          "name": "responsePhrase",
+                          "optional": true,
+                          "rest": false,
+                          "type": "string"
+                        }
+                      ],
+                      "returnType": "Promise<void>",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "BaseFetchInterception.fulfillRequest",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "CANDIDATE"
                 },
                 "signature": {
                   "parameters": [
@@ -25506,11 +27202,22 @@
                 "kind": "property",
                 "name": "request",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on FetchInterception",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "access": "get",
+                      "declaration": "get request(): Promise<Protocol.Network.Request>;",
+                      "kind": "property",
+                      "name": "request",
+                      "parameters": [],
+                      "returnType": "Promise<Protocol.Network.Request>",
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "BaseFetchInterception.request",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "signatureComparison": "PROPERTY_KIND_ONLY",
+                  "status": "CANDIDATE"
                 }
               },
               {
@@ -25520,11 +27227,22 @@
                 "kind": "method",
                 "name": "reset",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on FetchInterception",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "declaration": "reset(): Promise<void>;",
+                      "kind": "method",
+                      "name": "reset",
+                      "parameters": [],
+                      "returnType": "Promise<void>",
+                      "static": false,
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "BaseFetchInterception.reset",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "signatureComparison": "COMPATIBLE_REQUIRED_ARITY",
+                  "status": "CANDIDATE"
                 },
                 "signature": {
                   "parameters": [
@@ -25548,11 +27266,22 @@
                 "kind": "property",
                 "name": "response_body",
                 "nodeMapping": {
-                  "evidence": "no equivalent member name declared on FetchInterception",
-                  "nodeMember": null,
+                  "evidence": "compatible member kind in TypeScript AST declaration",
+                  "nodeDeclarations": [
+                    {
+                      "access": "get",
+                      "declaration": "get responseBody(): Promise<readonly [string, boolean]>;",
+                      "kind": "property",
+                      "name": "responseBody",
+                      "parameters": [],
+                      "returnType": "Promise<readonly [string, boolean]>",
+                      "typeParameters": []
+                    }
+                  ],
+                  "nodeMember": "BaseFetchInterception.responseBody",
                   "semanticsVerified": false,
-                  "signatureComparison": "UNVERIFIED",
-                  "status": "MISSING"
+                  "signatureComparison": "PROPERTY_KIND_ONLY",
+                  "status": "CANDIDATE"
                 }
               }
             ],
@@ -25565,7 +27294,7 @@
             "nodeMapping": {
               "evidence": "compatible TypeScript AST declaration",
               "nodeKind": "class",
-              "nodeSymbol": "FetchInterception",
+              "nodeSymbol": "BaseFetchInterception",
               "runtimeExport": true,
               "semanticsVerified": false,
               "signatureComparison": "UNVERIFIED",

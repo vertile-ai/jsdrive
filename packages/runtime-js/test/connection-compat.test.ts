@@ -138,6 +138,21 @@ test("ZDAPI-CONNECTION-ERRORS-001", () => {
   assert.equal(protocol.message, "bad [code: -32000]");
   assert.deepEqual(protocol.data, { reason: "fixture" });
   assert.equal(new ProtocolException("first", "second").toString(), "first| second");
+  assert.deepEqual(protocol.args, [{ code: -32000, message: "bad", data: { reason: "fixture" } }]);
+  assert.equal(protocol.add_note("fixture note"), undefined);
+  assert.deepEqual(protocol.__notes__, ["fixture note"]);
+  assert.equal(protocol.with_traceback(undefined), protocol);
+  const permission = new SettingClassVarNotAllowedException(1, "denied", "input.txt", undefined, "output.txt");
+  assert.deepEqual(permission.args, [1, "denied"]);
+  assert.equal(permission.errno, 1);
+  assert.equal(permission.strerror, "denied");
+  assert.equal(permission.filename, "input.txt");
+  assert.equal(permission.filename2, "output.txt");
+  assert.equal(permission.message, "[Errno 1] denied: input.txt -> output.txt");
+  assert.throws(() => permission.characters_written, /characters_written/);
+  assert.equal(permission.add_note("fixture note"), undefined);
+  assert.deepEqual(permission.__notes__, ["fixture note"]);
+  assert.equal(permission.with_traceback(undefined), permission);
   assert.throws(() => CantTouchThis.rejectClassAssignment("Fixture", "value"), SettingClassVarNotAllowedException);
   assert.throws(() => {
     (Connection as unknown as { fixtureValue: number }).fixtureValue = 1;

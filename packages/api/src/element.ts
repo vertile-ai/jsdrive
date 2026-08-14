@@ -26,12 +26,41 @@ export class Position extends Array<number> {
   public get width(): number { return (this[4] as number) - this.x; }
   public get height(): number { return (this[7] as number) - this.y; }
   public get center(): readonly [number, number] { return [this.x + this.width / 2, this.y + this.height / 2]; }
+  public append(value: number): void { this.push(value); }
+  public clear(): void { this.splice(0); }
+  public copy(): number[] { return [...this]; }
+  public count(value: number): number { return this.reduce((total, item) => total + Number(Object.is(item, value)), 0); }
+  public extend(values: Iterable<number>): void { this.push(...values); }
+  public index(value: number, start = 0, stop = this.length): number {
+    const from = normalizeListIndex(start, this.length);
+    const until = normalizeListIndex(stop, this.length);
+    for (let index = from; index < until; index += 1) if (Object.is(this[index], value)) return index;
+    throw new RangeError(`${String(value)} is not in Position`);
+  }
+  public insert(index: number, value: number): void {
+    const normalized = index < 0 ? Math.max(0, this.length + index) : Math.min(index, this.length);
+    this.splice(normalized, 0, value);
+  }
+  public override pop(index = -1): number {
+    if (this.length === 0) throw new RangeError("pop from empty Position");
+    const normalized = index < 0 ? this.length + index : index;
+    if (normalized < 0 || normalized >= this.length) throw new RangeError("pop index out of range");
+    return this.splice(normalized, 1)[0] as number;
+  }
+  public remove(value: number): void { this.splice(this.index(value), 1); }
+  public override reverse(): this { super.reverse(); return this; }
+  public override sort(compareFn?: (a: number, b: number) => number): this { super.sort(compareFn); return this; }
   public toJSON(): number[] { return [...this]; }
   public toJson(): number[] { return this.toJSON(); }
   public static fromJson(points: readonly number[]): Position { return new Position(points); }
   public toViewport(scale = 1): Protocol.Page.Viewport {
     return { x: this.x, y: this.y, width: this.width, height: this.height, scale };
   }
+}
+
+function normalizeListIndex(index: number, length: number): number {
+  if (index < 0) return Math.max(0, length + index);
+  return Math.min(index, length);
 }
 
 export interface ApplyOptions {

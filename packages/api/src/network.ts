@@ -51,6 +51,11 @@ export class BaseRequestExpectation<T extends ExpectedRequest | ExpectedResponse
   public get responseBody(): Promise<readonly [string, boolean]> { return this.state.responseBody; }
   public cancel(reason?: unknown): Promise<void> { return this.state.cancel(reason); }
   public reset(): Promise<void> { return this.state.reset(); }
+  public async aenter(): Promise<this> {
+    await this.ready;
+    return this;
+  }
+  public aexit(..._args: readonly unknown[]): Promise<void> { return this.cancel(); }
   public [Symbol.asyncDispose](): Promise<void> { return this.state[Symbol.asyncDispose](); }
 }
 
@@ -281,6 +286,15 @@ export class BaseFetchInterception {
   }
 
   public [Symbol.asyncDispose](): Promise<void> {
+    return this.close();
+  }
+
+  public async aenter(): Promise<this> {
+    await this.ready;
+    return this;
+  }
+
+  public aexit(..._args: readonly unknown[]): Promise<void> {
     return this.close();
   }
 

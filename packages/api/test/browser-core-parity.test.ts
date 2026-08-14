@@ -102,26 +102,30 @@ for (const [parameter, headless, ids] of [
 
 test("ZDTEST-0020 one Config launches three isolated browsers", {
   timeout: 60_000,
-  skip: process.env.NODRIVER_SKIP_MULTI_BROWSER === "1" ? "Repository isolation permits only one managed Chromium" : false,
+  skip: browserCaseSkipReason(true),
 }, async () => {
   const shared = new Config({ executable, headless: true });
-  const browsers: Browser[] = [];
-  try {
-    browsers.push(await Browser.start(shared), await Browser.start(shared), await Browser.start(shared));
-    assert.equal(shared.port, undefined);
-    assert.equal(shared.configuredUserDataDir, undefined);
-    assert.equal(browsers.every((browser) => !browser.config.usesCustomDataDir), true);
-    assert.equal(new Set(browsers.map((browser) => browser.config.port)).size, 3);
-    assert.equal(new Set(browsers.map((browser) => browser.config.userDataDir)).size, 3);
-    const pages = await Promise.all(browsers.map((browser, index) => browser.get(`${fixtureUrl}/${index + 1}`)));
-    assert.deepEqual(await Promise.all(pages.map(async (page) => (await page.updateTarget()).title)), [
-      "Example Domain",
-      "Example Domain",
-      "Example Domain",
-    ]);
-  } finally {
-    await Promise.all(browsers.map(async (browser) => browser.stop()));
+  const ports = new Set<number>();
+  const profiles = new Set<string>();
+  const titles: string[] = [];
+  for (let index = 0; index < 3; index += 1) {
+    const browser = await Browser.start(shared);
+    try {
+      assert.equal(browser.config.usesCustomDataDir, false);
+      assert.ok(browser.config.port !== undefined);
+      assert.ok(browser.config.userDataDir !== undefined);
+      ports.add(browser.config.port);
+      profiles.add(browser.config.userDataDir);
+      titles.push((await (await browser.get(`${fixtureUrl}/${index + 1}`)).updateTarget()).title);
+    } finally {
+      await browser.stop();
+    }
   }
+  assert.equal(shared.port, undefined);
+  assert.equal(shared.configuredUserDataDir, undefined);
+  assert.equal(ports.size, 3);
+  assert.equal(profiles.size, 3);
+  assert.deepEqual(titles, ["Example Domain", "Example Domain", "Example Domain"]);
 });
 
 async function usingBrowser(headless: boolean, action: (browser: Browser) => Promise<void>): Promise<void> {

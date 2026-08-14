@@ -48,6 +48,11 @@ export class DownloadExpectation implements DownloadWillBeginExpectation {
   public get value(): Promise<Protocol.Browser.Events.DownloadWillBeginEvent> { return this.#state.value; }
   public cancel(reason?: unknown): Promise<void> { return this.#state.cancel(reason); }
   public close(): Promise<void> { return this.#state.close(); }
+  public async aenter(): Promise<this> {
+    await this.ready;
+    return this;
+  }
+  public aexit(..._args: readonly unknown[]): Promise<void> { return this.close(); }
   public [Symbol.asyncDispose](): Promise<void> { return this.#state[Symbol.asyncDispose](); }
 }
 
